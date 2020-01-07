@@ -1,7 +1,9 @@
-import { put, takeEvery } from 'redux-saga/effects';
-import { ActionModel, MessageModel, WelcomeMessageModel, TransferModel, TransferMessageModel } from '../types/Models';
-import { ActionType } from '../types/ActionType';
+import { put, takeEvery, select } from 'redux-saga/effects';
 import uuid from 'uuid/v4';
+
+import { ActionModel, MessageModel, WelcomeMessageModel, TransferModel, TransferMessageModel, NameMessageModel } from '../types/Models';
+import { ActionType } from '../types/ActionType';
+import { StateType } from '../reducers';
 
 function* message(action: ActionModel) {
     const msg: MessageModel = action.value as MessageModel;
@@ -18,7 +20,7 @@ function* message(action: ActionModel) {
                 fileSize: transferMessage.fileSize,
                 transferId: transferMessage.transferId,
             };
-            
+
             yield put({ type: ActionType.ADD_INCOMING_TRANSFER, value: transfer });
             break;
         case 'rtc':
@@ -28,6 +30,25 @@ function* message(action: ActionModel) {
 
 function* connected() {
     yield put({ type: ActionType.SET_CONNECTED, value: true });
+
+    let name = yield select((state: StateType) => state.name);
+    if (name && name !== '') {
+        const message: NameMessageModel = {
+            type: 'name',
+            clientName: name,
+        };
+
+        yield put({ type: ActionType.WS_SEND_MESSAGE, value: message });
+    }
+}
+
+function* setName(action: ActionModel) {
+    const message: NameMessageModel = {
+        type: 'name',
+        clientName: action.value,
+    };
+
+    yield put({ type: ActionType.WS_SEND_MESSAGE, value: message });
 }
 
 function* disconnected() {
@@ -62,6 +83,8 @@ export default function* root() {
     yield takeEvery(ActionType.WS_MESSAGE, message);
     yield takeEvery(ActionType.WS_CONNECTED, connected);
     yield takeEvery(ActionType.WS_DISCONNECTED, disconnected);
+
+    yield takeEvery(ActionType.SET_NAME, setName);
 
     yield takeEvery(ActionType.CREATE_TRANSFER, createTransfer);
 };

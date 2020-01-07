@@ -17,7 +17,8 @@ const Transfers: React.FC = () => {
 
     useEffect(() => {
         setHref(window.location.href);
-    }, [ setHref, code ])
+        dispatch({ type: ActionType.SET_NAME, value: code });
+    }, [ setHref, code, dispatch ])
 
     const onDrop = useCallback((files: File[]) => {
         for (let file of files) {
