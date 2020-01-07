@@ -13,7 +13,6 @@ export class BetterWebSocket {
     }
 
     connect() {
-        console.log(this.retries);
         this.retries++;
 
         if (this.retries > 5) {
