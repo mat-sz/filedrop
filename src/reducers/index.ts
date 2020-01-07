@@ -42,7 +42,7 @@ function applicationState(state = initialState, action: ActionModel) {
             newState.outgoingTransfers = [...newState.outgoingTransfers, action.value];
             break;
         case ActionType.REMOVE_OUTGOING_TRANSFER:
-            newState.outgoingTransfers = newState.outgoingTransfers.filter(transfer => transfer.requestId !== action.value.requestId);
+            newState.outgoingTransfers = newState.outgoingTransfers.filter(transfer => transfer.transferId !== action.value.transferId);
             break;
         default:
             return state;

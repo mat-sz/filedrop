@@ -1,5 +1,5 @@
 import { put, takeEvery } from 'redux-saga/effects';
-import { ActionModel, MessageModel, WelcomeMessageModel, TransferModel, RequestMessageModel } from '../types/Models';
+import { ActionModel, MessageModel, WelcomeMessageModel, TransferModel, TransferMessageModel } from '../types/Models';
 import { ActionType } from '../types/ActionType';
 import uuid from 'uuid/v4';
 
@@ -33,14 +33,14 @@ function* createTransfer(action: ActionModel) {
         fileName: file.name,
         fileSize: file.size,
         fileType: file.type,
-        requestId: uuid(),
+        transferId: uuid(),
     };
 
     yield put({ type: ActionType.ADD_OUTGOING_TRANSFER, value: transfer });
 
-    const model: RequestMessageModel = {
+    const model: TransferMessageModel = {
         type: 'request',
-        requestId: transfer.requestId,
+        transferId: transfer.transferId,
         fileName: transfer.fileName,
         fileSize: transfer.fileSize,
         fileType: transfer.fileType,
