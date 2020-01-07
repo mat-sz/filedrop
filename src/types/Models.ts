@@ -20,6 +20,9 @@ export interface NameMessageModel extends MessageModel {
 export interface RequestMessageModel extends MessageModel {
     type: 'request',
     requestId: string,
+    fileName: string,
+    fileSize: number,
+    fileType: string,
     clientId?: string,
 };
 
@@ -29,4 +32,12 @@ export interface RTCMessageModel extends MessageModel {
     targetId: string,
     requestId: string,
     clientId?: string,
+};
+
+export interface TransferModel {
+    requestId: string,
+    fileName: string,
+    fileSize: number,
+    fileType: string,
+    file?: File,
 };

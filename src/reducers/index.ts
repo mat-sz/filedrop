@@ -1,4 +1,4 @@
-import { ActionModel } from '../types/Models';
+import { ActionModel, TransferModel } from '../types/Models';
 import { ActionType } from '../types/ActionType';
 import { Store } from 'redux';
 
@@ -7,6 +7,7 @@ export interface StateType {
     error: string,
     name: string,
     clientId: string,
+    outgoingTransfers: TransferModel[],
 };
 
 let initialState: StateType = {
@@ -14,6 +15,7 @@ let initialState: StateType = {
     error: null,
     name: null,
     clientId: null,
+    outgoingTransfers: [],
 };
 
 export type StoreType = Store<StateType, ActionModel>;
@@ -35,6 +37,12 @@ function applicationState(state = initialState, action: ActionModel) {
             break;
         case ActionType.SET_CLIENT_ID:
             newState.clientId = action.value as string;
+            break;
+        case ActionType.ADD_OUTGOING_TRANSFER:
+            newState.outgoingTransfers = [...newState.outgoingTransfers, action.value];
+            break;
+        case ActionType.REMOVE_OUTGOING_TRANSFER:
+            newState.outgoingTransfers = newState.outgoingTransfers.filter(transfer => transfer.requestId !== action.value.requestId);
             break;
         default:
             return state;
