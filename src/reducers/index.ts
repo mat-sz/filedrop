@@ -7,6 +7,7 @@ export interface StateType {
     error: string,
     name: string,
     clientId: string,
+    incomingTransfers: TransferModel[],
     outgoingTransfers: TransferModel[],
 };
 
@@ -15,6 +16,7 @@ let initialState: StateType = {
     error: null,
     name: null,
     clientId: null,
+    incomingTransfers: [],
     outgoingTransfers: [],
 };
 
@@ -43,6 +45,12 @@ function applicationState(state = initialState, action: ActionModel) {
             break;
         case ActionType.REMOVE_OUTGOING_TRANSFER:
             newState.outgoingTransfers = newState.outgoingTransfers.filter(transfer => transfer.transferId !== action.value.transferId);
+            break;
+        case ActionType.ADD_INCOMING_TRANSFER:
+            newState.incomingTransfers = [...newState.incomingTransfers, action.value];
+            break;
+        case ActionType.REMOVE_INCOMING_TRANSFER:
+            newState.incomingTransfers = newState.incomingTransfers.filter(transfer => transfer.transferId !== action.value.transferId);
             break;
         default:
             return state;

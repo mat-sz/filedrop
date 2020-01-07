@@ -10,7 +10,16 @@ function* message(action: ActionModel) {
         case 'welcome':
             yield put({ type: ActionType.SET_CLIENT_ID, value: (msg as WelcomeMessageModel).clientId });
             break;
-        case 'request':
+        case 'transfer':
+            const transferMessage: TransferMessageModel = msg as TransferMessageModel;
+            const transfer: TransferModel = {
+                fileName: transferMessage.fileName,
+                fileType: transferMessage.fileType,
+                fileSize: transferMessage.fileSize,
+                transferId: transferMessage.transferId,
+            };
+            
+            yield put({ type: ActionType.ADD_INCOMING_TRANSFER, value: transfer });
             break;
         case 'rtc':
             break;
@@ -39,7 +48,7 @@ function* createTransfer(action: ActionModel) {
     yield put({ type: ActionType.ADD_OUTGOING_TRANSFER, value: transfer });
 
     const model: TransferMessageModel = {
-        type: 'request',
+        type: 'transfer',
         transferId: transfer.transferId,
         fileName: transfer.fileName,
         fileSize: transfer.fileSize,

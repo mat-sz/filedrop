@@ -12,6 +12,7 @@ const Transfers: React.FC = () => {
     const [ href, setHref ] = useState('');
     const dispatch = useDispatch();
 
+    const incomingTransfers = useSelector((store: StateType) => store.incomingTransfers);
     const outgoingTransfers = useSelector((store: StateType) => store.outgoingTransfers);
 
     useEffect(() => {
@@ -34,6 +35,14 @@ const Transfers: React.FC = () => {
                 <pre>
                     { href }
                 </pre>
+            </div>
+            <h2>Incoming transfers:</h2>
+            <div>
+                { incomingTransfers.map((transfer) =>
+                    <div>
+                        { transfer.fileName }
+                    </div>
+                )}
             </div>
             <h2>Your transfers:</h2>
             <div>
