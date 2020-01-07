@@ -44,13 +44,13 @@ function applicationState(state = initialState, action: ActionModel) {
             newState.outgoingTransfers = [...newState.outgoingTransfers, action.value];
             break;
         case ActionType.REMOVE_OUTGOING_TRANSFER:
-            newState.outgoingTransfers = newState.outgoingTransfers.filter(transfer => transfer.transferId !== action.value.transferId);
+            newState.outgoingTransfers = newState.outgoingTransfers.filter(transfer => transfer.transferId !== action.value);
             break;
         case ActionType.ADD_INCOMING_TRANSFER:
             newState.incomingTransfers = [...newState.incomingTransfers, action.value];
             break;
         case ActionType.REMOVE_INCOMING_TRANSFER:
-            newState.incomingTransfers = newState.incomingTransfers.filter(transfer => transfer.transferId !== action.value.transferId);
+            newState.incomingTransfers = newState.incomingTransfers.filter(transfer => transfer.transferId !== action.value);
             break;
         default:
             return state;

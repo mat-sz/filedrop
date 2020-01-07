@@ -4,7 +4,7 @@ export interface ActionModel {
 };
 
 export interface MessageModel {
-    type: 'welcome' | 'name' | 'transfer' | 'rtc',
+    type: 'welcome' | 'name' | 'transfer' | 'rtc' | 'action',
 };
 
 export interface WelcomeMessageModel extends MessageModel {
@@ -24,6 +24,12 @@ export interface TransferMessageModel extends MessageModel {
     fileSize: number,
     fileType: string,
     clientId?: string,
+};
+
+export interface ActionMessageModel extends MessageModel {
+    type: 'action',
+    transferId: string,
+    action: 'accept' | 'reject' | 'cancel',
 };
 
 export interface RTCMessageModel extends MessageModel {

@@ -40,7 +40,7 @@ const Transfers: React.FC = () => {
             <h2>Incoming transfers:</h2>
             <div>
                 { incomingTransfers.map((transfer) =>
-                    <div>
+                    <div key={transfer.transferId}>
                         { transfer.fileName }
                     </div>
                 )}
@@ -48,8 +48,9 @@ const Transfers: React.FC = () => {
             <h2>Your transfers:</h2>
             <div>
                 { outgoingTransfers.map((transfer) =>
-                    <div>
+                    <div key={transfer.transferId}>
                         { transfer.fileName }
+                        <button onClick={() => dispatch({ type: ActionType.CANCEL_TRANSFER, value: transfer.transferId })}>Cancel</button>
                     </div>
                 )}
             </div>

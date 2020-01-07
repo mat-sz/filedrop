@@ -1,7 +1,7 @@
 import { put, takeEvery, select } from 'redux-saga/effects';
 import uuid from 'uuid/v4';
 
-import { ActionModel, MessageModel, WelcomeMessageModel, TransferModel, TransferMessageModel, NameMessageModel } from '../types/Models';
+import { ActionModel, MessageModel, WelcomeMessageModel, TransferModel, TransferMessageModel, NameMessageModel, ActionMessageModel } from '../types/Models';
 import { ActionType } from '../types/ActionType';
 import { StateType } from '../reducers';
 
@@ -22,6 +22,15 @@ function* message(action: ActionModel) {
             };
 
             yield put({ type: ActionType.ADD_INCOMING_TRANSFER, value: transfer });
+            break;
+        case 'action':
+            const actionMessage: ActionMessageModel = msg as ActionMessageModel;
+
+            switch (actionMessage.action) {
+                case 'cancel':
+                    yield put({ type: ActionType.REMOVE_INCOMING_TRANSFER, value: actionMessage.transferId });
+                    break;
+            }
             break;
         case 'rtc':
             break;
@@ -79,6 +88,18 @@ function* createTransfer(action: ActionModel) {
     yield put({ type: ActionType.WS_SEND_MESSAGE, value: model });
 }
 
+function* cancelTransfer(action: ActionModel) {
+    yield put({ type: ActionType.REMOVE_OUTGOING_TRANSFER, value: action.value });
+
+    const model: ActionMessageModel = {
+        type: 'action',
+        transferId: action.value,
+        action: 'cancel',
+    };
+
+    yield put({ type: ActionType.WS_SEND_MESSAGE, value: model });
+}
+
 export default function* root() {
     yield takeEvery(ActionType.WS_MESSAGE, message);
     yield takeEvery(ActionType.WS_CONNECTED, connected);
@@ -87,4 +108,5 @@ export default function* root() {
     yield takeEvery(ActionType.SET_NAME, setName);
 
     yield takeEvery(ActionType.CREATE_TRANSFER, createTransfer);
+    yield takeEvery(ActionType.CANCEL_TRANSFER, cancelTransfer);
 };
