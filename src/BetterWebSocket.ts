@@ -64,6 +64,10 @@ export class BetterWebSocket {
         this.socket.send(JSON.stringify(data));
     }
 
+    get readyState() {
+        return this.socket.readyState;
+    }
+
     private connected() {
         this.retries = 0;
 
@@ -97,7 +101,7 @@ export const socketMiddleware = (url: string) => {
         socket.onMessage = (message) => store.dispatch({ type: ActionType.WS_MESSAGE, value: message });
 
         return (next: (action: any) => void) => (action: any) => {
-            if (action.type && action.type === ActionType.WS_SEND_MESSAGE) {
+            if (action.type && action.type === ActionType.WS_SEND_MESSAGE && socket.readyState === 1) {
                 socket.send(action.value);
             }
             
