@@ -5,7 +5,7 @@ import { socketMiddleware } from './BetterWebSocket';
 import reducers, { StoreType } from './reducers';
 import sagas from './sagas';
 
-const url = process.env.REACT_APP_SERVER || 'ws://localhost:5000/ws';
+const url = process.env.REACT_APP_SERVER || 'ws://' + window.location.hostname + ':5000/ws';
 
 const newStore = (): StoreType => {
     const sagaMiddleware = createSagaMiddleware();
