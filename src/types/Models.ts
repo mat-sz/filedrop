@@ -4,7 +4,7 @@ export interface ActionModel {
 };
 
 export interface MessageModel {
-    type: 'welcome' | 'name' | 'transfer' | 'rtc' | 'action',
+    type: 'welcome' | 'name' | 'transfer' | 'action' | 'rtcDescription' | 'rtcCandidate',
 };
 
 export interface WelcomeMessageModel extends MessageModel {
@@ -30,10 +30,19 @@ export interface ActionMessageModel extends MessageModel {
     type: 'action',
     transferId: string,
     action: 'accept' | 'reject' | 'cancel',
+    clientId?: string,
 };
 
-export interface RTCMessageModel extends MessageModel {
-    type: 'rtc',
+export interface RTCDescriptionMessageModel extends MessageModel {
+    type: 'rtcDescription',
+    data: any,
+    targetId: string,
+    transferId: string,
+    clientId?: string,
+};
+
+export interface RTCCandidateMessageModel extends MessageModel {
+    type: 'rtcCandidate',
     data: any,
     targetId: string,
     transferId: string,
@@ -46,4 +55,10 @@ export interface TransferModel {
     fileSize: number,
     fileType: string,
     file?: File,
+    clientId?: string,
+    peerConnection?: RTCPeerConnection,
+    sendChannel?: RTCDataChannel,
+    progress?: number,
+    complete?: boolean,
+    speed?: number,
 };

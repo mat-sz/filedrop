@@ -64,6 +64,30 @@ function applicationState(state = initialState, action: ActionModel) {
             newState.outgoingTransfers = newState.outgoingTransfers.filter(transfer => transfer.transferId !== action.value);
             newState.activeTransfers = [...newState.activeTransfers, outgoingTransfer];
             break;
+        case ActionType.ADD_PEER_CONNECTION:
+            newState.activeTransfers = newState.activeTransfers.map((transfer) => {
+                if (transfer.transferId === action.value.transferId && action.value.peerConnection) {
+                    transfer.peerConnection = action.value.peerConnection;
+                }
+                return transfer;
+            });
+            break;
+        case ActionType.SET_REMOTE_DESCRIPTION:
+            newState.activeTransfers = newState.activeTransfers.map((transfer) => {
+                if (transfer.transferId === action.value.transferId && transfer.peerConnection) {
+                    transfer.peerConnection.setRemoteDescription(action.value.data);
+                }
+                return transfer;
+            });
+            break;
+        case ActionType.ADD_ICE_CANDIDATE:
+            newState.activeTransfers = newState.activeTransfers.map((transfer) => {
+                if (transfer.transferId === action.value.transferId && transfer.peerConnection) {
+                    transfer.peerConnection.addIceCandidate(action.value.data);
+                }
+                return transfer;
+            });
+            break;
         default:
             return state;
     }

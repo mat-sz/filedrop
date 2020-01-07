@@ -1,5 +1,5 @@
-import { MiddlewareAPI } from "redux";
-import { ActionType } from "./types/ActionType";
+import { MiddlewareAPI } from 'redux';
+import { ActionType } from './types/ActionType';
 
 export class BetterWebSocket {
     onConnected?: () => void;
@@ -65,7 +65,7 @@ export class BetterWebSocket {
     }
 
     get readyState() {
-        return this.socket.readyState;
+        return this.socket ? this.socket.readyState : 0;
     }
 
     private connected() {

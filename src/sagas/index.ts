@@ -1,11 +1,11 @@
-import { put, takeEvery, select } from 'redux-saga/effects';
+import { put, takeEvery, select, call } from 'redux-saga/effects';
 import uuid from 'uuid/v4';
 
-import { ActionModel, MessageModel, WelcomeMessageModel, TransferModel, TransferMessageModel, NameMessageModel, ActionMessageModel } from '../types/Models';
+import { ActionModel, MessageModel, WelcomeMessageModel, TransferModel, TransferMessageModel, NameMessageModel, ActionMessageModel, RTCDescriptionMessageModel, RTCCandidateMessageModel } from '../types/Models';
 import { ActionType } from '../types/ActionType';
 import { StateType } from '../reducers';
 
-function* message(action: ActionModel) {
+function* message(action: ActionModel, dispatch: (action: any) => void) {
     const msg: MessageModel = action.value as MessageModel;
 
     switch (msg.type) {
@@ -32,13 +32,103 @@ function* message(action: ActionModel) {
                     break;
                 case 'accept':
                     yield put({ type: ActionType.MOVE_OUTGOING_TRANSFER_TO_ACTIVE, value: actionMessage.transferId });
+
+                    const sendingConnection = new RTCPeerConnection({
+                        iceServers: [
+                            {
+                                urls: 'stun:stun.1.google.com:19302',
+                            }
+                        ]
+                    });
+
+                    sendingConnection.addEventListener('icecandidate', (c) => {
+                        const candidateMessage: RTCCandidateMessageModel = {
+                            type: 'rtcCandidate',
+                            targetId: actionMessage.clientId,
+                            transferId: actionMessage.transferId,
+                            data: c.candidate,
+                        };
+                        
+                        dispatch({ type: ActionType.WS_SEND_MESSAGE, value: candidateMessage });
+                    });
+
+                    const sendChannel = sendingConnection.createDataChannel('sendDataChannel');
+                    sendChannel.binaryType = 'arraybuffer';
+
+                    sendChannel.addEventListener('open', () => console.log('Send channel is now open.'));
+
+                    const offer = yield call(async () => await sendingConnection.createOffer());
+                    sendingConnection.setLocalDescription(offer);
+
+                    yield put({ type: ActionType.ADD_PEER_CONNECTION, value: {
+                        transferId: actionMessage.transferId,
+                        peerConnection: sendingConnection,
+                        sendChannel: sendChannel,
+                    } });
+
+                    const sendingRtcMessage: RTCDescriptionMessageModel = {
+                        type: 'rtcDescription',
+                        transferId: actionMessage.transferId,
+                        targetId: actionMessage.clientId,
+                        data: offer,
+                    };
+
+                    yield put({ type: ActionType.WS_SEND_MESSAGE, value: sendingRtcMessage });
                     break;
                 case 'reject':
                     yield put({ type: ActionType.REMOVE_OUTGOING_TRANSFER, value: actionMessage.transferId });
                     break;
             }
             break;
-        case 'rtc':
+        case 'rtcDescription':
+            const rtcMessage: RTCDescriptionMessageModel = msg as RTCDescriptionMessageModel;
+            
+            if (rtcMessage.data.type === 'answer') {
+                yield put({ type: ActionType.SET_REMOTE_DESCRIPTION, value: {
+                    transferId: rtcMessage.transferId,
+                    data: rtcMessage.data,
+                } });
+            } else {
+                const receivingConnection = new RTCPeerConnection({
+                    iceServers: [
+                        {
+                            urls: 'stun:stun.1.google.com:19302',
+                        }
+                    ]
+                });
+
+                receivingConnection.addEventListener('icecandidate', (c) => {
+                    const candidateMessage: RTCCandidateMessageModel = {
+                        type: 'rtcCandidate',
+                        targetId: rtcMessage.clientId,
+                        transferId: rtcMessage.transferId,
+                        data: c.candidate,
+                    };
+
+                    dispatch({ type: ActionType.WS_SEND_MESSAGE, value: candidateMessage });
+                });
+                receivingConnection.addEventListener('datachannel', () => console.log('Received a data channel.'));
+                receivingConnection.setRemoteDescription(rtcMessage.data);
+
+                const answer = yield call(async () => await receivingConnection.createAnswer());
+                receivingConnection.setLocalDescription(answer);
+
+                const sendingRtcMessage: RTCDescriptionMessageModel = {
+                    type: 'rtcDescription',
+                    transferId: rtcMessage.transferId,
+                    targetId: rtcMessage.clientId,
+                    data: answer,
+                };
+
+                yield put({ type: ActionType.WS_SEND_MESSAGE, value: sendingRtcMessage });
+            }
+            break;
+        case 'rtcCandidate':
+            const rtcCandidate: RTCCandidateMessageModel = msg as RTCCandidateMessageModel;
+            yield put({ type: ActionType.ADD_ICE_CANDIDATE, value: {
+                transferId: rtcCandidate.transferId,
+                data: rtcCandidate.data,
+            } });
             break;
     }
 }
@@ -130,8 +220,10 @@ function* rejectTransfer(action: ActionModel) {
     yield put({ type: ActionType.WS_SEND_MESSAGE, value: model });
 }
 
-export default function* root() {
-    yield takeEvery(ActionType.WS_MESSAGE, message);
+export default function* root(dispatch: (action: any) => void) {
+    yield takeEvery(ActionType.WS_MESSAGE, function* (action: ActionModel) {
+        yield call(() => message(action, dispatch));
+    });
     yield takeEvery(ActionType.WS_CONNECTED, connected);
     yield takeEvery(ActionType.WS_DISCONNECTED, disconnected);
 

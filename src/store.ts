@@ -14,7 +14,7 @@ const newStore = (): StoreType => {
         applyMiddleware(socketMiddleware(url), sagaMiddleware),
     );
 
-    sagaMiddleware.run(sagas);
+    sagaMiddleware.run(sagas, store.dispatch);
 
     return store;
 };
