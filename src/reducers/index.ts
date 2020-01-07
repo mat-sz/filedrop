@@ -7,6 +7,7 @@ export interface StateType {
     error: string,
     name: string,
     clientId: string,
+    activeTransfers: TransferModel[],
     incomingTransfers: TransferModel[],
     outgoingTransfers: TransferModel[],
 };
@@ -16,6 +17,7 @@ let initialState: StateType = {
     error: null,
     name: null,
     clientId: null,
+    activeTransfers: [],
     incomingTransfers: [],
     outgoingTransfers: [],
 };
@@ -51,6 +53,16 @@ function applicationState(state = initialState, action: ActionModel) {
             break;
         case ActionType.REMOVE_INCOMING_TRANSFER:
             newState.incomingTransfers = newState.incomingTransfers.filter(transfer => transfer.transferId !== action.value);
+            break;
+        case ActionType.MOVE_INCOMING_TRANSFER_TO_ACTIVE:
+            const incomingTransfer = newState.incomingTransfers.find(transfer => transfer.transferId === action.value);
+            newState.incomingTransfers = newState.incomingTransfers.filter(transfer => transfer.transferId !== action.value);
+            newState.activeTransfers = [...newState.activeTransfers, incomingTransfer];
+            break;
+        case ActionType.MOVE_OUTGOING_TRANSFER_TO_ACTIVE:
+            const outgoingTransfer = newState.outgoingTransfers.find(transfer => transfer.transferId === action.value);
+            newState.outgoingTransfers = newState.outgoingTransfers.filter(transfer => transfer.transferId !== action.value);
+            newState.activeTransfers = [...newState.activeTransfers, outgoingTransfer];
             break;
         default:
             return state;

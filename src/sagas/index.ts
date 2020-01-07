@@ -30,6 +30,12 @@ function* message(action: ActionModel) {
                 case 'cancel':
                     yield put({ type: ActionType.REMOVE_INCOMING_TRANSFER, value: actionMessage.transferId });
                     break;
+                case 'accept':
+                    yield put({ type: ActionType.MOVE_OUTGOING_TRANSFER_TO_ACTIVE, value: actionMessage.transferId });
+                    break;
+                case 'reject':
+                    yield put({ type: ActionType.REMOVE_OUTGOING_TRANSFER, value: actionMessage.transferId });
+                    break;
             }
             break;
         case 'rtc':
@@ -100,6 +106,30 @@ function* cancelTransfer(action: ActionModel) {
     yield put({ type: ActionType.WS_SEND_MESSAGE, value: model });
 }
 
+function* acceptTransfer(action: ActionModel) {
+    yield put({ type: ActionType.MOVE_INCOMING_TRANSFER_TO_ACTIVE, value: action.value });
+
+    const model: ActionMessageModel = {
+        type: 'action',
+        transferId: action.value,
+        action: 'accept',
+    };
+
+    yield put({ type: ActionType.WS_SEND_MESSAGE, value: model });
+}
+
+function* rejectTransfer(action: ActionModel) {
+    yield put({ type: ActionType.REMOVE_INCOMING_TRANSFER, value: action.value });
+
+    const model: ActionMessageModel = {
+        type: 'action',
+        transferId: action.value,
+        action: 'reject',
+    };
+
+    yield put({ type: ActionType.WS_SEND_MESSAGE, value: model });
+}
+
 export default function* root() {
     yield takeEvery(ActionType.WS_MESSAGE, message);
     yield takeEvery(ActionType.WS_CONNECTED, connected);
@@ -109,4 +139,7 @@ export default function* root() {
 
     yield takeEvery(ActionType.CREATE_TRANSFER, createTransfer);
     yield takeEvery(ActionType.CANCEL_TRANSFER, cancelTransfer);
+
+    yield takeEvery(ActionType.ACCEPT_TRANSFER, acceptTransfer);
+    yield takeEvery(ActionType.REJECT_TRANSFER, rejectTransfer);
 };

@@ -12,6 +12,7 @@ const Transfers: React.FC = () => {
     const [ href, setHref ] = useState('');
     const dispatch = useDispatch();
 
+    const activeTransfers = useSelector((store: StateType) => store.activeTransfers);
     const incomingTransfers = useSelector((store: StateType) => store.incomingTransfers);
     const outgoingTransfers = useSelector((store: StateType) => store.outgoingTransfers);
 
@@ -37,11 +38,20 @@ const Transfers: React.FC = () => {
                     { href }
                 </pre>
             </div>
+            <div>
+                { activeTransfers.map((transfer) =>
+                    <div key={transfer.transferId}>
+                        { transfer.fileName }
+                    </div>
+                )}
+            </div>
             <h2>Incoming transfers:</h2>
             <div>
                 { incomingTransfers.map((transfer) =>
                     <div key={transfer.transferId}>
                         { transfer.fileName }
+                        <button onClick={() => dispatch({ type: ActionType.ACCEPT_TRANSFER, value: transfer.transferId })}>Accept</button>
+                        <button onClick={() => dispatch({ type: ActionType.REJECT_TRANSFER, value: transfer.transferId })}>Reject</button>
                     </div>
                 )}
             </div>
