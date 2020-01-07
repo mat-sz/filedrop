@@ -1,0 +1,14 @@
+export enum ActionType {
+    // Application state
+    SET_ERROR = 'SET_ERROR',
+    DISMISS_ERROR = 'DISMISS_ERROR',
+    SET_CONNECTED = 'SET_CONNECTED',
+    SET_NAME = 'SET_NAME',
+    SET_CLIENT_ID = 'SET_CLIENT_ID',
+
+    // Web Sockets
+    WS_SEND_MESSAGE = 'WS_SEND_MESSAGE',
+    WS_MESSAGE = 'WS_MESSAGE',
+    WS_CONNECTED = 'WS_CONNECTED',
+    WS_DISCONNECTED = 'WS_DISCONNECTED',
+};
