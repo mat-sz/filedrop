@@ -4,6 +4,7 @@ import uuid from 'uuid/v4';
 import { ActionModel, MessageModel, WelcomeMessageModel, TransferModel, TransferMessageModel, NameMessageModel, ActionMessageModel, RTCDescriptionMessageModel, RTCCandidateMessageModel } from '../types/Models';
 import { ActionType } from '../types/ActionType';
 import { StateType } from '../reducers';
+import { stunServer } from '../config';
 
 function* transferSendFile(actionMessage: ActionMessageModel, dispatch: (action: any) => void) {
     yield put({ type: ActionType.MOVE_OUTGOING_TRANSFER_TO_ACTIVE, value: actionMessage.transferId });
@@ -20,7 +21,7 @@ function* transferSendFile(actionMessage: ActionMessageModel, dispatch: (action:
     const sendingConnection = new RTCPeerConnection({
         iceServers: [
             {
-                urls: 'stun:stun.1.google.com:19302',
+                urls: stunServer,
             }
         ]
     });
@@ -93,7 +94,7 @@ function* transferReceiveFile(rtcMessage: RTCDescriptionMessageModel, dispatch: 
     const receivingConnection = new RTCPeerConnection({
         iceServers: [
             {
-                urls: 'stun:stun.1.google.com:19302',
+                urls: stunServer,
             }
         ]
     });
