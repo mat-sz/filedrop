@@ -21,7 +21,7 @@ const App: React.FC = () => {
                 <div className="logo section">drop.lol</div>
                 { !connected ? <div className={"status error"}>Not connected</div> : null }
                 <Switch>
-                    <Route path="/transfers/:code">
+                    <Route path="/:code">
                         <Transfers />
                     </Route>
                     <Route path="/">

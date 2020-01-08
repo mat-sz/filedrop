@@ -8,7 +8,7 @@ const Home: React.FC = () => {
 
     return (
         <div className="section center">
-            <Link to={"/transfers/" + name} className="button">Receive files</Link>
+            <Link to={"/" + name} className="button">Receive files</Link>
         </div>
     );
 }
