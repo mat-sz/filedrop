@@ -1,10 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { StateType } from '../reducers';
 
 const Home: React.FC = () => {
+    const name = useSelector((state: StateType) => state.name);
+
     return (
         <div className="screen">
-            <Link to="/transfers/123456">Receive files</Link>
+            <Link to={"/transfers/" + name} className="button">Receive files</Link>
         </div>
     );
 }

@@ -15,7 +15,7 @@ export interface StateType {
 let initialState: StateType = {
     connected: false,
     error: null,
-    name: null,
+    name: Math.floor(100000 + Math.random() * 900000).toString(),
     clientId: null,
     activeTransfers: [],
     incomingTransfers: [],
