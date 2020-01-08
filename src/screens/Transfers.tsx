@@ -28,42 +28,42 @@ const Transfers: React.FC = () => {
     }, [ dispatch ]);
 
     return (
-        <div className="screen">
+        <div className="section">
             <h2>Transfer files:</h2>
-            <div>
-                Scan this QR code:
+            <div className="center qrcode">
+                <p>Scan this QR code:</p>
                 <QrCode value={ href } />
-                or open this URL on another device:
+                <p>or open this URL on another device:</p>
                 <pre>
                     { href }
                 </pre>
             </div>
-            <div>
+            <ul className="center queue">
                 { activeTransfers.map((transfer) =>
-                    <div key={transfer.transferId}>
-                        { transfer.fileName }
-                    </div>
+                    <li key={transfer.transferId}>
+                        <div>{ transfer.fileName }</div>
+                    </li>
                 )}
-            </div>
+            </ul>
             <h2>Incoming transfers:</h2>
-            <div>
+            <ul className="center queue">
                 { incomingTransfers.map((transfer) =>
-                    <div key={transfer.transferId}>
-                        { transfer.fileName }
+                    <li key={transfer.transferId}>
+                        <div>{ transfer.fileName }</div>
                         <button onClick={() => dispatch({ type: ActionType.ACCEPT_TRANSFER, value: transfer.transferId })}>Accept</button>
                         <button onClick={() => dispatch({ type: ActionType.REJECT_TRANSFER, value: transfer.transferId })}>Reject</button>
-                    </div>
+                    </li>
                 )}
-            </div>
+            </ul>
             <h2>Your transfers:</h2>
-            <div>
+            <ul className="center queue">
                 { outgoingTransfers.map((transfer) =>
-                    <div key={transfer.transferId}>
-                        { transfer.fileName }
+                    <li key={transfer.transferId}>
+                        <div>{ transfer.fileName }</div>
                         <button onClick={() => dispatch({ type: ActionType.CANCEL_TRANSFER, value: transfer.transferId })}>Cancel</button>
-                    </div>
+                    </li>
                 )}
-            </div>
+            </ul>
             <h2>Create a new transfer:</h2>
             <Dropzone onDrop={onDrop}>
                 {({ getRootProps, getInputProps }) => (

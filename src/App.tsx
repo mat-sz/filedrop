@@ -14,13 +14,12 @@ import { StateType } from './reducers';
 
 const App: React.FC = () => {
     const connected = useSelector((state: StateType) => state.connected);
-    
+
     return (
         <Router>
             <div className="app">
-                <div>
-                    { connected ? 'Connected' : 'Connecting...' }
-                </div>
+                <div className="logo section">drop.lol</div>
+                { !connected ? <div className={"status error"}>Not connected</div> : null }
                 <Switch>
                     <Route path="/transfers/:code">
                         <Transfers />

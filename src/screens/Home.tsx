@@ -7,7 +7,7 @@ const Home: React.FC = () => {
     const name = useSelector((state: StateType) => state.name);
 
     return (
-        <div className="screen">
+        <div className="section center">
             <Link to={"/transfers/" + name} className="button">Receive files</Link>
         </div>
     );
