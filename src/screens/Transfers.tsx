@@ -29,29 +29,33 @@ const Transfers: React.FC = () => {
     }, [ dispatch ]);
 
     return (
-        <section>
-            <h2>Transfer files:</h2>
-            <div className="center qrcode">
-                <p>Scan this QR code:</p>
-                <QrCode value={ href } />
-                <p>or open this URL on another device:</p>
-                <pre>
-                    { href }
-                </pre>
-            </div>
-            <TransferList transfers={activeTransfers} type={'active'} />
-            <TransferList transfers={incomingTransfers} type={'incoming'} />
-            <TransferList transfers={outgoingTransfers} type={'outgoing'} />
-            <h2>Create a new transfer:</h2>
-            <Dropzone onDrop={onDrop}>
-                {({ getRootProps, getInputProps }) => (
-                <div {...getRootProps()} className="dropzone">
-                    <input {...getInputProps()} accept={'*'} />
-                    <div>To send files, drag and drop them here</div>
-                    <div>or click on this area to open a file selection dialog.</div>
+        <section className="desktop-2col">
+            <div>
+                <h2>Transfer files:</h2>
+                <div className="center qrcode">
+                    <p>Scan this QR code:</p>
+                    <QrCode value={ href } />
+                    <p>or open this URL on another device:</p>
+                    <pre>
+                        { href }
+                    </pre>
                 </div>
-                )}
-            </Dropzone>
+            </div>
+            <div>
+                <TransferList transfers={activeTransfers} type={'active'} />
+                <TransferList transfers={incomingTransfers} type={'incoming'} />
+                <TransferList transfers={outgoingTransfers} type={'outgoing'} />
+                <h2>Create a new transfer:</h2>
+                <Dropzone onDrop={onDrop}>
+                    {({ getRootProps, getInputProps }) => (
+                    <div {...getRootProps()} className="dropzone">
+                        <input {...getInputProps()} accept={'*'} />
+                        <div>To send files, drag and drop them here</div>
+                        <div>or click on this area to open a file selection dialog.</div>
+                    </div>
+                    )}
+                </Dropzone>
+            </div>
         </section>
     );
 }
