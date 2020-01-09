@@ -115,7 +115,6 @@ h1, h2, h3 {
 }
 
 .logo {
-    text-align: center;
     font-weight: bold;
     font-size: 24px;
 }
@@ -127,4 +126,25 @@ h1, h2, h3 {
 .qrcode canvas {
     box-sizing: content-box;
     border: 10px solid white;
+}
+
+.menu {
+    padding: 20px;
+    text-align: left;
+
+    a {
+        color: white;
+    }
+}
+
+footer {
+    padding: 20px;
+
+    a {
+        margin: 0 10px;
+    }
+
+    a:first-child {
+        margin-left: 0;
+    }
 }

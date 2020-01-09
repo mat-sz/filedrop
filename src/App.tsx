@@ -2,7 +2,8 @@ import React from 'react';
 import {
     HashRouter as Router,
     Switch,
-    Route
+    Route,
+    Link
 } from 'react-router-dom';
 
 import './App.scss';
@@ -19,7 +20,11 @@ const App: React.FC = () => {
     return (
         <Router>
             <div className="app">
-                <div className="logo section">drop.lol</div>
+                <header>
+                    <nav className="menu">
+                        <Link to="/" className="logo">drop.lol</Link>
+                    </nav>
+                </header>
                 { !connected ? <div className={"status error"}>Not connected</div> : null }
                 <Switch>
                     <Route path="/privacy">
@@ -32,6 +37,10 @@ const App: React.FC = () => {
                         <Home />
                     </Route>
                 </Switch>
+                <footer>
+                    <a href="https://github.com/mat-sz/filedrop-web">filedrop-web</a>
+                    <Link to="/privacy">privacy policy</Link>
+                </footer>
             </div>
         </Router>
     );
