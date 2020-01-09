@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     HashRouter as Router,
     Switch,
@@ -13,16 +13,20 @@ import Transfers from './screens/Transfers';
 import Privacy from './screens/Privacy';
 import { useSelector } from 'react-redux';
 import { StateType } from './reducers';
+import { title } from './config';
 
 const App: React.FC = () => {
     const connected = useSelector((state: StateType) => state.connected);
+    useEffect(() => {
+        document.title = title;
+    });
 
     return (
         <Router>
             <div className="app">
                 <header>
                     <nav className="menu">
-                        <Link to="/" className="logo">drop.lol</Link>
+                        <Link to="/" className="logo">{ title }</Link>
                     </nav>
                 </header>
                 { !connected ? <div className={"status error"}>Not connected</div> : null }
