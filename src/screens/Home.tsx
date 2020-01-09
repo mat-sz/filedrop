@@ -12,9 +12,9 @@ const Home: React.FC = () => {
     });
 
     return (
-        <div className="section center">
+        <section className="center">
             Loading...
-        </div>
+        </section>
     );
 }
 

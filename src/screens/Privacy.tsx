@@ -2,7 +2,7 @@ import React from 'react';
 
 const Privacy: React.FC = () => {
     return (
-        <div className="section center text">
+        <section className="center text">
             <h1>Privacy Policy</h1>
             <p>
                 The following user data is processed by the service:
@@ -18,7 +18,7 @@ const Privacy: React.FC = () => {
             <p>
                 In some edge cases (both the receiving and sending device being behind NAT) the binary file data may be sent over the service's TURN servers. The data is not stored in any way. The data is also not being processed in any other way than just being sent to the target device.
             </p>
-        </div>
+        </section>
     );
 }
 

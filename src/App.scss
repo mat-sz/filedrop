@@ -67,7 +67,7 @@ button, .button {
     }
 }
 
-.section {
+section {
     position: relative;
     padding: 20px;
 }
@@ -147,4 +147,12 @@ footer {
     a:first-child {
         margin-left: 0;
     }
+}
+
+.dropzone {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    padding: 20px;
+    margin: 10px 0;
+    text-align: center;
 }

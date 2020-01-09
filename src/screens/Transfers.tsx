@@ -28,7 +28,7 @@ const Transfers: React.FC = () => {
     }, [ dispatch ]);
 
     return (
-        <div className="section">
+        <section>
             <h2>Transfer files:</h2>
             <div className="center qrcode">
                 <p>Scan this QR code:</p>
@@ -74,7 +74,7 @@ const Transfers: React.FC = () => {
                 </div>
                 )}
             </Dropzone>
-        </div>
+        </section>
     );
 }
 
