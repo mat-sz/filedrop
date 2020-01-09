@@ -6,6 +6,7 @@ import Dropzone from 'react-dropzone';
 
 import { StateType } from '../reducers';
 import { ActionType } from '../types/ActionType';
+import TransferList from '../components/TransferList';
 
 const Transfers: React.FC = () => {
     const { code } = useParams<{ code: string }>();
@@ -38,32 +39,9 @@ const Transfers: React.FC = () => {
                     { href }
                 </pre>
             </div>
-            <ul className="center queue">
-                { activeTransfers.map((transfer) =>
-                    <li key={transfer.transferId}>
-                        <div>{ transfer.fileName }</div>
-                    </li>
-                )}
-            </ul>
-            <h2>Incoming transfers:</h2>
-            <ul className="center queue">
-                { incomingTransfers.map((transfer) =>
-                    <li key={transfer.transferId}>
-                        <div>{ transfer.fileName }</div>
-                        <button onClick={() => dispatch({ type: ActionType.ACCEPT_TRANSFER, value: transfer.transferId })}>Accept</button>
-                        <button onClick={() => dispatch({ type: ActionType.REJECT_TRANSFER, value: transfer.transferId })}>Reject</button>
-                    </li>
-                )}
-            </ul>
-            <h2>Your transfers:</h2>
-            <ul className="center queue">
-                { outgoingTransfers.map((transfer) =>
-                    <li key={transfer.transferId}>
-                        <div>{ transfer.fileName }</div>
-                        <button onClick={() => dispatch({ type: ActionType.CANCEL_TRANSFER, value: transfer.transferId })}>Cancel</button>
-                    </li>
-                )}
-            </ul>
+            <TransferList transfers={activeTransfers} type={'active'} />
+            <TransferList transfers={incomingTransfers} type={'incoming'} />
+            <TransferList transfers={outgoingTransfers} type={'outgoing'} />
             <h2>Create a new transfer:</h2>
             <Dropzone onDrop={onDrop}>
                 {({ getRootProps, getInputProps }) => (
