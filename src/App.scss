@@ -30,15 +30,17 @@ a {
     padding-bottom: 5px;
 
     li {
-        display: grid;
-        grid-template-columns: 3fr 1fr;
-        padding-top: 5px;
-        grid-gap: 10px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 5px;
+        padding: 20px;
+        margin: 10px 0;
 
         & > * {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            margin: 5px 0;
+        }
+
+        button {
+            margin: 5px;
         }
     }
 }
