@@ -72,6 +72,15 @@ button, .button {
     padding: 20px;
 }
 
+.text {
+    max-width: 500px;
+    margin: 20px auto;
+
+    ul {
+        text-align: left;;
+    }
+}
+
 .status {
     position: absolute;
     z-index: 9999;

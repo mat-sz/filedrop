@@ -7,8 +7,9 @@ import {
 
 import './App.scss';
 
-import Transfers from './screens/Transfers';
 import Home from './screens/Home';
+import Transfers from './screens/Transfers';
+import Privacy from './screens/Privacy';
 import { useSelector } from 'react-redux';
 import { StateType } from './reducers';
 
@@ -21,6 +22,9 @@ const App: React.FC = () => {
                 <div className="logo section">drop.lol</div>
                 { !connected ? <div className={"status error"}>Not connected</div> : null }
                 <Switch>
+                    <Route path="/privacy">
+                        <Privacy />
+                    </Route>
                     <Route path="/:code">
                         <Transfers />
                     </Route>
