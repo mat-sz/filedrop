@@ -37,10 +37,10 @@ function* transferSendFile(actionMessage: ActionMessageModel, dispatch: (action:
         dispatch({ type: ActionType.WS_SEND_MESSAGE, value: candidateMessage });
     });
 
-    const sendChannel = sendingConnection.createDataChannel('sendDataChannel');
-    sendChannel.binaryType = 'arraybuffer';
+    const channel = sendingConnection.createDataChannel('sendDataChannel');
+    channel.binaryType = 'arraybuffer';
 
-    sendChannel.addEventListener('open', () => {
+    channel.addEventListener('open', () => {
         const fileReader = new FileReader();
         let offset = 0;
 
@@ -51,13 +51,13 @@ function* transferSendFile(actionMessage: ActionMessageModel, dispatch: (action:
 
         fileReader.addEventListener('load', (e) => {
             const buffer = e.target.result as ArrayBuffer;
-            sendChannel.send(buffer);
+            channel.send(buffer);
             offset += buffer.byteLength;
 
             if (offset < file.size) {
                 nextSlice(offset);
             } else {
-                sendChannel.close();
+                channel.close();
             }
         });
 
@@ -70,7 +70,7 @@ function* transferSendFile(actionMessage: ActionMessageModel, dispatch: (action:
     yield put({ type: ActionType.ADD_PEER_CONNECTION, value: {
         transferId: actionMessage.transferId,
         peerConnection: sendingConnection,
-        sendChannel: sendChannel,
+        sendChannel: channel,
     } });
 
     const sendingRtcMessage: RTCDescriptionMessageModel = {
@@ -117,9 +117,13 @@ function* transferReceiveFile(rtcMessage: RTCDescriptionMessageModel, dispatch: 
         channel.binaryType = 'arraybuffer';
         channel.addEventListener('message', (event) => {
             buffer.push(event.data);
+
+            if (buffer.length > transfer.fileSize) {
+                channel.close();
+            }
         });
 
-        channel.addEventListener('close', (event) => {
+        channel.addEventListener('close', () => {
             const blob = new Blob(buffer);
 
             const element = document.createElement('a');
