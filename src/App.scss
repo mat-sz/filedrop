@@ -14,11 +14,10 @@ html, body, #root {
 
 * {
     box-sizing: border-box;
-    transition: 0.2s all ease-in-out;
 }
 
 a {
-    color: desaturate($accent-color, 50%);
+    color: desaturate($accent-color, 15%);
     text-decoration: none;
 
     &:hover {

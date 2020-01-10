@@ -26,7 +26,9 @@ const App: React.FC = () => {
             <div className="app">
                 <header>
                     <nav className="menu">
-                        <Link to="/" className="logo">{ title }</Link>
+                        <h1>
+                            <Link to="/" className="logo">{ title }</Link>
+                        </h1>
                     </nav>
                 </header>
                 { !connected ? <div className={"status error"}>Not connected</div> : null }

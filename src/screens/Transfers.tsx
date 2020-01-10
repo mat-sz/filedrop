@@ -49,9 +49,11 @@ const Transfers: React.FC = () => {
                 <Dropzone onDrop={onDrop}>
                     {({ getRootProps, getInputProps }) => (
                     <div {...getRootProps()} className="subsection dropzone">
-                        <input {...getInputProps()} accept={'*'} />
-                        <div>To send files, drag and drop them here</div>
-                        <div>or click on this area to open a file selection dialog.</div>
+                        <label>
+                            <input {...getInputProps()} accept={'*'} />
+                            <div>To send files, drag and drop them here</div>
+                            <div>or click on this area to open a file selection dialog.</div>
+                        </label>
                     </div>
                     )}
                 </Dropzone>
