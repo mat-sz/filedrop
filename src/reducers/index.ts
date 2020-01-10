@@ -89,6 +89,30 @@ function applicationState(state = initialState, action: ActionModel) {
                 return transfer;
             });
             break;
+        case ActionType.SET_TRANSFER_SPEED:
+        case ActionType.SET_TRANSFER_PROGRESS:
+        case ActionType.SET_TRANSFER_STATE:
+        case ActionType.SET_TRANSFER_BUFFER:
+            newState.activeTransfers = newState.activeTransfers.map((transfer) => {
+                if (transfer.transferId === action.value.transferId) {
+                    switch (action.type) {
+                        case ActionType.SET_TRANSFER_PROGRESS:
+                            transfer.progress = action.value;
+                            break;
+                        case ActionType.SET_TRANSFER_STATE:
+                            transfer.state = action.value;
+                            break;
+                        case ActionType.SET_TRANSFER_SPEED:
+                            transfer.speed = action.value;
+                            break;
+                        case ActionType.SET_TRANSFER_BUFFER:
+                            transfer.buffer = action.value;
+                            break;
+                    }
+                }
+                return transfer;
+            });
+            break;
         default:
             return state;
     }

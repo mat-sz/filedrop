@@ -55,10 +55,11 @@ export interface TransferModel {
     fileSize: number,
     fileType: string,
     file?: File,
+    buffer?: ArrayBuffer,
     clientId?: string,
     peerConnection?: RTCPeerConnection,
     sendChannel?: RTCDataChannel,
     progress?: number,
-    complete?: boolean,
     speed?: number,
+    state?: 'connecting' | 'inprogress' | 'complete' | 'failed',
 };
