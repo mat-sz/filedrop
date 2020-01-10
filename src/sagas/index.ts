@@ -41,6 +41,11 @@ function* transferSendFile(actionMessage: ActionMessageModel, dispatch: (action:
     channel.binaryType = 'arraybuffer';
 
     channel.addEventListener('open', () => {
+        dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
+            transferId: actionMessage.transferId,
+            state: 'connected',
+        } });
+
         const fileReader = new FileReader();
         let offset = 0;
 
@@ -54,9 +59,21 @@ function* transferSendFile(actionMessage: ActionMessageModel, dispatch: (action:
             channel.send(buffer);
             offset += buffer.byteLength;
 
+            dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
+                transferId: actionMessage.transferId,
+                state: 'inprogress',
+                progress: offset/file.size,
+            } });
+
             if (offset < file.size) {
                 nextSlice(offset);
             } else {
+                dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
+                    transferId: actionMessage.transferId,
+                    state: 'complete',
+                    progress: 1,
+                } });
+
                 channel.close();
             }
         });
@@ -112,11 +129,22 @@ function* transferReceiveFile(rtcMessage: RTCDescriptionMessageModel, dispatch: 
 
     const buffer: BlobPart[] = [];
     receivingConnection.addEventListener('datachannel', (event) => {
+        dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
+            transferId: transfer.transferId,
+            state: 'connected',
+        } });
+
         const channel = event.channel;
 
         channel.binaryType = 'arraybuffer';
         channel.addEventListener('message', (event) => {
             buffer.push(event.data);
+
+            dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
+                transferId: transfer.transferId,
+                state: 'inprogress',
+                progress: buffer.length/transfer.fileSize,
+            } });
 
             if (buffer.length > transfer.fileSize) {
                 channel.close();
@@ -125,6 +153,13 @@ function* transferReceiveFile(rtcMessage: RTCDescriptionMessageModel, dispatch: 
 
         channel.addEventListener('close', () => {
             const blob = new Blob(buffer);
+
+            dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
+                transferId: transfer.transferId,
+                state: 'complete',
+                progress: 1,
+                blob: blob,
+            } });
 
             const element = document.createElement('a');
             element.setAttribute('href', URL.createObjectURL(blob));

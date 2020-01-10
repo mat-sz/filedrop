@@ -4,6 +4,14 @@ import { useDispatch } from 'react-redux';
 import { ActionType } from '../types/ActionType';
 import { TransferModel } from '../types/Models';
 
+const states = {
+    connecting: 'Connecting...',
+    connected: 'Connected!',
+    inprogress: 'In progress...',
+    complete: 'Complete!',
+    failed: 'Failed!',
+};
+
 const Transfer: React.FC<{
     transfer: TransferModel,
     type: 'active' | 'incoming' | 'outgoing',
@@ -16,7 +24,7 @@ const Transfer: React.FC<{
 
     return (
         <li key={transfer.transferId}>
-            <div>{ transfer.fileName }</div>
+            <div>{ transfer.fileName }{ transfer.state ? ' - ' + states[transfer.state] : '' }</div>
             { type === 'incoming' ? 
             <>
                 <button onClick={acceptTransfer}>Accept</button>

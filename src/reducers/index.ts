@@ -57,11 +57,13 @@ function applicationState(state = initialState, action: ActionModel) {
             break;
         case ActionType.MOVE_INCOMING_TRANSFER_TO_ACTIVE:
             const incomingTransfer = newState.incomingTransfers.find(transfer => transfer.transferId === action.value);
+            incomingTransfer.state = 'connecting';
             newState.incomingTransfers = newState.incomingTransfers.filter(transfer => transfer.transferId !== action.value);
             newState.activeTransfers = [...newState.activeTransfers, incomingTransfer];
             break;
         case ActionType.MOVE_OUTGOING_TRANSFER_TO_ACTIVE:
             const outgoingTransfer = newState.outgoingTransfers.find(transfer => transfer.transferId === action.value);
+            outgoingTransfer.state = 'connecting';
             newState.outgoingTransfers = newState.outgoingTransfers.filter(transfer => transfer.transferId !== action.value);
             newState.activeTransfers = [...newState.activeTransfers, outgoingTransfer];
             break;
@@ -89,26 +91,13 @@ function applicationState(state = initialState, action: ActionModel) {
                 return transfer;
             });
             break;
-        case ActionType.SET_TRANSFER_SPEED:
-        case ActionType.SET_TRANSFER_PROGRESS:
-        case ActionType.SET_TRANSFER_STATE:
-        case ActionType.SET_TRANSFER_BUFFER:
+        case ActionType.UPDATE_TRANSFER:
             newState.activeTransfers = newState.activeTransfers.map((transfer) => {
                 if (transfer.transferId === action.value.transferId) {
-                    switch (action.type) {
-                        case ActionType.SET_TRANSFER_PROGRESS:
-                            transfer.progress = action.value;
-                            break;
-                        case ActionType.SET_TRANSFER_STATE:
-                            transfer.state = action.value;
-                            break;
-                        case ActionType.SET_TRANSFER_SPEED:
-                            transfer.speed = action.value;
-                            break;
-                        case ActionType.SET_TRANSFER_BUFFER:
-                            transfer.buffer = action.value;
-                            break;
-                    }
+                    return {
+                        ...transfer,
+                        ...action.value,
+                    };
                 }
                 return transfer;
             });
