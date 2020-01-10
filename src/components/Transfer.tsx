@@ -32,6 +32,12 @@ const Transfer: React.FC<{
                 <progress value={transfer.progress} max={1} />
                 <div>{ Math.round(transfer.speed / 1000) } kB/s</div>
             </> : null }
+            { type === 'active' && transfer.state === 'complete' ?
+            <>
+                <div>
+                    <a className="button" href={transfer.blobUrl} download={transfer.fileName}>Redownload</a>
+                </div>
+            </> : null }
             { type === 'incoming' ? 
             <>
                 <button onClick={acceptTransfer}>Accept</button>

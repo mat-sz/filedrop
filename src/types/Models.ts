@@ -55,7 +55,7 @@ export interface TransferModel {
     fileSize: number,
     fileType: string,
     file?: File,
-    blob?: Blob,
+    blobUrl?: string,
     clientId?: string,
     peerConnection?: RTCPeerConnection,
     sendChannel?: RTCDataChannel,

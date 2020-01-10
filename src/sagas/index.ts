@@ -162,6 +162,7 @@ function* transferReceiveFile(rtcMessage: RTCDescriptionMessageModel, dispatch: 
 
         channel.addEventListener('close', () => {
             const blob = new Blob(buffer);
+            const blobUrl = URL.createObjectURL(blob);
 
             dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
                 transferId: transfer.transferId,
@@ -169,11 +170,11 @@ function* transferReceiveFile(rtcMessage: RTCDescriptionMessageModel, dispatch: 
                 progress: 1,
                 speed: 0,
                 time: Math.floor(new Date().getTime() / 1000 - timestamp),
-                blob: blob,
+                blobUrl: blobUrl,
             } });
 
             const element = document.createElement('a');
-            element.setAttribute('href', URL.createObjectURL(blob));
+            element.setAttribute('href', blobUrl);
             element.setAttribute('download', transfer.fileName);
 
             element.style.display = 'none';
