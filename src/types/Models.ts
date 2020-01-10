@@ -61,5 +61,6 @@ export interface TransferModel {
     sendChannel?: RTCDataChannel,
     progress?: number,
     speed?: number,
+    time?: number,
     state?: 'connecting' | 'connected' | 'inprogress' | 'complete' | 'failed',
 };

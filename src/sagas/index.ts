@@ -40,6 +40,7 @@ function* transferSendFile(actionMessage: ActionMessageModel, dispatch: (action:
     const channel = sendingConnection.createDataChannel('sendDataChannel');
     channel.binaryType = 'arraybuffer';
 
+    const timestamp = new Date().getTime() / 1000;
     channel.addEventListener('open', () => {
         dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
             transferId: actionMessage.transferId,
@@ -63,6 +64,7 @@ function* transferSendFile(actionMessage: ActionMessageModel, dispatch: (action:
                 transferId: actionMessage.transferId,
                 state: 'inprogress',
                 progress: offset/file.size,
+                speed: offset/(new Date().getTime() / 1000 - timestamp),
             } });
 
             if (offset < file.size) {
@@ -72,6 +74,8 @@ function* transferSendFile(actionMessage: ActionMessageModel, dispatch: (action:
                     transferId: actionMessage.transferId,
                     state: 'complete',
                     progress: 1,
+                    speed: 0,
+                    time: Math.floor(new Date().getTime() / 1000 - timestamp),
                 } });
 
                 channel.close();
@@ -127,7 +131,10 @@ function* transferReceiveFile(rtcMessage: RTCDescriptionMessageModel, dispatch: 
         dispatch({ type: ActionType.WS_SEND_MESSAGE, value: candidateMessage });
     });
 
+    const timestamp = new Date().getTime() / 1000;
     const buffer: BlobPart[] = [];
+    let offset = 0;
+
     receivingConnection.addEventListener('datachannel', (event) => {
         dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
             transferId: transfer.transferId,
@@ -139,11 +146,13 @@ function* transferReceiveFile(rtcMessage: RTCDescriptionMessageModel, dispatch: 
         channel.binaryType = 'arraybuffer';
         channel.addEventListener('message', (event) => {
             buffer.push(event.data);
+            offset += event.data.byteLength;
 
             dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
                 transferId: transfer.transferId,
                 state: 'inprogress',
-                progress: buffer.length/transfer.fileSize,
+                progress: offset/transfer.fileSize,
+                speed: offset/(new Date().getTime() / 1000 - timestamp),
             } });
 
             if (buffer.length > transfer.fileSize) {
@@ -158,6 +167,8 @@ function* transferReceiveFile(rtcMessage: RTCDescriptionMessageModel, dispatch: 
                 transferId: transfer.transferId,
                 state: 'complete',
                 progress: 1,
+                speed: 0,
+                time: Math.floor(new Date().getTime() / 1000 - timestamp),
                 blob: blob,
             } });
 
