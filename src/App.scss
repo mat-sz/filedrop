@@ -33,11 +33,6 @@ a {
     padding-bottom: 5px;
 
     li {
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 5px;
-        padding: 20px;
-        margin: 10px 0;
-
         & > * {
             margin: 5px 0;
         }
@@ -139,9 +134,21 @@ h1, h2, h3 {
     text-align: center;
 }
 
+.subsection {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
+    padding: 15px 20px;
+    margin: 10px 0;
+    text-align: center;
+
+    p {
+        margin: 0;
+    }
+}
+
 .qrcode {
     p {
-        font-weight: bold;
+        margin-bottom: 5px;
     }
 
     pre {
@@ -153,6 +160,7 @@ h1, h2, h3 {
     }
 
     canvas {
+        margin-bottom: 20px;
         box-sizing: content-box;
         border: 10px solid white;
         border-radius: 5px;
@@ -181,16 +189,13 @@ footer {
 }
 
 .dropzone {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 5px;
-    padding: 20px;
-    margin: 10px 0;
-    text-align: center;
+    cursor: pointer;
 }
 
 @media screen and (min-width: 768px) {
     .desktop-2col {
         display: grid;
+        grid-gap: 20px;
         grid-template-columns: 1fr 1fr;
     }
 }

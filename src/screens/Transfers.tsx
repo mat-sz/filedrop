@@ -32,7 +32,7 @@ const Transfers: React.FC = () => {
         <section className="desktop-2col">
             <div>
                 <h2>Transfer files:</h2>
-                <div className="center qrcode">
+                <div className="center qrcode subsection">
                     <p>Scan this QR code:</p>
                     <QrCode value={ href } />
                     <p>or open this URL on another device:</p>
@@ -48,7 +48,7 @@ const Transfers: React.FC = () => {
                 <h2>Create a new transfer:</h2>
                 <Dropzone onDrop={onDrop}>
                     {({ getRootProps, getInputProps }) => (
-                    <div {...getRootProps()} className="dropzone">
+                    <div {...getRootProps()} className="subsection dropzone">
                         <input {...getInputProps()} accept={'*'} />
                         <div>To send files, drag and drop them here</div>
                         <div>or click on this area to open a file selection dialog.</div>

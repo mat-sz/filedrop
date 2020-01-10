@@ -23,7 +23,7 @@ const Transfer: React.FC<{
     const cancelTransfer = useCallback(() => dispatch({ type: ActionType.CANCEL_TRANSFER, value: transfer.transferId }), [ transfer, dispatch ]);
 
     return (
-        <li key={transfer.transferId}>
+        <li key={transfer.transferId} className="subsection">
             <div>
                 { transfer.fileName }{ transfer.state ? ' - ' + states[transfer.state] : '' }
             </div>
