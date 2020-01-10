@@ -1,6 +1,7 @@
 import { ActionModel, TransferModel } from '../types/Models';
 import { ActionType } from '../types/ActionType';
 import { Store } from 'redux';
+import { nameCharacterSet, nameLength } from '../config';
 
 export interface StateType {
     connected: boolean,
@@ -15,7 +16,7 @@ export interface StateType {
 let initialState: StateType = {
     connected: false,
     error: null,
-    name: Math.floor(100000 + Math.random() * 900000).toString(),
+    name: new Array(nameLength).fill('').map(() => nameCharacterSet.charAt(Math.floor(Math.random() * nameCharacterSet.length))).join(''),
     clientId: null,
     activeTransfers: [],
     incomingTransfers: [],
