@@ -24,7 +24,14 @@ const Transfer: React.FC<{
 
     return (
         <li key={transfer.transferId}>
-            <div>{ transfer.fileName }{ transfer.state ? ' - ' + states[transfer.state] : '' }</div>
+            <div>
+                { transfer.fileName }{ transfer.state ? ' - ' + states[transfer.state] : '' }
+            </div>
+            { type === 'active' && transfer.state === 'inprogress' ?
+            <>
+                <progress value={transfer.progress} max={1} />
+                <div>{ Math.round(transfer.speed / 1000) } kB/s</div>
+            </> : null }
             { type === 'incoming' ? 
             <>
                 <button onClick={acceptTransfer}>Accept</button>
