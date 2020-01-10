@@ -21,7 +21,11 @@ const TransferList: React.FC<{
             <h2>{ titles[type] }</h2>
             <ul className="center queue">
                 { transfers.map((transfer) =>
-                    <Transfer transfer={transfer} type={type} />
+                    <Transfer
+                        key={transfer.transferId}
+                        transfer={transfer}
+                        type={type}
+                    />
                 ) }
             </ul>
         </>
