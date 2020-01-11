@@ -11,23 +11,19 @@ const turnServer = process.env.REACT_APP_TURN_SERVER || null;
 const turnUsername = process.env.REACT_APP_TURN_USERNAME || null;
 const turnCredential = process.env.REACT_APP_TURN_CREDENTIAL || null;
 
-let iceSevrers = [];
+let iceServers = [];
 if (turnServer && turnUsername && turnCredential) {
-    iceSevrers.push({
+    iceServers.push({
         urls: turnServer,
         username: turnUsername,
         credential: turnCredential,
     });
 }
 
-iceSevrers.push({
+iceServers.push({
     urls: stunServer,
 });
 
 export const rtcConfiguration: RTCConfiguration = {
-    iceServers: [
-        {
-            urls: stunServer,
-        }
-    ]
+    iceServers,
 };
