@@ -20,12 +20,33 @@ function* transferSendFile(actionMessage: ActionMessageModel, dispatch: (action:
 
     const sendingConnection = new RTCPeerConnection(rtcConfiguration);
 
-    sendingConnection.addEventListener('icecandidate', (c) => {
+    yield put({ type: ActionType.ADD_PEER_CONNECTION, value: {
+        transferId: actionMessage.transferId,
+        peerConnection: sendingConnection,
+    } });
+
+    sendingConnection.addEventListener('negotiationneeded', async () => {
+        const offer = await sendingConnection.createOffer();
+        await sendingConnection.setLocalDescription(offer);
+
+        const sendingRtcMessage: RTCDescriptionMessageModel = {
+            type: 'rtcDescription',
+            transferId: actionMessage.transferId,
+            targetId: actionMessage.clientId,
+            data: sendingConnection.localDescription,
+        };
+
+        dispatch({ type: ActionType.WS_SEND_MESSAGE, value: sendingRtcMessage });
+    });
+
+    sendingConnection.addEventListener('icecandidate', (e) => {
+        if (!e || !e.candidate) return;
+
         const candidateMessage: RTCCandidateMessageModel = {
             type: 'rtcCandidate',
             targetId: actionMessage.clientId,
             transferId: actionMessage.transferId,
-            data: c.candidate,
+            data: e.candidate,
         };
         
         dispatch({ type: ActionType.WS_SEND_MESSAGE, value: candidateMessage });
@@ -97,24 +118,6 @@ function* transferSendFile(actionMessage: ActionMessageModel, dispatch: (action:
             active = false;
         }
     });
-
-    const offer = yield call(async () => await sendingConnection.createOffer());
-    sendingConnection.setLocalDescription(offer);
-
-    yield put({ type: ActionType.ADD_PEER_CONNECTION, value: {
-        transferId: actionMessage.transferId,
-        peerConnection: sendingConnection,
-        sendChannel: channel,
-    } });
-
-    const sendingRtcMessage: RTCDescriptionMessageModel = {
-        type: 'rtcDescription',
-        transferId: actionMessage.transferId,
-        targetId: actionMessage.clientId,
-        data: offer,
-    };
-
-    yield put({ type: ActionType.WS_SEND_MESSAGE, value: sendingRtcMessage });
 }
 
 function* transferReceiveFile(rtcMessage: RTCDescriptionMessageModel, dispatch: (action: any) => void) {
@@ -127,12 +130,19 @@ function* transferReceiveFile(rtcMessage: RTCDescriptionMessageModel, dispatch: 
 
     const receivingConnection = new RTCPeerConnection(rtcConfiguration);
 
-    receivingConnection.addEventListener('icecandidate', (c) => {
+    yield put({ type: ActionType.ADD_PEER_CONNECTION, value: {
+        transferId: rtcMessage.transferId,
+        peerConnection: receivingConnection,
+    } });
+
+    receivingConnection.addEventListener('icecandidate', (e) => {
+        if (!e || !e.candidate) return;
+
         const candidateMessage: RTCCandidateMessageModel = {
             type: 'rtcCandidate',
             targetId: rtcMessage.clientId,
             transferId: rtcMessage.transferId,
-            data: c.candidate,
+            data: e.candidate,
         };
 
         dispatch({ type: ActionType.WS_SEND_MESSAGE, value: candidateMessage });
@@ -200,16 +210,16 @@ function* transferReceiveFile(rtcMessage: RTCDescriptionMessageModel, dispatch: 
         });
     });
 
-    receivingConnection.setRemoteDescription(rtcMessage.data);
+    yield call(async () => await receivingConnection.setRemoteDescription(rtcMessage.data));
 
     const answer = yield call(async () => await receivingConnection.createAnswer());
-    receivingConnection.setLocalDescription(answer);
+    yield call(async () => await receivingConnection.setLocalDescription(answer));
 
     const sendingRtcMessage: RTCDescriptionMessageModel = {
         type: 'rtcDescription',
         transferId: rtcMessage.transferId,
         targetId: rtcMessage.clientId,
-        data: answer,
+        data: receivingConnection.localDescription,
     };
 
     yield put({ type: ActionType.WS_SEND_MESSAGE, value: sendingRtcMessage });

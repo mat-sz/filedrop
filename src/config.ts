@@ -12,6 +12,11 @@ const turnUsername = process.env.REACT_APP_TURN_USERNAME || null;
 const turnCredential = process.env.REACT_APP_TURN_CREDENTIAL || null;
 
 let iceServers = [];
+
+iceServers.push({
+    urls: stunServer,
+});
+
 if (turnServer && turnUsername && turnCredential) {
     iceServers.push({
         urls: turnServer,
@@ -19,10 +24,6 @@ if (turnServer && turnUsername && turnCredential) {
         credential: turnCredential,
     });
 }
-
-iceServers.push({
-    urls: stunServer,
-});
 
 export const rtcConfiguration: RTCConfiguration = {
     iceServers,
