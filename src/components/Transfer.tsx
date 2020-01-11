@@ -36,7 +36,7 @@ const Transfer: React.FC<{
             { type === 'active' ?
             <>
                 <div>
-                    { transfer.state === 'complete' ? 
+                    { transfer.state === 'complete' && transfer.blobUrl ? 
                     <a className="button" href={transfer.blobUrl} download={transfer.fileName}>Redownload</a>
                     : null }
                     { transfer.state === 'complete' || transfer.state === 'failed' ?
