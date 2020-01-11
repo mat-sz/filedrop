@@ -28,6 +28,10 @@ const Transfers: React.FC = () => {
         }
     }, [ dispatch ]);
 
+    const preventClick = (event: React.MouseEvent) => {
+        event.preventDefault();
+    };
+
     return (
         <section className="desktop-2col">
             <div>
@@ -49,7 +53,7 @@ const Transfers: React.FC = () => {
                 <Dropzone onDrop={onDrop}>
                     {({ getRootProps, getInputProps }) => (
                     <div {...getRootProps()} className="subsection dropzone">
-                        <label>
+                        <label onClick={preventClick}>
                             <input {...getInputProps()} accept={'*'} />
                             <div>To send files, drag and drop them here</div>
                             <div>or click on this area to open a file selection dialog.</div>
