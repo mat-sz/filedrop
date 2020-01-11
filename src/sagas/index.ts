@@ -33,7 +33,11 @@ function* transferSendFile(actionMessage: ActionMessageModel, dispatch: (action:
             type: 'rtcDescription',
             transferId: actionMessage.transferId,
             targetId: actionMessage.clientId,
-            data: sendingConnection.localDescription,
+            data: {
+                type: sendingConnection.localDescription.type,
+                // Increase connection throughput on Chromium-based browsers.
+                sdp: sendingConnection.localDescription.sdp.replace('b=AS:30', 'b=AS:1638400'),
+            },
         };
 
         dispatch({ type: ActionType.WS_SEND_MESSAGE, value: sendingRtcMessage });
@@ -219,7 +223,11 @@ function* transferReceiveFile(rtcMessage: RTCDescriptionMessageModel, dispatch: 
         type: 'rtcDescription',
         transferId: rtcMessage.transferId,
         targetId: rtcMessage.clientId,
-        data: receivingConnection.localDescription,
+        data: {
+            type: receivingConnection.localDescription.type,
+            // Increase connection throughput on Chromium-based browsers.
+            sdp: receivingConnection.localDescription.sdp.replace('b=AS:30', 'b=AS:1638400'),
+        },
     };
 
     yield put({ type: ActionType.WS_SEND_MESSAGE, value: sendingRtcMessage });
