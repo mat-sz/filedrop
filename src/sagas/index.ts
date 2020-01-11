@@ -60,14 +60,24 @@ function* transferSendFile(actionMessage: ActionMessageModel, dispatch: (action:
     channel.binaryType = 'arraybuffer';
 
     const timestamp = new Date().getTime() / 1000;
-    let active = false;
+
+    let complete = false;
+    const onFailure = () => {
+        complete = true;
+
+        dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
+            transferId: actionMessage.transferId,
+            state: 'failed',
+            progress: 1,
+            speed: 0,
+        } });
+    };
+
     channel.addEventListener('open', () => {
         dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
             transferId: actionMessage.transferId,
             state: 'connected',
         } });
-
-        active = true;
 
         const fileReader = new FileReader();
         let offset = 0;
@@ -78,10 +88,18 @@ function* transferSendFile(actionMessage: ActionMessageModel, dispatch: (action:
         };
 
         fileReader.addEventListener('load', (e) => {
-            if (!active) return;
+            if (complete) return;
 
             const buffer = e.target.result as ArrayBuffer;
-            channel.send(buffer);
+
+            try {
+                channel.send(buffer);
+            } catch {
+                onFailure();
+                channel.close();
+                return;
+            }
+
             offset += buffer.byteLength;
 
             dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
@@ -102,7 +120,7 @@ function* transferSendFile(actionMessage: ActionMessageModel, dispatch: (action:
                     time: Math.floor(new Date().getTime() / 1000 - timestamp),
                 } });
 
-                active = false;
+                complete = true;
                 channel.close();
             }
         });
@@ -111,15 +129,17 @@ function* transferSendFile(actionMessage: ActionMessageModel, dispatch: (action:
     });
 
     channel.addEventListener('close', () => {
-        if (active) {
-            dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
-                transferId: actionMessage.transferId,
-                state: 'failed',
-                progress: 1,
-                speed: 0,
-            } });
+        if (!complete) {
+            onFailure();
+        }
 
-            active = false;
+        sendingConnection.close();
+    });
+
+    sendingConnection.addEventListener('iceconnectionstatechange', () => {
+        if ((sendingConnection.iceConnectionState === 'failed' ||
+            sendingConnection.iceConnectionState === 'disconnected') && !complete) {
+            onFailure();
         }
     });
 }
@@ -156,6 +176,18 @@ function* transferReceiveFile(rtcMessage: RTCDescriptionMessageModel, dispatch: 
     const buffer: BlobPart[] = [];
     let offset = 0;
 
+    let complete = false;
+    const onFailure = () => {
+        complete = true;
+
+        dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
+            transferId: rtcMessage.transferId,
+            state: 'failed',
+            progress: 1,
+            speed: 0,
+        } });
+    };
+
     receivingConnection.addEventListener('datachannel', (event) => {
         dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
             transferId: transfer.transferId,
@@ -176,26 +208,22 @@ function* transferReceiveFile(rtcMessage: RTCDescriptionMessageModel, dispatch: 
                 speed: offset/(new Date().getTime() / 1000 - timestamp),
             } });
 
-            if (offset > transfer.fileSize) {
+            if (offset >= transfer.fileSize) {
+                complete = true;
                 channel.close();
             }
         });
 
         channel.addEventListener('close', () => {
             if (offset < transfer.fileSize) {
-                dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
-                    transferId: transfer.transferId,
-                    state: 'failed',
-                    progress: 1,
-                    speed: 0,
-                } });
-
+                onFailure();
                 return;
             }
 
             const blob = new Blob(buffer);
             const blobUrl = URL.createObjectURL(blob);
 
+            complete = true;
             dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
                 transferId: transfer.transferId,
                 state: 'complete',
@@ -211,7 +239,16 @@ function* transferReceiveFile(rtcMessage: RTCDescriptionMessageModel, dispatch: 
 
             element.style.display = 'none';
             element.click();
+
+            receivingConnection.close();
         });
+    });
+
+    receivingConnection.addEventListener('iceconnectionstatechange', () => {
+        if ((receivingConnection.iceConnectionState === 'failed' ||
+            receivingConnection.iceConnectionState === 'disconnected') && !complete) {
+            onFailure();
+        }
     });
 
     yield call(async () => await receivingConnection.setRemoteDescription(rtcMessage.data));
