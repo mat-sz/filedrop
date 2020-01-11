@@ -41,11 +41,14 @@ function* transferSendFile(actionMessage: ActionMessageModel, dispatch: (action:
     channel.binaryType = 'arraybuffer';
 
     const timestamp = new Date().getTime() / 1000;
+    let active = false;
     channel.addEventListener('open', () => {
         dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
             transferId: actionMessage.transferId,
             state: 'connected',
         } });
+
+        active = true;
 
         const fileReader = new FileReader();
         let offset = 0;
@@ -56,6 +59,8 @@ function* transferSendFile(actionMessage: ActionMessageModel, dispatch: (action:
         };
 
         fileReader.addEventListener('load', (e) => {
+            if (!active) return;
+
             const buffer = e.target.result as ArrayBuffer;
             channel.send(buffer);
             offset += buffer.byteLength;
@@ -78,11 +83,25 @@ function* transferSendFile(actionMessage: ActionMessageModel, dispatch: (action:
                     time: Math.floor(new Date().getTime() / 1000 - timestamp),
                 } });
 
+                active = false;
                 channel.close();
             }
         });
 
         nextSlice(0);
+    });
+
+    channel.addEventListener('close', () => {
+        if (active) {
+            dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
+                transferId: actionMessage.transferId,
+                state: 'failed',
+                progress: 1,
+                speed: 0,
+            } });
+
+            active = false;
+        }
     });
 
     const offer = yield call(async () => await sendingConnection.createOffer());
@@ -155,12 +174,23 @@ function* transferReceiveFile(rtcMessage: RTCDescriptionMessageModel, dispatch: 
                 speed: offset/(new Date().getTime() / 1000 - timestamp),
             } });
 
-            if (buffer.length > transfer.fileSize) {
+            if (offset > transfer.fileSize) {
                 channel.close();
             }
         });
 
         channel.addEventListener('close', () => {
+            if (offset < transfer.fileSize) {
+                dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
+                    transferId: transfer.transferId,
+                    state: 'failed',
+                    progress: 1,
+                    speed: 0,
+                } });
+
+                return;
+            }
+
             const blob = new Blob(buffer);
             const blobUrl = URL.createObjectURL(blob);
 
