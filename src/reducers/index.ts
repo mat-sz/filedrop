@@ -67,6 +67,9 @@ function applicationState(state = initialState, action: ActionModel) {
             newState.outgoingTransfers = newState.outgoingTransfers.filter(transfer => transfer.transferId !== action.value);
             newState.activeTransfers = [...newState.activeTransfers, outgoingTransfer];
             break;
+        case ActionType.REMOVE_ACTIVE_TRANSFER:
+            newState.activeTransfers = newState.activeTransfers.filter(transfer => transfer.transferId !== action.value);
+            break;
         case ActionType.ADD_PEER_CONNECTION:
             newState.activeTransfers = newState.activeTransfers.map((transfer) => {
                 if (transfer.transferId === action.value.transferId && action.value.peerConnection) {

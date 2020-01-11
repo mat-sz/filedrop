@@ -21,6 +21,7 @@ const Transfer: React.FC<{
     const acceptTransfer = useCallback(() => dispatch({ type: ActionType.ACCEPT_TRANSFER, value: transfer.transferId }), [ transfer, dispatch ]);
     const rejectTransfer = useCallback(() => dispatch({ type: ActionType.REJECT_TRANSFER, value: transfer.transferId }), [ transfer, dispatch ]);
     const cancelTransfer = useCallback(() => dispatch({ type: ActionType.CANCEL_TRANSFER, value: transfer.transferId }), [ transfer, dispatch ]);
+    const dismissTransfer = useCallback(() => dispatch({ type: ActionType.REMOVE_ACTIVE_TRANSFER, value: transfer.transferId }), [ transfer, dispatch ]);
 
     return (
         <li key={transfer.transferId} className="subsection">
@@ -32,10 +33,15 @@ const Transfer: React.FC<{
                 <progress value={transfer.progress} max={1} />
                 <div>{ Math.round(transfer.speed / 1000) } kB/s</div>
             </> : null }
-            { type === 'active' && transfer.state === 'complete' ?
+            { type === 'active' ?
             <>
                 <div>
+                    { transfer.state === 'complete' ? 
                     <a className="button" href={transfer.blobUrl} download={transfer.fileName}>Redownload</a>
+                    : null }
+                    { transfer.state === 'complete' || transfer.state === 'failed' ?
+                    <button onClick={dismissTransfer}>Dismiss</button>
+                    : null }
                 </div>
             </> : null }
             { type === 'incoming' ? 
