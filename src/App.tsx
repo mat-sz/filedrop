@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import {
-    HashRouter as Router,
     Switch,
     Route,
     Link
@@ -13,7 +12,7 @@ import Transfers from './screens/Transfers';
 import Privacy from './screens/Privacy';
 import { useSelector } from 'react-redux';
 import { StateType } from './reducers';
-import { title } from './config';
+import { title, Router } from './config';
 
 const App: React.FC = () => {
     const connected = useSelector((state: StateType) => state.connected);
