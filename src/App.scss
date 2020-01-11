@@ -1,10 +1,13 @@
 $accent-color: #fc03a1;
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     background: #111;
     color: white;
     border-top: 5px solid $accent-color;
+}
+
+body, input, button, a {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 html, body, #root {
@@ -36,7 +39,7 @@ a {
             margin: 5px 0;
         }
 
-        button {
+        button, .button {
             margin: 5px;
         }
     }
@@ -59,6 +62,7 @@ button, .button {
     font-weight: bold;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 14px;
 
     &:hover {
         text-decoration: none;
