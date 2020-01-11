@@ -314,7 +314,7 @@ function* createTransfer(action: ActionModel) {
         file: file,
         fileName: file.name,
         fileSize: file.size,
-        fileType: file.type,
+        fileType: file.type || 'application/octet-stream',
         transferId: uuid(),
     };
 
