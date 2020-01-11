@@ -4,7 +4,7 @@ import uuid from 'uuid/v4';
 import { ActionModel, MessageModel, WelcomeMessageModel, TransferModel, TransferMessageModel, NameMessageModel, ActionMessageModel, RTCDescriptionMessageModel, RTCCandidateMessageModel } from '../types/Models';
 import { ActionType } from '../types/ActionType';
 import { StateType } from '../reducers';
-import { stunServer } from '../config';
+import { rtcConfiguration } from '../config';
 
 function* transferSendFile(actionMessage: ActionMessageModel, dispatch: (action: any) => void) {
     yield put({ type: ActionType.MOVE_OUTGOING_TRANSFER_TO_ACTIVE, value: actionMessage.transferId });
@@ -18,13 +18,7 @@ function* transferSendFile(actionMessage: ActionMessageModel, dispatch: (action:
 
     const file = transfer.file;
 
-    const sendingConnection = new RTCPeerConnection({
-        iceServers: [
-            {
-                urls: stunServer,
-            }
-        ]
-    });
+    const sendingConnection = new RTCPeerConnection(rtcConfiguration);
 
     sendingConnection.addEventListener('icecandidate', (c) => {
         const candidateMessage: RTCCandidateMessageModel = {
@@ -131,13 +125,7 @@ function* transferReceiveFile(rtcMessage: RTCDescriptionMessageModel, dispatch: 
     const transfer = filteredTransfers[0];
     if (!transfer) return;
 
-    const receivingConnection = new RTCPeerConnection({
-        iceServers: [
-            {
-                urls: stunServer,
-            }
-        ]
-    });
+    const receivingConnection = new RTCPeerConnection(rtcConfiguration);
 
     receivingConnection.addEventListener('icecandidate', (c) => {
         const candidateMessage: RTCCandidateMessageModel = {
