@@ -1,30 +1,16 @@
-import React, { useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import Dropzone from 'react-dropzone';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
 import { StateType } from '../reducers';
-import { ActionType } from '../types/ActionType';
 import TransferList from './TransferList';
 import NetworkTile from './NetworkTile';
 
 const TransfersSection: React.FC = () => {
-    const dispatch = useDispatch();
-
     const clientColor = useSelector((store: StateType) => store.clientColor);
     const network = useSelector((store: StateType) => store.network);
     const activeTransfers = useSelector((store: StateType) => store.activeTransfers);
     const incomingTransfers = useSelector((store: StateType) => store.incomingTransfers);
     const outgoingTransfers = useSelector((store: StateType) => store.outgoingTransfers);
-
-    const onDrop = useCallback((files: File[]) => {
-        for (let file of files) {
-            dispatch({ type: ActionType.CREATE_TRANSFER, value: file });
-        }
-    }, [ dispatch ]);
-
-    const preventClick = (event: React.MouseEvent) => {
-        event.preventDefault();
-    };
 
     return (
         <div>
@@ -38,9 +24,15 @@ const TransfersSection: React.FC = () => {
                     <div>Drag and drop files onto other tiles or click on a tile to start a transfer.</div>
                 </div>
             </div>
+            { network.length > 0 ?
             <div className="subsection network">
                 { network.map((client) => <NetworkTile key={client.clientId} client={client} />) }
             </div>
+            :
+            <div className="subsection">
+                Nobody is connected to your network.
+            </div>
+            }
             <TransferList transfers={activeTransfers} type={'active'} />
             <TransferList transfers={incomingTransfers} type={'incoming'} />
             <TransferList transfers={outgoingTransfers} type={'outgoing'} />
