@@ -1,13 +1,14 @@
 import { ActionModel, TransferModel } from '../types/Models';
 import { ActionType } from '../types/ActionType';
 import { Store } from 'redux';
-import { nameCharacterSet, nameLength } from '../config';
 
 export interface StateType {
     connected: boolean,
     error: string,
     name: string,
     clientId: string,
+    clientColor: string,
+    suggestedName: string,
     activeTransfers: TransferModel[],
     incomingTransfers: TransferModel[],
     outgoingTransfers: TransferModel[],
@@ -16,8 +17,10 @@ export interface StateType {
 let initialState: StateType = {
     connected: false,
     error: null,
-    name: new Array(nameLength).fill('').map(() => nameCharacterSet.charAt(Math.floor(Math.random() * nameCharacterSet.length))).join(''),
+    name: null,
     clientId: null,
+    clientColor: null,
+    suggestedName: null,
     activeTransfers: [],
     incomingTransfers: [],
     outgoingTransfers: [],
@@ -42,6 +45,12 @@ function applicationState(state = initialState, action: ActionModel) {
             break;
         case ActionType.SET_CLIENT_ID:
             newState.clientId = action.value as string;
+            break;
+        case ActionType.SET_CLIENT_COLOR:
+            newState.clientColor = action.value as string;
+            break;
+        case ActionType.SET_SUGGESTED_NAME:
+            newState.suggestedName = action.value as string;
             break;
         case ActionType.ADD_OUTGOING_TRANSFER:
             newState.outgoingTransfers = [...newState.outgoingTransfers, action.value];

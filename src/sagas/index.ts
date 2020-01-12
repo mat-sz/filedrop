@@ -12,7 +12,9 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
 
     switch (msg.type) {
         case 'welcome':
+            yield put({ type: ActionType.SET_SUGGESTED_NAME, value: (msg as WelcomeMessageModel).suggestedName });
             yield put({ type: ActionType.SET_CLIENT_ID, value: (msg as WelcomeMessageModel).clientId });
+            yield put({ type: ActionType.SET_CLIENT_COLOR, value: (msg as WelcomeMessageModel).clientColor });
             break;
         case 'transfer':
             const transferMessage: TransferMessageModel = msg as TransferMessageModel;

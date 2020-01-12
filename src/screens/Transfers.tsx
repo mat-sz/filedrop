@@ -14,7 +14,7 @@ const Transfers: React.FC = () => {
     useEffect(() => {
         setHref(window.location.href);
         dispatch({ type: ActionType.SET_NAME, value: code });
-    }, [ setHref, code, dispatch ])
+    }, [ setHref, code, dispatch ]);
 
     return (
         <section className="desktop-2col">

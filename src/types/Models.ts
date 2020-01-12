@@ -10,6 +10,8 @@ export interface MessageModel {
 export interface WelcomeMessageModel extends MessageModel {
     type: 'welcome',
     clientId: string,
+    clientColor: string,
+    suggestedName: string,
 };
 
 export interface NameMessageModel extends MessageModel {
