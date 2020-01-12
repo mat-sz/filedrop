@@ -25,6 +25,7 @@ export interface TransferMessageModel extends MessageModel {
     fileName: string,
     fileSize: number,
     fileType: string,
+    targetId: string,
     clientId?: string,
 };
 
@@ -32,6 +33,7 @@ export interface ActionMessageModel extends MessageModel {
     type: 'action',
     transferId: string,
     action: 'accept' | 'reject' | 'cancel',
+    targetId: string,
     clientId?: string,
 };
 

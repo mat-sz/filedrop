@@ -116,45 +116,67 @@ function* createTransfer(action: ActionModel) {
         fileName: transfer.fileName,
         fileSize: transfer.fileSize,
         fileType: transfer.fileType,
+        targetId: transfer.clientId,
     };
 
     yield put({ type: ActionType.WS_SEND_MESSAGE, value: model });
 }
 
 function* cancelTransfer(action: ActionModel) {
-    yield put({ type: ActionType.REMOVE_OUTGOING_TRANSFER, value: action.value });
+    const outgoingTransfers: TransferModel[] = yield select((state: StateType) => state.outgoingTransfers);
+    const filteredTransfers: TransferModel[] = outgoingTransfers.filter((transfer) => transfer.transferId === action.value);
+    if (filteredTransfers.length === 0) return;
+
+    const transfer = filteredTransfers[0];
+    if (!transfer) return;
 
     const model: ActionMessageModel = {
         type: 'action',
-        transferId: action.value,
+        transferId: transfer.transferId,
+        targetId: transfer.clientId,
         action: 'cancel',
     };
 
     yield put({ type: ActionType.WS_SEND_MESSAGE, value: model });
+    yield put({ type: ActionType.REMOVE_OUTGOING_TRANSFER, value: action.value });
 }
 
 function* acceptTransfer(action: ActionModel) {
-    yield put({ type: ActionType.MOVE_INCOMING_TRANSFER_TO_ACTIVE, value: action.value });
+    const incomingTransfers: TransferModel[] = yield select((state: StateType) => state.incomingTransfers);
+    const filteredTransfers: TransferModel[] = incomingTransfers.filter((transfer) => transfer.transferId === action.value);
+    if (filteredTransfers.length === 0) return;
+
+    const transfer = filteredTransfers[0];
+    if (!transfer) return;
 
     const model: ActionMessageModel = {
         type: 'action',
-        transferId: action.value,
+        transferId: transfer.transferId,
+        targetId: transfer.clientId,
         action: 'accept',
     };
 
     yield put({ type: ActionType.WS_SEND_MESSAGE, value: model });
+    yield put({ type: ActionType.MOVE_INCOMING_TRANSFER_TO_ACTIVE, value: action.value });
 }
 
 function* rejectTransfer(action: ActionModel) {
-    yield put({ type: ActionType.REMOVE_INCOMING_TRANSFER, value: action.value });
+    const incomingTransfers: TransferModel[] = yield select((state: StateType) => state.incomingTransfers);
+    const filteredTransfers: TransferModel[] = incomingTransfers.filter((transfer) => transfer.transferId === action.value);
+    if (filteredTransfers.length === 0) return;
+
+    const transfer = filteredTransfers[0];
+    if (!transfer) return;
 
     const model: ActionMessageModel = {
         type: 'action',
-        transferId: action.value,
+        transferId: transfer.transferId,
+        targetId: transfer.clientId,
         action: 'reject',
     };
 
     yield put({ type: ActionType.WS_SEND_MESSAGE, value: model });
+    yield put({ type: ActionType.REMOVE_INCOMING_TRANSFER, value: action.value });
 }
 
 export default function* root(dispatch: (action: any) => void) {
