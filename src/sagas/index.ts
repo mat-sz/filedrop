@@ -1,7 +1,7 @@
 import { put, takeEvery, select, call } from 'redux-saga/effects';
 import uuid from 'uuid/v4';
 
-import { ActionModel, MessageModel, WelcomeMessageModel, TransferModel, TransferMessageModel, NameMessageModel, ActionMessageModel, RTCDescriptionMessageModel, RTCCandidateMessageModel, NetworkMessageModel } from '../types/Models';
+import { ActionModel, MessageModel, WelcomeMessageModel, TransferModel, TransferMessageModel, NameMessageModel, ActionMessageModel, RTCDescriptionMessageModel, RTCCandidateMessageModel, NetworkMessageModel, PingMessageModel } from '../types/Models';
 import { ActionType } from '../types/ActionType';
 import { StateType } from '../reducers';
 import transferSendFile from './transferSendFile';
@@ -46,6 +46,13 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
         case 'network':
             const networkMessage: NetworkMessageModel = msg as NetworkMessageModel;
             yield put({ type: ActionType.SET_NETWORK, value: networkMessage.clients });
+            break;
+        case 'ping':
+            const pongMessage: PingMessageModel = {
+                type: 'ping',
+                timestamp: new Date().getTime(),
+            };
+            yield put({ type: ActionType.WS_SEND_MESSAGE, value: pongMessage });
             break;
         case 'rtcDescription':
             const rtcMessage: RTCDescriptionMessageModel = msg as RTCDescriptionMessageModel;

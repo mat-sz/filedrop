@@ -4,7 +4,7 @@ export interface ActionModel {
 };
 
 export interface MessageModel {
-    type: 'welcome' | 'name' | 'transfer' | 'action' | 'network' | 'rtcDescription' | 'rtcCandidate',
+    type: 'welcome' | 'name' | 'transfer' | 'action' | 'network' | 'ping' | 'rtcDescription' | 'rtcCandidate',
 };
 
 export interface WelcomeMessageModel extends MessageModel {
@@ -40,6 +40,11 @@ export interface ActionMessageModel extends MessageModel {
 export interface NetworkMessageModel extends MessageModel {
     type: 'network',
     clients: ClientModel[],
+};
+
+export interface PingMessageModel extends MessageModel {
+    type: 'ping',
+    timestamp: number,
 };
 
 export interface RTCDescriptionMessageModel extends MessageModel {
