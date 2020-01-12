@@ -49,6 +49,31 @@ export default function* transferReceiveFile(rtcMessage: RTCDescriptionMessageMo
         } });
     };
 
+    const onComplete = () => {
+        complete = true;
+
+        const blob = new Blob(buffer);
+        const blobUrl = URL.createObjectURL(blob);
+
+        dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
+            transferId: transfer.transferId,
+            state: 'complete',
+            progress: 1,
+            speed: 0,
+            time: Math.floor(new Date().getTime() / 1000 - timestamp),
+            blobUrl: blobUrl,
+        } });
+
+        const element = document.createElement('a');
+        element.setAttribute('href', blobUrl);
+        element.setAttribute('download', transfer.fileName);
+
+        element.style.display = 'none';
+        element.click();
+
+        connection.close();
+    };
+
     connection.addEventListener('datachannel', (event) => {
         dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
             transferId: transfer.transferId,
@@ -70,7 +95,7 @@ export default function* transferReceiveFile(rtcMessage: RTCDescriptionMessageMo
             } });
 
             if (offset >= transfer.fileSize) {
-                complete = true;
+                onComplete();
                 channel.close();
             }
         });
@@ -81,27 +106,9 @@ export default function* transferReceiveFile(rtcMessage: RTCDescriptionMessageMo
                 return;
             }
 
-            const blob = new Blob(buffer);
-            const blobUrl = URL.createObjectURL(blob);
-
-            complete = true;
-            dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
-                transferId: transfer.transferId,
-                state: 'complete',
-                progress: 1,
-                speed: 0,
-                time: Math.floor(new Date().getTime() / 1000 - timestamp),
-                blobUrl: blobUrl,
-            } });
-
-            const element = document.createElement('a');
-            element.setAttribute('href', blobUrl);
-            element.setAttribute('download', transfer.fileName);
-
-            element.style.display = 'none';
-            element.click();
-
-            connection.close();
+            if (!complete) {
+                onComplete();
+            }
         });
     });
 
