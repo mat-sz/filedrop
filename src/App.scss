@@ -90,13 +90,18 @@ section {
     top: 0;
     left: 0;
     right: 0;
-    padding: 20px;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
     font-weight: bold;
-    text-align: center;
-    background: black;
 
-    &.error {
-        background: #991111;
+    & > div {
+        padding: 20px;
+        text-align: center;
+        background: black;
+    }
+    
+    &.error > div {
+        background: darken($accent-color, 20%);
     }
 }
 

@@ -30,7 +30,11 @@ const App: React.FC = () => {
                         </h1>
                     </nav>
                 </header>
-                { !connected ? <div className={"status error"}>Not connected</div> : null }
+                { !connected ?
+                    <div className={"status error"}>
+                        <div>Connecting...</div>
+                    </div>
+                : null }
                 <Switch>
                     <Route path="/privacy">
                         <Privacy />
