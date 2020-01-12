@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
     Switch,
     Route,
@@ -12,13 +12,10 @@ import Transfers from './screens/Transfers';
 import Privacy from './screens/Privacy';
 import { useSelector } from 'react-redux';
 import { StateType } from './reducers';
-import { title, Router } from './config';
+import { Router } from './config';
 
 const App: React.FC = () => {
     const connected = useSelector((state: StateType) => state.connected);
-    useEffect(() => {
-        document.title = title;
-    });
 
     return (
         <Router>
@@ -26,7 +23,7 @@ const App: React.FC = () => {
                 <header>
                     <nav className="menu">
                         <h1>
-                            <Link to="/" className="logo">{ title }</Link>
+                            <Link to="/" className="logo">{ process.env.REACT_APP_TITLE }</Link>
                         </h1>
                     </nav>
                 </header>
