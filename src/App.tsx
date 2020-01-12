@@ -39,7 +39,7 @@ const App: React.FC = () => {
                     <Route path="/privacy">
                         <Privacy />
                     </Route>
-                    <Route path="/:code">
+                    <Route path="/:networkName">
                         <Transfers />
                     </Route>
                     <Route path="/">

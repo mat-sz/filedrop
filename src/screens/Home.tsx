@@ -6,7 +6,7 @@ import { StateType } from '../reducers';
 import { nameCharacterSet, nameLength } from '../config';
 
 const Home: React.FC = () => {
-    const name = useSelector((state: StateType) => state.networkName);
+    const networkName = useSelector((state: StateType) => state.networkName);
     const connected = useSelector((state: StateType) => state.connected);
     const clientId = useSelector((state: StateType) => state.clientId);
     const suggestedName = useSelector((state: StateType) => state.suggestedName);
@@ -14,11 +14,11 @@ const Home: React.FC = () => {
     const history = useHistory();
 
     useEffect(() => {
-        const name = suggestedName || new Array(nameLength).fill('').map(() => nameCharacterSet.charAt(Math.floor(Math.random() * nameCharacterSet.length))).join('');
+        const networkName = suggestedName || new Array(nameLength).fill('').map(() => nameCharacterSet.charAt(Math.floor(Math.random() * nameCharacterSet.length))).join('');
         if (connected && clientId) {
-            history.push("/" + name);
+            history.push("/" + networkName);
         }
-    }, [ connected, name, history, clientId, suggestedName ]);
+    }, [ connected, networkName, history, clientId, suggestedName ]);
 
     return (
         <section className="center">

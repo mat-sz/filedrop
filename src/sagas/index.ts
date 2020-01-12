@@ -68,11 +68,11 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
 function* connected() {
     yield put({ type: ActionType.SET_CONNECTED, value: true });
 
-    let name = yield select((state: StateType) => state.networkName);
-    if (name && name !== '') {
+    let networkName = yield select((state: StateType) => state.networkName);
+    if (networkName && networkName !== '') {
         const message: NameMessageModel = {
             type: 'name',
-            networkName: name,
+            networkName: networkName,
         };
 
         yield put({ type: ActionType.WS_SEND_MESSAGE, value: message });
