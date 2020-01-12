@@ -35,6 +35,8 @@ a {
     padding-bottom: 5px;
 
     li {
+        animation: queue-animation 0.4s ease-in-out 0s 1;
+
         & > * {
             margin: 5px 0;
         }
@@ -42,6 +44,16 @@ a {
         button, .button {
             margin: 5px;
         }
+    }
+}
+
+@keyframes queue-animation {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
     }
 }
 
