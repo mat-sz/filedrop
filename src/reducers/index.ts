@@ -62,9 +62,10 @@ function applicationState(state = initialState, action: ActionModel) {
             newState.activeTransfers = [...newState.activeTransfers, incomingTransfer];
             break;
         case ActionType.MOVE_OUTGOING_TRANSFER_TO_ACTIVE:
-            const outgoingTransfer = newState.outgoingTransfers.find(transfer => transfer.transferId === action.value);
+            const outgoingTransfer = newState.outgoingTransfers.find(transfer => transfer.transferId === action.value.transferId);
             outgoingTransfer.state = 'connecting';
-            newState.outgoingTransfers = newState.outgoingTransfers.filter(transfer => transfer.transferId !== action.value);
+            outgoingTransfer.clientId = action.value.clientId;
+            newState.outgoingTransfers = newState.outgoingTransfers.filter(transfer => transfer.transferId !== action.value.transferId);
             newState.activeTransfers = [...newState.activeTransfers, outgoingTransfer];
             break;
         case ActionType.REMOVE_ACTIVE_TRANSFER:
