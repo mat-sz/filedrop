@@ -16,7 +16,7 @@ export interface WelcomeMessageModel extends MessageModel {
 
 export interface NameMessageModel extends MessageModel {
     type: 'name',
-    clientName: string,
+    networkName: string,
 };
 
 export interface TransferMessageModel extends MessageModel {

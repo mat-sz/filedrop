@@ -6,7 +6,7 @@ import { StateType } from '../reducers';
 import { nameCharacterSet, nameLength } from '../config';
 
 const Home: React.FC = () => {
-    const name = useSelector((state: StateType) => state.name);
+    const name = useSelector((state: StateType) => state.networkName);
     const connected = useSelector((state: StateType) => state.connected);
     const clientId = useSelector((state: StateType) => state.clientId);
     const suggestedName = useSelector((state: StateType) => state.suggestedName);

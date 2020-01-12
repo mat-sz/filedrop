@@ -13,7 +13,7 @@ const Transfers: React.FC = () => {
 
     useEffect(() => {
         setHref(window.location.href);
-        dispatch({ type: ActionType.SET_NAME, value: code });
+        dispatch({ type: ActionType.SET_NETWORK_NAME, value: code });
     }, [ setHref, code, dispatch ]);
 
     return (

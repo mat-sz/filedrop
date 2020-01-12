@@ -68,11 +68,11 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
 function* connected() {
     yield put({ type: ActionType.SET_CONNECTED, value: true });
 
-    let name = yield select((state: StateType) => state.name);
+    let name = yield select((state: StateType) => state.networkName);
     if (name && name !== '') {
         const message: NameMessageModel = {
             type: 'name',
-            clientName: name,
+            networkName: name,
         };
 
         yield put({ type: ActionType.WS_SEND_MESSAGE, value: message });
@@ -82,7 +82,7 @@ function* connected() {
 function* setName(action: ActionModel) {
     const message: NameMessageModel = {
         type: 'name',
-        clientName: action.value,
+        networkName: action.value,
     };
 
     yield put({ type: ActionType.WS_SEND_MESSAGE, value: message });
@@ -159,7 +159,7 @@ export default function* root(dispatch: (action: any) => void) {
     yield takeEvery(ActionType.WS_CONNECTED, connected);
     yield takeEvery(ActionType.WS_DISCONNECTED, disconnected);
 
-    yield takeEvery(ActionType.SET_NAME, setName);
+    yield takeEvery(ActionType.SET_NETWORK_NAME, setName);
 
     yield takeEvery(ActionType.CREATE_TRANSFER, createTransfer);
     yield takeEvery(ActionType.CANCEL_TRANSFER, cancelTransfer);

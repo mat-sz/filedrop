@@ -5,7 +5,7 @@ import { Store } from 'redux';
 export interface StateType {
     connected: boolean,
     error: string,
-    name: string,
+    networkName: string,
     clientId: string,
     clientColor: string,
     suggestedName: string,
@@ -17,7 +17,7 @@ export interface StateType {
 let initialState: StateType = {
     connected: false,
     error: null,
-    name: null,
+    networkName: null,
     clientId: null,
     clientColor: null,
     suggestedName: null,
@@ -40,8 +40,8 @@ function applicationState(state = initialState, action: ActionModel) {
         case ActionType.SET_CONNECTED:
             newState.connected = action.value as boolean;
             break;
-        case ActionType.SET_NAME:
-            newState.name = action.value as string;
+        case ActionType.SET_NETWORK_NAME:
+            newState.networkName = action.value as string;
             break;
         case ActionType.SET_CLIENT_ID:
             newState.clientId = action.value as string;
