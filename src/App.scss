@@ -220,11 +220,39 @@ footer {
     }
 }
 
-.dropzone {
-    cursor: pointer;
+.network-tile {
+    width: 75px;
+    height: 75px;
+    border-radius: 5px;
+    color: black;
 
-    label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.network {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 75px;
+    grid-auto-rows: 75px;
+    grid-gap: 10px;
+
+    .network-tile {
         cursor: pointer;
+    }
+}
+
+.network-you {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+
+    .help {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 }
 

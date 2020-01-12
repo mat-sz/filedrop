@@ -1,4 +1,4 @@
-import { ActionModel, TransferModel } from '../types/Models';
+import { ActionModel, TransferModel, ClientModel } from '../types/Models';
 import { ActionType } from '../types/ActionType';
 import { Store } from 'redux';
 
@@ -9,6 +9,7 @@ export interface StateType {
     clientId: string,
     clientColor: string,
     suggestedName: string,
+    network: ClientModel[],
     activeTransfers: TransferModel[],
     incomingTransfers: TransferModel[],
     outgoingTransfers: TransferModel[],
@@ -21,6 +22,7 @@ let initialState: StateType = {
     clientId: null,
     clientColor: null,
     suggestedName: null,
+    network: [],
     activeTransfers: [],
     incomingTransfers: [],
     outgoingTransfers: [],
@@ -51,6 +53,10 @@ function applicationState(state = initialState, action: ActionModel) {
             break;
         case ActionType.SET_SUGGESTED_NAME:
             newState.suggestedName = action.value as string;
+            break;
+        case ActionType.SET_NETWORK:
+            newState.network = action.value as ClientModel[];
+            newState.network = newState.network.filter((client) => client.clientId !== newState.clientId);
             break;
         case ActionType.ADD_OUTGOING_TRANSFER:
             newState.outgoingTransfers = [...newState.outgoingTransfers, action.value];

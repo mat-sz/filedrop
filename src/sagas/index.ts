@@ -1,7 +1,7 @@
 import { put, takeEvery, select, call } from 'redux-saga/effects';
 import uuid from 'uuid/v4';
 
-import { ActionModel, MessageModel, WelcomeMessageModel, TransferModel, TransferMessageModel, NameMessageModel, ActionMessageModel, RTCDescriptionMessageModel, RTCCandidateMessageModel } from '../types/Models';
+import { ActionModel, MessageModel, WelcomeMessageModel, TransferModel, TransferMessageModel, NameMessageModel, ActionMessageModel, RTCDescriptionMessageModel, RTCCandidateMessageModel, NetworkMessageModel } from '../types/Models';
 import { ActionType } from '../types/ActionType';
 import { StateType } from '../reducers';
 import transferSendFile from './transferSendFile';
@@ -42,6 +42,10 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
                     yield put({ type: ActionType.REMOVE_OUTGOING_TRANSFER, value: actionMessage.transferId });
                     break;
             }
+            break;
+        case 'network':
+            const networkMessage: NetworkMessageModel = msg as NetworkMessageModel;
+            yield put({ type: ActionType.SET_NETWORK, value: networkMessage.clients });
             break;
         case 'rtcDescription':
             const rtcMessage: RTCDescriptionMessageModel = msg as RTCDescriptionMessageModel;
@@ -93,7 +97,7 @@ function* disconnected() {
 }
 
 function* createTransfer(action: ActionModel) {
-    const file: File = action.value;
+    const file: File = action.value.file;
 
     const transfer: TransferModel = {
         file: file,
@@ -101,6 +105,7 @@ function* createTransfer(action: ActionModel) {
         fileSize: file.size,
         fileType: file.type || 'application/octet-stream', // fileType is required by the server.
         transferId: uuid(),
+        clientId: action.value.clientId,
     };
 
     yield put({ type: ActionType.ADD_OUTGOING_TRANSFER, value: transfer });

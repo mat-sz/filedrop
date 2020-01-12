@@ -4,7 +4,7 @@ export interface ActionModel {
 };
 
 export interface MessageModel {
-    type: 'welcome' | 'name' | 'transfer' | 'action' | 'rtcDescription' | 'rtcCandidate',
+    type: 'welcome' | 'name' | 'transfer' | 'action' | 'network' | 'rtcDescription' | 'rtcCandidate',
 };
 
 export interface WelcomeMessageModel extends MessageModel {
@@ -33,6 +33,11 @@ export interface ActionMessageModel extends MessageModel {
     transferId: string,
     action: 'accept' | 'reject' | 'cancel',
     clientId?: string,
+};
+
+export interface NetworkMessageModel extends MessageModel {
+    type: 'network',
+    clients: ClientModel[],
 };
 
 export interface RTCDescriptionMessageModel extends MessageModel {
@@ -64,4 +69,9 @@ export interface TransferModel {
     speed?: number,
     time?: number,
     state?: 'connecting' | 'connected' | 'inprogress' | 'complete' | 'failed',
+};
+
+export interface ClientModel {
+    clientId: string,
+    clientColor: string,
 };
