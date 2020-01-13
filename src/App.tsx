@@ -5,6 +5,7 @@ import {
     Route,
     Link
 } from 'react-router-dom';
+import GithubCorner from 'react-github-corner';
 
 import './App.scss';
 
@@ -21,6 +22,7 @@ const App: React.FC = () => {
     return (
         <Router>
             <div className="app">
+                <GithubCorner href="https://github.com/mat-sz/filedrop-web" octoColor="#111" bannerColor="#fc03a1" />
                 <header>
                     <nav className="menu">
                         <h1>
