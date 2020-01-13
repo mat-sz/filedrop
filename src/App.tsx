@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import {
     Switch,
     Route,
@@ -13,12 +12,10 @@ import Home from './screens/Home';
 import Transfers from './screens/Transfers';
 import Privacy from './screens/Privacy';
 import ToS from './screens/ToS';
-import { StateType } from './reducers';
+import Status from './components/Status';
 import { Router } from './config';
 
 const App: React.FC = () => {
-    const connected = useSelector((state: StateType) => state.connected);
-
     return (
         <Router>
             <div className="app">
@@ -30,11 +27,7 @@ const App: React.FC = () => {
                         </h1>
                     </nav>
                 </header>
-                { !connected ?
-                    <div className="status error">
-                        <div>Connecting...</div>
-                    </div>
-                : null }
+                <Status />
                 <Switch>
                     <Route path="/privacy">
                         <Privacy />
