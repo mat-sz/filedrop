@@ -140,6 +140,12 @@ function* cancelTransfer(action: ActionModel) {
     const transfer = filteredTransfers[0];
     if (!transfer) return;
 
+    if (transfer.peerConnection) {
+        try {
+            transfer.peerConnection.close();
+        } catch {}
+    }
+
     const model: ActionMessageModel = {
         type: 'action',
         transferId: transfer.transferId,

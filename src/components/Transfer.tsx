@@ -15,6 +15,13 @@ const states = {
     [TransferState.FAILED]: 'Failed!',
 };
 
+const cancellableStates = [
+    TransferState.IN_PROGRESS,
+    TransferState.CONNECTING,
+    TransferState.CONNECTED,
+    TransferState.OUTGOING,
+];
+
 const Transfer: React.FC<{
     transfer: TransferModel,
 }> = ({ transfer }) => {
@@ -35,23 +42,20 @@ const Transfer: React.FC<{
                 <progress value={transfer.progress} max={1} />
                 <div>{ Math.round(transfer.speed / 1000) } kB/s</div>
             </> : null }
-            <div>
-                { transfer.state === TransferState.COMPLETE && transfer.blobUrl ? 
+            { transfer.state === TransferState.COMPLETE && transfer.blobUrl ? 
                 <a className="button" href={transfer.blobUrl} download={transfer.fileName}>Redownload</a>
-                : null }
-                { transfer.state === TransferState.COMPLETE || transfer.state === TransferState.FAILED ?
+            : null }
+            { transfer.state === TransferState.COMPLETE || transfer.state === TransferState.FAILED ?
                 <button onClick={dismissTransfer}>Dismiss</button>
-                : null }
-            </div>
+            : null }
             { transfer.state === TransferState.INCOMING ? 
             <>
                 <button onClick={acceptTransfer}>Accept</button>
                 <button onClick={rejectTransfer}>Reject</button>
             </> : null }
-            { transfer.state === TransferState.OUTGOING ?
-            <>
+            { cancellableStates.includes(transfer.state) ?
                 <button onClick={cancelTransfer}>Cancel</button>
-            </> : null }
+            : null }
         </li>
     );
 }
