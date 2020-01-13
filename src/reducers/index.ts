@@ -10,9 +10,7 @@ export interface StateType {
     clientColor: string,
     suggestedName: string,
     network: ClientModel[],
-    activeTransfers: TransferModel[],
-    incomingTransfers: TransferModel[],
-    outgoingTransfers: TransferModel[],
+    transfers: TransferModel[],
 };
 
 let initialState: StateType = {
@@ -23,9 +21,7 @@ let initialState: StateType = {
     clientColor: null,
     suggestedName: null,
     network: [],
-    activeTransfers: [],
-    incomingTransfers: [],
-    outgoingTransfers: [],
+    transfers: [],
 };
 
 export type StoreType = Store<StateType, ActionModel>;
@@ -58,44 +54,14 @@ function applicationState(state = initialState, action: ActionModel) {
             newState.network = action.value as ClientModel[];
             newState.network = newState.network.filter((client) => client.clientId !== newState.clientId);
             break;
-        case ActionType.ADD_OUTGOING_TRANSFER:
-            newState.outgoingTransfers = [...newState.outgoingTransfers, action.value];
+        case ActionType.ADD_TRANSFER:
+            newState.transfers = [...newState.transfers, action.value];
             break;
-        case ActionType.REMOVE_OUTGOING_TRANSFER:
-            newState.outgoingTransfers = newState.outgoingTransfers.filter(transfer => transfer.transferId !== action.value);
-            break;
-        case ActionType.ADD_INCOMING_TRANSFER:
-            newState.incomingTransfers = [...newState.incomingTransfers, action.value];
-            break;
-        case ActionType.REMOVE_INCOMING_TRANSFER:
-            newState.incomingTransfers = newState.incomingTransfers.filter(transfer => transfer.transferId !== action.value);
-            break;
-        case ActionType.MOVE_INCOMING_TRANSFER_TO_ACTIVE:
-            const incomingTransfer = newState.incomingTransfers.find(transfer => transfer.transferId === action.value);
-            incomingTransfer.state = 'connecting';
-            newState.incomingTransfers = newState.incomingTransfers.filter(transfer => transfer.transferId !== action.value);
-            newState.activeTransfers = [...newState.activeTransfers, incomingTransfer];
-            break;
-        case ActionType.MOVE_OUTGOING_TRANSFER_TO_ACTIVE:
-            const outgoingTransfer = newState.outgoingTransfers.find(transfer => transfer.transferId === action.value.transferId);
-            outgoingTransfer.state = 'connecting';
-            outgoingTransfer.clientId = action.value.clientId;
-            newState.outgoingTransfers = newState.outgoingTransfers.filter(transfer => transfer.transferId !== action.value.transferId);
-            newState.activeTransfers = [...newState.activeTransfers, outgoingTransfer];
-            break;
-        case ActionType.REMOVE_ACTIVE_TRANSFER:
-            newState.activeTransfers = newState.activeTransfers.filter(transfer => transfer.transferId !== action.value);
-            break;
-        case ActionType.ADD_PEER_CONNECTION:
-            newState.activeTransfers = newState.activeTransfers.map((transfer) => {
-                if (transfer.transferId === action.value.transferId && action.value.peerConnection) {
-                    transfer.peerConnection = action.value.peerConnection;
-                }
-                return transfer;
-            });
+        case ActionType.REMOVE_TRANSFER:
+            newState.transfers = newState.transfers.filter(transfer => transfer.transferId !== action.value);
             break;
         case ActionType.SET_REMOTE_DESCRIPTION:
-            newState.activeTransfers = newState.activeTransfers.map((transfer) => {
+            newState.transfers = newState.transfers.map((transfer) => {
                 if (transfer.transferId === action.value.transferId && transfer.peerConnection) {
                     transfer.peerConnection.setRemoteDescription(action.value.data);
                 }
@@ -103,15 +69,17 @@ function applicationState(state = initialState, action: ActionModel) {
             });
             break;
         case ActionType.ADD_ICE_CANDIDATE:
-            newState.activeTransfers = newState.activeTransfers.map((transfer) => {
+            newState.transfers = newState.transfers.map((transfer) => {
                 if (transfer.transferId === action.value.transferId && transfer.peerConnection) {
-                    transfer.peerConnection.addIceCandidate(action.value.data);
+                    try {
+                        transfer.peerConnection.addIceCandidate(action.value.data);
+                    } catch {}
                 }
                 return transfer;
             });
             break;
         case ActionType.UPDATE_TRANSFER:
-            newState.activeTransfers = newState.activeTransfers.map((transfer) => {
+            newState.transfers = newState.transfers.map((transfer) => {
                 if (transfer.transferId === action.value.transferId) {
                     return {
                         ...transfer,
@@ -124,6 +92,10 @@ function applicationState(state = initialState, action: ActionModel) {
         default:
             return state;
     }
+
+    newState.transfers = newState.transfers.sort((a, b) => {
+        return b.state - a.state;
+    });
 
     return newState;
 };

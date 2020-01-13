@@ -1,3 +1,5 @@
+import { TransferState } from "./TransferState";
+
 export interface ActionModel {
     type: string,
     value: any,
@@ -75,7 +77,7 @@ export interface TransferModel {
     progress?: number,
     speed?: number,
     time?: number,
-    state?: 'connecting' | 'connected' | 'inprogress' | 'complete' | 'failed',
+    state: TransferState,
 };
 
 export interface ClientModel {

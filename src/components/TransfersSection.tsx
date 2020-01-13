@@ -8,9 +8,7 @@ import NetworkTile from './NetworkTile';
 const TransfersSection: React.FC = () => {
     const clientColor = useSelector((store: StateType) => store.clientColor);
     const network = useSelector((store: StateType) => store.network);
-    const activeTransfers = useSelector((store: StateType) => store.activeTransfers);
-    const incomingTransfers = useSelector((store: StateType) => store.incomingTransfers);
-    const outgoingTransfers = useSelector((store: StateType) => store.outgoingTransfers);
+    const transfers = useSelector((store: StateType) => store.transfers);
 
     return (
         <div>
@@ -33,9 +31,7 @@ const TransfersSection: React.FC = () => {
                 Nobody is connected to your network.
             </div>
             }
-            <TransferList transfers={activeTransfers} type={'active'} />
-            <TransferList transfers={incomingTransfers} type={'incoming'} />
-            <TransferList transfers={outgoingTransfers} type={'outgoing'} />
+            <TransferList transfers={transfers} />
         </div>
     );
 }

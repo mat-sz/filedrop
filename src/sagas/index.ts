@@ -6,6 +6,7 @@ import { ActionType } from '../types/ActionType';
 import { StateType } from '../reducers';
 import transferSendFile from './transferSendFile';
 import transferReceiveFile from './transferReceiveFile';
+import { TransferState } from '../types/TransferState';
 
 function* message(action: ActionModel, dispatch: (action: any) => void) {
     const msg: MessageModel = action.value as MessageModel;
@@ -24,22 +25,23 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
                 fileSize: transferMessage.fileSize,
                 transferId: transferMessage.transferId,
                 clientId: transferMessage.clientId,
+                state: TransferState.INCOMING,
             };
 
-            yield put({ type: ActionType.ADD_INCOMING_TRANSFER, value: transfer });
+            yield put({ type: ActionType.ADD_TRANSFER, value: transfer });
             break;
         case 'action':
             const actionMessage: ActionMessageModel = msg as ActionMessageModel;
 
             switch (actionMessage.action) {
                 case 'cancel':
-                    yield put({ type: ActionType.REMOVE_INCOMING_TRANSFER, value: actionMessage.transferId });
+                    yield put({ type: ActionType.REMOVE_TRANSFER, value: actionMessage.transferId });
                     break;
                 case 'accept':
                     yield call(() => transferSendFile(actionMessage, dispatch));
                     break;
                 case 'reject':
-                    yield put({ type: ActionType.REMOVE_OUTGOING_TRANSFER, value: actionMessage.transferId });
+                    yield put({ type: ActionType.REMOVE_TRANSFER, value: actionMessage.transferId });
                     break;
             }
             break;
@@ -113,9 +115,10 @@ function* createTransfer(action: ActionModel) {
         fileType: file.type || 'application/octet-stream', // fileType is required by the server.
         transferId: uuid(),
         clientId: action.value.clientId,
+        state: TransferState.OUTGOING,
     };
 
-    yield put({ type: ActionType.ADD_OUTGOING_TRANSFER, value: transfer });
+    yield put({ type: ActionType.ADD_TRANSFER, value: transfer });
 
     const model: TransferMessageModel = {
         type: 'transfer',
@@ -130,7 +133,7 @@ function* createTransfer(action: ActionModel) {
 }
 
 function* cancelTransfer(action: ActionModel) {
-    const outgoingTransfers: TransferModel[] = yield select((state: StateType) => state.outgoingTransfers);
+    const outgoingTransfers: TransferModel[] = yield select((state: StateType) => state.transfers);
     const filteredTransfers: TransferModel[] = outgoingTransfers.filter((transfer) => transfer.transferId === action.value);
     if (filteredTransfers.length === 0) return;
 
@@ -145,11 +148,11 @@ function* cancelTransfer(action: ActionModel) {
     };
 
     yield put({ type: ActionType.WS_SEND_MESSAGE, value: model });
-    yield put({ type: ActionType.REMOVE_OUTGOING_TRANSFER, value: action.value });
+    yield put({ type: ActionType.REMOVE_TRANSFER, value: action.value });
 }
 
 function* acceptTransfer(action: ActionModel) {
-    const incomingTransfers: TransferModel[] = yield select((state: StateType) => state.incomingTransfers);
+    const incomingTransfers: TransferModel[] = yield select((state: StateType) => state.transfers);
     const filteredTransfers: TransferModel[] = incomingTransfers.filter((transfer) => transfer.transferId === action.value);
     if (filteredTransfers.length === 0) return;
 
@@ -164,11 +167,14 @@ function* acceptTransfer(action: ActionModel) {
     };
 
     yield put({ type: ActionType.WS_SEND_MESSAGE, value: model });
-    yield put({ type: ActionType.MOVE_INCOMING_TRANSFER_TO_ACTIVE, value: action.value });
+    yield put({ type: ActionType.UPDATE_TRANSFER, value: {
+        transferId: action.value,
+        state: TransferState.CONNECTING,
+    } });
 }
 
 function* rejectTransfer(action: ActionModel) {
-    const incomingTransfers: TransferModel[] = yield select((state: StateType) => state.incomingTransfers);
+    const incomingTransfers: TransferModel[] = yield select((state: StateType) => state.transfers);
     const filteredTransfers: TransferModel[] = incomingTransfers.filter((transfer) => transfer.transferId === action.value);
     if (filteredTransfers.length === 0) return;
 
@@ -183,7 +189,7 @@ function* rejectTransfer(action: ActionModel) {
     };
 
     yield put({ type: ActionType.WS_SEND_MESSAGE, value: model });
-    yield put({ type: ActionType.REMOVE_INCOMING_TRANSFER, value: action.value });
+    yield put({ type: ActionType.REMOVE_TRANSFER, value: action.value });
 }
 
 export default function* root(dispatch: (action: any) => void) {

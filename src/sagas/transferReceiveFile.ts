@@ -4,10 +4,11 @@ import { TransferModel, RTCDescriptionMessageModel, RTCCandidateMessageModel } f
 import { ActionType } from '../types/ActionType';
 import { StateType } from '../reducers';
 import { rtcConfiguration } from '../config';
+import { TransferState } from '../types/TransferState';
 
 export default function* transferReceiveFile(rtcMessage: RTCDescriptionMessageModel, dispatch: (action: any) => void) {
-    const activeTransfers: TransferModel[] = yield select((state: StateType) => state.activeTransfers);
-    const filteredTransfers: TransferModel[] = activeTransfers.filter((transfer) => transfer.transferId === rtcMessage.transferId);
+    const transfers: TransferModel[] = yield select((state: StateType) => state.transfers);
+    const filteredTransfers: TransferModel[] = transfers.filter((transfer) => transfer.transferId === rtcMessage.transferId);
     if (filteredTransfers.length === 0) return;
 
     const transfer = filteredTransfers[0];
@@ -15,7 +16,7 @@ export default function* transferReceiveFile(rtcMessage: RTCDescriptionMessageMo
 
     const connection = new RTCPeerConnection(rtcConfiguration);
 
-    yield put({ type: ActionType.ADD_PEER_CONNECTION, value: {
+    yield put({ type: ActionType.UPDATE_TRANSFER, value: {
         transferId: transfer.transferId,
         peerConnection: connection,
     } });
@@ -43,7 +44,7 @@ export default function* transferReceiveFile(rtcMessage: RTCDescriptionMessageMo
 
         dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
             transferId: transfer.transferId,
-            state: 'failed',
+            state: TransferState.FAILED,
             progress: 1,
             speed: 0,
         } });
@@ -57,7 +58,7 @@ export default function* transferReceiveFile(rtcMessage: RTCDescriptionMessageMo
 
         dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
             transferId: transfer.transferId,
-            state: 'complete',
+            state: TransferState.COMPLETE,
             progress: 1,
             speed: 0,
             time: Math.floor(new Date().getTime() / 1000 - timestamp),
@@ -77,7 +78,7 @@ export default function* transferReceiveFile(rtcMessage: RTCDescriptionMessageMo
     connection.addEventListener('datachannel', (event) => {
         dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
             transferId: transfer.transferId,
-            state: 'connected',
+            state: TransferState.CONNECTED,
         } });
 
         const channel = event.channel;
@@ -89,7 +90,7 @@ export default function* transferReceiveFile(rtcMessage: RTCDescriptionMessageMo
 
             dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
                 transferId: transfer.transferId,
-                state: 'inprogress',
+                state: TransferState.IN_PROGRESS,
                 progress: offset/transfer.fileSize,
                 speed: offset/(new Date().getTime() / 1000 - timestamp),
             } });
