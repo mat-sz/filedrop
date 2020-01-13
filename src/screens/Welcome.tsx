@@ -7,7 +7,7 @@ const Welcome: React.FC = () => {
             <h2>Welcome</h2>
             <div className="subsection left">
                 <p>
-                    Welcome to { process.env.REACT_APP_TITLE }! Let me explain what the service is.
+                    Welcome to { process.env.REACT_APP_TITLE }! Let me explain what this website is.
                 </p>
                 <p>
                     This website allows you to copy files over the network (LAN if both devices are on the same local network and support WebRTC, otherwise the traffic goes through a TURN relay). Originally I've created this project to avoid logging into my e-mail on computers I don't own or having to type long URLs by hand. I hope it is as useful for you as it is for me. :)

@@ -281,6 +281,7 @@ footer {
     z-index: 10000;
     padding-top: 30px;
     padding-bottom: 30px;
+    backdrop-filter: blur(5px);
 }
 
 @media screen and (min-width: 768px) {
