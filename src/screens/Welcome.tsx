@@ -22,7 +22,7 @@ const Welcome: React.FC = () => {
                     </ol>
                 </p>
                 <p>
-                    { process.env.REACT_APP_TITLE } is open source! The code lives on GitHub: <a href="https://github.com/mat-sz/filedrop-web">front end</a> and <a href="https://github.com/mat-sz/filedrop-ws">back end</a>. If you enjoy using the website please give these projects a star. You can also report issues there or help the project by creating a pull request.
+                    { process.env.REACT_APP_TITLE } is open source! The code lives on GitHub: <a href="https://github.com/mat-sz/filedrop-web">front end</a> and <a href="https://github.com/mat-sz/filedrop-ws">back end</a>. If you enjoy using the website please consider giving these projects a star. You can also report issues there or help the project by creating a pull request.
                 </p>
                 <p>
                     By interacting with the service you accept our <Link to="/privacy">Privacy Policy</Link> and <Link to="/tos">Terms of Service</Link>.
