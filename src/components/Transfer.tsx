@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
+import { motion } from 'framer-motion';
 
 import { ActionType } from '../types/ActionType';
 import { TransferModel } from '../types/Models';
@@ -32,8 +33,20 @@ const Transfer: React.FC<{
     const cancelTransfer = useCallback(() => dispatch({ type: ActionType.CANCEL_TRANSFER, value: transfer.transferId }), [ transfer, dispatch ]);
     const dismissTransfer = useCallback(() => dispatch({ type: ActionType.REMOVE_TRANSFER, value: transfer.transferId }), [ transfer, dispatch ]);
 
+    const animationProps = {
+        initial: { scale: 0 },
+        animate: { scale: 1 },
+        exit: { scale: 0 },
+        transition: {
+            type: 'spring',
+            stiffness: 260,
+            damping: 20,
+        },
+        positionTransition: true,
+    };
+
     return (
-        <li key={transfer.transferId} className="subsection">
+        <motion.li className="subsection" {...animationProps}>
             <div>
                 { transfer.fileName }{ transfer.state ? ' - ' + states[transfer.state] : '' }
             </div>
@@ -56,7 +69,7 @@ const Transfer: React.FC<{
             { cancellableStates.includes(transfer.state) ?
                 <button onClick={cancelTransfer}>Cancel</button>
             : null }
-        </li>
+        </motion.li>
     );
 }
 

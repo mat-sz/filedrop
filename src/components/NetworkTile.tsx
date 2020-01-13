@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import Dropzone from 'react-dropzone';
+import { motion } from 'framer-motion';
 
 import { ActionType } from '../types/ActionType';
 import { ClientModel } from '../types/Models';
@@ -21,19 +22,33 @@ const NetworkTile: React.FC<{ client: ClientModel }> = ({ client }) => {
         event.preventDefault();
     };
 
+    const animationProps = {
+        initial: { scale: 0 },
+        animate: { rotate: 180, scale: 1 },
+        exit: { scale: 0 },
+        transition: {
+            type: 'spring',
+            stiffness: 260,
+            damping: 20,
+        },
+        positionTransition: true,
+    };
+
     return (
-        <Dropzone onDrop={onDrop}>
-            {({ getRootProps, getInputProps }) => (
-            <div {...getRootProps()} className="network-tile"
-                style={{
-                    backgroundColor: client.clientColor
-                }}>
-                <label onClick={preventClick}>
-                    <input {...getInputProps()} accept={'*'} />
-                </label>
-            </div>
-            )}
-        </Dropzone>
+        <motion.div {...animationProps}>
+            <Dropzone onDrop={onDrop}>
+                {({ getRootProps, getInputProps }) => (
+                <div {...getRootProps()} className="network-tile"
+                    style={{
+                        backgroundColor: client.clientColor
+                    }}>
+                    <label onClick={preventClick}>
+                        <input {...getInputProps()} accept={'*'} />
+                    </label>
+                </div>
+                )}
+            </Dropzone>
+        </motion.div>
     );
 }
 

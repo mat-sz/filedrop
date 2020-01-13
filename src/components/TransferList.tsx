@@ -1,24 +1,24 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { AnimatePresence } from 'framer-motion';
 
 import Transfer from './Transfer';
-import { TransferModel } from '../types/Models';
+import { StateType } from '../reducers';
 
-const TransferList: React.FC<{
-    transfers: TransferModel[],
-}> = ({ transfers }) => {
-    if (transfers.length === 0) return null;
+const TransferList: React.FC = () => {
+    const transfers = useSelector((store: StateType) => store.transfers);
 
     return (
-        <>
-            <ul className="center queue">
+        <ul className="center queue">
+            <AnimatePresence>
                 { transfers.map((transfer) =>
                     <Transfer
                         key={transfer.transferId}
                         transfer={transfer}
                     />
                 ) }
-            </ul>
-        </>
+            </AnimatePresence>
+        </ul>
     );
 }
 

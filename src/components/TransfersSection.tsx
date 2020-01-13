@@ -3,12 +3,10 @@ import { useSelector } from 'react-redux';
 
 import { StateType } from '../reducers';
 import TransferList from './TransferList';
-import NetworkTile from './NetworkTile';
+import Network from './Network';
 
 const TransfersSection: React.FC = () => {
     const clientColor = useSelector((store: StateType) => store.clientColor);
-    const network = useSelector((store: StateType) => store.network);
-    const transfers = useSelector((store: StateType) => store.transfers);
 
     return (
         <div>
@@ -22,16 +20,8 @@ const TransfersSection: React.FC = () => {
                     <div>Drag and drop files onto other tiles or click on a tile to start a transfer.</div>
                 </div>
             </div>
-            { network.length > 0 ?
-            <div className="subsection network">
-                { network.map((client) => <NetworkTile key={client.clientId} client={client} />) }
-            </div>
-            :
-            <div className="subsection">
-                Nobody is connected to your network.
-            </div>
-            }
-            <TransferList transfers={transfers} />
+            <Network />
+            <TransferList />
         </div>
     );
 }
