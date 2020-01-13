@@ -278,11 +278,11 @@ footer {
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0;
     z-index: 10000;
     padding-top: 30px;
     padding-bottom: 30px;
     backdrop-filter: blur(5px);
+    min-height: 100vh;
 }
 
 @media screen and (min-width: 768px) {
