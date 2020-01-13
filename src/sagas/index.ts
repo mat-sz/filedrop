@@ -198,7 +198,13 @@ function* rejectTransfer(action: ActionModel) {
     yield put({ type: ActionType.REMOVE_TRANSFER, value: action.value });
 }
 
+function* welcomed() {
+    localStorage.setItem('welcomed', '1');
+}
+
 export default function* root(dispatch: (action: any) => void) {
+    yield takeEvery(ActionType.DISMISS_WELCOME, welcomed);
+
     yield takeEvery(ActionType.WS_MESSAGE, function* (action: ActionModel) {
         yield call(() => message(action, dispatch));
     });

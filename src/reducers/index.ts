@@ -3,6 +3,7 @@ import { ActionType } from '../types/ActionType';
 import { Store } from 'redux';
 
 export interface StateType {
+    welcomed: boolean,
     connected: boolean,
     error: string,
     networkName: string,
@@ -14,6 +15,7 @@ export interface StateType {
 };
 
 let initialState: StateType = {
+    welcomed: localStorage.getItem('welcomed') === '1',
     connected: false,
     error: null,
     networkName: null,
@@ -34,6 +36,9 @@ function applicationState(state = initialState, action: ActionModel) {
             break;
         case ActionType.DISMISS_ERROR:
             newState.error = null;
+            break;
+        case ActionType.DISMISS_WELCOME:
+            newState.welcomed = true;
             break;
         case ActionType.SET_CONNECTED:
             newState.connected = action.value as boolean;

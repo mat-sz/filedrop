@@ -28,7 +28,7 @@ const App: React.FC = () => {
                     </nav>
                 </header>
                 { !connected ?
-                    <div className={"status error"}>
+                    <div className="status error">
                         <div>Connecting...</div>
                     </div>
                 : null }

@@ -6,9 +6,9 @@ const QrCodeSection: React.FC<{ href: string }> = ({ href }) => {
         <div>
             <h2>Invite</h2>
             <div className="center qrcode subsection">
-                <p>Scan this QR code:</p>
+                <div>Scan this QR code:</div>
                 <QrCode value={ href } />
-                <p>or open this URL on another device:</p>
+                <div>or open this URL on another device:</div>
                 <pre>
                     { href }
                 </pre>

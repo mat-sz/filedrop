@@ -19,6 +19,9 @@ const Privacy: React.FC = () => {
                 <p>
                     In some edge cases (both the receiving and sending device being behind NAT) the binary file data may be sent over the service's TURN servers. The data is not stored in any way. The data is also not being processed in any other way than just being sent to the target device.
                 </p>
+                <p>
+                    No HTTP cookies will be stored on your device. The application stores the acknowledgement of the "welcome" notice in local storage, this can't and won't be used to track users.
+                </p>
             </div>
         </section>
     );
