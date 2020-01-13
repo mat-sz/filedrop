@@ -4,7 +4,7 @@ import QrCode from 'qrcode.react';
 const QrCodeSection: React.FC<{ href: string }> = ({ href }) => {
     return (
         <div>
-            <h2>Transfer files:</h2>
+            <h2>Invite</h2>
             <div className="center qrcode subsection">
                 <p>Scan this QR code:</p>
                 <QrCode value={ href } />

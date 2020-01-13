@@ -12,7 +12,7 @@ const TransfersSection: React.FC = () => {
 
     return (
         <div>
-            <h2>Create a new transfer:</h2>
+            <h2>Your network</h2>
             <div className="subsection network-you">
                 <div className="network-tile" style={{
                     backgroundColor: clientColor
