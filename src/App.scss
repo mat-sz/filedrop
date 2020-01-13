@@ -257,6 +257,18 @@ footer {
 
 .left {
     text-align: left;
+
+    p:first-child {
+        margin-top: 0;
+    }
+
+    p:last-child, ol:last-child, ul:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.bold {
+    font-weight: bold;
 }
 
 .welcome {
@@ -268,14 +280,6 @@ footer {
     bottom: 0;
     z-index: 10000;
     padding-top: 30px;
-
-    p:first-child {
-        margin-top: 0;
-    }
-
-    p:last-child {
-        margin-bottom: 0;
-    }
 }
 
 @media screen and (min-width: 768px) {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import {
     Switch,
     Route,
@@ -10,7 +11,7 @@ import './App.scss';
 import Home from './screens/Home';
 import Transfers from './screens/Transfers';
 import Privacy from './screens/Privacy';
-import { useSelector } from 'react-redux';
+import ToS from './screens/ToS';
 import { StateType } from './reducers';
 import { Router } from './config';
 
@@ -36,6 +37,9 @@ const App: React.FC = () => {
                     <Route path="/privacy">
                         <Privacy />
                     </Route>
+                    <Route path="/tos">
+                        <ToS />
+                    </Route>
                     <Route path="/:networkName">
                         <Transfers />
                     </Route>
@@ -46,6 +50,7 @@ const App: React.FC = () => {
                 <footer>
                     <a href="https://github.com/mat-sz/filedrop-web">filedrop-web</a>
                     <Link to="/privacy">privacy policy</Link>
+                    <Link to="/tos">terms of service</Link>
                 </footer>
             </div>
         </Router>

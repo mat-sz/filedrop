@@ -199,7 +199,7 @@ function* rejectTransfer(action: ActionModel) {
 }
 
 function* welcomed() {
-    localStorage.setItem('welcomed', '1');
+    yield call(() => localStorage.setItem('welcomed', '1'));
 }
 
 export default function* root(dispatch: (action: any) => void) {
