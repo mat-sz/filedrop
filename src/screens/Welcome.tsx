@@ -28,7 +28,7 @@ const Welcome: React.FC = () => {
                     By interacting with the service you accept our <Link to="/privacy">Privacy Policy</Link> and <Link to="/tos">Terms of Service</Link>.
                 </p>
                 <p>
-                    Clicking on the "Continue" button below the "Welcome" notice will save data (welcomed = '1') into your browser's local storage. This data will be used to avoid showing you the notice in future.
+                    Clicking the "Continue" button below this notice will save data (welcomed = '1') into your browser's local storage. This data will be used to avoid showing you this notice in future.
                 </p>
             </div>
         </section>
