@@ -14,6 +14,7 @@ export interface WelcomeMessageModel extends MessageModel {
     clientId: string,
     clientColor: string,
     suggestedName: string,
+    rtcConfiguration?: RTCConfiguration,
 };
 
 export interface NameMessageModel extends MessageModel {

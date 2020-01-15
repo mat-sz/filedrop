@@ -5,6 +5,7 @@ import { Store } from 'redux';
 export interface StateType {
     welcomed: boolean,
     connected: boolean,
+    rtcConfiguration: RTCConfiguration,
     error: string,
     networkName: string,
     clientId: string,
@@ -17,6 +18,7 @@ export interface StateType {
 let initialState: StateType = {
     welcomed: localStorage.getItem('welcomed') === '1',
     connected: false,
+    rtcConfiguration: null,
     error: null,
     networkName: null,
     clientId: null,
@@ -42,6 +44,9 @@ function applicationState(state = initialState, action: ActionModel) {
             break;
         case ActionType.SET_CONNECTED:
             newState.connected = action.value as boolean;
+            break;
+        case ActionType.SET_RTC_CONFIGURATION:
+            newState.rtcConfiguration = action.value as RTCConfiguration;
             break;
         case ActionType.SET_NETWORK_NAME:
             newState.networkName = action.value as string;

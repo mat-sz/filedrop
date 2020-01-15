@@ -13,9 +13,11 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
 
     switch (msg.type) {
         case 'welcome':
-            yield put({ type: ActionType.SET_SUGGESTED_NAME, value: (msg as WelcomeMessageModel).suggestedName });
-            yield put({ type: ActionType.SET_CLIENT_ID, value: (msg as WelcomeMessageModel).clientId });
-            yield put({ type: ActionType.SET_CLIENT_COLOR, value: (msg as WelcomeMessageModel).clientColor });
+            const welcomeMessage: WelcomeMessageModel = msg as WelcomeMessageModel;
+            yield put({ type: ActionType.SET_RTC_CONFIGURATION, value: welcomeMessage.rtcConfiguration })
+            yield put({ type: ActionType.SET_SUGGESTED_NAME, value: welcomeMessage.suggestedName });
+            yield put({ type: ActionType.SET_CLIENT_ID, value: welcomeMessage.clientId });
+            yield put({ type: ActionType.SET_CLIENT_COLOR, value: welcomeMessage.clientColor });
             break;
         case 'transfer':
             const transferMessage: TransferMessageModel = msg as TransferMessageModel;

@@ -3,7 +3,6 @@ import { put, select, call } from 'redux-saga/effects';
 import { TransferModel, RTCDescriptionMessageModel, RTCCandidateMessageModel } from '../types/Models';
 import { ActionType } from '../types/ActionType';
 import { StateType } from '../reducers';
-import { rtcConfiguration } from '../config';
 import { TransferState } from '../types/TransferState';
 
 export default function* transferReceiveFile(rtcMessage: RTCDescriptionMessageModel, dispatch: (action: any) => void) {
@@ -14,6 +13,7 @@ export default function* transferReceiveFile(rtcMessage: RTCDescriptionMessageMo
     const transfer = filteredTransfers[0];
     if (!transfer) return;
 
+    const rtcConfiguration = yield select((state: StateType) => state.rtcConfiguration);
     const connection = new RTCPeerConnection(rtcConfiguration);
 
     yield put({ type: ActionType.UPDATE_TRANSFER, value: {
