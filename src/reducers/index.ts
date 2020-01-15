@@ -46,7 +46,18 @@ function applicationState(state = initialState, action: ActionModel) {
             newState.connected = action.value as boolean;
             break;
         case ActionType.SET_RTC_CONFIGURATION:
-            newState.rtcConfiguration = action.value as RTCConfiguration;
+            const rtcConfiguration = action.value as RTCConfiguration;
+
+            // If the server is allowed to set other properties it may result in a potential privacy breach.
+            // Let's make sure that doesn't happen.
+            // TODO: add other properties if neccessary.
+            if (rtcConfiguration.iceServers) {
+                newState.rtcConfiguration = {
+                    iceServers: rtcConfiguration.iceServers,
+                };
+            } else {
+                newState.rtcConfiguration = null;
+            }
             break;
         case ActionType.SET_NETWORK_NAME:
             newState.networkName = action.value as string;
