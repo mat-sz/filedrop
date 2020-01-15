@@ -9,9 +9,9 @@ const Privacy: React.FC = () => {
                     The following user data is processed by the service:
                 </p>
                 <ul>
-                    <li>file metadata such as: file name, size and type</li>
-                    <li>WebRTC data from your browser such as: ICE candidate descriptions and WebRTC offers/answers</li>
-                    <li>your IP address</li>
+                    <li>file metadata such as: file name, size and type,</li>
+                    <li>WebRTC data from your browser such as: ICE candidate descriptions and WebRTC offers/answers,</li>
+                    <li>your IP address.</li>
                 </ul>
                 <p>
                     None of the above are stored by the service in any way, once the your connection to the service is over (WebSockets connection closed) or times out all the temporarily stored (in RAM) data is irrecoverably removed.
