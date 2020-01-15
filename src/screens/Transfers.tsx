@@ -16,7 +16,7 @@ const Transfers: React.FC = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        setHref(window.location.href);
+        setHref(window.location.origin + window.location.pathname + window.location.hash);
         dispatch({ type: ActionType.SET_NETWORK_NAME, value: networkName });
     }, [ setHref, networkName, dispatch ]);
 
