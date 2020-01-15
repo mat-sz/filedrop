@@ -104,10 +104,7 @@ export default function* transferReceiveFile(rtcMessage: RTCDescriptionMessageMo
         channel.addEventListener('close', () => {
             if (offset < transfer.fileSize) {
                 onFailure();
-                return;
-            }
-
-            if (!complete) {
+            } else if (!complete) {
                 onComplete();
             }
         });
