@@ -8,17 +8,23 @@ import { StateType } from '../reducers';
 import Welcome from './Welcome';
 import QrCodeSection from '../components/QrCodeSection';
 import TransfersSection from '../components/TransfersSection';
+import IncompatibleBrowser from '../components/IncompatibleBrowser';
 
 const Transfers: React.FC = () => {
+    const dispatch = useDispatch();
     const welcomed = useSelector((state: StateType) => state.welcomed);
     const { networkName } = useParams<{ networkName: string }>();
     const [ href, setHref ] = useState('');
-    const dispatch = useDispatch();
+    const [ incompatibleBrowser, setIncompatibleBrowser ] = useState(false);
 
     useEffect(() => {
         setHref(window.location.origin + window.location.pathname + window.location.hash);
         dispatch({ type: ActionType.SET_NETWORK_NAME, value: networkName });
     }, [ setHref, networkName, dispatch ]);
+
+    useEffect(() => {
+        setIncompatibleBrowser(!(('RTCPeerConnection' in window) && ('WebSocket' in window)));
+    }, []);
 
     const dismissWelcome = useCallback(() => {
         dispatch({ type: ActionType.DISMISS_WELCOME });
@@ -37,6 +43,7 @@ const Transfers: React.FC = () => {
 
     return (
         <>
+            { incompatibleBrowser ? <IncompatibleBrowser /> : null }
             <AnimatePresence>
             { !welcomed ?
                 <motion.div className="welcome" {...animationProps}>
