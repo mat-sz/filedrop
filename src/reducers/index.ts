@@ -74,6 +74,10 @@ function applicationState(state = initialState, action: ActionModel) {
         case ActionType.SET_NETWORK:
             newState.network = action.value as ClientModel[];
             newState.network = newState.network.filter((client) => client.clientId !== newState.clientId);
+            
+            // Remove transfers from now offline clients.
+            const clientIds = newState.network.map((client) => client.clientId);
+            newState.transfers = newState.transfers.filter((transfer) => transfer.clientId ? clientIds.includes(transfer.clientId) : true);
             break;
         case ActionType.ADD_TRANSFER:
             newState.transfers = [...newState.transfers, action.value];
