@@ -12,8 +12,9 @@ import Home from './screens/Home';
 import Transfers from './screens/Transfers';
 import Privacy from './screens/Privacy';
 import ToS from './screens/ToS';
+import Abuse from './screens/Abuse';
 import Status from './components/Status';
-import { Router } from './config';
+import { Router, abuseEmail } from './config';
 
 const App: React.FC = () => {
     return (
@@ -29,6 +30,10 @@ const App: React.FC = () => {
                 </header>
                 <Status />
                 <Switch>
+                    { abuseEmail ?
+                    <Route path="/abuse">
+                        <Abuse />
+                    </Route> : null }
                     <Route path="/privacy">
                         <Privacy />
                     </Route>
@@ -46,6 +51,9 @@ const App: React.FC = () => {
                     <a href="https://github.com/mat-sz/filedrop-web">filedrop-web</a>
                     <Link to="/privacy">privacy policy</Link>
                     <Link to="/tos">terms of service</Link>
+                    { abuseEmail ?
+                    <Link to="/abuse">report abuse</Link>
+                    : null }
                 </footer>
             </div>
         </Router>
