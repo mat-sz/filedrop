@@ -21,8 +21,10 @@ html, body, #root {
 }
 
 a {
+    display: inline-block;
     color: desaturate($accent-color, 15%);
     text-decoration: none;
+    white-space: nowrap;
 
     &:hover {
         text-decoration: underline;
