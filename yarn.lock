@@ -10621,10 +10621,10 @@ typescript@~3.7.2:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.7.4.tgz#1743a5ec5fef6a1fa9f3e4708e33c81c73876c19"
   integrity sha512-A25xv5XCtarLwXpcDNZzCGvW2D1S3/bACratYBx2sax8PefsFhlYmkQicKHvpYflFS8if4zne5zT5kpJ7pzuvw==
 
-typesocket@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/typesocket/-/typesocket-0.0.1.tgz#9322fd702232a53346e3011ec956f3c179f7a8bb"
-  integrity sha512-1t0bU6ymntCmabgX1VyLkH/tLvSx0QXWr55SIejKqKVdGf4HnOweSBUBd49WofuifTGHNNPUZClVU6R5KDvF3Q==
+typesocket@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/typesocket/-/typesocket-0.0.3.tgz#58654f888800cd3954b864aba4309c2919e50e27"
+  integrity sha512-1jU74IUphcstb7sJyKkfRBY9MTDP9kfP3oMCfTbwLKWLYc0Wdek15p9oEKMWLF9cj20Ts7vPbljOXIw3JSR/Tg==
 
 uglify-js@3.4.x:
   version "3.4.10"

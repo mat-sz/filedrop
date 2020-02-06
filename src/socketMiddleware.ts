@@ -6,7 +6,11 @@ import { MessageModel } from './types/Models';
 
 export const socketMiddleware = (url: string) => {
     return (store: MiddlewareAPI<any, any>) => {
-        const socket = new TypeSocket<MessageModel>(url);
+        const socket = new TypeSocket<MessageModel>(url, {
+            maxRetries: 0,
+            retryOnClose: true,
+            retryTime: 500,
+        });
         
         socket.onConnected = () => store.dispatch({ type: ActionType.WS_CONNECTED });
         socket.onDisconnected = () => store.dispatch({ type: ActionType.WS_DISCONNECTED });
