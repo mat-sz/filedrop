@@ -251,6 +251,7 @@ export default function* root(dispatch: (action: any) => void) {
     yield takeEvery([
         ActionType.ADD_TRANSFER,
         ActionType.UPDATE_TRANSFER,
-        ActionType.REMOVE_TRANSFER
+        ActionType.REMOVE_TRANSFER,
+        ActionType.SET_NETWORK,
     ], updateNotificationCount);
 };
