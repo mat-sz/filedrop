@@ -1,5 +1,6 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import CopyToClipboard from 'react-copy-to-clipboard';
 import { motion } from 'framer-motion';
 
 import { ActionType } from '../types/ActionType';
@@ -28,6 +29,8 @@ const Transfer: React.FC<{
     transfer: TransferModel,
 }> = ({ transfer }) => {
     const dispatch = useDispatch();
+    const [ copied, setCopied ] = useState(false);
+    const [ text, setText ] = useState('');
 
     const network = useSelector((state: StateType) => state.network);
     const targetClient = network.find((client) => client.clientId === transfer.clientId);
@@ -36,6 +39,21 @@ const Transfer: React.FC<{
     const rejectTransfer = useCallback(() => dispatch({ type: ActionType.REJECT_TRANSFER, value: transfer.transferId }), [ transfer, dispatch ]);
     const cancelTransfer = useCallback(() => dispatch({ type: ActionType.CANCEL_TRANSFER, value: transfer.transferId }), [ transfer, dispatch ]);
     const dismissTransfer = useCallback(() => dispatch({ type: ActionType.REMOVE_TRANSFER, value: transfer.transferId }), [ transfer, dispatch ]);
+
+    useEffect(() => {
+        setCopied(false);
+    }, [ transfer.blobUrl, setCopied ]);
+
+    useEffect(() => {
+        if (transfer.fileType === 'text/plain' && transfer.blobUrl) {
+            console.log(transfer.blobUrl);
+            fetch(transfer.blobUrl)
+                .then((res) => res.text())
+                .then((text) => setText(text));
+        }
+    }, [ transfer ])
+
+    const onCopy = useCallback(() => setCopied(true), [ setCopied ]);
 
     const animationProps = {
         initial: { scale: 0 },
@@ -69,8 +87,20 @@ const Transfer: React.FC<{
                 <progress value={transfer.progress} max={1} />
                 <div>{ Math.round(transfer.speed / 1000) } kB/s</div>
             </> : null }
-            { transfer.state === TransferState.COMPLETE && transfer.blobUrl ? 
+            { transfer.state === TransferState.COMPLETE && transfer.blobUrl ?
+            <>
                 <a className="button" href={transfer.blobUrl} download={transfer.fileName}>Redownload</a>
+                { transfer.fileType === 'text/plain' ?
+                    <CopyToClipboard
+                        text={text}
+                        onCopy={onCopy}
+                    >
+                        <button>
+                            { copied ? 'Copied' : 'Copy to clipboard' }
+                        </button>
+                    </CopyToClipboard>
+                : null }
+            </>
             : null }
             { transfer.state === TransferState.COMPLETE || transfer.state === TransferState.FAILED ?
                 <button onClick={dismissTransfer}>Dismiss</button>
