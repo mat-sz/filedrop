@@ -135,8 +135,12 @@ function* createTransfer(action: ActionModel) {
 }
 
 function* cancelTransfer(action: ActionModel) {
-    const outgoingTransfers: TransferModel[] = yield select((state: StateType) => state.transfers);
-    const filteredTransfers: TransferModel[] = outgoingTransfers.filter((transfer) => transfer.transferId === action.value);
+    const transfers: TransferModel[] = yield select((state: StateType) => state.transfers);
+    const filteredTransfers: TransferModel[] = transfers.filter(
+        (transfer) =>
+            transfer.state === TransferState.OUTGOING &&
+            transfer.transferId === action.value
+    );
     if (filteredTransfers.length === 0) return;
 
     const transfer = filteredTransfers[0];
@@ -160,8 +164,12 @@ function* cancelTransfer(action: ActionModel) {
 }
 
 function* acceptTransfer(action: ActionModel) {
-    const incomingTransfers: TransferModel[] = yield select((state: StateType) => state.transfers);
-    const filteredTransfers: TransferModel[] = incomingTransfers.filter((transfer) => transfer.transferId === action.value);
+    const transfers: TransferModel[] = yield select((state: StateType) => state.transfers);
+    const filteredTransfers: TransferModel[] = transfers.filter(
+        (transfer) =>
+        transfer.state === TransferState.INCOMING &&
+        transfer.transferId === action.value
+    );
     if (filteredTransfers.length === 0) return;
 
     const transfer = filteredTransfers[0];
@@ -182,8 +190,12 @@ function* acceptTransfer(action: ActionModel) {
 }
 
 function* rejectTransfer(action: ActionModel) {
-    const incomingTransfers: TransferModel[] = yield select((state: StateType) => state.transfers);
-    const filteredTransfers: TransferModel[] = incomingTransfers.filter((transfer) => transfer.transferId === action.value);
+    const transfers: TransferModel[] = yield select((state: StateType) => state.transfers);
+    const filteredTransfers: TransferModel[] = transfers.filter(
+        (transfer) =>
+        transfer.state === TransferState.INCOMING &&
+        transfer.transferId === action.value
+    );
     if (filteredTransfers.length === 0) return;
 
     const transfer = filteredTransfers[0];
