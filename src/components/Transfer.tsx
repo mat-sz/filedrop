@@ -1,10 +1,11 @@
 import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 
 import { ActionType } from '../types/ActionType';
 import { TransferModel } from '../types/Models';
 import { TransferState } from '../types/TransferState';
+import { StateType } from '../reducers';
 
 const states = {
     [TransferState.INCOMING]: 'Incoming',
@@ -28,6 +29,9 @@ const Transfer: React.FC<{
 }> = ({ transfer }) => {
     const dispatch = useDispatch();
 
+    const network = useSelector((state: StateType) => state.network);
+    const targetClient = network.find((client) => client.clientId === transfer.clientId);
+    
     const acceptTransfer = useCallback(() => dispatch({ type: ActionType.ACCEPT_TRANSFER, value: transfer.transferId }), [ transfer, dispatch ]);
     const rejectTransfer = useCallback(() => dispatch({ type: ActionType.REJECT_TRANSFER, value: transfer.transferId }), [ transfer, dispatch ]);
     const cancelTransfer = useCallback(() => dispatch({ type: ActionType.CANCEL_TRANSFER, value: transfer.transferId }), [ transfer, dispatch ]);
@@ -47,8 +51,18 @@ const Transfer: React.FC<{
 
     return (
         <motion.li className="subsection" {...animationProps}>
-            <div>
-                { transfer.fileName }{ transfer.state ? ' - ' + states[transfer.state] : '' }
+            <div className="transfer-info">
+                { targetClient ? 
+                <div className="network-tile target-tile"
+                    style={{
+                        backgroundColor: targetClient.clientColor
+                    }}
+                >
+                </div>
+                : null }
+                <div>
+                    { transfer.fileName }{ transfer.state ? ' - ' + states[transfer.state] : '' }
+                </div>
             </div>
             { transfer.state === TransferState.IN_PROGRESS ?
             <>

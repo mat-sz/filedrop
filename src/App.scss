@@ -177,6 +177,7 @@ h1, h2, h3 {
     padding: 20px;
     margin: 20px 0;
     text-align: center;
+    position: relative;
 }
 
 .qrcode {
@@ -256,6 +257,17 @@ footer {
         align-items: flex-start;
         text-align: left;
     }
+}
+
+.target-tile {
+    width: 25px;
+    height: 25px;
+    margin: 0 10px;
+}
+
+.transfer-info {
+    display: flex;
+    justify-content: center;
 }
 
 .left {
