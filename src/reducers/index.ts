@@ -87,18 +87,24 @@ function applicationState(state = initialState, action: ActionModel) {
             break;
         case ActionType.SET_REMOTE_DESCRIPTION:
             newState.transfers = newState.transfers.map((transfer) => {
-                if (transfer.transferId === action.value.transferId && transfer.peerConnection) {
-                    transfer.peerConnection.setRemoteDescription(action.value.data);
+                const peerConnection = transfer.peerConnection;
+                if (transfer.transferId === action.value.transferId &&
+                    peerConnection &&
+                    peerConnection.connectionState !== 'disconnected' &&
+                    peerConnection.connectionState !== 'failed') {
+                    transfer.peerConnection.setRemoteDescription(action.value.data).catch(() => {});
                 }
                 return transfer;
             });
             break;
         case ActionType.ADD_ICE_CANDIDATE:
             newState.transfers = newState.transfers.map((transfer) => {
-                if (transfer.transferId === action.value.transferId && transfer.peerConnection) {
-                    try {
-                        transfer.peerConnection.addIceCandidate(action.value.data);
-                    } catch {}
+                const peerConnection = transfer.peerConnection;
+                if (transfer.transferId === action.value.transferId &&
+                    peerConnection &&
+                    peerConnection.connectionState !== 'disconnected' &&
+                    peerConnection.connectionState !== 'failed') {
+                    transfer.peerConnection.addIceCandidate(action.value.data).catch(() => {});
                 }
                 return transfer;
             });
