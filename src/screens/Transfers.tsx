@@ -9,10 +9,12 @@ import Welcome from './Welcome';
 import QrCodeSection from '../components/QrCodeSection';
 import TransfersSection from '../components/TransfersSection';
 import IncompatibleBrowser from '../components/IncompatibleBrowser';
+import ClipboardModal from '../components/ClipboardModal';
 
 const Transfers: React.FC = () => {
     const dispatch = useDispatch();
     const welcomed = useSelector((state: StateType) => state.welcomed);
+    const [ clipboardFiles, setClipboardFiles ] = useState<File[]>([]);
     const { networkName } = useParams<{ networkName: string }>();
     const [ href, setHref ] = useState('');
     const [ incompatibleBrowser, setIncompatibleBrowser ] = useState(false);
@@ -26,9 +28,40 @@ const Transfers: React.FC = () => {
         setIncompatibleBrowser(!(('RTCPeerConnection' in window) && ('WebSocket' in window)));
     }, []);
 
+    useEffect(() => {
+        const onPaste = (e: ClipboardEvent) => {
+            let files = [];
+            for (let item of e.clipboardData.items) {
+                const file = item.getAsFile();
+
+                if (file) {
+                    files.push(file);
+                } else if (item.type === 'text/plain') {
+                    item.getAsString((str) => {
+                        setClipboardFiles((files) => [...files,
+                            new File([ str ], "clipboard.txt", { type: "text/plain" })
+                        ]);
+                    });
+                }
+            }
+            
+            setClipboardFiles(files);
+        };
+
+        document.addEventListener('paste', onPaste);
+
+        return () => {
+            document.removeEventListener('paste', onPaste);
+        }
+    });
+
     const dismissWelcome = useCallback(() => {
         dispatch({ type: ActionType.DISMISS_WELCOME });
     }, [ dispatch ]);
+
+    const dismissClipboard = useCallback(() => {
+        setClipboardFiles([]);
+    }, [ setClipboardFiles ]);
 
     const animationProps = {
         initial: { opacity: 0 },
@@ -46,7 +79,7 @@ const Transfers: React.FC = () => {
             { incompatibleBrowser ? <IncompatibleBrowser /> : null }
             <AnimatePresence>
             { !welcomed ?
-                <motion.div className="welcome" {...animationProps}>
+                <motion.div className="modal" {...animationProps}>
                     <div>
                         <Welcome />
                         <div className="center">
@@ -54,6 +87,14 @@ const Transfers: React.FC = () => {
                         </div>
                     </div>
                 </motion.div>
+            : null }
+            </AnimatePresence>
+            <AnimatePresence>
+            { clipboardFiles.length > 0 ?
+                <ClipboardModal
+                    files={clipboardFiles}
+                    dismissClipboard={dismissClipboard}
+                />
             : null }
             </AnimatePresence>
             <section className="desktop-2col">

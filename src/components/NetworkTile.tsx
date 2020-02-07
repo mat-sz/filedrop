@@ -6,7 +6,10 @@ import { motion } from 'framer-motion';
 import { ActionType } from '../types/ActionType';
 import { ClientModel } from '../types/Models';
 
-const NetworkTile: React.FC<{ client: ClientModel }> = ({ client }) => {
+const NetworkTile: React.FC<{
+    client: ClientModel,
+    onSelect?: (clientId: string) => void,
+}> = ({ client, onSelect }) => {
     const dispatch = useDispatch();
 
     const onDrop = useCallback((files: File[]) => {
@@ -22,6 +25,10 @@ const NetworkTile: React.FC<{ client: ClientModel }> = ({ client }) => {
         event.preventDefault();
     };
 
+    const onClick = useCallback(() => {
+        onSelect(client.clientId);
+    }, [ client, onSelect ]);
+
     const animationProps = {
         initial: { scale: 0 },
         animate: { rotate: 180, scale: 1 },
@@ -35,19 +42,29 @@ const NetworkTile: React.FC<{ client: ClientModel }> = ({ client }) => {
     };
 
     return (
-        <motion.div {...animationProps}>
+        <motion.div {...animationProps} onClick={onSelect ? onClick : null}>
+            { onSelect ?
+            <div className="network-tile"
+                style={{
+                    backgroundColor: client.clientColor
+                }}
+            >
+            </div>
+            :
             <Dropzone onDrop={onDrop}>
                 {({ getRootProps, getInputProps }) => (
                 <div {...getRootProps()} className="network-tile"
                     style={{
                         backgroundColor: client.clientColor
-                    }}>
+                    }}
+                >
                     <label onClick={preventClick}>
                         <input {...getInputProps()} accept={'*'} />
                     </label>
                 </div>
                 )}
             </Dropzone>
+            }
         </motion.div>
     );
 }

@@ -5,7 +5,9 @@ import { AnimatePresence } from 'framer-motion';
 import { StateType } from '../reducers';
 import NetworkTile from './NetworkTile';
 
-const Network: React.FC = () => {
+const Network: React.FC<{
+    onSelect?: (clientId: string) => void,
+}> = ({ onSelect }) => {
     const network = useSelector((store: StateType) => store.network);
 
     return (
@@ -13,7 +15,13 @@ const Network: React.FC = () => {
             { network.length > 0 ?
             <div className="subsection network">
                 <AnimatePresence>
-                    { network.map((client) => <NetworkTile key={client.clientId} client={client} />) }
+                    { network.map((client) =>
+                        <NetworkTile
+                            key={client.clientId}
+                            client={client}
+                            onSelect={onSelect}
+                        />
+                    ) }
                 </AnimatePresence>
             </div>
             :
