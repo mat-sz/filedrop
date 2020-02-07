@@ -46,7 +46,6 @@ const Transfer: React.FC<{
 
     useEffect(() => {
         if (transfer.fileType === 'text/plain' && transfer.blobUrl) {
-            console.log(transfer.blobUrl);
             fetch(transfer.blobUrl)
                 .then((res) => res.text())
                 .then((text) => setText(text));
