@@ -207,6 +207,17 @@ function* welcomed() {
     yield call(() => localStorage.setItem('welcomed', '1'));
 }
 
+function* updateNotificationCount() {
+    const transfers: TransferModel[] = yield select((state: StateType) => state.transfers);
+    const incomingTransfers: TransferModel[] = transfers.filter((transfer) => transfer.state === TransferState.INCOMING);
+    
+    if (incomingTransfers.length > 0) {
+        document.title = "(" + incomingTransfers.length + ") " + process.env.REACT_APP_TITLE;
+    } else {
+        document.title = process.env.REACT_APP_TITLE;
+    }
+}
+
 export default function* root(dispatch: (action: any) => void) {
     yield takeEvery(ActionType.DISMISS_WELCOME, welcomed);
 
@@ -224,4 +235,10 @@ export default function* root(dispatch: (action: any) => void) {
 
     yield takeEvery(ActionType.ACCEPT_TRANSFER, acceptTransfer);
     yield takeEvery(ActionType.REJECT_TRANSFER, rejectTransfer);
+
+    yield takeEvery([
+        ActionType.ADD_TRANSFER,
+        ActionType.UPDATE_TRANSFER,
+        ActionType.REMOVE_TRANSFER
+    ], updateNotificationCount);
 };
