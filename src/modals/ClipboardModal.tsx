@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { motion } from 'framer-motion';
 
 import { ActionType } from '../types/ActionType';
-import Network from './Network';
+import Network from '../components/Network';
 
 const ClipboardModal: React.FC<{
     files: File[],

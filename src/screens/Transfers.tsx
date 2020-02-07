@@ -1,15 +1,15 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 
 import { ActionType } from '../types/ActionType';
 import { StateType } from '../reducers';
-import Welcome from './Welcome';
 import QrCodeSection from '../components/QrCodeSection';
 import TransfersSection from '../components/TransfersSection';
 import IncompatibleBrowser from '../components/IncompatibleBrowser';
-import ClipboardModal from '../components/ClipboardModal';
+import ClipboardModal from '../modals/ClipboardModal';
+import WelcomeModal from '../modals/WelcomeModal';
 
 const Transfers: React.FC = () => {
     const dispatch = useDispatch();
@@ -55,38 +55,16 @@ const Transfers: React.FC = () => {
         }
     });
 
-    const dismissWelcome = useCallback(() => {
-        dispatch({ type: ActionType.DISMISS_WELCOME });
-    }, [ dispatch ]);
-
     const dismissClipboard = useCallback(() => {
         setClipboardFiles([]);
     }, [ setClipboardFiles ]);
-
-    const animationProps = {
-        initial: { opacity: 0 },
-        animate: { opacity: 1 },
-        exit: { opacity: 0 },
-        transition: {
-            type: 'spring',
-            stiffness: 260,
-            damping: 20,
-        },
-    };
 
     return (
         <>
             { incompatibleBrowser ? <IncompatibleBrowser /> : null }
             <AnimatePresence>
             { !welcomed ?
-                <motion.div className="modal" {...animationProps}>
-                    <div>
-                        <Welcome />
-                        <div className="center">
-                            <button onClick={dismissWelcome}>Continue</button>
-                        </div>
-                    </div>
-                </motion.div>
+                <WelcomeModal />
             : null }
             </AnimatePresence>
             <AnimatePresence>
