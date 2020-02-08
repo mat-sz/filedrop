@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CopyToClipboard from 'react-copy-to-clipboard';
+import { FiFile } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 
 import { ActionType } from '../types/ActionType';
@@ -68,7 +69,7 @@ const Transfer: React.FC<{
 
     return (
         <motion.li className="subsection" {...animationProps}>
-            <div className="transfer-info">
+            <div className="transfer-icon">
                 { targetClient ? 
                 <div className="network-tile target-tile"
                     style={{
@@ -77,8 +78,14 @@ const Transfer: React.FC<{
                 >
                 </div>
                 : null }
+                <FiFile />
+            </div>
+            <div className="transfer-info">
                 <div>
-                    { transfer.fileName }{ transfer.state ? ' - ' + states[transfer.state] : '' }
+                    { transfer.fileName }
+                </div>
+                <div>
+                    { transfer.state ? states[transfer.state] : '' }
                 </div>
             </div>
             { transfer.state === TransferState.IN_PROGRESS ?

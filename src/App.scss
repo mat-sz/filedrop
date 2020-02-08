@@ -266,8 +266,28 @@ footer {
 }
 
 .transfer-info {
-    display: flex;
-    justify-content: center;
+    display: block;
+    position: relative;
+
+    div {
+        margin: 0 75px;
+    }
+}
+
+.transfer-icon {
+    position: absolute;
+    top: calc(50% - 40px);
+
+    .target-tile {
+        position: absolute;
+        top: -10px;
+        left: -10px;
+    }
+
+    svg {
+        width: 75px;
+        height: 75px;
+    }
 }
 
 .left {
