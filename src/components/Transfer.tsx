@@ -1,13 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import CopyToClipboard from 'react-copy-to-clipboard';
-import { FiFile } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 
 import { ActionType } from '../types/ActionType';
 import { TransferModel } from '../types/Models';
 import { TransferState } from '../types/TransferState';
-import { StateType } from '../reducers';
+import TransferIcon from './TransferIcon';
 
 const states = {
     [TransferState.INCOMING]: 'Incoming',
@@ -32,9 +31,6 @@ const Transfer: React.FC<{
     const dispatch = useDispatch();
     const [ copied, setCopied ] = useState(false);
     const [ text, setText ] = useState('');
-
-    const network = useSelector((state: StateType) => state.network);
-    const targetClient = network.find((client) => client.clientId === transfer.clientId);
     
     const acceptTransfer = useCallback(() => dispatch({ type: ActionType.ACCEPT_TRANSFER, value: transfer.transferId }), [ transfer, dispatch ]);
     const rejectTransfer = useCallback(() => dispatch({ type: ActionType.REJECT_TRANSFER, value: transfer.transferId }), [ transfer, dispatch ]);
@@ -51,7 +47,7 @@ const Transfer: React.FC<{
                 .then((res) => res.text())
                 .then((text) => setText(text));
         }
-    }, [ transfer ])
+    }, [ transfer ]);
 
     const onCopy = useCallback(() => setCopied(true), [ setCopied ]);
 
@@ -69,17 +65,7 @@ const Transfer: React.FC<{
 
     return (
         <motion.li className="subsection" {...animationProps}>
-            <div className="transfer-icon">
-                { targetClient ? 
-                <div className="network-tile target-tile"
-                    style={{
-                        backgroundColor: targetClient.clientColor
-                    }}
-                >
-                </div>
-                : null }
-                <FiFile />
-            </div>
+            <TransferIcon transfer={transfer} />
             <div className="transfer-info">
                 <div>
                     { transfer.fileName }
