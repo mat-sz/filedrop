@@ -1,10 +1,21 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import ReactTooltip from 'react-tooltip';
 import { FaFile, FaFileAlt, FaFileVideo, FaFileAudio, FaFileImage, FaTimes, FaArrowDown, FaArrowUp, FaAngleDoubleDown, FaCheck, FaAngleDoubleUp, FaHourglassHalf, FaHourglassEnd } from 'react-icons/fa';
 
 import { TransferModel } from '../types/Models';
 import { StateType } from '../reducers';
 import { TransferState } from '../types/TransferState';
+
+const states = {
+    [TransferState.INCOMING]: 'Incoming',
+    [TransferState.OUTGOING]: 'Outgoing',
+    [TransferState.CONNECTING]: 'Connecting...',
+    [TransferState.CONNECTED]: 'Connected!',
+    [TransferState.IN_PROGRESS]: 'In progress...',
+    [TransferState.COMPLETE]: 'Complete!',
+    [TransferState.FAILED]: 'Failed!',
+};
 
 const TransferIcon: React.FC<{
     transfer: TransferModel,
@@ -49,25 +60,23 @@ const TransferIcon: React.FC<{
             case TransferState.COMPLETE:
                 return <FaCheck />;
         }
-        
-        return null;
     };
 
     return (
-        <>
-            <div className="transfer-icon">
-                { targetClient ? 
+        <div className="transfer-icon">
+            <ReactTooltip className="custom-tooltip" />
+            { targetClient ? 
                 <div className="network-tile target-tile"
                     style={{
                         backgroundColor: targetClient.clientColor
                     }}
+                    data-tip={states[transfer.state]}
                 >
                     { stateIcon(transfer.state, transfer.receiving) }
                 </div>
-                : null }
-                { typeIcon(transfer.fileType) }
-            </div>
-        </>
+            : null }
+            { typeIcon(transfer.fileType) }
+        </div>
     );
 }
 

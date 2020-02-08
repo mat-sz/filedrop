@@ -293,6 +293,7 @@ footer {
         position: absolute;
         top: -10px;
         left: -10px;
+        z-index: 500;
     }
 
     & > svg {
@@ -331,6 +332,16 @@ footer {
 
 .warning {
     margin: 20px;
+}
+
+.__react_component_tooltip.type-dark.place-top.custom-tooltip {
+    background: #111;
+    opacity: 1;
+    font-weight: bold;
+
+    &:after {
+        border-top-color: #111;
+    }
 }
 
 @media screen and (min-width: 768px) {

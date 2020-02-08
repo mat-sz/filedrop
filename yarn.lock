@@ -1475,6 +1475,13 @@
     "@types/history" "*"
     "@types/react" "*"
 
+"@types/react-tooltip@^3.11.0":
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/@types/react-tooltip/-/react-tooltip-3.11.0.tgz#e7e7e9c67629f2b6f75ea67752922c9de0b64468"
+  integrity sha512-TkXMgkZ5aAKkFE9Wvt8OlOiPtF9ufgBOL9xWlRSzLBaoL12qSOBiyMcU4/8TyED1fuWkm5VTVarScwOPLSArYw==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react@*", "@types/react@^16.9.0":
   version "16.9.17"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.17.tgz#58f0cc0e9ec2425d1441dd7b623421a867aa253e"
@@ -9029,6 +9036,13 @@ react-scripts@3.3.0:
     workbox-webpack-plugin "4.3.1"
   optionalDependencies:
     fsevents "2.1.2"
+
+react-tooltip@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/react-tooltip/-/react-tooltip-4.0.0.tgz#a3ea46c9fae6ceeaa0969000793ad75c49f9572c"
+  integrity sha512-AddFMtuHNZT6ISwsyh3VGfCDqv8fl5ra4Nctga3U4c05Es/YjWHqdsIxLC9Iq+u4OwnTBEnfYq4xqr2USvvg3A==
+  dependencies:
+    prop-types "^15.6.0"
 
 react@^16.12.0:
   version "16.12.0"

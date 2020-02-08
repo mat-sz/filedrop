@@ -8,16 +8,6 @@ import { TransferModel } from '../types/Models';
 import { TransferState } from '../types/TransferState';
 import TransferIcon from './TransferIcon';
 
-const states = {
-    [TransferState.INCOMING]: 'Incoming',
-    [TransferState.OUTGOING]: 'Outgoing',
-    [TransferState.CONNECTING]: 'Connecting...',
-    [TransferState.CONNECTED]: 'Connected!',
-    [TransferState.IN_PROGRESS]: 'In progress...',
-    [TransferState.COMPLETE]: 'Complete!',
-    [TransferState.FAILED]: 'Failed!',
-};
-
 const cancellableStates = [
     TransferState.IN_PROGRESS,
     TransferState.CONNECTING,
@@ -71,7 +61,7 @@ const Transfer: React.FC<{
                     { transfer.fileName }
                 </div>
                 <div>
-                    { states[transfer.state] }
+                    { transfer.state === TransferState.FAILED ? 'Failed!' : '' }
                 </div>
             </div>
             { transfer.state === TransferState.IN_PROGRESS ?
