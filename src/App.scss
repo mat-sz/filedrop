@@ -191,6 +191,12 @@ h1, h2, h3 {
         border-radius: $border-radius;
         display: inline-block;
         margin: 0;
+        margin-bottom: 10px;
+    }
+
+    button {
+        display: block;
+        margin: 0 auto;
     }
 
     canvas {
