@@ -16,8 +16,12 @@ const TransfersSection: React.FC = () => {
                     backgroundColor: clientColor
                 }}>You</div>
                 <div className="help">
-                    <div>This is your tile.</div>
-                    <div>Drag and drop files onto other tiles or click on a tile to start a transfer.</div>
+                    <div>
+                        <strong>This is your tile.</strong>
+                    </div>
+                    <div>
+                        Below this section you will see other tiles. You can drag and drop your files onto a tile or click on it to initiate a file transfer.
+                    </div>
                 </div>
             </div>
             <Network />

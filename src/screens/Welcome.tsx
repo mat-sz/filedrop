@@ -17,7 +17,7 @@ const Welcome: React.FC = () => {
                     <ol>
                         <li>Open this website on one device (you're here right now!)</li>
                         <li>Scan the QR code or open the URL from the "Invite" section on another device.</li>
-                        <li>Drag and drop your files onto a tile (any tile that isn't marked as "You").</li>
+                        <li>Drag and drop your files onto a tile (any tile that isn't marked as "You", you can also click on a tile to open a file selection dialog).</li>
                         <li>Accept the transfer on another device.</li>
                     </ol>
                 </p>
