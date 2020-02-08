@@ -28,6 +28,7 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
                 transferId: transferMessage.transferId,
                 clientId: transferMessage.clientId,
                 state: TransferState.INCOMING,
+                receiving: true,
             };
 
             yield put({ type: ActionType.ADD_TRANSFER, value: transfer });
@@ -118,6 +119,7 @@ function* createTransfer(action: ActionModel) {
         transferId: uuid(),
         clientId: action.value.clientId,
         state: TransferState.OUTGOING,
+        receiving: false,
     };
 
     yield put({ type: ActionType.ADD_TRANSFER, value: transfer });

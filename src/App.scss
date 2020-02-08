@@ -269,6 +269,11 @@ footer {
     width: 25px;
     height: 25px;
     margin: 0 10px;
+
+    svg {
+        width: 15px;
+        height: 15px;
+    }
 }
 
 .transfer-info {
@@ -290,7 +295,7 @@ footer {
         left: -10px;
     }
 
-    svg {
+    & > svg {
         width: 75px;
         height: 75px;
     }

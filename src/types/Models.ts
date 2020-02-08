@@ -71,6 +71,7 @@ export interface TransferModel {
     fileName: string,
     fileSize: number,
     fileType: string,
+    receiving: boolean,
     file?: File,
     blobUrl?: string,
     clientId?: string,

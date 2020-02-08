@@ -1,9 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { FaFile, FaFileAlt, FaFileVideo, FaFileAudio, FaFileImage } from 'react-icons/fa';
+import { FaFile, FaFileAlt, FaFileVideo, FaFileAudio, FaFileImage, FaTimes, FaArrowDown, FaArrowUp, FaAngleDoubleDown, FaCheck, FaAngleDoubleUp, FaHourglassHalf, FaHourglassEnd } from 'react-icons/fa';
 
 import { TransferModel } from '../types/Models';
 import { StateType } from '../reducers';
+import { TransferState } from '../types/TransferState';
 
 const TransferIcon: React.FC<{
     transfer: TransferModel,
@@ -11,7 +12,7 @@ const TransferIcon: React.FC<{
     const network = useSelector((state: StateType) => state.network);
     const targetClient = network.find((client) => client.clientId === transfer.clientId);
 
-    const icon = (type: string) => {
+    const typeIcon = (type: string) => {
         if (type.startsWith('text/')) {
             return <FaFileAlt />;
         } else if (type.startsWith('image/')) {
@@ -27,6 +28,31 @@ const TransferIcon: React.FC<{
         }
     };
 
+    const stateIcon = (state: TransferState, receiving: boolean) => {
+        switch (state) {
+            case TransferState.INCOMING:
+                return <FaArrowDown />;
+            case TransferState.OUTGOING:
+                return <FaArrowUp />;
+            case TransferState.FAILED:
+                return <FaTimes />;
+            case TransferState.IN_PROGRESS:
+                if (receiving) {
+                    return <FaAngleDoubleDown />;
+                } else {
+                    return <FaAngleDoubleUp />;
+                }
+            case TransferState.CONNECTING:
+                return <FaHourglassHalf />;
+            case TransferState.CONNECTED:
+                return <FaHourglassEnd />;
+            case TransferState.COMPLETE:
+                return <FaCheck />;
+        }
+        
+        return null;
+    };
+
     return (
         <>
             <div className="transfer-icon">
@@ -36,9 +62,10 @@ const TransferIcon: React.FC<{
                         backgroundColor: targetClient.clientColor
                     }}
                 >
+                    { stateIcon(transfer.state, transfer.receiving) }
                 </div>
                 : null }
-                { icon(transfer.fileType) }
+                { typeIcon(transfer.fileType) }
             </div>
         </>
     );
