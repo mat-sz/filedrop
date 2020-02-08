@@ -71,7 +71,7 @@ const Transfer: React.FC<{
                     { transfer.fileName }
                 </div>
                 <div>
-                    { transfer.state ? states[transfer.state] : '' }
+                    { states[transfer.state] }
                 </div>
             </div>
             { transfer.state === TransferState.IN_PROGRESS ?
