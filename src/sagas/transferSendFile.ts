@@ -77,6 +77,9 @@ export default function* transferSendFile(actionMessage: ActionMessageModel, dis
         }));
     };
 
+    const bufferSupported = !!connection.sctp;
+    const bufferSize = (bufferSupported) ? connection.sctp.maxMessageSize : 16384;
+
     channel.addEventListener('open', () => {
         dispatch(updateTransferAction({
             transferId: transfer.transferId,
@@ -87,7 +90,7 @@ export default function* transferSendFile(actionMessage: ActionMessageModel, dis
         let offset = 0;
 
         const nextSlice = (currentOffset: number) => {
-            const slice = file.slice(offset, currentOffset + 16384);
+            const slice = file.slice(offset, currentOffset + bufferSize);
             fileReader.readAsArrayBuffer(slice);
         };
 
@@ -124,11 +127,15 @@ export default function* transferSendFile(actionMessage: ActionMessageModel, dis
 
                 complete = true;
                 channel.close();
+            } else if (!bufferSupported) {
+                nextSlice(offset);
             }
         });
 
-        channel.bufferedAmountLowThreshold = 1024;
-        channel.addEventListener('bufferedamountlow', () => nextSlice(offset));
+        if (bufferSupported) {
+            channel.bufferedAmountLowThreshold = 1024;
+            channel.addEventListener('bufferedamountlow', () => nextSlice(offset));
+        }
 
         nextSlice(0);
     });
