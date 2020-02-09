@@ -129,8 +129,7 @@ export default function* transferReceiveFile(rtcMessage: RTCDescriptionMessageMo
         targetId: transfer.clientId,
         data: {
             type: connection.localDescription.type,
-            // Increase connection throughput on Chromium-based browsers.
-            sdp: connection.localDescription.sdp.replace('b=AS:30', 'b=AS:1638400'),
+            sdp: connection.localDescription.sdp,
         },
     };
 

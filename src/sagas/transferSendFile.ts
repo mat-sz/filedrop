@@ -39,8 +39,7 @@ export default function* transferSendFile(actionMessage: ActionMessageModel, dis
             targetId: transfer.clientId,
             data: {
                 type: connection.localDescription.type,
-                // Increase connection throughput on Chromium-based browsers.
-                sdp: connection.localDescription.sdp.replace('b=AS:30', 'b=AS:1638400'),
+                sdp: connection.localDescription.sdp,
             },
         };
 
@@ -126,14 +125,15 @@ export default function* transferSendFile(actionMessage: ActionMessageModel, dis
                 }));
 
                 complete = true;
-                channel.close();
+                // Uncomment the next line if there are issues with transfers getting stuck at 100%.
+                // channel.close();
             } else if (!bufferSupported) {
                 nextSlice(offset);
             }
         });
 
         if (bufferSupported) {
-            channel.bufferedAmountLowThreshold = 1024;
+            channel.bufferedAmountLowThreshold = 0;
             channel.addEventListener('bufferedamountlow', () => nextSlice(offset));
         }
 
