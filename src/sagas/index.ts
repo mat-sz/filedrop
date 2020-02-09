@@ -133,7 +133,6 @@ function* cancelTransfer(action: ActionModel) {
     const transfers: TransferModel[] = yield select((state: StateType) => state.transfers);
     const filteredTransfers: TransferModel[] = transfers.filter(
         (transfer) =>
-            transfer.state === TransferState.OUTGOING &&
             transfer.transferId === action.value
     );
     if (filteredTransfers.length === 0) return;
