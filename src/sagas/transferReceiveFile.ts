@@ -1,10 +1,10 @@
 import { put, select, call } from 'redux-saga/effects';
 
 import { TransferModel, RTCDescriptionMessageModel, RTCCandidateMessageModel } from '../types/Models';
-import { ActionType } from '../types/ActionType';
 import { StateType } from '../reducers';
 import { TransferState } from '../types/TransferState';
 import { updateTransferAction } from '../actions/transfers';
+import { sendMessageAction } from '../actions/websocket';
 
 export default function* transferReceiveFile(rtcMessage: RTCDescriptionMessageModel, dispatch: (action: any) => void) {
     const transfers: TransferModel[] = yield select((state: StateType) => state.transfers);
@@ -32,7 +32,7 @@ export default function* transferReceiveFile(rtcMessage: RTCDescriptionMessageMo
             data: e.candidate,
         };
 
-        dispatch({ type: ActionType.WS_SEND_MESSAGE, value: candidateMessage });
+        dispatch(sendMessageAction(candidateMessage));
     });
 
     const timestamp = new Date().getTime() / 1000;
@@ -134,5 +134,5 @@ export default function* transferReceiveFile(rtcMessage: RTCDescriptionMessageMo
         },
     };
 
-    yield put({ type: ActionType.WS_SEND_MESSAGE, value: nextRtcMessage });
+    yield put(sendMessageAction(nextRtcMessage));
 }

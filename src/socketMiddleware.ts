@@ -3,6 +3,7 @@ import { TypeSocket } from 'typesocket';
 
 import { ActionType } from './types/ActionType';
 import { MessageModel } from './types/Models';
+import { connectedAction, disconnectedAction, messageAction } from './actions/websocket';
 
 export const socketMiddleware = (url: string) => {
     return (store: MiddlewareAPI<any, any>) => {
@@ -12,9 +13,9 @@ export const socketMiddleware = (url: string) => {
             retryTime: 500,
         });
         
-        socket.on('connected', () => store.dispatch({ type: ActionType.WS_CONNECTED }));
-        socket.on('disconnected', () => store.dispatch({ type: ActionType.WS_DISCONNECTED }));
-        socket.on('message', (message) => store.dispatch({ type: ActionType.WS_MESSAGE, value: message }));
+        socket.on('connected', () => store.dispatch(connectedAction()));
+        socket.on('disconnected', () => store.dispatch(disconnectedAction()));
+        socket.on('message', (message) => store.dispatch(messageAction(message)));
         socket.connect();
 
         return (next: (action: any) => void) => (action: any) => {

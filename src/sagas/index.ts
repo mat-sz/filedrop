@@ -8,6 +8,7 @@ import transferSendFile from './transferSendFile';
 import transferReceiveFile from './transferReceiveFile';
 import { TransferState } from '../types/TransferState';
 import { setRemoteDescriptionAction, removeTransferAction, updateTransferAction, addTransferAction, addIceCandidateAction } from '../actions/transfers';
+import { sendMessageAction } from '../actions/websocket';
 
 function* message(action: ActionModel, dispatch: (action: any) => void) {
     const msg: MessageModel = action.value as MessageModel;
@@ -56,7 +57,7 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
                 type: 'ping',
                 timestamp: new Date().getTime(),
             };
-            yield put({ type: ActionType.WS_SEND_MESSAGE, value: pongMessage });
+            yield put(sendMessageAction(pongMessage));
             break;
         case 'rtcDescription':
             const rtcMessage: RTCDescriptionMessageModel = msg as RTCDescriptionMessageModel;
@@ -84,7 +85,7 @@ function* connected() {
             networkName: networkName,
         };
 
-        yield put({ type: ActionType.WS_SEND_MESSAGE, value: message });
+        yield put(sendMessageAction(message));
     }
 }
 
@@ -94,7 +95,7 @@ function* setName(action: ActionModel) {
         networkName: action.value,
     };
 
-    yield put({ type: ActionType.WS_SEND_MESSAGE, value: message });
+    yield put(sendMessageAction(message));
 }
 
 function* disconnected() {
@@ -126,7 +127,7 @@ function* createTransfer(action: ActionModel) {
         targetId: transfer.clientId,
     };
 
-    yield put({ type: ActionType.WS_SEND_MESSAGE, value: model });
+    yield put(sendMessageAction(model));
 }
 
 function* cancelTransfer(action: ActionModel) {
@@ -153,7 +154,7 @@ function* cancelTransfer(action: ActionModel) {
         action: 'cancel',
     };
 
-    yield put({ type: ActionType.WS_SEND_MESSAGE, value: model });
+    yield put(sendMessageAction(model));
     yield put(removeTransferAction(action.value));
 }
 
@@ -176,7 +177,7 @@ function* acceptTransfer(action: ActionModel) {
         action: 'accept',
     };
 
-    yield put({ type: ActionType.WS_SEND_MESSAGE, value: model });
+    yield put(sendMessageAction(model));
     yield put(updateTransferAction({
         transferId: action.value,
         state: TransferState.CONNECTING,
@@ -202,7 +203,7 @@ function* rejectTransfer(action: ActionModel) {
         action: 'reject',
     };
 
-    yield put({ type: ActionType.WS_SEND_MESSAGE, value: model });
+    yield put(sendMessageAction(model));
     yield put(removeTransferAction(action.value));
 }
 

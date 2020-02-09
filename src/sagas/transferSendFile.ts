@@ -1,10 +1,10 @@
 import { put, select } from 'redux-saga/effects';
 
 import { TransferModel, ActionMessageModel, RTCDescriptionMessageModel, RTCCandidateMessageModel } from '../types/Models';
-import { ActionType } from '../types/ActionType';
 import { StateType } from '../reducers';
 import { TransferState } from '../types/TransferState';
 import { updateTransferAction } from '../actions/transfers';
+import { sendMessageAction } from '../actions/websocket';
 
 export default function* transferSendFile(actionMessage: ActionMessageModel, dispatch: (action: any) => void) {
     yield put(updateTransferAction({
@@ -44,7 +44,7 @@ export default function* transferSendFile(actionMessage: ActionMessageModel, dis
             },
         };
 
-        dispatch({ type: ActionType.WS_SEND_MESSAGE, value: nextRtcMessage });
+        dispatch(sendMessageAction(nextRtcMessage));
     });
 
     connection.addEventListener('icecandidate', (e) => {
@@ -57,7 +57,7 @@ export default function* transferSendFile(actionMessage: ActionMessageModel, dis
             data: e.candidate,
         };
         
-        dispatch({ type: ActionType.WS_SEND_MESSAGE, value: candidateMessage });
+        dispatch(sendMessageAction(candidateMessage));
     });
 
     const channel = connection.createDataChannel('sendDataChannel');
