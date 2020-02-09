@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { motion } from 'framer-motion';
 
-import { ActionType } from '../types/ActionType';
+import { removeTransferAction, cancelTransferAction, rejectTransferAction, acceptTransferAction } from '../actions/transfers';
 import { TransferModel } from '../types/Models';
 import { TransferState } from '../types/TransferState';
 import TransferIcon from './TransferIcon';
@@ -22,10 +22,10 @@ const Transfer: React.FC<{
     const [ copied, setCopied ] = useState(false);
     const [ text, setText ] = useState('');
     
-    const acceptTransfer = useCallback(() => dispatch({ type: ActionType.ACCEPT_TRANSFER, value: transfer.transferId }), [ transfer, dispatch ]);
-    const rejectTransfer = useCallback(() => dispatch({ type: ActionType.REJECT_TRANSFER, value: transfer.transferId }), [ transfer, dispatch ]);
-    const cancelTransfer = useCallback(() => dispatch({ type: ActionType.CANCEL_TRANSFER, value: transfer.transferId }), [ transfer, dispatch ]);
-    const dismissTransfer = useCallback(() => dispatch({ type: ActionType.REMOVE_TRANSFER, value: transfer.transferId }), [ transfer, dispatch ]);
+    const acceptTransfer = useCallback(() => dispatch(acceptTransferAction(transfer.transferId)), [ transfer, dispatch ]);
+    const rejectTransfer = useCallback(() => dispatch(rejectTransferAction(transfer.transferId)), [ transfer, dispatch ]);
+    const cancelTransfer = useCallback(() => dispatch(cancelTransferAction(transfer.transferId)), [ transfer, dispatch ]);
+    const dismissTransfer = useCallback(() => dispatch(removeTransferAction(transfer.transferId)), [ transfer, dispatch ]);
 
     useEffect(() => {
         setCopied(false);

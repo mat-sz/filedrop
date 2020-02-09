@@ -82,6 +82,22 @@ export interface TransferModel {
     state: TransferState,
 };
 
+export interface TransferUpdateModel {
+    transferId: string,
+    fileName?: string,
+    fileSize?: number,
+    fileType?: string,
+    receiving?: boolean,
+    file?: File,
+    blobUrl?: string,
+    clientId?: string,
+    peerConnection?: RTCPeerConnection,
+    progress?: number,
+    speed?: number,
+    time?: number,
+    state?: TransferState,
+};
+
 export interface ClientModel {
     clientId: string,
     clientColor: string,

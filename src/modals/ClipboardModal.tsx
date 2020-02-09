@@ -2,8 +2,8 @@ import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { motion } from 'framer-motion';
 
-import { ActionType } from '../types/ActionType';
 import Network from '../components/Network';
+import { createTransferAction } from '../actions/transfers';
 
 const ClipboardModal: React.FC<{
     files: File[],
@@ -13,10 +13,7 @@ const ClipboardModal: React.FC<{
 
     const onSelect = useCallback((clientId: string) => {
         for (let file of files) {
-            dispatch({ type: ActionType.CREATE_TRANSFER, value: {
-                file: file,
-                clientId: clientId,
-            } });
+            dispatch(createTransferAction(file, clientId));
         }
 
         dismissClipboard();

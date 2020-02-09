@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import Dropzone from 'react-dropzone';
 import { motion } from 'framer-motion';
 
-import { ActionType } from '../types/ActionType';
 import { ClientModel } from '../types/Models';
+import { createTransferAction } from '../actions/transfers';
 
 const NetworkTile: React.FC<{
     client: ClientModel,
@@ -14,10 +14,7 @@ const NetworkTile: React.FC<{
 
     const onDrop = useCallback((files: File[]) => {
         for (let file of files) {
-            dispatch({ type: ActionType.CREATE_TRANSFER, value: {
-                file: file,
-                clientId: client.clientId,
-            } });
+            dispatch(createTransferAction(file, client.clientId));
         }
     }, [ dispatch, client.clientId ]);
 

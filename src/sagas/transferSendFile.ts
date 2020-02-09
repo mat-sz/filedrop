@@ -4,12 +4,13 @@ import { TransferModel, ActionMessageModel, RTCDescriptionMessageModel, RTCCandi
 import { ActionType } from '../types/ActionType';
 import { StateType } from '../reducers';
 import { TransferState } from '../types/TransferState';
+import { updateTransferAction } from '../actions/transfers';
 
 export default function* transferSendFile(actionMessage: ActionMessageModel, dispatch: (action: any) => void) {
-    yield put({ type: ActionType.UPDATE_TRANSFER, value: {
+    yield put(updateTransferAction({
         transferId: actionMessage.transferId,
         state: TransferState.CONNECTING,
-    } });
+    }));
 
     const transfers: TransferModel[] = yield select((state: StateType) => state.transfers);
     const filteredTransfers: TransferModel[] = transfers.filter((transfer) => transfer.transferId === actionMessage.transferId);
@@ -23,10 +24,10 @@ export default function* transferSendFile(actionMessage: ActionMessageModel, dis
     const rtcConfiguration = yield select((state: StateType) => state.rtcConfiguration);
     const connection = new RTCPeerConnection(rtcConfiguration);
 
-    yield put({ type: ActionType.UPDATE_TRANSFER, value: {
+    yield put(updateTransferAction({
         transferId: transfer.transferId,
         peerConnection: connection,
-    } });
+    }));
 
     connection.addEventListener('negotiationneeded', async () => {
         const offer = await connection.createOffer();
@@ -68,19 +69,19 @@ export default function* transferSendFile(actionMessage: ActionMessageModel, dis
     const onFailure = () => {
         complete = true;
 
-        dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
+        dispatch(updateTransferAction({
             transferId: transfer.transferId,
             state: TransferState.FAILED,
             progress: 1,
             speed: 0,
-        } });
+        }));
     };
 
     channel.addEventListener('open', () => {
-        dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
+        dispatch(updateTransferAction({
             transferId: transfer.transferId,
             state: TransferState.CONNECTED,
-        } });
+        }));
 
         const fileReader = new FileReader();
         let offset = 0;
@@ -105,23 +106,23 @@ export default function* transferSendFile(actionMessage: ActionMessageModel, dis
 
             offset += buffer.byteLength;
 
-            dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
+            dispatch(updateTransferAction({
                 transferId: transfer.transferId,
                 state: TransferState.IN_PROGRESS,
                 progress: offset/file.size,
                 speed: offset/(new Date().getTime() / 1000 - timestamp),
-            } });
+            }));
 
             if (offset < file.size) {
                 nextSlice(offset);
             } else {
-                dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
+                dispatch(updateTransferAction({
                     transferId: transfer.transferId,
                     state: TransferState.COMPLETE,
                     progress: 1,
                     speed: 0,
                     time: Math.floor(new Date().getTime() / 1000 - timestamp),
-                } });
+                }));
 
                 complete = true;
                 channel.close();

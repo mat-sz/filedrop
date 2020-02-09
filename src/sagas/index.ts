@@ -7,6 +7,7 @@ import { StateType } from '../reducers';
 import transferSendFile from './transferSendFile';
 import transferReceiveFile from './transferReceiveFile';
 import { TransferState } from '../types/TransferState';
+import { setRemoteDescriptionAction, removeTransferAction, updateTransferAction, addTransferAction, addIceCandidateAction } from '../actions/transfers';
 
 function* message(action: ActionModel, dispatch: (action: any) => void) {
     const msg: MessageModel = action.value as MessageModel;
@@ -31,20 +32,18 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
                 receiving: true,
             };
 
-            yield put({ type: ActionType.ADD_TRANSFER, value: transfer });
+            yield put(addTransferAction(transfer));
             break;
         case 'action':
             const actionMessage: ActionMessageModel = msg as ActionMessageModel;
 
             switch (actionMessage.action) {
                 case 'cancel':
-                    yield put({ type: ActionType.REMOVE_TRANSFER, value: actionMessage.transferId });
+                case 'reject':
+                    yield put(removeTransferAction(actionMessage.transferId));
                     break;
                 case 'accept':
                     yield call(() => transferSendFile(actionMessage, dispatch));
-                    break;
-                case 'reject':
-                    yield put({ type: ActionType.REMOVE_TRANSFER, value: actionMessage.transferId });
                     break;
             }
             break;
@@ -63,20 +62,14 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
             const rtcMessage: RTCDescriptionMessageModel = msg as RTCDescriptionMessageModel;
             
             if (rtcMessage.data.type === 'answer') {
-                yield put({ type: ActionType.SET_REMOTE_DESCRIPTION, value: {
-                    transferId: rtcMessage.transferId,
-                    data: rtcMessage.data,
-                } });
+                yield put(setRemoteDescriptionAction(rtcMessage.transferId, rtcMessage.data));
             } else {
                 yield call(() => transferReceiveFile(rtcMessage, dispatch));
             }
             break;
         case 'rtcCandidate':
             const rtcCandidate: RTCCandidateMessageModel = msg as RTCCandidateMessageModel;
-            yield put({ type: ActionType.ADD_ICE_CANDIDATE, value: {
-                transferId: rtcCandidate.transferId,
-                data: rtcCandidate.data,
-            } });
+            yield put(addIceCandidateAction(rtcCandidate.transferId, rtcCandidate.data));
             break;
     }
 }
@@ -122,7 +115,7 @@ function* createTransfer(action: ActionModel) {
         receiving: false,
     };
 
-    yield put({ type: ActionType.ADD_TRANSFER, value: transfer });
+    yield put(addTransferAction(transfer));
 
     const model: TransferMessageModel = {
         type: 'transfer',
@@ -162,7 +155,7 @@ function* cancelTransfer(action: ActionModel) {
     };
 
     yield put({ type: ActionType.WS_SEND_MESSAGE, value: model });
-    yield put({ type: ActionType.REMOVE_TRANSFER, value: action.value });
+    yield put(removeTransferAction(action.value));
 }
 
 function* acceptTransfer(action: ActionModel) {
@@ -185,10 +178,10 @@ function* acceptTransfer(action: ActionModel) {
     };
 
     yield put({ type: ActionType.WS_SEND_MESSAGE, value: model });
-    yield put({ type: ActionType.UPDATE_TRANSFER, value: {
+    yield put(updateTransferAction({
         transferId: action.value,
         state: TransferState.CONNECTING,
-    } });
+    }));
 }
 
 function* rejectTransfer(action: ActionModel) {
@@ -211,7 +204,7 @@ function* rejectTransfer(action: ActionModel) {
     };
 
     yield put({ type: ActionType.WS_SEND_MESSAGE, value: model });
-    yield put({ type: ActionType.REMOVE_TRANSFER, value: action.value });
+    yield put(removeTransferAction(action.value));
 }
 
 /**

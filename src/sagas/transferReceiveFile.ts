@@ -4,6 +4,7 @@ import { TransferModel, RTCDescriptionMessageModel, RTCCandidateMessageModel } f
 import { ActionType } from '../types/ActionType';
 import { StateType } from '../reducers';
 import { TransferState } from '../types/TransferState';
+import { updateTransferAction } from '../actions/transfers';
 
 export default function* transferReceiveFile(rtcMessage: RTCDescriptionMessageModel, dispatch: (action: any) => void) {
     const transfers: TransferModel[] = yield select((state: StateType) => state.transfers);
@@ -16,10 +17,10 @@ export default function* transferReceiveFile(rtcMessage: RTCDescriptionMessageMo
     const rtcConfiguration = yield select((state: StateType) => state.rtcConfiguration);
     const connection = new RTCPeerConnection(rtcConfiguration);
 
-    yield put({ type: ActionType.UPDATE_TRANSFER, value: {
+    yield put(updateTransferAction({
         transferId: transfer.transferId,
         peerConnection: connection,
-    } });
+    }));
 
     connection.addEventListener('icecandidate', (e) => {
         if (!e || !e.candidate) return;
@@ -42,12 +43,12 @@ export default function* transferReceiveFile(rtcMessage: RTCDescriptionMessageMo
     const onFailure = () => {
         complete = true;
 
-        dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
+        dispatch(updateTransferAction({
             transferId: transfer.transferId,
             state: TransferState.FAILED,
             progress: 1,
             speed: 0,
-        } });
+        }));
     };
 
     const onComplete = () => {
@@ -56,14 +57,14 @@ export default function* transferReceiveFile(rtcMessage: RTCDescriptionMessageMo
         const blob = new Blob(buffer);
         const blobUrl = URL.createObjectURL(blob);
 
-        dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
+        dispatch(updateTransferAction({
             transferId: transfer.transferId,
             state: TransferState.COMPLETE,
             progress: 1,
             speed: 0,
             time: Math.floor(new Date().getTime() / 1000 - timestamp),
             blobUrl: blobUrl,
-        } });
+        }));
 
         const element = document.createElement('a');
         element.setAttribute('href', blobUrl);
@@ -76,10 +77,10 @@ export default function* transferReceiveFile(rtcMessage: RTCDescriptionMessageMo
     };
 
     connection.addEventListener('datachannel', (event) => {
-        dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
+        dispatch(updateTransferAction({
             transferId: transfer.transferId,
             state: TransferState.CONNECTED,
-        } });
+        }));
 
         const channel = event.channel;
 
@@ -88,12 +89,12 @@ export default function* transferReceiveFile(rtcMessage: RTCDescriptionMessageMo
             buffer.push(event.data);
             offset += event.data.byteLength;
 
-            dispatch({ type: ActionType.UPDATE_TRANSFER, value: {
+            dispatch(updateTransferAction({
                 transferId: transfer.transferId,
                 state: TransferState.IN_PROGRESS,
                 progress: offset/transfer.fileSize,
                 speed: offset/(new Date().getTime() / 1000 - timestamp),
-            } });
+            }));
 
             if (offset >= transfer.fileSize) {
                 onComplete();
