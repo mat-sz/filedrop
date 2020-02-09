@@ -113,9 +113,7 @@ export default function* transferSendFile(actionMessage: ActionMessageModel, dis
                 speed: offset/(new Date().getTime() / 1000 - timestamp),
             }));
 
-            if (offset < file.size) {
-                nextSlice(offset);
-            } else {
+            if (offset >= file.size) {
                 dispatch(updateTransferAction({
                     transferId: transfer.transferId,
                     state: TransferState.COMPLETE,
@@ -128,6 +126,9 @@ export default function* transferSendFile(actionMessage: ActionMessageModel, dis
                 channel.close();
             }
         });
+
+        channel.bufferedAmountLowThreshold = 1024;
+        channel.addEventListener('bufferedamountlow', () => nextSlice(offset));
 
         nextSlice(0);
     });
