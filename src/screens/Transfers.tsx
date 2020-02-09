@@ -3,13 +3,13 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AnimatePresence } from 'framer-motion';
 
-import { ActionType } from '../types/ActionType';
 import { StateType } from '../reducers';
 import QrCodeSection from '../components/QrCodeSection';
 import TransfersSection from '../components/TransfersSection';
 import IncompatibleBrowser from '../components/IncompatibleBrowser';
 import ClipboardModal from '../modals/ClipboardModal';
 import WelcomeModal from '../modals/WelcomeModal';
+import { setNetworkNameAction } from '../actions/state';
 
 const Transfers: React.FC = () => {
     const dispatch = useDispatch();
@@ -21,7 +21,7 @@ const Transfers: React.FC = () => {
 
     useEffect(() => {
         setHref(window.location.origin + window.location.pathname + window.location.hash);
-        dispatch({ type: ActionType.SET_NETWORK_NAME, value: networkName });
+        dispatch(setNetworkNameAction(networkName));
     }, [ setHref, networkName, dispatch ]);
 
     useEffect(() => {

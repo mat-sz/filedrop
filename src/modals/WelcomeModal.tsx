@@ -2,14 +2,14 @@ import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { motion } from 'framer-motion';
 
-import { ActionType } from '../types/ActionType';
 import Welcome from '../screens/Welcome';
+import { dismissWelcomeAction } from '../actions/state';
 
 const WelcomeModal: React.FC = () => {
     const dispatch = useDispatch();
 
     const dismissWelcome = useCallback(() => {
-        dispatch({ type: ActionType.DISMISS_WELCOME });
+        dispatch(dismissWelcomeAction());
     }, [ dispatch ]);
 
     const animationProps = {

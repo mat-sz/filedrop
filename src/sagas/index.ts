@@ -9,6 +9,7 @@ import transferReceiveFile from './transferReceiveFile';
 import { TransferState } from '../types/TransferState';
 import { setRemoteDescriptionAction, removeTransferAction, updateTransferAction, addTransferAction, addIceCandidateAction } from '../actions/transfers';
 import { sendMessageAction } from '../actions/websocket';
+import { setNetworkAction, setRtcConfigurationAction, setSuggestedNameAction, setClientIdAction, setClientColorAction, setConnectedAction } from '../actions/state';
 
 function* message(action: ActionModel, dispatch: (action: any) => void) {
     const msg: MessageModel = action.value as MessageModel;
@@ -16,10 +17,10 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
     switch (msg.type) {
         case 'welcome':
             const welcomeMessage: WelcomeMessageModel = msg as WelcomeMessageModel;
-            yield put({ type: ActionType.SET_RTC_CONFIGURATION, value: welcomeMessage.rtcConfiguration })
-            yield put({ type: ActionType.SET_SUGGESTED_NAME, value: welcomeMessage.suggestedName });
-            yield put({ type: ActionType.SET_CLIENT_ID, value: welcomeMessage.clientId });
-            yield put({ type: ActionType.SET_CLIENT_COLOR, value: welcomeMessage.clientColor });
+            yield put(setRtcConfigurationAction(welcomeMessage.rtcConfiguration));
+            yield put(setSuggestedNameAction(welcomeMessage.suggestedName));
+            yield put(setClientIdAction(welcomeMessage.clientId));
+            yield put(setClientColorAction(welcomeMessage.clientColor));
             break;
         case 'transfer':
             const transferMessage: TransferMessageModel = msg as TransferMessageModel;
@@ -50,7 +51,7 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
             break;
         case 'network':
             const networkMessage: NetworkMessageModel = msg as NetworkMessageModel;
-            yield put({ type: ActionType.SET_NETWORK, value: networkMessage.clients });
+            yield put(setNetworkAction(networkMessage.clients));
             break;
         case 'ping':
             const pongMessage: PingMessageModel = {
@@ -76,7 +77,7 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
 }
 
 function* connected() {
-    yield put({ type: ActionType.SET_CONNECTED, value: true });
+    yield put(setConnectedAction(true));
 
     let networkName = yield select((state: StateType) => state.networkName);
     if (networkName && networkName !== '') {
@@ -99,7 +100,7 @@ function* setName(action: ActionModel) {
 }
 
 function* disconnected() {
-    yield put({ type: ActionType.SET_CONNECTED, value: false });
+    yield put(setConnectedAction(false));
 }
 
 function* createTransfer(action: ActionModel) {
