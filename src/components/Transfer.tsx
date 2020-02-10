@@ -54,47 +54,49 @@ const Transfer: React.FC<{
     };
 
     return (
-        <motion.li className="subsection" {...animationProps}>
+        <motion.li className="subsection info-grid" {...animationProps}>
             <TransferIcon transfer={transfer} />
-            <div className="transfer-info">
-                <div>
+            <div className="info">
+                <div className="metadata">
                     { transfer.fileName }
                 </div>
-                <div>
+                <div className="metadata">
                     { transfer.state === TransferState.FAILED ? 'Failed!' : '' }
                 </div>
-            </div>
-            { transfer.state === TransferState.IN_PROGRESS ?
-            <>
-                <progress value={transfer.progress} max={1} />
-                <div>{ Math.round(transfer.speed / 1000) } kB/s</div>
-            </> : null }
-            { transfer.state === TransferState.COMPLETE && transfer.blobUrl ?
-            <>
-                <a className="button" href={transfer.blobUrl} download={transfer.fileName}>Redownload</a>
-                { transfer.fileType === 'text/plain' ?
-                    <CopyToClipboard
-                        text={text}
-                        onCopy={onCopy}
-                    >
-                        <button>
-                            { copied ? 'Copied' : 'Copy to clipboard' }
-                        </button>
-                    </CopyToClipboard>
+                { transfer.state === TransferState.IN_PROGRESS ?
+                <div className="progress">
+                    <progress value={transfer.progress} max={1} />
+                    <div>{ Math.round(transfer.speed / 1000) } kB/s</div>
+                </div> : null }
+                <div className="buttons">
+                { transfer.state === TransferState.COMPLETE && transfer.blobUrl ?
+                <>
+                    <a className="button" href={transfer.blobUrl} download={transfer.fileName}>Redownload</a>
+                    { transfer.fileType === 'text/plain' ?
+                        <CopyToClipboard
+                            text={text}
+                            onCopy={onCopy}
+                        >
+                            <button>
+                                { copied ? 'Copied' : 'Copy to clipboard' }
+                            </button>
+                        </CopyToClipboard>
+                    : null }
+                </>
                 : null }
-            </>
-            : null }
-            { transfer.state === TransferState.COMPLETE || transfer.state === TransferState.FAILED ?
-                <button onClick={dismissTransfer}>Dismiss</button>
-            : null }
-            { transfer.state === TransferState.INCOMING ? 
-            <>
-                <button onClick={acceptTransfer}>Accept</button>
-                <button onClick={rejectTransfer}>Reject</button>
-            </> : null }
-            { cancellableStates.includes(transfer.state) ?
-                <button onClick={cancelTransfer}>Cancel</button>
-            : null }
+                { transfer.state === TransferState.COMPLETE || transfer.state === TransferState.FAILED ?
+                    <button onClick={dismissTransfer}>Dismiss</button>
+                : null }
+                { transfer.state === TransferState.INCOMING ? 
+                <>
+                    <button onClick={acceptTransfer}>Accept</button>
+                    <button onClick={rejectTransfer}>Reject</button>
+                </> : null }
+                { cancellableStates.includes(transfer.state) ?
+                    <button onClick={cancelTransfer}>Cancel</button>
+                : null }
+                </div>
+            </div>
         </motion.li>
     );
 }

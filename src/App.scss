@@ -252,16 +252,32 @@ footer {
     }
 }
 
-.network-you {
+.info-grid {
     display: grid;
     grid-template-columns: 100px 1fr;
 
-    .help {
+    .info {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
         text-align: left;
+
+        .metadata {
+            word-break: break-word;
+        }
+
+        .progress {
+            text-align: center;
+        }
+
+        .buttons {
+            margin-left: -5px;
+
+            & > * {
+                display: inline-block;
+            }
+        }
     }
 }
 
@@ -276,18 +292,8 @@ footer {
     }
 }
 
-.transfer-info {
-    display: block;
-    position: relative;
-
-    div {
-        margin: 0 75px;
-    }
-}
-
 .transfer-icon {
-    position: absolute;
-    top: calc(50% - 40px);
+    position: relative;
 
     .target-tile {
         position: absolute;

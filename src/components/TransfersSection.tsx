@@ -11,11 +11,11 @@ const TransfersSection: React.FC = () => {
     return (
         <div>
             <h2>Your network</h2>
-            <div className="subsection network-you">
+            <div className="subsection info-grid">
                 <div className="network-tile" style={{
                     backgroundColor: clientColor
                 }}>You</div>
-                <div className="help">
+                <div className="info">
                     <div>
                         <strong>This is your tile.</strong>
                     </div>
