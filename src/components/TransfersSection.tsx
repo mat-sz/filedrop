@@ -12,9 +12,11 @@ const TransfersSection: React.FC = () => {
         <div>
             <h2>Your network</h2>
             <div className="subsection info-grid">
-                <div className="network-tile" style={{
-                    backgroundColor: clientColor
-                }}>You</div>
+                <div className="image">
+                    <div className="network-tile" style={{
+                        backgroundColor: clientColor
+                    }}>You</div>
+                </div>
                 <div className="info">
                     <div>
                         <strong>This is your tile.</strong>

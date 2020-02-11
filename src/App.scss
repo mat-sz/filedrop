@@ -254,7 +254,14 @@ footer {
 
 .info-grid {
     display: grid;
-    grid-template-columns: 100px 1fr;
+    grid-template-columns: 75px 1fr;
+    grid-gap: 25px;
+
+    .image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
     .info {
         display: flex;
@@ -294,6 +301,7 @@ footer {
 
 .transfer-icon {
     position: relative;
+    font-size: 0;
 
     .target-tile {
         position: absolute;

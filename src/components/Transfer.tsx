@@ -55,7 +55,9 @@ const Transfer: React.FC<{
 
     return (
         <motion.li className="subsection info-grid" {...animationProps}>
-            <TransferIcon transfer={transfer} />
+            <div className="image">
+                <TransferIcon transfer={transfer} />
+            </div>
             <div className="info">
                 <div className="metadata">
                     { transfer.fileName }
