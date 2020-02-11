@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
-import { FaFile, FaFileAlt, FaFileVideo, FaFileAudio, FaFileImage, FaTimes, FaArrowDown, FaArrowUp, FaAngleDoubleDown, FaCheck, FaAngleDoubleUp, FaHourglassHalf, FaHourglassEnd } from 'react-icons/fa';
+import { FaFile, FaFileAlt, FaFileVideo, FaFileAudio, FaFileImage, FaFileArchive, FaTimes, FaArrowDown, FaArrowUp, FaAngleDoubleDown, FaCheck, FaAngleDoubleUp, FaHourglassHalf, FaHourglassEnd } from 'react-icons/fa';
 
 import { TransferModel } from '../types/Models';
 import { StateType } from '../reducers';
@@ -24,8 +24,10 @@ const TransferIcon: React.FC<{
     const targetClient = network.find((client) => client.clientId === transfer.clientId);
 
     const typeIcon = (type: string) => {
-        if (type.startsWith('text/')) {
+        if (type.startsWith('text/') || type.includes('pdf')) {
             return <FaFileAlt />;
+        } else if (type.includes('zip') || type.includes('rar') || type.includes('7z') || type.includes('compress')) {
+            return <FaFileArchive />;
         } else if (type.startsWith('image/')) {
             return <FaFileImage />;
         } else if (type.startsWith('video/')) {
