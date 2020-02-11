@@ -141,15 +141,14 @@ progress {
     border-radius: $border-radius;
     -webkit-appearance: none;
     -moz-appearance: none;
+    overflow: hidden;
 
     &::-moz-progress-bar {
         background-color: desaturate($accent-color, 50%);
-        border-radius: $border-radius;
     }
     
     &::-webkit-progress-value {
         background-color: desaturate($accent-color, 50%);
-        border-radius: $border-radius;
     }
 
     &::-webkit-progress-bar {
