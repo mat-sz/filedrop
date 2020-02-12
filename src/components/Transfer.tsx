@@ -7,6 +7,7 @@ import { removeTransferAction, cancelTransferAction, rejectTransferAction, accep
 import { TransferModel } from '../types/Models';
 import { TransferState } from '../types/TransferState';
 import TransferIcon from './TransferIcon';
+import { animationPropsScale } from '../animationSettings';
 
 const cancellableStates = [
     TransferState.IN_PROGRESS,
@@ -41,20 +42,8 @@ const Transfer: React.FC<{
 
     const onCopy = useCallback(() => setCopied(true), [ setCopied ]);
 
-    const animationProps = {
-        initial: { scale: 0 },
-        animate: { scale: 1 },
-        exit: { scale: 0 },
-        transition: {
-            type: 'spring',
-            stiffness: 260,
-            damping: 20,
-        },
-        positionTransition: true,
-    };
-
     return (
-        <motion.li className="subsection info-grid" {...animationProps}>
+        <motion.li className="subsection info-grid" {...animationPropsScale}>
             <div className="image">
                 <TransferIcon transfer={transfer} />
             </div>

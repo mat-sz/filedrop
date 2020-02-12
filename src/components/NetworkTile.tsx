@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 
 import { ClientModel } from '../types/Models';
 import { createTransferAction } from '../actions/transfers';
+import { animationPropsRotation } from '../animationSettings';
 
 const NetworkTile: React.FC<{
     client: ClientModel,
@@ -26,20 +27,8 @@ const NetworkTile: React.FC<{
         onSelect(client.clientId);
     }, [ client, onSelect ]);
 
-    const animationProps = {
-        initial: { scale: 0 },
-        animate: { rotate: 180, scale: 1 },
-        exit: { scale: 0 },
-        transition: {
-            type: 'spring',
-            stiffness: 260,
-            damping: 20,
-        },
-        positionTransition: true,
-    };
-
     return (
-        <motion.div {...animationProps} onClick={onSelect ? onClick : null}>
+        <motion.div {...animationPropsRotation} onClick={onSelect ? onClick : null}>
             { onSelect ?
             <div className="network-tile"
                 style={{

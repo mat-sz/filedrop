@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 
 import Welcome from '../screens/Welcome';
 import { dismissWelcomeAction } from '../actions/state';
+import { animationPropsOpacity } from '../animationSettings';
 
 const WelcomeModal: React.FC = () => {
     const dispatch = useDispatch();
@@ -12,19 +13,8 @@ const WelcomeModal: React.FC = () => {
         dispatch(dismissWelcomeAction());
     }, [ dispatch ]);
 
-    const animationProps = {
-        initial: { opacity: 0 },
-        animate: { opacity: 1 },
-        exit: { opacity: 0 },
-        transition: {
-            type: 'spring',
-            stiffness: 260,
-            damping: 20,
-        },
-    };
-
     return (
-        <motion.div className="modal" {...animationProps}>
+        <motion.div className="modal" {...animationPropsOpacity}>
             <div>
                 <Welcome />
                 <div className="center">

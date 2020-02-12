@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 
 import Network from '../components/Network';
 import { createTransferAction } from '../actions/transfers';
+import { animationPropsOpacity } from '../animationSettings';
 
 const ClipboardModal: React.FC<{
     files: File[],
@@ -19,19 +20,8 @@ const ClipboardModal: React.FC<{
         dismissClipboard();
     }, [ dispatch, files, dismissClipboard ]);
 
-    const animationProps = {
-        initial: { opacity: 0 },
-        animate: { opacity: 1 },
-        exit: { opacity: 0 },
-        transition: {
-            type: 'spring',
-            stiffness: 260,
-            damping: 20,
-        },
-    };
-
     return (
-        <motion.div className="modal" {...animationProps}>
+        <motion.div className="modal" {...animationPropsOpacity}>
             <div>
                 <section>
                     <h2>Send clipboard contents</h2>
