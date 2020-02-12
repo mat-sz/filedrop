@@ -301,17 +301,20 @@ footer {
 .transfer-icon {
     position: relative;
     font-size: 0;
+    background: #111;
+    padding: 10px 0;
+    border-radius: $border-radius;
 
     .target-tile {
         position: absolute;
-        top: -10px;
-        left: -10px;
+        top: -8.5px;
+        left: -18.5px;
         z-index: 500;
     }
 
     & > svg {
         width: 75px;
-        height: 75px;
+        height: 55px;
     }
 }
 
