@@ -10,19 +10,20 @@ import { TransferState } from '../types/TransferState';
 import { setRemoteDescriptionAction, removeTransferAction, updateTransferAction, addTransferAction, addIceCandidateAction } from '../actions/transfers';
 import { sendMessageAction } from '../actions/websocket';
 import { setNetworkAction, setRtcConfigurationAction, setSuggestedNameAction, setClientIdAction, setClientColorAction, setConnectedAction } from '../actions/state';
+import { MessageType, ActionMessageActionType } from '../types/MessageType';
 
 function* message(action: ActionModel, dispatch: (action: any) => void) {
     const msg: MessageModel = action.value as MessageModel;
 
     switch (msg.type) {
-        case 'welcome':
+        case MessageType.WELCOME:
             const welcomeMessage: WelcomeMessageModel = msg as WelcomeMessageModel;
             yield put(setRtcConfigurationAction(welcomeMessage.rtcConfiguration));
             yield put(setSuggestedNameAction(welcomeMessage.suggestedName));
             yield put(setClientIdAction(welcomeMessage.clientId));
             yield put(setClientColorAction(welcomeMessage.clientColor));
             break;
-        case 'transfer':
+        case MessageType.TRANSFER:
             const transferMessage: TransferMessageModel = msg as TransferMessageModel;
             const transfer: TransferModel = {
                 fileName: transferMessage.fileName,
@@ -36,31 +37,31 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
 
             yield put(addTransferAction(transfer));
             break;
-        case 'action':
+        case MessageType.ACTION:
             const actionMessage: ActionMessageModel = msg as ActionMessageModel;
 
             switch (actionMessage.action) {
-                case 'cancel':
-                case 'reject':
+                case ActionMessageActionType.CANCEL:
+                case ActionMessageActionType.REJECT:
                     yield put(removeTransferAction(actionMessage.transferId));
                     break;
-                case 'accept':
+                case ActionMessageActionType.ACCEPT:
                     yield call(() => transferSendFile(actionMessage, dispatch));
                     break;
             }
             break;
-        case 'network':
+        case MessageType.NETWORK:
             const networkMessage: NetworkMessageModel = msg as NetworkMessageModel;
             yield put(setNetworkAction(networkMessage.clients));
             break;
-        case 'ping':
+        case MessageType.PING:
             const pongMessage: PingMessageModel = {
-                type: 'ping',
+                type: MessageType.PING,
                 timestamp: new Date().getTime(),
             };
             yield put(sendMessageAction(pongMessage));
             break;
-        case 'rtcDescription':
+        case MessageType.RTC_DESCRIPTION:
             const rtcMessage: RTCDescriptionMessageModel = msg as RTCDescriptionMessageModel;
             
             if (rtcMessage.data.type === 'answer') {
@@ -69,7 +70,7 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
                 yield call(() => transferReceiveFile(rtcMessage, dispatch));
             }
             break;
-        case 'rtcCandidate':
+        case MessageType.RTC_CANDIDATE:
             const rtcCandidate: RTCCandidateMessageModel = msg as RTCCandidateMessageModel;
             yield put(addIceCandidateAction(rtcCandidate.transferId, rtcCandidate.data));
             break;
@@ -82,7 +83,7 @@ function* connected() {
     let networkName = yield select((state: StateType) => state.networkName);
     if (networkName && networkName !== '') {
         const message: NameMessageModel = {
-            type: 'name',
+            type: MessageType.NAME,
             networkName: networkName,
         };
 
@@ -92,7 +93,7 @@ function* connected() {
 
 function* setName(action: ActionModel) {
     const message: NameMessageModel = {
-        type: 'name',
+        type: MessageType.NAME,
         networkName: action.value,
     };
 
@@ -120,7 +121,7 @@ function* createTransfer(action: ActionModel) {
     yield put(addTransferAction(transfer));
 
     const model: TransferMessageModel = {
-        type: 'transfer',
+        type: MessageType.TRANSFER,
         transferId: transfer.transferId,
         fileName: transfer.fileName,
         fileSize: transfer.fileSize,
@@ -149,10 +150,10 @@ function* cancelTransfer(action: ActionModel) {
     }
 
     const model: ActionMessageModel = {
-        type: 'action',
+        type: MessageType.ACTION,
         transferId: transfer.transferId,
         targetId: transfer.clientId,
-        action: 'cancel',
+        action: ActionMessageActionType.CANCEL,
     };
 
     yield put(sendMessageAction(model));
@@ -172,10 +173,10 @@ function* acceptTransfer(action: ActionModel) {
     if (!transfer) return;
 
     const model: ActionMessageModel = {
-        type: 'action',
+        type: MessageType.ACTION,
         transferId: transfer.transferId,
         targetId: transfer.clientId,
-        action: 'accept',
+        action: ActionMessageActionType.ACCEPT,
     };
 
     yield put(sendMessageAction(model));
@@ -198,10 +199,10 @@ function* rejectTransfer(action: ActionModel) {
     if (!transfer) return;
 
     const model: ActionMessageModel = {
-        type: 'action',
+        type: MessageType.ACTION,
         transferId: transfer.transferId,
         targetId: transfer.clientId,
-        action: 'reject',
+        action: ActionMessageActionType.REJECT,
     };
 
     yield put(sendMessageAction(model));

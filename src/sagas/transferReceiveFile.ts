@@ -5,6 +5,7 @@ import { StateType } from '../reducers';
 import { TransferState } from '../types/TransferState';
 import { updateTransferAction } from '../actions/transfers';
 import { sendMessageAction } from '../actions/websocket';
+import { MessageType } from '../types/MessageType';
 
 export default function* transferReceiveFile(rtcMessage: RTCDescriptionMessageModel, dispatch: (action: any) => void) {
     const transfers: TransferModel[] = yield select((state: StateType) => state.transfers);
@@ -26,7 +27,7 @@ export default function* transferReceiveFile(rtcMessage: RTCDescriptionMessageMo
         if (!e || !e.candidate) return;
 
         const candidateMessage: RTCCandidateMessageModel = {
-            type: 'rtcCandidate',
+            type: MessageType.RTC_CANDIDATE,
             targetId: transfer.clientId,
             transferId: transfer.transferId,
             data: e.candidate,
@@ -124,7 +125,7 @@ export default function* transferReceiveFile(rtcMessage: RTCDescriptionMessageMo
     yield call(async () => await connection.setLocalDescription(answer));
 
     const nextRtcMessage: RTCDescriptionMessageModel = {
-        type: 'rtcDescription',
+        type: MessageType.RTC_DESCRIPTION,
         transferId: transfer.transferId,
         targetId: transfer.clientId,
         data: {

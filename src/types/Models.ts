@@ -1,4 +1,5 @@
 import { TransferState } from "./TransferState";
+import { MessageType, ActionMessageActionType } from "./MessageType";
 
 export interface ActionModel {
     type: string,
@@ -6,11 +7,11 @@ export interface ActionModel {
 };
 
 export interface MessageModel {
-    type: 'welcome' | 'name' | 'transfer' | 'action' | 'network' | 'ping' | 'rtcDescription' | 'rtcCandidate',
+    type: MessageType,
 };
 
 export interface WelcomeMessageModel extends MessageModel {
-    type: 'welcome',
+    type: MessageType.WELCOME,
     clientId: string,
     clientColor: string,
     suggestedName: string,
@@ -18,12 +19,12 @@ export interface WelcomeMessageModel extends MessageModel {
 };
 
 export interface NameMessageModel extends MessageModel {
-    type: 'name',
+    type: MessageType.NAME,
     networkName: string,
 };
 
 export interface TransferMessageModel extends MessageModel {
-    type: 'transfer',
+    type: MessageType.TRANSFER,
     transferId: string,
     fileName: string,
     fileSize: number,
@@ -33,25 +34,25 @@ export interface TransferMessageModel extends MessageModel {
 };
 
 export interface ActionMessageModel extends MessageModel {
-    type: 'action',
+    type: MessageType.ACTION,
     transferId: string,
-    action: 'accept' | 'reject' | 'cancel',
+    action: ActionMessageActionType,
     targetId: string,
     clientId?: string,
 };
 
 export interface NetworkMessageModel extends MessageModel {
-    type: 'network',
+    type: MessageType.NETWORK,
     clients: ClientModel[],
 };
 
 export interface PingMessageModel extends MessageModel {
-    type: 'ping',
+    type: MessageType.PING,
     timestamp: number,
 };
 
 export interface RTCDescriptionMessageModel extends MessageModel {
-    type: 'rtcDescription',
+    type: MessageType.RTC_DESCRIPTION,
     data: any,
     targetId: string,
     transferId: string,
@@ -59,7 +60,7 @@ export interface RTCDescriptionMessageModel extends MessageModel {
 };
 
 export interface RTCCandidateMessageModel extends MessageModel {
-    type: 'rtcCandidate',
+    type: MessageType.RTC_CANDIDATE,
     data: any,
     targetId: string,
     transferId: string,
