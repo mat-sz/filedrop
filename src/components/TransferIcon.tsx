@@ -17,9 +17,11 @@ const states = {
     [TransferState.FAILED]: 'Failed!',
 };
 
-const TransferIcon: React.FC<{
+interface TransferIconProps {
     transfer: TransferModel,
-}> = ({ transfer }) => {
+};
+
+const TransferIcon: React.FC<TransferIconProps> = ({ transfer }) => {
     const network = useSelector((state: StateType) => state.network);
     const targetClient = network.find((client) => client.clientId === transfer.clientId);
 

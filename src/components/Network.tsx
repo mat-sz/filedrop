@@ -5,9 +5,11 @@ import { AnimatePresence } from 'framer-motion';
 import { StateType } from '../reducers';
 import NetworkTile from './NetworkTile';
 
-const Network: React.FC<{
+interface NetworkProps {
     onSelect?: (clientId: string) => void,
-}> = ({ onSelect }) => {
+};
+
+const Network: React.FC<NetworkProps> = ({ onSelect }) => {
     const network = useSelector((store: StateType) => store.network);
 
     return (

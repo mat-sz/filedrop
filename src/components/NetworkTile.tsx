@@ -7,10 +7,12 @@ import { ClientModel } from '../types/Models';
 import { createTransferAction } from '../actions/transfers';
 import { animationPropsRotation } from '../animationSettings';
 
-const NetworkTile: React.FC<{
+interface NetworkTileProps {
     client: ClientModel,
     onSelect?: (clientId: string) => void,
-}> = ({ client, onSelect }) => {
+};
+
+const NetworkTile: React.FC<NetworkTileProps> = ({ client, onSelect }) => {
     const dispatch = useDispatch();
 
     const onDrop = useCallback((files: File[]) => {

@@ -2,7 +2,11 @@ import React, { useState, useCallback } from 'react';
 import QrCode from 'qrcode.react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
-const QrCodeSection: React.FC<{ href: string }> = ({ href }) => {
+interface QrCodeSectionProps {
+    href: string
+};
+
+const QrCodeSection: React.FC<QrCodeSectionProps> = ({ href }) => {
     const [ copied, setCopied ] = useState(false);
 
     const onCopy = useCallback(() => setCopied(true), [ setCopied ]);

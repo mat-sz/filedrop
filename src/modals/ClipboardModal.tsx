@@ -6,10 +6,12 @@ import Network from '../components/Network';
 import { createTransferAction } from '../actions/transfers';
 import { animationPropsOpacity } from '../animationSettings';
 
-const ClipboardModal: React.FC<{
+interface ClipboardModalProps {
     files: File[],
     dismissClipboard: () => void,
-}> = ({ files, dismissClipboard }) => {
+};
+
+const ClipboardModal: React.FC<ClipboardModalProps> = ({ files, dismissClipboard }) => {
     const dispatch = useDispatch();
 
     const onSelect = useCallback((clientId: string) => {

@@ -16,9 +16,11 @@ const cancellableStates = [
     TransferState.OUTGOING,
 ];
 
-const Transfer: React.FC<{
+interface TransferProps {
     transfer: TransferModel,
-}> = ({ transfer }) => {
+};
+
+const Transfer: React.FC<TransferProps> = ({ transfer }) => {
     const dispatch = useDispatch();
     const [ copied, setCopied ] = useState(false);
     const [ text, setText ] = useState('');
