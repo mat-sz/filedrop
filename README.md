@@ -2,6 +2,18 @@
 
 Easy WebRTC file transfer.
 
+<p align="center">
+    <a href="https://drop.lol/">
+        <strong>Click here to open drop.lol.</strong>
+    </a>
+</p>
+
+<p align="center">
+    <a href="https://drop.lol/">
+        <img src="https://raw.githubusercontent.com/mat-sz/filedrop-web/master/filedrop.gif" alt="Screenshot">
+    </a>
+</p>
+
 ## FAQ
 
 ### What is the motivation behind the project?
