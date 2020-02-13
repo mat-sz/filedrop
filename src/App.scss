@@ -237,6 +237,18 @@ footer {
     justify-content: center;
     align-items: center;
     font-weight: bold;
+
+    input {
+        display: block;
+        width: 75px;
+        height: 75px;
+        background: transparent;
+        opacity: 0.01;
+        cursor: pointer;
+        padding: 0;
+        margin: 0;
+        font-size: 0;
+    }
 }
 
 .network {

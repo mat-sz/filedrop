@@ -13,7 +13,7 @@ export const animationPropsOpacity = {
 
 export const animationPropsRotation = {
     initial: { scale: 0 },
-    animate: { rotate: 180, scale: 1 },
+    animate: { rotate: 360, scale: 1 },
     exit: { scale: 0 },
     transition: transitionProps,
     positionTransition: true,

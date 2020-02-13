@@ -40,17 +40,22 @@ const NetworkTile: React.FC<NetworkTileProps> = ({ client, onSelect }) => {
             </div>
             :
             <Dropzone onDrop={onDrop}>
-                {({ getRootProps, getInputProps }) => (
-                <div {...getRootProps()} className="network-tile"
-                    style={{
-                        backgroundColor: client.clientColor
-                    }}
-                >
-                    <label onClick={preventClick}>
-                        <input {...getInputProps()} accept={'*'} />
-                    </label>
-                </div>
-                )}
+                {({ getRootProps, getInputProps }) => {
+                    let inputProps = getInputProps();
+                    delete inputProps['style'];
+
+                    return (
+                    <div {...getRootProps()} className="network-tile"
+                        style={{
+                            backgroundColor: client.clientColor
+                        }}
+                    >
+                        <label onClick={preventClick}>
+                            <input {...inputProps} accept={'*'} tabIndex={-1} />
+                        </label>
+                    </div>
+                    );
+                }}
             </Dropzone>
             }
         </motion.div>
