@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { motion } from 'framer-motion';
+import ReactTooltip from 'react-tooltip';
 
 import { removeTransferAction, cancelTransferAction, rejectTransferAction, acceptTransferAction } from '../actions/transfers';
 import { TransferModel } from '../types/Models';
@@ -19,6 +20,24 @@ const cancellableStates = [
 interface TransferProps {
     transfer: TransferModel,
 };
+
+function shorterFileName(name: string, fileNameLength = 48, replacementCharacter = '…') {
+    const dotIndex = name.lastIndexOf('.');
+    const half = Math.floor(fileNameLength / 2);
+
+    if (dotIndex !== -1) {
+        const extension = name.substr(dotIndex);
+        const fileName = name.substr(0, dotIndex);
+
+        if (fileName.length > fileNameLength) {
+            return fileName.substr(0, half) + replacementCharacter + fileName.substr(fileName.length - (half + 1)) + extension;
+        }
+    } else if (name.length > 24) {
+        return name.substr(0, half) + replacementCharacter + name.substr(name.length - (half + 1));
+    }
+
+    return name;
+}
 
 const Transfer: React.FC<TransferProps> = ({ transfer }) => {
     const dispatch = useDispatch();
@@ -46,13 +65,14 @@ const Transfer: React.FC<TransferProps> = ({ transfer }) => {
 
     return (
         <motion.li className="subsection info-grid" {...animationPropsScale}>
+            <ReactTooltip className="custom-tooltip" />
             <div className="image">
                 <TransferIcon transfer={transfer} />
             </div>
             <div className="info">
                 <div>
-                    <div className="metadata">
-                        { transfer.fileName }
+                    <div className="metadata" data-tip={transfer.fileName}>
+                        { shorterFileName(transfer.fileName) }
                     </div>
                     <div className="metadata">
                         { transfer.state === TransferState.FAILED ? 'Failed!' : '' }
