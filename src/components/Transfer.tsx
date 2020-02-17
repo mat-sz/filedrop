@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import CopyToClipboard from 'react-copy-to-clipboard';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import ReactTooltip from 'react-tooltip';
 
 import { removeTransferAction, cancelTransferAction, rejectTransferAction, acceptTransferAction } from '../actions/transfers';
@@ -107,14 +107,14 @@ const Transfer: React.FC<TransferProps> = ({ transfer }) => {
                             <button onClick={cancelTransfer}>Cancel</button>
                         : null }
                     </div>
-                    <div className="progress">
+                    <AnimatePresence>
                     { transfer.state === TransferState.IN_PROGRESS ?
-                        <>
+                    <motion.div className="progress" {...animationPropsScale}>
                         <progress value={transfer.progress} max={1} />
                         <div>{ Math.round(transfer.speed / 1000) } kB/s</div>
-                        </>
+                    </motion.div>
                     : null }
-                    </div>
+                    </AnimatePresence>
                 </div>
             </div>
         </motion.li>
