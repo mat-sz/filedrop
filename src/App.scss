@@ -232,6 +232,7 @@ footer {
     height: 75px;
     border-radius: $border-radius;
     color: black;
+    transition: 0.1s ease-in-out box-shadow;
 
     display: flex;
     justify-content: center;
@@ -248,6 +249,10 @@ footer {
         padding: 0;
         margin: 0;
         font-size: 0;
+    }
+
+    &.active {
+        box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.7);
     }
 }
 

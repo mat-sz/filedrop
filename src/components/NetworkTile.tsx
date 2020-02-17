@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import Dropzone from 'react-dropzone';
+import { useDropzone } from 'react-dropzone';
 import { motion } from 'framer-motion';
 
 import { ClientModel } from '../types/Models';
@@ -21,6 +21,10 @@ const NetworkTile: React.FC<NetworkTileProps> = ({ client, onSelect }) => {
         }
     }, [ dispatch, client.clientId ]);
 
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+        onDrop
+    });
+
     const preventClick = (event: React.MouseEvent) => {
         event.preventDefault();
     };
@@ -39,24 +43,17 @@ const NetworkTile: React.FC<NetworkTileProps> = ({ client, onSelect }) => {
             >
             </div>
             :
-            <Dropzone onDrop={onDrop}>
-                {({ getRootProps, getInputProps }) => {
-                    let inputProps = getInputProps();
-                    delete inputProps['style'];
-
-                    return (
-                    <div {...getRootProps()} className="network-tile"
-                        style={{
-                            backgroundColor: client.clientColor
-                        }}
-                    >
-                        <label onClick={preventClick}>
-                            <input {...inputProps} accept={'*'} tabIndex={-1} />
-                        </label>
-                    </div>
-                    );
+            <div {...getRootProps()} className={"network-tile " + (isDragActive ? 'active' : '')}
+                style={{
+                    backgroundColor: client.clientColor
                 }}
-            </Dropzone>
+            >
+                <label onClick={preventClick}>
+                    <input {...getInputProps({
+                        style: {}
+                    })} accept={'*'} tabIndex={-1} />
+                </label>
+            </div>
             }
         </motion.div>
     );
