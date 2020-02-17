@@ -50,44 +50,51 @@ const Transfer: React.FC<TransferProps> = ({ transfer }) => {
                 <TransferIcon transfer={transfer} />
             </div>
             <div className="info">
-                <div className="metadata">
-                    { transfer.fileName }
+                <div>
+                    <div className="metadata">
+                        { transfer.fileName }
+                    </div>
+                    <div className="metadata">
+                        { transfer.state === TransferState.FAILED ? 'Failed!' : '' }
+                    </div>
                 </div>
-                <div className="metadata">
-                    { transfer.state === TransferState.FAILED ? 'Failed!' : '' }
-                </div>
-                { transfer.state === TransferState.IN_PROGRESS ?
-                <div className="progress">
-                    <progress value={transfer.progress} max={1} />
-                    <div>{ Math.round(transfer.speed / 1000) } kB/s</div>
-                </div> : null }
-                <div className="buttons">
-                { transfer.state === TransferState.COMPLETE && transfer.blobUrl ?
-                <>
-                    <a className="button" href={transfer.blobUrl} download={transfer.fileName}>Redownload</a>
-                    { transfer.fileType === 'text/plain' ?
-                        <CopyToClipboard
-                            text={text}
-                            onCopy={onCopy}
-                        >
-                            <button>
-                                { copied ? 'Copied' : 'Copy to clipboard' }
-                            </button>
-                        </CopyToClipboard>
+                <div className="actions">
+                    <div className="buttons">
+                        { transfer.state === TransferState.COMPLETE && transfer.blobUrl ?
+                        <>
+                            <a className="button" href={transfer.blobUrl} download={transfer.fileName}>Redownload</a>
+                            { transfer.fileType === 'text/plain' ?
+                                <CopyToClipboard
+                                    text={text}
+                                    onCopy={onCopy}
+                                >
+                                    <button>
+                                        { copied ? 'Copied' : 'Copy to clipboard' }
+                                    </button>
+                                </CopyToClipboard>
+                            : null }
+                        </>
+                        : null }
+                        { transfer.state === TransferState.COMPLETE || transfer.state === TransferState.FAILED ?
+                            <button onClick={dismissTransfer}>Dismiss</button>
+                        : null }
+                        { transfer.state === TransferState.INCOMING ? 
+                        <>
+                            <button onClick={acceptTransfer}>Accept</button>
+                            <button onClick={rejectTransfer}>Reject</button>
+                        </> : null }
+                        { cancellableStates.includes(transfer.state) ?
+                            <button onClick={cancelTransfer}>Cancel</button>
+                        : null }
+                    </div>
+                    <div className="progress">
+                    { transfer.state === TransferState.IN_PROGRESS ?
+                        <>
+                        <progress value={transfer.progress} max={1} />
+                        <div>{ Math.round(transfer.speed / 1000) } kB/s</div>
+                        </>
                     : null }
-                </>
-                : null }
-                { transfer.state === TransferState.COMPLETE || transfer.state === TransferState.FAILED ?
-                    <button onClick={dismissTransfer}>Dismiss</button>
-                : null }
-                { transfer.state === TransferState.INCOMING ? 
-                <>
-                    <button onClick={acceptTransfer}>Accept</button>
-                    <button onClick={rejectTransfer}>Reject</button>
-                </> : null }
-                { cancellableStates.includes(transfer.state) ?
-                    <button onClick={cancelTransfer}>Cancel</button>
-                : null }
+                    </div>
                 </div>
             </div>
         </motion.li>

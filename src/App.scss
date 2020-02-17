@@ -290,13 +290,20 @@ footer {
             word-break: break-word;
         }
 
+        .actions {
+            display: flex;
+            margin: 0 -10px;
+
+            & > * {
+                margin: 0 5px;
+            }
+        }
+
         .progress {
             text-align: center;
         }
 
         .buttons {
-            margin-left: -5px;
-
             & > * {
                 display: inline-block;
             }
