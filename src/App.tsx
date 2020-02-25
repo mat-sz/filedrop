@@ -26,6 +26,19 @@ const App: React.FC = () => {
                         <h1>
                             <Link to="/" className="logo">{ process.env.REACT_APP_TITLE }</Link>
                         </h1>
+                        <ul>
+                            <li>
+                                <Link to="/privacy">privacy policy</Link>
+                            </li>
+                            <li>
+                                <Link to="/tos">terms of service</Link>
+                            </li>
+                            { abuseEmail ?
+                            <li>
+                                <Link to="/abuse">report abuse / dmca</Link>
+                            </li>
+                            : null }
+                        </ul>
                     </nav>
                 </header>
                 <Status />
@@ -47,14 +60,6 @@ const App: React.FC = () => {
                         <Home />
                     </Route>
                 </Switch>
-                <footer>
-                    <a href="https://github.com/mat-sz/filedrop-web">filedrop-web</a>
-                    <Link to="/privacy">privacy policy</Link>
-                    <Link to="/tos">terms of service</Link>
-                    { abuseEmail ?
-                    <Link to="/abuse">report abuse</Link>
-                    : null }
-                </footer>
             </div>
         </Router>
     );
