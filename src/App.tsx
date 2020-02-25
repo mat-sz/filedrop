@@ -1,13 +1,13 @@
 import React from 'react';
 import {
     Switch,
-    Route,
-    Link
+    Route
 } from 'react-router-dom';
 import GithubCorner from 'react-github-corner';
 
 import './App.scss';
 
+import Header from './components/Header';
 import Home from './screens/Home';
 import Transfers from './screens/Transfers';
 import Privacy from './screens/Privacy';
@@ -21,26 +21,7 @@ const App: React.FC = () => {
         <Router>
             <div className="app">
                 <GithubCorner href="https://github.com/mat-sz/filedrop-web" octoColor="#111" bannerColor="#fc03a1" />
-                <header>
-                    <nav className="menu">
-                        <h1>
-                            <Link to="/" className="logo">{ process.env.REACT_APP_TITLE }</Link>
-                        </h1>
-                        <ul>
-                            <li>
-                                <Link to="/privacy">privacy policy</Link>
-                            </li>
-                            <li>
-                                <Link to="/tos">terms of service</Link>
-                            </li>
-                            { abuseEmail ?
-                            <li>
-                                <Link to="/abuse">report abuse / dmca</Link>
-                            </li>
-                            : null }
-                        </ul>
-                    </nav>
-                </header>
+                <Header />
                 <Status />
                 <Switch>
                     { abuseEmail ?
