@@ -51,7 +51,7 @@ const NetworkTile: React.FC<NetworkTileProps> = ({ client, onSelect }) => {
                 <label onClick={preventClick}>
                     <input {...getInputProps({
                         style: {}
-                    })} accept={'*'} tabIndex={-1} />
+                    })} accept={'*'} tabIndex={1} />
                 </label>
             </div>
             }
