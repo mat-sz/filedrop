@@ -64,7 +64,7 @@ const Transfer: React.FC<TransferProps> = ({ transfer }) => {
     const onCopy = useCallback(() => setCopied(true), [ setCopied ]);
 
     return (
-        <motion.li className="subsection info-grid" {...animationPropsScale}>
+        <motion.li className="subsection info-grid" {...animationPropsScale} aria-label="Transfer">
             <ReactTooltip className="custom-tooltip" />
             <div className="image">
                 <TransferIcon transfer={transfer} />

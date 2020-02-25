@@ -10,7 +10,7 @@ const Header: React.FC = () => {
 
     return (
         <header>
-            <button className={'toggle ' + (toggled ? 'toggled' : '')} onClick={toggle}>
+            <button className={'toggle ' + (toggled ? 'toggled' : '')} onClick={toggle} aria-label={toggled ? 'Close menu' : 'Open menu'}>
                 <div className="bar" />
                 <div className="bar" />
                 <div className="bar" />

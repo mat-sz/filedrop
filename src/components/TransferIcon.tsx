@@ -75,6 +75,7 @@ const TransferIcon: React.FC<TransferIconProps> = ({ transfer }) => {
                         backgroundColor: targetClient.clientColor
                     }}
                     data-tip={states[transfer.state]}
+                    aria-label={"Transfer state: " + states[transfer.state]}
                 >
                     { stateIcon(transfer.state, transfer.receiving) }
                 </div>
