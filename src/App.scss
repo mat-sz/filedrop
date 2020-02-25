@@ -1,5 +1,6 @@
 $accent-color: #fc03a1;
 $border-radius: 10px;
+$transition-fn: cubic-bezier(.18,.89,.32,1.28);
 
 body {
     background: #111;
@@ -174,12 +175,12 @@ header {
         top: -10px;
         width: 50px;
         z-index: 500;
-        transition: 0.2s ease-in-out all;
+        transition: 0.3s $transition-fn all;
         transform: rotate(0);
         outline: none !important;
 
         .bar {
-            transition: 0.2s ease-in-out all;
+            transition: 0.3s $transition-fn all;
             background: currentColor;
             height: 4px;
             margin-top: 6px;
@@ -219,7 +220,7 @@ nav {
         padding: 0 20px;
         margin: 0;
         list-style-type: none;
-        transition: 0.2s ease-in-out all;
+        transition: 0.3s ease-in-out all;
         z-index: 499;
 
         position: fixed;
