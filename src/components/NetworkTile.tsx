@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
+import { FaPlus } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
 import { ClientModel } from '../types/Models';
@@ -41,6 +42,7 @@ const NetworkTile: React.FC<NetworkTileProps> = ({ client, onSelect }) => {
                     backgroundColor: client.clientColor
                 }}
             >
+                <FaPlus />
             </div>
             :
             <div {...getRootProps()} className={"network-tile " + (isDragActive ? 'active' : '')}
@@ -53,6 +55,7 @@ const NetworkTile: React.FC<NetworkTileProps> = ({ client, onSelect }) => {
                         style: {}
                     })} accept={'*'} tabIndex={1} />
                 </label>
+                <FaPlus />
             </div>
             }
         </motion.div>

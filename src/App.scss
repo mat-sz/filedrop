@@ -273,20 +273,20 @@ nav {
     .network-tile {
         cursor: pointer;
 
-        &:after {
-            display: block;
-            content: '+';
+        label {
             position: absolute;
-            font-size: 75px;
-            top: -20px;
+        }
+
+        svg {
             transition: 0.1s ease-in-out color;
             color: rgba(0, 0, 0, 0.25);
+            font-size: 40px;
         }
 
         &.active, &:hover, &:focus-within {
             box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.7);
 
-            &:after {
+            svg {
                 color: rgba(0, 0, 0, 1.0);
             }
         }
