@@ -11,8 +11,10 @@ const Header: React.FC = () => {
 
     return (
         <header>
-            <button className="toggle" onClick={toggle}>
-                { toggled ? <FaTimes /> : <FaBars /> }
+            <button className={'toggle ' + (toggled ? 'toggled' : '')} onClick={toggle}>
+                <div className="bar" />
+                <div className="bar" />
+                <div className="bar" />
             </button>
             <nav className="menu">
                 <h1>

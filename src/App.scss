@@ -167,11 +167,38 @@ header {
 
     .toggle {
         position: absolute;
+        left: 10px;
         background: none;
         color: white;
-        font-size: 32px;
-        top: -12px;
+        padding: 10px;
+        top: -10px;
+        width: 50px;
         z-index: 500;
+        transition: 0.2s ease-in-out all;
+        transform: rotate(0);
+        outline: none !important;
+
+        .bar {
+            transition: 0.2s ease-in-out all;
+            background: currentColor;
+            height: 4px;
+            margin-top: 6px;
+            width: 100%;
+            opacity: 1;
+            transform: rotate(0);
+        }
+
+        &.toggled {
+            transform: rotate(45deg);
+
+            .bar:first-child {
+                transform: rotate(90deg) translateX(33.3%);
+            }
+
+            .bar:last-child {
+                opacity: 0;
+            }
+        }
     }
 }
 
