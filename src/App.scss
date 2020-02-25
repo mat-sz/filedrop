@@ -71,6 +71,7 @@ input {
 button, .button {
     display: inline-block;
     background: rgba(255, 255, 255, 0.75);
+    transition: 0.1s ease-in-out all;
     border: none;
     color: black;
     padding: 10px 20px;
