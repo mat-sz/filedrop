@@ -162,6 +162,19 @@ h1, h2, h3 {
     margin: 0;
 }
 
+header {
+    position: relative;
+
+    .toggle {
+        position: absolute;
+        background: none;
+        color: white;
+        font-size: 32px;
+        top: -12px;
+        z-index: 500;
+    }
+}
+
 nav {
     display: flex;
     flex-direction: column;
@@ -171,19 +184,37 @@ nav {
         font-weight: bold;
         font-size: 24px;
         padding-bottom: 20px;
+        position: relative;
+        z-index: 500;
     }
 
     ul {
         padding: 0 20px;
         margin: 0;
         list-style-type: none;
+        transition: 0.2s ease-in-out all;
+        z-index: 499;
+
+        position: fixed;
+        background: rgba(0, 0, 0, 0.9);
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 80px;
+
+        &.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
 
         li {
             display: block;
             text-align: center;
 
             a {
-                margin: 0 20px;
+                margin: 10px 20px;
+                font-size: 20px;
             }
         }
     }
@@ -420,6 +451,10 @@ nav {
         padding: 30px;
     }
 
+    header .toggle {
+        display: none;
+    }
+
     nav {
         display: flex;
         flex-direction: row;
@@ -429,10 +464,29 @@ nav {
             padding-bottom: 0;
         }
 
-        ul {
+        ul, ul.hidden {
+            display: block;
+            opacity: 1;
+            pointer-events: all;
+            padding: 0 15px;
+            transition: unset;
+
+            position: relative;
+            top: unset;
+            left: unset;
+            right: unset;
+            bottom: unset;
+
+            background: none;
+
             li {
                 display: inline-block;
                 text-align: center;
+
+                a {
+                    margin: 0 15px;
+                    font-size: 16px;
+                }
             }
         }
     }
