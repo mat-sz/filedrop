@@ -237,23 +237,29 @@ nav {
         transition: 0.3s ease-in-out all;
         z-index: 499;
 
-        position: fixed;
+        position: absolute;
         background: rgba(0, 0, 0, 0.9);
         backdrop-filter: blur(5px);
-        top: 5px;
+        top: -15px;
         left: 0;
         right: 0;
-        bottom: 0;
+        height: calc(100vh - 10px);
         padding: 80px;
 
         &.hidden {
             opacity: 0;
             pointer-events: none;
+
+            li {
+                transform: translateY(-50%);
+            }
         }
 
         li {
             display: block;
             text-align: center;
+            transition: 0.3s ease-in-out all;
+            transform: translateY(0);
 
             a {
                 margin: 10px 20px;
@@ -517,6 +523,7 @@ nav {
             pointer-events: all;
             padding: 0 15px;
             transition: unset;
+            transform: none;
             backdrop-filter: none;
 
             position: relative;
@@ -524,12 +531,15 @@ nav {
             left: unset;
             right: unset;
             bottom: unset;
+            height: auto;
 
             background: none;
 
             li {
                 display: inline-block;
                 text-align: center;
+                transform: none;
+                transition: unset;
 
                 a {
                     margin: 0 15px;
