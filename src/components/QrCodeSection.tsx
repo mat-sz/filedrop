@@ -13,26 +13,27 @@ const QrCodeSection: React.FC<QrCodeSectionProps> = ({ href }) => {
 
     return (
         <div>
-            <h2>Invite</h2>
-            <div className="center qrcode subsection">
-                <div>
-                    <strong>Scan this QR code:</strong>
+            <h2>Connect</h2>
+            <div className="qrcode subsection">
+                <div className="info">
+                    To connect to your network and start transfering files, scan the QR code below, or open the page on another device.
                 </div>
-                <QrCode value={ href } />
                 <div>
-                    <strong>or open this URL on another device:</strong>
+                    <QrCode value={ href } />
                 </div>
-                <pre>
-                    { href }
-                </pre>
-                <CopyToClipboard
-                    text={href}
-                    onCopy={onCopy}
-                >
-                    <button>
-                        { copied ? 'Copied' : 'Copy to clipboard' }
-                    </button>
-                </CopyToClipboard>
+                <div>
+                    <pre>
+                        { href }
+                    </pre>
+                    <CopyToClipboard
+                        text={href}
+                        onCopy={onCopy}
+                    >
+                        <button>
+                            { copied ? 'Copied' : 'Copy to clipboard' }
+                        </button>
+                    </CopyToClipboard>
+                </div>
             </div>
         </div>
     );
