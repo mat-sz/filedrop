@@ -14,9 +14,9 @@ const Home: React.FC = () => {
     const history = useHistory();
 
     useEffect(() => {
-        const networkName = suggestedName || new Array(nameLength).fill('').map(() => nameCharacterSet.charAt(Math.floor(Math.random() * nameCharacterSet.length))).join('');
+        const currentNetworkName = networkName || suggestedName || new Array(nameLength).fill('').map(() => nameCharacterSet.charAt(Math.floor(Math.random() * nameCharacterSet.length))).join('');
         if (connected && clientId) {
-            history.replace('/' + networkName);
+            history.replace('/' + currentNetworkName);
         }
     }, [ connected, networkName, history, clientId, suggestedName ]);
 
