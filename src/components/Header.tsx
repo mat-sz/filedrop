@@ -17,18 +17,18 @@ const Header: React.FC = () => {
             </button>
             <nav className="menu">
                 <h1>
-                    <Link to="/" className="logo">{ process.env.REACT_APP_TITLE }</Link>
+                    <Link to="/" className="logo" onClick={toggle}>{ process.env.REACT_APP_TITLE }</Link>
                 </h1>
                 <ul className={toggled ? '' : 'hidden'}>
                     <li>
-                        <Link to="/privacy">privacy policy</Link>
+                        <Link to="/privacy" onClick={toggle}>privacy policy</Link>
                     </li>
                     <li>
-                        <Link to="/tos">terms of service</Link>
+                        <Link to="/tos" onClick={toggle}>terms of service</Link>
                     </li>
                     { abuseEmail ?
                     <li>
-                        <Link to="/abuse">report abuse / dmca</Link>
+                        <Link to="/abuse" onClick={toggle}>report abuse / dmca</Link>
                     </li>
                     : null }
                 </ul>
