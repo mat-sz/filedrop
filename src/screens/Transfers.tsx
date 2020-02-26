@@ -25,7 +25,10 @@ const Transfers: React.FC = () => {
     }, [ setHref, networkName, dispatch ]);
 
     useEffect(() => {
-        setIncompatibleBrowser(!(('RTCPeerConnection' in window) && ('WebSocket' in window)));
+        setIncompatibleBrowser(!(
+            'RTCPeerConnection' in window &&
+            'WebSocket' in window &&
+            'FileReader' in window));
     }, []);
 
     useEffect(() => {

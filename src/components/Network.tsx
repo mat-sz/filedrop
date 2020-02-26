@@ -14,7 +14,7 @@ const Network: React.FC<NetworkProps> = ({ onSelect }) => {
     const network = useSelector((store: StateType) => store.network);
 
     return (
-        <div key="network" className={'subsection ' + ((network.length > 0) ? 'network' : '')}>
+        <div className={'subsection ' + ((network.length > 0) ? 'network' : '')}>
             <AnimatePresence>
                 { network.length > 0 ?
                     <AnimatePresence>
