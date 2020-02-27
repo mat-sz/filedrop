@@ -77,7 +77,7 @@ button, .button {
     display: inline-block;
     background-color: rgba(255, 255, 255, 0.75);
     background-image: $dark-gradient;
-    transition: 0.05s ease-in-out all;
+    transition: 0.1s ease-in-out all;
     border: none;
     color: black;
     padding: 10px 20px;
@@ -89,6 +89,7 @@ button, .button {
     &:hover {
         text-decoration: none;
         background-color: white;
+        box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.5);
     }
 }
 
@@ -135,6 +136,7 @@ h2, h3 {
     letter-spacing: 3px;
     font-size: 16px;
     color: $accent-color;
+    text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.75)
 }
 
 h2 {
@@ -285,6 +287,8 @@ nav {
     margin: 20px 0;
     text-align: center;
     position: relative;
+    box-shadow: -20px -20px 50px -20px inset rgba(0, 0, 0, 0.2),
+                0 20px 20px -20px rgba(0, 0, 0, 0.5);
 }
 
 .qrcode {
@@ -321,6 +325,7 @@ nav {
         box-sizing: content-box;
         border: 10px solid white;
         border-radius: $border-radius;
+        box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.5);
     }
 }
 
@@ -339,7 +344,7 @@ nav {
     border-radius: $border-radius;
     color: rgba(0, 0, 0, 0.5);
     font-size: 20px;
-    transition: 0.05s ease-in-out box-shadow;
+    transition: 0.1s ease-in-out box-shadow;
     background-image: $dark-gradient;
 
     display: flex;
@@ -377,13 +382,13 @@ nav {
         }
 
         svg {
-            transition: 0.05s ease-in-out color;
+            transition: 0.1s ease-in-out color;
             color: rgba(0, 0, 0, 0.25);
             font-size: 40px;
         }
 
         &.active, &:hover, &:focus-within {
-            box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.5);
 
             svg {
                 color: rgba(0, 0, 0, 0.5);
