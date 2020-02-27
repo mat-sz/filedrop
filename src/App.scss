@@ -2,6 +2,9 @@ $accent-color: #fc03a1;
 $border-radius: 10px;
 $transition-fn: cubic-bezier(.18,.89,.32,1.28);
 
+$dark-gradient: linear-gradient(135deg, #00000000 0%, #00000044 100%);
+$light-gradient: linear-gradient(135deg, #ffffff11 0%, #ffffff00 100%);
+
 body {
     background: #111;
     color: white;
@@ -72,8 +75,9 @@ input {
 
 button, .button {
     display: inline-block;
-    background: rgba(255, 255, 255, 0.75);
-    transition: 0.1s ease-in-out all;
+    background-color: rgba(255, 255, 255, 0.75);
+    background-image: $dark-gradient;
+    transition: 0.05s ease-in-out all;
     border: none;
     color: black;
     padding: 10px 20px;
@@ -84,7 +88,7 @@ button, .button {
 
     &:hover {
         text-decoration: none;
-        background: white;
+        background-color: white;
     }
 }
 
@@ -167,12 +171,13 @@ h1, h2, h3 {
 .github-corner {
     position: absolute;
     right: 0;
+    top: 0;
     z-index: 500;
 }
 
 header {
     position: relative;
-    top: 20px;
+    padding-top: 20px;
     padding-bottom: 10px;
 
     .toggle {
@@ -181,7 +186,7 @@ header {
         background: none;
         color: white;
         padding: 10px;
-        top: -10px;
+        top: 10px;
         width: 50px;
         z-index: 500;
         transition: 0.3s $transition-fn all;
@@ -240,7 +245,7 @@ nav {
         position: absolute;
         background: rgba(0, 0, 0, 0.9);
         backdrop-filter: blur(5px);
-        top: -20px;
+        top: 0;
         left: 0;
         right: 0;
         height: calc(100vh - 5px);
@@ -297,7 +302,8 @@ nav {
     }
 
     pre {
-        background: rgba(255, 255, 255, 0.1);
+        background-color: rgba(255, 255, 255, 0.1);
+        background-image: $dark-gradient;
         padding: 10px;
         border-radius: $border-radius;
         display: inline-block;
@@ -331,13 +337,17 @@ nav {
     width: 75px;
     height: 75px;
     border-radius: $border-radius;
-    color: black;
-    transition: 0.1s ease-in-out box-shadow;
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 20px;
+    transition: 0.05s ease-in-out box-shadow;
+    background-image: $dark-gradient;
 
     display: flex;
     justify-content: center;
     align-items: center;
     font-weight: bold;
+    position: relative;
+    overflow: hidden;
 
     input {
         display: block;
@@ -367,16 +377,16 @@ nav {
         }
 
         svg {
-            transition: 0.1s ease-in-out color;
+            transition: 0.05s ease-in-out color;
             color: rgba(0, 0, 0, 0.25);
             font-size: 40px;
         }
 
         &.active, &:hover, &:focus-within {
-            box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.5);
 
             svg {
-                color: rgba(0, 0, 0, 1.0);
+                color: rgba(0, 0, 0, 0.5);
             }
         }
     }
@@ -439,7 +449,8 @@ nav {
 .transfer-icon {
     position: relative;
     font-size: 0;
-    background: #111;
+    background-color: #111;
+    background-image: $light-gradient;
     padding: 10px 0;
     border-radius: $border-radius;
 
