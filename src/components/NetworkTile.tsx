@@ -54,6 +54,7 @@ const NetworkTile: React.FC<NetworkTileProps> = ({ client, onSelect }) => {
                     <input {...getInputProps({
                         style: {}
                     })} accept={'*'} tabIndex={1} />
+                    Click on this area to start a transfer.
                 </label>
                 <FaPlus />
             </div>

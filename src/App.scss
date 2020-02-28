@@ -28,7 +28,7 @@ html, body, #root {
 
 a {
     display: inline-block;
-    color: desaturate($accent-color, 15%);
+    color: $accent-color;
     text-decoration: none;
     white-space: nowrap;
 
@@ -290,6 +290,10 @@ nav {
     position: relative;
     box-shadow: -20px -20px 50px -20px inset rgba(0, 0, 0, 0.2),
                 0 20px 20px -20px rgba(0, 0, 0, 0.5);
+
+    a {
+        font-weight: bold;
+    }
 }
 
 .qrcode {
@@ -380,6 +384,7 @@ nav {
 
         label {
             position: absolute;
+            opacity: 0.01;
         }
 
         svg {
