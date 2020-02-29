@@ -8,9 +8,14 @@ $light-gradient: linear-gradient(135deg, #ffffff11 0%, #ffffff00 100%);
 body {
     background: #111;
     color: white;
-    border-top: 5px solid $accent-color;
     line-height: 1.4;
     padding-bottom: 10px;
+}
+
+.line {
+    background-color: $accent-color;
+    box-shadow: 0px 0px 100px 5px $accent-color;
+    height: 5px;
 }
 
 body, input, button, a {
@@ -195,6 +200,7 @@ header {
         transition: 0.3s $transition-fn all;
         transform: rotate(0);
         outline: none !important;
+        box-shadow: none;
 
         .bar {
             transition: 0.3s $transition-fn all;

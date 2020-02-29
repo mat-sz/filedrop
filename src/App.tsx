@@ -20,6 +20,7 @@ const App: React.FC = () => {
     return (
         <Router>
             <div className="app">
+                <div className="line"></div>
                 <GithubCorner href="https://github.com/mat-sz/filedrop-web" octoColor="#111" bannerColor="#fc03a1" />
                 <Header />
                 <Status />
