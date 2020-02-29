@@ -1,6 +1,6 @@
 const transitionProps = {
     type: 'spring',
-    stiffness: 260,
+    stiffness: 200,
     damping: 20,
 };
 
@@ -19,10 +19,10 @@ export const animationPropsRotation = {
     positionTransition: true,
 };
 
-export const animationPropsScale = {
-    initial: { scale: 0 },
-    animate: { scale: 1 },
-    exit: { scale: 0 },
+export const animationPropsSlide = {
+    initial: { x: -100, opacity: 0 },
+    animate: { x: 0, opacity: 1 },
+    exit: { x: -100, opacity: 0 },
     transition: transitionProps,
     positionTransition: true,
 };

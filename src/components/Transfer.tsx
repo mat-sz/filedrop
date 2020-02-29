@@ -8,7 +8,7 @@ import { removeTransferAction, cancelTransferAction, rejectTransferAction, accep
 import { TransferModel } from '../types/Models';
 import { TransferState } from '../types/TransferState';
 import TransferIcon from './TransferIcon';
-import { animationPropsScale } from '../animationSettings';
+import { animationPropsSlide } from '../animationSettings';
 
 const cancellableStates = [
     TransferState.IN_PROGRESS,
@@ -64,7 +64,7 @@ const Transfer: React.FC<TransferProps> = ({ transfer }) => {
     const onCopy = useCallback(() => setCopied(true), [ setCopied ]);
 
     return (
-        <motion.li className="subsection info-grid" {...animationPropsScale} aria-label="Transfer">
+        <motion.li className="subsection info-grid" {...animationPropsSlide} aria-label="Transfer">
             <ReactTooltip className="custom-tooltip" />
             <div className="image">
                 <TransferIcon transfer={transfer} />
@@ -109,7 +109,7 @@ const Transfer: React.FC<TransferProps> = ({ transfer }) => {
                     </div>
                     <AnimatePresence>
                     { transfer.state === TransferState.IN_PROGRESS ?
-                    <motion.div className="progress" {...animationPropsScale}>
+                    <motion.div className="progress" {...animationPropsSlide}>
                         <progress value={transfer.progress} max={1} />
                         <div>{ Math.round(transfer.speed / 1000) } kB/s</div>
                     </motion.div>
