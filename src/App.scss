@@ -9,7 +9,6 @@ body {
     background: #111;
     color: white;
     line-height: 1.4;
-    padding-bottom: 10px;
 }
 
 .line {
@@ -102,7 +101,6 @@ button, .button {
 section {
     position: relative;
     padding: 20px;
-    padding-bottom: 0;
 }
 
 .text {
@@ -136,13 +134,16 @@ section {
     }
 }
 
+h1, h2, h3, .bar, .subsection {
+    text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.75);
+}
+
 h2, h3 {
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 3px;
     font-size: 16px;
     color: $accent-color;
-    text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.75)
 }
 
 h2 {
@@ -257,6 +258,7 @@ nav {
         top: 0;
         left: 0;
         right: 0;
+        bottom: 0;
         height: calc(100vh - 5px);
         padding: 80px;
 
@@ -364,6 +366,7 @@ nav {
     font-weight: bold;
     position: relative;
     overflow: hidden;
+    text-shadow: none;
 
     input {
         display: block;
