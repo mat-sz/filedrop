@@ -16,7 +16,7 @@ const QrCodeSection: React.FC<QrCodeSectionProps> = ({ href }) => {
             <h2>Connect</h2>
             <div className="qrcode subsection">
                 <div className="info">
-                    To connect to your network and start transfering files, scan the QR code below, or open the page on another device.
+                    To connect to your network and start copying files, scan the QR code below, or open the URL on another device.
                 </div>
                 <div>
                     <QrCode value={ href } />

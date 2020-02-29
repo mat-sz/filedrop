@@ -28,7 +28,8 @@ const Network: React.FC<NetworkProps> = ({ onSelect }) => {
                     </AnimatePresence>
                 :
                     <motion.span {...animationPropsOpacity}>
-                        Nobody is connected to your network.
+                        <div>Nobody is connected to your network.</div>
+                        <div>Open this website elsewhere to connect.</div>
                     </motion.span>
                 }
             </AnimatePresence>

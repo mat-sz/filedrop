@@ -22,7 +22,7 @@ const TransfersSection: React.FC = () => {
                         <strong>This is your tile.</strong>
                     </div>
                     <div>
-                        Below this section you will see other tiles. You can drag and drop your files onto a tile or click on it to initiate a file transfer.
+                        Under this section you will see other tiles like this one. Drag and drop your files or click on them to initiate a file transfer.
                     </div>
                 </div>
             </div>
