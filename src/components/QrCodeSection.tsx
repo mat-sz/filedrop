@@ -14,6 +14,9 @@ const QrCodeSection: React.FC<QrCodeSectionProps> = ({ href }) => {
     return (
         <div>
             <h2>Connect</h2>
+            <div className="subsection">
+                The CLI tool for drop.lol is now available. <a href="https://github.com/mat-sz/droplol">Get it here now!</a>
+            </div>
             <div className="qrcode subsection">
                 <div className="info">
                     To connect to your network and start copying files, scan the QR code below, or open the URL on another device.
