@@ -1,5 +1,5 @@
 import { put, takeEvery, select, call } from 'redux-saga/effects';
-import uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 
 import { ActionModel, MessageModel, WelcomeMessageModel, TransferModel, TransferMessageModel, NameMessageModel, ActionMessageModel, RTCDescriptionMessageModel, RTCCandidateMessageModel, NetworkMessageModel, PingMessageModel } from '../types/Models';
 import { ActionType } from '../types/ActionType';
