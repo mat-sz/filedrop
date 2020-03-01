@@ -1,6 +1,6 @@
 # filedrop-web
 
-Easy WebRTC file transfer.
+Easy WebRTC file transfer. [CLI tool is available here.](https://github.com/mat-sz/droplol)
 
 <p align="center">
     <a href="https://drop.lol/">
