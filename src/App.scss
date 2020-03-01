@@ -90,6 +90,7 @@ button, .button {
     border-radius: $border-radius;
     cursor: pointer;
     font-size: 14px;
+    text-shadow: none;
 
     &:hover {
         text-decoration: none;
