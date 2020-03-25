@@ -456,6 +456,8 @@ nav {
 
     .actions {
       display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       margin: 0 -10px;
 
       & > * {
@@ -608,6 +610,14 @@ nav {
           margin: 0 15px;
           font-size: 16px;
         }
+      }
+    }
+  }
+
+  .info-grid {
+    .info {
+      .actions {
+        justify-content: flex-start;
       }
     }
   }
