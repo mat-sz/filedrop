@@ -7,15 +7,15 @@ import sagas from './sagas';
 import { wsServer } from './config';
 
 const newStore = (): StoreType => {
-    const sagaMiddleware = createSagaMiddleware();
-    const store = createStore(
-        reducers,
-        applyMiddleware(socketMiddleware(wsServer), sagaMiddleware),
-    );
+  const sagaMiddleware = createSagaMiddleware();
+  const store = createStore(
+    reducers,
+    applyMiddleware(socketMiddleware(wsServer), sagaMiddleware)
+  );
 
-    sagaMiddleware.run(sagas, store.dispatch);
+  sagaMiddleware.run(sagas, store.dispatch);
 
-    return store;
+  return store;
 };
 
 export default newStore;

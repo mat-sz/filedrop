@@ -6,17 +6,17 @@ import { StateType } from '../reducers';
 import { animationPropsOpacity } from '../animationSettings';
 
 const Status: React.FC = () => {
-    const connected = useSelector((state: StateType) => state.connected);
+  const connected = useSelector((state: StateType) => state.connected);
 
-    return (
-        <AnimatePresence>
-            { !connected ?
-                <motion.div {...animationPropsOpacity} className="status error">
-                    <div>Connecting...</div>
-                </motion.div>
-            : null }
-        </AnimatePresence>
-    );
-}
+  return (
+    <AnimatePresence>
+      {!connected ? (
+        <motion.div {...animationPropsOpacity} className="status error">
+          <div>Connecting...</div>
+        </motion.div>
+      ) : null}
+    </AnimatePresence>
+  );
+};
 
 export default Status;

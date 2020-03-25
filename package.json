@@ -17,7 +17,10 @@
     "@types/react-tooltip": "^3.11.0",
     "@types/uuid": "^3.4.6",
     "framer-motion": "^1.7.0",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.0.9",
     "node-sass": "^4.13.0",
+    "prettier": "^2.0.2",
     "qrcode.react": "^1.0.0",
     "react": "^16.12.0",
     "react-copy-to-clipboard": "^5.0.2",
@@ -34,6 +37,16 @@
     "typescript": "~3.8.3",
     "typesocket": "^1.0.0",
     "uuid": "^7.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write"
+    ]
   },
   "scripts": {
     "start": "react-scripts start",
