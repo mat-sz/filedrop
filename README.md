@@ -14,6 +14,16 @@ Easy WebRTC file transfer. [CLI tool is available here.](https://github.com/mat-
     </a>
 </p>
 
+## Self-hosting
+
+A docker-compose configuration is available in the [filedrop-docker](https://github.com/mat-sz/filedrop-docker) repository.
+
+Installation can be achieved without Docker as well:
+
+> First you need to clone, build and run [filedrop-ws](https://github.com/mat-sz/filedrop-ws) and a TURN server (like [coturn](https://github.com/coturn/coturn)), read the README in filedrop-ws for more information on configuration.
+>
+> Then you need to clone this project, point it to the WebSockets backend (filedrop-ws) (in .env.local), build it and place it on some static file server (I use nginx for that). I also use nginx to proxy the back end through it. [Here's a guide on how to achieve that.](https://www.nginx.com/blog/websocket-nginx/)
+
 ## FAQ
 
 ### What is the motivation behind the project?
@@ -28,11 +38,11 @@ To the other device. Sometimes the (encrypted, since WebRTC uses encryption by d
 
 While [ShareDrop](https://github.com/cowbell/sharedrop) and [SnapDrop](https://github.com/RobinLinus/snapdrop) are both excellent projects and most definitely exist, I felt the need to create my own version for a several reasons:
 
-* I wanted to build something using React.js and TypeScript. While the [back end](https://github.com/mat-sz/filedrop-ws) doesn't use TypeScript the front end benefits greatly from being written in it - this saved me countless hours I'd spend debugging and also provides me with better autocomplete.
-* ShareDrop doesn't work when the devices are on different networks but still behind NAT.
-* I didn't like the layout and design of both, I feel like the abstract design of FileDrop makes it easier to use.
-* I was not aware of these projects while I started working on this project.
-* ShareDrop's URLs are extremely long.
+- I wanted to build something using React.js and TypeScript. While the [back end](https://github.com/mat-sz/filedrop-ws) doesn't use TypeScript the front end benefits greatly from being written in it - this saved me countless hours I'd spend debugging and also provides me with better autocomplete.
+- ShareDrop doesn't work when the devices are on different networks but still behind NAT.
+- I didn't like the layout and design of both, I feel like the abstract design of FileDrop makes it easier to use.
+- I was not aware of these projects while I started working on this project.
+- ShareDrop's URLs are extremely long.
 
 ### How is it related to the other projects you've mentioned?
 
