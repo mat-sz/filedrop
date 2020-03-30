@@ -3,16 +3,12 @@ import { v4 as uuid } from 'uuid';
 
 import {
   ActionModel,
-  MessageModel,
-  WelcomeMessageModel,
   TransferModel,
   TransferMessageModel,
   NameMessageModel,
   ActionMessageModel,
-  RTCDescriptionMessageModel,
-  RTCCandidateMessageModel,
-  NetworkMessageModel,
   PingMessageModel,
+  Message,
 } from '../types/Models';
 import { ActionType } from '../types/ActionType';
 import { StateType } from '../reducers';
@@ -38,24 +34,22 @@ import {
 import { MessageType, ActionMessageActionType } from '../types/MessageType';
 
 function* message(action: ActionModel, dispatch: (action: any) => void) {
-  const msg: MessageModel = action.value as MessageModel;
+  const msg: Message = action.value as Message;
 
   switch (msg.type) {
     case MessageType.WELCOME:
-      const welcomeMessage: WelcomeMessageModel = msg as WelcomeMessageModel;
-      yield put(setRtcConfigurationAction(welcomeMessage.rtcConfiguration));
-      yield put(setSuggestedNameAction(welcomeMessage.suggestedName));
-      yield put(setClientIdAction(welcomeMessage.clientId));
-      yield put(setClientColorAction(welcomeMessage.clientColor));
+      yield put(setRtcConfigurationAction(msg.rtcConfiguration));
+      yield put(setSuggestedNameAction(msg.suggestedName));
+      yield put(setClientIdAction(msg.clientId));
+      yield put(setClientColorAction(msg.clientColor));
       break;
     case MessageType.TRANSFER:
-      const transferMessage: TransferMessageModel = msg as TransferMessageModel;
       const transfer: TransferModel = {
-        fileName: transferMessage.fileName,
-        fileType: transferMessage.fileType,
-        fileSize: transferMessage.fileSize,
-        transferId: transferMessage.transferId,
-        clientId: transferMessage.clientId,
+        fileName: msg.fileName,
+        fileType: msg.fileType,
+        fileSize: msg.fileSize,
+        transferId: msg.transferId,
+        clientId: msg.clientId,
         state: TransferState.INCOMING,
         receiving: true,
       };
@@ -63,21 +57,18 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
       yield put(addTransferAction(transfer));
       break;
     case MessageType.ACTION:
-      const actionMessage: ActionMessageModel = msg as ActionMessageModel;
-
-      switch (actionMessage.action) {
+      switch (msg.action) {
         case ActionMessageActionType.CANCEL:
         case ActionMessageActionType.REJECT:
-          yield put(removeTransferAction(actionMessage.transferId));
+          yield put(removeTransferAction(msg.transferId));
           break;
         case ActionMessageActionType.ACCEPT:
-          yield call(() => transferSendFile(actionMessage, dispatch));
+          yield call(() => transferSendFile(msg, dispatch));
           break;
       }
       break;
     case MessageType.NETWORK:
-      const networkMessage: NetworkMessageModel = msg as NetworkMessageModel;
-      yield put(setNetworkAction(networkMessage.clients));
+      yield put(setNetworkAction(msg.clients));
       break;
     case MessageType.PING:
       const pongMessage: PingMessageModel = {
@@ -87,21 +78,14 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
       yield put(sendMessageAction(pongMessage));
       break;
     case MessageType.RTC_DESCRIPTION:
-      const rtcMessage: RTCDescriptionMessageModel = msg as RTCDescriptionMessageModel;
-
-      if (rtcMessage.data.type === 'answer') {
-        yield put(
-          setRemoteDescriptionAction(rtcMessage.transferId, rtcMessage.data)
-        );
+      if (msg.data.type === 'answer') {
+        yield put(setRemoteDescriptionAction(msg.transferId, msg.data));
       } else {
-        yield call(() => transferReceiveFile(rtcMessage, dispatch));
+        yield call(() => transferReceiveFile(msg, dispatch));
       }
       break;
     case MessageType.RTC_CANDIDATE:
-      const rtcCandidate: RTCCandidateMessageModel = msg as RTCCandidateMessageModel;
-      yield put(
-        addIceCandidateAction(rtcCandidate.transferId, rtcCandidate.data)
-      );
+      yield put(addIceCandidateAction(msg.transferId, msg.data));
       break;
   }
 }

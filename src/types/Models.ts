@@ -99,6 +99,16 @@ export interface TransferUpdateModel {
   state?: TransferState;
 }
 
+export type Message =
+  | WelcomeMessageModel
+  | NameMessageModel
+  | TransferMessageModel
+  | ActionMessageModel
+  | NetworkMessageModel
+  | PingMessageModel
+  | RTCDescriptionMessageModel
+  | RTCCandidateMessageModel;
+
 export interface ClientModel {
   clientId: string;
   clientColor: string;
