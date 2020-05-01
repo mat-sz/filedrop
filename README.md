@@ -50,7 +50,7 @@ To the other device. Sometimes the (encrypted, since WebRTC uses encryption by d
 
 While [ShareDrop](https://github.com/cowbell/sharedrop) and [SnapDrop](https://github.com/RobinLinus/snapdrop) are both excellent projects and most definitely exist, I felt the need to create my own version for a several reasons:
 
-- I wanted to build something using React.js and TypeScript. While the [back end](https://github.com/mat-sz/filedrop-ws) doesn't use TypeScript the front end benefits greatly from being written in it - this saved me countless hours I'd spend debugging and also provides me with better autocomplete.
+- I wanted to build something using React.js and TypeScript.
 - ShareDrop doesn't work when the devices are on different networks but still behind NAT.
 - I didn't like the layout and design of both, I feel like the abstract design of FileDrop makes it easier to use.
 - I was not aware of these projects while I started working on this project.
