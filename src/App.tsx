@@ -21,7 +21,7 @@ const App: React.FC = () => {
         <GithubCorner
           href="https://github.com/mat-sz/filedrop-web"
           octoColor="#111"
-          bannerColor="#fc03a1"
+          bannerColor="#ff6f06"
         />
         <Header />
         <Status />

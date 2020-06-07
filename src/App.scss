@@ -1,5 +1,5 @@
-$accent-color: #fc03a1;
-$border-radius: 10px;
+$accent-color: #ff6f06;
+$border-radius: 5px;
 $transition-fn: cubic-bezier(0.18, 0.89, 0.32, 1.28);
 
 $dark-gradient: linear-gradient(135deg, #00000000 0%, #00000044 100%);
@@ -13,7 +13,7 @@ body {
 
 .line {
   background-color: $accent-color;
-  box-shadow: 0px 0px 100px 5px $accent-color;
+  box-shadow: 0px 0px 5px 5px adjust-color($accent-color, $alpha: -0.8);
   height: 5px;
 }
 
@@ -306,14 +306,14 @@ nav {
 }
 
 .subsection {
-  background: #222;
+  background: #202020;
   border-radius: $border-radius;
   padding: 20px;
   margin: 20px 0;
   text-align: center;
   position: relative;
-  box-shadow: -20px -20px 50px -20px inset rgba(0, 0, 0, 0.2),
-    0 20px 20px -20px rgba(0, 0, 0, 0.5);
+  box-shadow: -20px -20px 50px -20px inset rgba(0, 0, 0, 0.1),
+    0 20px 20px -20px rgba(0, 0, 0, 0.25);
 
   a {
     font-weight: bold;
