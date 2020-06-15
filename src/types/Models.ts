@@ -51,20 +51,19 @@ export interface PingMessageModel extends MessageModel {
   timestamp: number;
 }
 
-export interface RTCDescriptionMessageModel extends MessageModel {
-  type: MessageType.RTC_DESCRIPTION;
+export interface RTCMessageModel extends MessageModel {
   data: any;
   targetId: string;
   transferId: string;
   clientId?: string;
 }
 
-export interface RTCCandidateMessageModel extends MessageModel {
+export interface RTCDescriptionMessageModel extends RTCMessageModel {
+  type: MessageType.RTC_DESCRIPTION;
+}
+
+export interface RTCCandidateMessageModel extends RTCMessageModel {
   type: MessageType.RTC_CANDIDATE;
-  data: any;
-  targetId: string;
-  transferId: string;
-  clientId?: string;
 }
 
 export interface TransferModel {
@@ -83,21 +82,9 @@ export interface TransferModel {
   state: TransferState;
 }
 
-export interface TransferUpdateModel {
+export type TransferUpdateModel = Partial<TransferModel> & {
   transferId: string;
-  fileName?: string;
-  fileSize?: number;
-  fileType?: string;
-  receiving?: boolean;
-  file?: File;
-  blobUrl?: string;
-  clientId?: string;
-  peerConnection?: RTCPeerConnection;
-  progress?: number;
-  speed?: number;
-  time?: number;
-  state?: TransferState;
-}
+};
 
 export type Message =
   | WelcomeMessageModel
