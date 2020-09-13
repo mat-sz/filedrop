@@ -2,16 +2,24 @@ import React, { useState, useCallback } from 'react';
 import QrCode from 'qrcode.react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
-import { showCliToolInfo } from '../config';
+import { showCliToolInfo, title } from '../config';
 
 interface QrCodeSectionProps {
   href: string;
 }
 
+const shareSupported = !!(navigator as any).share;
+
 const QrCodeSection: React.FC<QrCodeSectionProps> = ({ href }) => {
   const [copied, setCopied] = useState(false);
 
   const onCopy = useCallback(() => setCopied(true), [setCopied]);
+  const onShare = useCallback(() => {
+    (navigator as any).share({
+      title: title + ' - transfer files',
+      url: href,
+    });
+  }, [href]);
 
   return (
     <div>
@@ -46,6 +54,7 @@ const QrCodeSection: React.FC<QrCodeSectionProps> = ({ href }) => {
           <CopyToClipboard text={href} onCopy={onCopy}>
             <button>{copied ? 'Copied' : 'Copy to clipboard'}</button>
           </CopyToClipboard>
+          {shareSupported && <button onClick={onShare}>Share</button>}
         </div>
       </div>
     </div>
