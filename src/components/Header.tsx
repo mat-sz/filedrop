@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { abuseEmail } from '../config';
+import { abuseEmail, title } from '../config';
 
 const Header: React.FC = () => {
   const [toggled, setToggled] = useState(false);
@@ -23,7 +23,7 @@ const Header: React.FC = () => {
       <nav className="menu">
         <h1>
           <Link to="/" className="logo" onClick={close}>
-            {process.env.REACT_APP_TITLE}
+            {title}
           </Link>
         </h1>
         <ul className={toggled ? '' : 'hidden'}>

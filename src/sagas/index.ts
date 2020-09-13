@@ -32,6 +32,7 @@ import {
   setConnectedAction,
 } from '../actions/state';
 import { MessageType, ActionMessageActionType } from '../types/MessageType';
+import { title } from '../config';
 
 function* message(action: ActionModel, dispatch: (action: any) => void) {
   const msg: Message = action.value as Message;
@@ -245,10 +246,9 @@ function* updateNotificationCount() {
   );
 
   if (incomingTransfers.length > 0) {
-    document.title =
-      '(' + incomingTransfers.length + ') ' + process.env.REACT_APP_TITLE;
+    document.title = '(' + incomingTransfers.length + ') ' + title;
   } else {
-    document.title = process.env.REACT_APP_TITLE;
+    document.title = title;
   }
 }
 

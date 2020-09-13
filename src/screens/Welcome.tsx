@@ -1,15 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { title } from '../config';
+
 const Welcome: React.FC = () => {
   return (
     <section>
       <h2>Welcome</h2>
       <div className="subsection left">
-        <p>
-          Welcome to {process.env.REACT_APP_TITLE}! Let me explain what this
-          website is.
-        </p>
+        <p>Welcome to {title}! Let me explain what this website is.</p>
         <p>
           This website allows you to copy files over the network (LAN if both
           devices are on the same local network and support WebRTC, otherwise
@@ -35,12 +34,12 @@ const Welcome: React.FC = () => {
           </ol>
         </p>
         <p>
-          {process.env.REACT_APP_TITLE} is open source! The code lives on
-          GitHub: <a href="https://github.com/mat-sz/filedrop-web">front end</a>{' '}
-          and <a href="https://github.com/mat-sz/filedrop-ws">back end</a>. If
-          you enjoy using the website please consider giving these projects a
-          star. You can also report issues there or help the project by creating
-          a pull request.
+          {title} is open source! The code lives on GitHub:{' '}
+          <a href="https://github.com/mat-sz/filedrop-web">front end</a> and{' '}
+          <a href="https://github.com/mat-sz/filedrop-ws">back end</a>. If you
+          enjoy using the website please consider giving these projects a star.
+          You can also report issues there or help the project by creating a
+          pull request.
         </p>
         <p>
           By interacting with the service you accept our{' '}
