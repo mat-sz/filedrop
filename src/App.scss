@@ -349,8 +349,11 @@ nav {
   .buttons {
     display: flex;
     flex-direction: row;
-    gap: 10px;
     width: 100%;
+
+    button:not(:last-child) {
+      margin-right: 10px;
+    }
   }
 
   button {
