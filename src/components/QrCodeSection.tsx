@@ -52,16 +52,18 @@ const QrCodeSection: React.FC<QrCodeSectionProps> = ({ href }) => {
         </div>
         <div>
           <pre>{href}</pre>
-          <CopyToClipboard text={href} onCopy={onCopy}>
-            <button>
-              <FaCopy /> {copied ? 'Copied' : 'Copy to clipboard'}
-            </button>
-          </CopyToClipboard>
-          {shareSupported && (
-            <button onClick={onShare}>
-              <FaShare /> Share
-            </button>
-          )}
+          <div className="buttons">
+            <CopyToClipboard text={href} onCopy={onCopy}>
+              <button>
+                <FaCopy /> {copied ? 'Copied' : 'Copy'}
+              </button>
+            </CopyToClipboard>
+            {shareSupported && (
+              <button onClick={onShare}>
+                <FaShare /> Share
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>

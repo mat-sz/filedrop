@@ -343,13 +343,22 @@ nav {
     display: inline-block;
     margin: 0;
     margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
   }
 
   button {
     display: flex;
     align-items: center;
+    justify-content: center;
     margin: 0 auto;
-    margin-bottom: 10px;
+    flex: 1;
 
     svg {
       margin-right: 5px;
