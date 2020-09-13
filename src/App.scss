@@ -346,9 +346,14 @@ nav {
   }
 
   button {
-    display: block;
+    display: flex;
+    align-items: center;
     margin: 0 auto;
     margin-bottom: 10px;
+
+    svg {
+      margin-right: 5px;
+    }
   }
 
   canvas {

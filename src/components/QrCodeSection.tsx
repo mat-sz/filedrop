@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import QrCode from 'qrcode.react';
 import CopyToClipboard from 'react-copy-to-clipboard';
+import { FaShare, FaCopy } from 'react-icons/fa';
 
 import { showCliToolInfo, title } from '../config';
 
@@ -52,9 +53,15 @@ const QrCodeSection: React.FC<QrCodeSectionProps> = ({ href }) => {
         <div>
           <pre>{href}</pre>
           <CopyToClipboard text={href} onCopy={onCopy}>
-            <button>{copied ? 'Copied' : 'Copy to clipboard'}</button>
+            <button>
+              <FaCopy /> {copied ? 'Copied' : 'Copy to clipboard'}
+            </button>
           </CopyToClipboard>
-          {shareSupported && <button onClick={onShare}>Share</button>}
+          {shareSupported && (
+            <button onClick={onShare}>
+              <FaShare /> Share
+            </button>
+          )}
         </div>
       </div>
     </div>
