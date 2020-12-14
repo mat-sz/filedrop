@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { motion, AnimatePresence } from 'framer-motion';
-import ReactTooltip from 'react-tooltip';
+import Tooltip from 'rc-tooltip';
 
 import {
   removeTransferAction,
@@ -99,15 +99,18 @@ const Transfer: React.FC<TransferProps> = ({ transfer }) => {
       {...animationPropsSlide}
       aria-label="Transfer"
     >
-      <ReactTooltip className="custom-tooltip" />
       <div className="image">
         <TransferIcon transfer={transfer} />
       </div>
       <div className="info">
         <div>
-          <div className="metadata" data-tip={transfer.fileName}>
-            {shorterFileName(transfer.fileName)}
-          </div>
+          <Tooltip
+            placement="top"
+            overlay={transfer.fileName}
+            transitionName="rc-tooltip-fade"
+          >
+            <div className="metadata">{shorterFileName(transfer.fileName)}</div>
+          </Tooltip>
           <div className="metadata">
             {transfer.state === TransferState.FAILED ? 'Failed!' : ''}
           </div>

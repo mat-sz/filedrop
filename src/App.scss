@@ -561,13 +561,63 @@ nav {
   margin: 20px;
 }
 
-.__react_component_tooltip.type-dark.place-top.custom-tooltip {
-  background: #111;
-  opacity: 1;
-  font-weight: bold;
+div.rc-tooltip {
+  div.rc-tooltip-arrow {
+    border-top-color: #444;
+  }
 
-  &:after {
-    border-top-color: #111;
+  div.rc-tooltip-inner {
+    background: #444;
+    border: none;
+    color: white;
+  }
+}
+
+.rc-tooltip.rc-tooltip-fade-appear,
+.rc-tooltip.rc-tooltip-fade-enter {
+  opacity: 0;
+}
+.rc-tooltip.rc-tooltip-fade-enter,
+.rc-tooltip.rc-tooltip-fade-leave {
+  display: block;
+}
+.rc-tooltip-fade-enter,
+.rc-tooltip-fade-appear {
+  opacity: 0;
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  animation-play-state: paused;
+}
+.rc-tooltip-fade-leave {
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.6, -0.3, 0.74, 0.05);
+  animation-play-state: paused;
+}
+.rc-tooltip-fade-enter.rc-tooltip-fade-enter-active,
+.rc-tooltip-fade-appear.rc-tooltip-fade-appear-active {
+  animation-name: rcToolTipFadeIn;
+  animation-play-state: running;
+}
+.rc-tooltip-fade-leave.rc-tooltip-fade-leave-active {
+  animation-name: rcToolTipFadeOut;
+  animation-play-state: running;
+}
+@keyframes rcToolTipFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes rcToolTipFadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
 

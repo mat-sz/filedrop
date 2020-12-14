@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import GithubCorner from 'react-github-corner';
 
+import 'rc-tooltip/assets/bootstrap_white.css';
 import './App.scss';
 
 import Header from './components/Header';

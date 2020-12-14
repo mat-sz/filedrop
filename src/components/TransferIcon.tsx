@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import ReactTooltip from 'react-tooltip';
+import Tooltip from 'rc-tooltip';
 import {
   FaFile,
   FaFileAlt,
@@ -90,18 +90,22 @@ const TransferIcon: React.FC<TransferIconProps> = ({ transfer }) => {
 
   return (
     <div className="transfer-icon">
-      <ReactTooltip className="custom-tooltip" />
       {targetClient ? (
-        <div
-          className="network-tile target-tile"
-          style={{
-            backgroundColor: targetClient.clientColor,
-          }}
-          data-tip={states[transfer.state]}
-          aria-label={'Transfer state: ' + states[transfer.state]}
+        <Tooltip
+          placement="top"
+          overlay={states[transfer.state]}
+          transitionName="rc-tooltip-fade"
         >
-          {stateIcon(transfer.state, transfer.receiving)}
-        </div>
+          <div
+            className="network-tile target-tile"
+            style={{
+              backgroundColor: targetClient.clientColor,
+            }}
+            aria-label={'Transfer state: ' + states[transfer.state]}
+          >
+            {stateIcon(transfer.state, transfer.receiving)}
+          </div>
+        </Tooltip>
       ) : null}
       {typeIcon(transfer.fileType)}
     </div>
