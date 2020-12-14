@@ -525,6 +525,13 @@ nav {
     width: 75px;
     height: 55px;
   }
+
+  & > img {
+    width: 75px;
+    height: 75px;
+    margin: -10px 0;
+    border-radius: $border-radius;
+  }
 }
 
 .left {

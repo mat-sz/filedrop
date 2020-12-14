@@ -53,6 +53,7 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
         transferId: msg.transferId,
         clientId: msg.clientId,
         state: TransferState.INCOMING,
+        preview: msg.preview?.startsWith('data:') ? msg.preview : undefined,
         receiving: true,
       };
 

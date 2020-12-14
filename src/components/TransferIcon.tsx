@@ -107,7 +107,11 @@ const TransferIcon: React.FC<TransferIconProps> = ({ transfer }) => {
           </div>
         </Tooltip>
       ) : null}
-      {typeIcon(transfer.fileType)}
+      {transfer.preview ? (
+        <img src={transfer.preview} alt={'Preview: ' + transfer.fileName} />
+      ) : (
+        typeIcon(transfer.fileType)
+      )}
     </div>
   );
 };
