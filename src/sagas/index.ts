@@ -31,6 +31,7 @@ import {
   setClientIdAction,
   setClientColorAction,
   setConnectedAction,
+  setMaxSizeAction,
 } from '../actions/state';
 import { MessageType, ActionMessageActionType } from '../types/MessageType';
 import { title } from '../config';
@@ -44,6 +45,7 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
       yield put(setSuggestedNameAction(msg.suggestedName));
       yield put(setClientIdAction(msg.clientId));
       yield put(setClientColorAction(msg.clientColor));
+      yield put(setMaxSizeAction(msg.maxSize));
       break;
     case MessageType.TRANSFER:
       const transfer: TransferModel = {
@@ -126,11 +128,17 @@ function* createTransfer(action: ActionModel) {
   let preview: string | undefined = undefined;
 
   if (file.type.startsWith('image/')) {
+    const maxSize = yield select((state: StateType) => state.maxSize);
     preview = yield call(async () => {
       try {
         const imtool = await fromImage(file);
         imtool.thumbnail(100, true);
-        return await imtool.toDataURL();
+
+        const url = await imtool.toDataURL();
+        // Ensure the URL isn't too long.
+        if (url.length < maxSize * 0.75) {
+          return url;
+        }
       } catch {}
 
       return undefined;

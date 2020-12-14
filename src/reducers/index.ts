@@ -10,6 +10,7 @@ export interface StateType {
   networkName: string;
   clientId: string;
   clientColor: string;
+  maxSize: number;
   suggestedName: string;
   network: ClientModel[];
   transfers: TransferModel[];
@@ -26,6 +27,7 @@ let initialState: StateType = {
   suggestedName: null,
   network: [],
   transfers: [],
+  maxSize: 0,
 };
 
 export type StoreType = Store<StateType, ActionModel>;
@@ -67,6 +69,9 @@ function applicationState(state = initialState, action: ActionModel) {
       break;
     case ActionType.SET_CLIENT_COLOR:
       newState.clientColor = action.value as string;
+      break;
+    case ActionType.SET_MAX_SIZE:
+      newState.maxSize = action.value as number;
       break;
     case ActionType.SET_SUGGESTED_NAME:
       newState.suggestedName = action.value as string;

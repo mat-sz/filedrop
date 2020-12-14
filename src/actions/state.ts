@@ -59,6 +59,13 @@ export function setNetworkAction(network: ClientModel[]): ActionModel {
   };
 }
 
+export function setMaxSizeAction(maxSize: number): ActionModel {
+  return {
+    type: ActionType.SET_MAX_SIZE,
+    value: maxSize,
+  };
+}
+
 export function dismissWelcomeAction(): ActionModel {
   return {
     type: ActionType.DISMISS_WELCOME,
