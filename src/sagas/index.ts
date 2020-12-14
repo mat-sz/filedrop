@@ -1,5 +1,6 @@
 import { put, takeEvery, select, call } from 'redux-saga/effects';
 import { v4 as uuid } from 'uuid';
+import { fromImage } from 'imtool';
 
 import {
   ActionModel,
@@ -121,6 +122,20 @@ function* disconnected() {
 function* createTransfer(action: ActionModel) {
   const file: File = action.value.file;
 
+  let preview: string | undefined = undefined;
+
+  if (file.type.startsWith('image/')) {
+    preview = yield call(async () => {
+      try {
+        const imtool = await fromImage(file);
+        imtool.thumbnail(100, true);
+        return await imtool.toDataURL();
+      } catch {}
+
+      return undefined;
+    });
+  }
+
   const transfer: TransferModel = {
     file: file,
     fileName: file.name,
@@ -130,6 +145,7 @@ function* createTransfer(action: ActionModel) {
     clientId: action.value.clientId,
     state: TransferState.OUTGOING,
     receiving: false,
+    preview,
   };
 
   yield put(addTransferAction(transfer));
@@ -141,6 +157,7 @@ function* createTransfer(action: ActionModel) {
     fileSize: transfer.fileSize,
     fileType: transfer.fileType,
     targetId: transfer.clientId,
+    preview,
   };
 
   yield put(sendMessageAction(model));

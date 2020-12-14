@@ -31,6 +31,7 @@ export interface TransferMessageModel extends MessageModel {
   fileType: string;
   targetId: string;
   clientId?: string;
+  preview?: string;
 }
 
 export interface ActionMessageModel extends MessageModel {
@@ -79,6 +80,7 @@ export interface TransferModel {
   progress?: number;
   speed?: number;
   time?: number;
+  preview?: string;
   state: TransferState;
 }
 
