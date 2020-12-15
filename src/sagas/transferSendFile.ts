@@ -97,8 +97,7 @@ export default function* transferSendFile(
     );
   };
 
-  const bufferSupported = !!connection.sctp;
-  const bufferSize = bufferSupported ? connection.sctp.maxMessageSize : 16384;
+  const bufferSize = connection.sctp?.maxMessageSize || 65535;
 
   channel.addEventListener('open', () => {
     dispatch(
@@ -154,15 +153,13 @@ export default function* transferSendFile(
         complete = true;
         // Uncomment the next line if there are issues with transfers getting stuck at 100%.
         // channel.close();
-      } else if (!bufferSupported) {
+      } else if (channel.bufferedAmount < bufferSize / 2) {
         nextSlice(offset);
       }
     });
 
-    if (bufferSupported) {
-      channel.bufferedAmountLowThreshold = 0;
-      channel.addEventListener('bufferedamountlow', () => nextSlice(offset));
-    }
+    channel.bufferedAmountLowThreshold = bufferSize / 2;
+    channel.addEventListener('bufferedamountlow', () => nextSlice(offset));
 
     nextSlice(0);
   });
