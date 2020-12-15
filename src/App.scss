@@ -470,6 +470,10 @@ nav {
 
     .metadata {
       word-break: break-word;
+
+      span {
+        font-weight: bold;
+      }
     }
 
     .actions {

@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { motion, AnimatePresence } from 'framer-motion';
 import Tooltip from 'rc-tooltip';
+import filesize from 'filesize';
 
 import {
   removeTransferAction,
@@ -28,7 +29,7 @@ interface TransferProps {
 
 function shorterFileName(
   name: string,
-  fileNameLength = 48,
+  fileNameLength = 20,
   replacementCharacter = '…'
 ) {
   const dotIndex = name.lastIndexOf('.');
@@ -109,7 +110,10 @@ const Transfer: React.FC<TransferProps> = ({ transfer }) => {
             overlay={transfer.fileName}
             transitionName="rc-tooltip-fade"
           >
-            <div className="metadata">{shorterFileName(transfer.fileName)}</div>
+            <div className="metadata">
+              {shorterFileName(transfer.fileName)}
+              <span> ({filesize(transfer.fileSize)})</span>
+            </div>
           </Tooltip>
           <div className="metadata">
             {transfer.state === TransferState.FAILED ? 'Failed!' : ''}
