@@ -16,7 +16,7 @@ import { TransferState } from '../types/TransferState';
 import TransferIcon from './TransferIcon';
 import { animationPropsSlide } from '../animationSettings';
 
-const cancellableStates = [
+export const cancellableStates = [
   TransferState.IN_PROGRESS,
   TransferState.CONNECTING,
   TransferState.CONNECTED,
