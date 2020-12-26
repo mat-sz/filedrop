@@ -158,6 +158,18 @@ h3 {
   letter-spacing: 3px;
   font-size: 16px;
   color: $accent-color;
+  position: relative;
+
+  .buttons {
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    button {
+      padding: 5px 20px;
+      margin: 0 5px;
+    }
+  }
 }
 
 h2 {
