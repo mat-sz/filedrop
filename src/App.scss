@@ -161,10 +161,7 @@ h3 {
   position: relative;
 
   .buttons {
-    position: absolute;
-    right: 0;
-    top: 0;
-
+    margin-top: 5px;
     button {
       padding: 5px 20px;
       margin: 0 5px;
@@ -710,6 +707,15 @@ div.rc-tooltip {
       .actions {
         justify-content: flex-start;
       }
+    }
+  }
+
+  h2 {
+    .buttons {
+      position: absolute;
+      right: 0;
+      top: 0;
+      margin-top: -2px;
     }
   }
 }
