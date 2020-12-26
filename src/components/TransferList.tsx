@@ -57,10 +57,10 @@ const TransferList: React.FC = () => {
               transfer =>
                 transfer.state === TransferState.COMPLETE ||
                 transfer.state === TransferState.FAILED
-            ) && <button onClick={cancelAll}>Dismiss all</button>}
+            ) && <button onClick={dismissAll}>Dismiss all</button>}
             {!!transfers.find(transfer =>
               cancellableStates.includes(transfer.state)
-            ) && <button onClick={dismissAll}>Cancel all</button>}
+            ) && <button onClick={cancelAll}>Cancel all</button>}
           </div>
         </h2>
       )}
