@@ -1,6 +1,8 @@
 import { put, takeEvery, select, call } from 'redux-saga/effects';
 import { v4 as uuid } from 'uuid';
 import { fromImage } from 'imtool';
+import { fromByteArray, toByteArray } from 'base64-js';
+import { randomKey, encryptString, decryptString } from 'matcrypt';
 
 import {
   ActionModel,
@@ -11,6 +13,8 @@ import {
   PingMessageModel,
   Message,
   KeyPairModel,
+  ClientModel,
+  EncryptedMessageModel,
 } from '../types/Models';
 import { ActionType } from '../types/ActionType';
 import { StateType } from '../reducers';
@@ -24,7 +28,11 @@ import {
   addTransferAction,
   addIceCandidateAction,
 } from '../actions/transfers';
-import { connectAction, sendMessageAction } from '../actions/websocket';
+import {
+  connectAction,
+  messageAction,
+  sendMessageAction,
+} from '../actions/websocket';
 import {
   setNetworkAction,
   setRtcConfigurationAction,
@@ -39,6 +47,13 @@ import {
 } from '../actions/state';
 import { MessageType, ActionMessageActionType } from '../types/MessageType';
 import { title } from '../config';
+
+const keyParams = {
+  name: 'RSA-OAEP',
+  modulusLength: 2048,
+  publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+  hash: 'SHA-256',
+} as RsaHashedKeyGenParams;
 
 function* message(action: ActionModel, dispatch: (action: any) => void) {
   const msg: Message = action.value as Message;
@@ -103,7 +118,88 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
     case MessageType.RTC_CANDIDATE:
       yield put(addIceCandidateAction(msg.transferId, msg.data));
       break;
+    case MessageType.ENCRYPTED:
+      const keyPair = yield select((state: StateType) => state.keyPair);
+      if (keyPair) {
+        try {
+          const encryptedSecret = yield call(
+            async () =>
+              await crypto.subtle.decrypt(
+                { name: 'RSA-OAEP' } as RsaOaepParams,
+                keyPair.privateKey,
+                toByteArray(msg.secret)
+              )
+          );
+          const secret = fromByteArray(new Uint8Array(encryptedSecret));
+
+          const json = JSON.parse(
+            yield call(async () => await decryptString(secret, msg.payload))
+          );
+          if (json && json.type) {
+            yield put(messageAction(json));
+          }
+        } catch {}
+      }
+      break;
   }
+}
+
+function* prepareMesage(action: ActionModel) {
+  const msg = action.value as Message;
+
+  if ('targetId' in msg) {
+    const network: ClientModel[] = yield select(
+      (state: StateType) => state.network
+    );
+    const target = network?.find(client => client.clientId === msg.targetId);
+    if (target && target.publicKey) {
+      try {
+        const publicKey: CryptoKey = yield call(
+          async () =>
+            await crypto.subtle.importKey(
+              'jwk',
+              JSON.parse(target.publicKey),
+              keyParams,
+              true,
+              ['encrypt']
+            )
+        );
+
+        const secret = yield call(async () => await randomKey());
+        const encryptedSecret = yield call(
+          async () =>
+            await crypto.subtle.encrypt(
+              { name: 'RSA-OAEP' } as RsaOaepParams,
+              publicKey,
+              toByteArray(secret)
+            )
+        );
+
+        const encrypted: string = yield call(
+          async () => await encryptString(secret, JSON.stringify(msg))
+        );
+
+        const message: EncryptedMessageModel = {
+          type: MessageType.ENCRYPTED,
+          targetId: msg.targetId,
+          secret: fromByteArray(new Uint8Array(encryptedSecret)),
+          payload: encrypted,
+        };
+
+        yield put({
+          type: ActionType.WS_SEND_MESSAGE,
+          value: message,
+        });
+        return;
+      } catch {}
+    }
+  }
+
+  yield put({
+    type: ActionType.WS_SEND_MESSAGE,
+    value: msg,
+  });
+  return;
 }
 
 function* connected() {
@@ -287,14 +383,9 @@ function* createKeys() {
   const keyPair: KeyPairModel | undefined = yield call(async () => {
     try {
       const keyPair: CryptoKeyPair = (await window.crypto.subtle.generateKey(
-        {
-          name: 'RSA-OAEP',
-          modulusLength: 2048,
-          publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
-          hash: 'SHA-256',
-        } as RsaHashedKeyGenParams,
+        keyParams,
         true,
-        ['decrypt']
+        ['encrypt', 'decrypt']
       )) as CryptoKeyPair;
 
       const publicKey = JSON.stringify(
@@ -327,6 +418,7 @@ export default function* root(dispatch: (action: any) => void) {
     // TODO: rewrite this to avoid passing dispatch
     yield call(() => message(action, dispatch));
   });
+  yield takeEvery(ActionType.PREPARE_MESSAGE, prepareMesage);
   yield takeEvery(ActionType.WS_CONNECTED, connected);
   yield takeEvery(ActionType.WS_DISCONNECTED, disconnected);
 

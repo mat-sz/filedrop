@@ -75,6 +75,7 @@ export interface EncryptedMessageModel extends MessageModel {
   type: MessageType.ENCRYPTED;
   targetId: string;
   payload: string;
+  secret: string;
 }
 
 export interface TransferModel {

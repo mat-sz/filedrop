@@ -3,7 +3,7 @@ import { ActionType } from '../types/ActionType';
 
 export function sendMessageAction(message: MessageModel): ActionModel {
   return {
-    type: ActionType.WS_SEND_MESSAGE,
+    type: ActionType.PREPARE_MESSAGE,
     value: message,
   };
 }

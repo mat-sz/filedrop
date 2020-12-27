@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
 import { FaLock, FaPlus } from 'react-icons/fa';
 import { motion } from 'framer-motion';
@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { ClientModel } from '../types/Models';
 import { createTransferAction } from '../actions/transfers';
 import { animationPropsRotation } from '../animationSettings';
+import { StateType } from '../reducers';
 
 interface NetworkTileProps {
   client: ClientModel;
@@ -15,6 +16,7 @@ interface NetworkTileProps {
 
 const NetworkTile: React.FC<NetworkTileProps> = ({ client, onSelect }) => {
   const dispatch = useDispatch();
+  const publicKey = useSelector((state: StateType) => state.publicKey);
 
   const onDrop = useCallback(
     (files: File[]) => {
@@ -47,7 +49,7 @@ const NetworkTile: React.FC<NetworkTileProps> = ({ client, onSelect }) => {
           }}
         >
           <FaPlus />
-          {client.publicKey && (
+          {!!publicKey && !!client.publicKey && (
             <div className="secure">
               <FaLock />
             </div>
