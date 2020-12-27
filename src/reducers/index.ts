@@ -14,6 +14,8 @@ export interface StateType {
   suggestedName: string;
   network: ClientModel[];
   transfers: TransferModel[];
+  noticeText?: string;
+  noticeUrl?: string;
 }
 
 let initialState: StateType = {
@@ -87,6 +89,14 @@ function applicationState(state = initialState, action: ActionModel) {
       newState.transfers = newState.transfers.filter(transfer =>
         transfer.clientId ? clientIds.includes(transfer.clientId) : true
       );
+      break;
+    case ActionType.SET_NOTICE:
+      const notice = action.value as {
+        noticeText?: string;
+        noticeUrl?: string;
+      };
+      newState.noticeText = notice.noticeText;
+      newState.noticeUrl = notice.noticeUrl;
       break;
     case ActionType.ADD_TRANSFER:
       newState.transfers = [...newState.transfers, action.value];

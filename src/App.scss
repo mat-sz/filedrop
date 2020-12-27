@@ -581,6 +581,13 @@ nav {
   margin: 20px;
 }
 
+.notice {
+  a {
+    display: inline;
+    white-space: unset;
+  }
+}
+
 div.rc-tooltip {
   div.rc-tooltip-arrow {
     border-top-color: #444;

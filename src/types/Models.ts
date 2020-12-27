@@ -17,6 +17,8 @@ export interface WelcomeMessageModel extends MessageModel {
   suggestedName: string;
   rtcConfiguration?: RTCConfiguration;
   maxSize: number;
+  noticeText?: string;
+  noticeUrl?: string;
 }
 
 export interface NameMessageModel extends MessageModel {

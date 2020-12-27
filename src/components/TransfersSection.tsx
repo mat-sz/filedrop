@@ -7,10 +7,18 @@ import Network from './Network';
 
 const TransfersSection: React.FC = () => {
   const clientColor = useSelector((store: StateType) => store.clientColor);
+  const noticeText = useSelector((store: StateType) => store.noticeText);
+  const noticeUrl = useSelector((store: StateType) => store.noticeUrl);
 
   return (
     <div>
       <h2>Your network</h2>
+      {!!noticeText && (
+        <div className="subsection notice">
+          <strong>Server notice:</strong>{' '}
+          {noticeUrl ? <a href={noticeUrl}>{noticeText}</a> : noticeText}
+        </div>
+      )}
       <div className="subsection info-grid">
         <div className="image">
           <div

@@ -66,6 +66,19 @@ export function setMaxSizeAction(maxSize: number): ActionModel {
   };
 }
 
+export function setNoticeAction(
+  noticeText?: string,
+  noticeUrl?: string
+): ActionModel {
+  return {
+    type: ActionType.SET_NOTICE,
+    value: {
+      noticeText,
+      noticeUrl,
+    },
+  };
+}
+
 export function dismissWelcomeAction(): ActionModel {
   return {
     type: ActionType.DISMISS_WELCOME,

@@ -32,6 +32,7 @@ import {
   setClientColorAction,
   setConnectedAction,
   setMaxSizeAction,
+  setNoticeAction,
 } from '../actions/state';
 import { MessageType, ActionMessageActionType } from '../types/MessageType';
 import { title } from '../config';
@@ -46,6 +47,7 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
       yield put(setClientIdAction(msg.clientId));
       yield put(setClientColorAction(msg.clientColor));
       yield put(setMaxSizeAction(msg.maxSize));
+      yield put(setNoticeAction(msg.noticeText, msg.noticeUrl));
       break;
     case MessageType.TRANSFER:
       const transfer: TransferModel = {
