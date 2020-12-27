@@ -21,6 +21,10 @@ const Privacy: React.FC = () => {
           removed.
         </p>
         <p>
+          For clients that support end-to-end encryption, the WebRTC data and
+          file metadata will be encrypted and unknown to the service.
+        </p>
+        <p>
           In some cases (both the receiving and sending device being behind NAT)
           the binary file data may be sent over the service's TURN servers. The
           data is not stored in any way. The data is also not being processed in
