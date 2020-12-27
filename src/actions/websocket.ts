@@ -28,3 +28,10 @@ export function disconnectedAction(): ActionModel {
     value: null,
   };
 }
+
+export function connectAction(): ActionModel {
+  return {
+    type: ActionType.WS_CONNECT,
+    value: null,
+  };
+}

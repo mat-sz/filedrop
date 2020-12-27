@@ -20,15 +20,19 @@ export const socketMiddleware = (url: string) => {
     socket.on('connected', () => store.dispatch(connectedAction()));
     socket.on('disconnected', () => store.dispatch(disconnectedAction()));
     socket.on('message', message => store.dispatch(messageAction(message)));
-    socket.connect();
 
     return (next: (action: any) => void) => (action: any) => {
-      if (
-        action.type &&
-        action.type === ActionType.WS_SEND_MESSAGE &&
-        socket.readyState === 1
-      ) {
-        socket.send(action.value);
+      if (action.type) {
+        if (
+          action.type === ActionType.WS_SEND_MESSAGE &&
+          socket.readyState === 1
+        ) {
+          socket.send(action.value);
+        }
+
+        if (action.type === ActionType.WS_CONNECT && socket.readyState === 0) {
+          socket.connect();
+        }
       }
 
       return next(action);

@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
-import { FaPlus } from 'react-icons/fa';
+import { FaLock, FaPlus } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
 import { ClientModel } from '../types/Models';
@@ -47,6 +47,11 @@ const NetworkTile: React.FC<NetworkTileProps> = ({ client, onSelect }) => {
           }}
         >
           <FaPlus />
+          {client.publicKey && (
+            <div className="secure">
+              <FaLock />
+            </div>
+          )}
         </div>
       ) : (
         <div
@@ -67,6 +72,11 @@ const NetworkTile: React.FC<NetworkTileProps> = ({ client, onSelect }) => {
             Click on this area to start a transfer.
           </label>
           <FaPlus />
+          {client.publicKey && (
+            <div className="secure">
+              <FaLock />
+            </div>
+          )}
         </div>
       )}
     </motion.div>

@@ -24,6 +24,7 @@ export interface WelcomeMessageModel extends MessageModel {
 export interface NameMessageModel extends MessageModel {
   type: MessageType.NAME;
   networkName: string;
+  publicKey?: string;
 }
 
 export interface TransferMessageModel extends MessageModel {
@@ -70,6 +71,12 @@ export interface RTCCandidateMessageModel extends RTCMessageModel {
   type: MessageType.RTC_CANDIDATE;
 }
 
+export interface EncryptedMessageModel extends MessageModel {
+  type: MessageType.ENCRYPTED;
+  targetId: string;
+  payload: string;
+}
+
 export interface TransferModel {
   transferId: string;
   fileName: string;
@@ -99,9 +106,16 @@ export type Message =
   | NetworkMessageModel
   | PingMessageModel
   | RTCDescriptionMessageModel
-  | RTCCandidateMessageModel;
+  | RTCCandidateMessageModel
+  | EncryptedMessageModel;
 
 export interface ClientModel {
   clientId: string;
   clientColor: string;
+  publicKey?: string;
+}
+
+export interface KeyPairModel {
+  keyPair: CryptoKeyPair;
+  publicKey: string;
 }

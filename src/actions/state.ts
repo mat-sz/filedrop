@@ -1,4 +1,4 @@
-import { ActionModel, ClientModel } from '../types/Models';
+import { ActionModel, ClientModel, KeyPairModel } from '../types/Models';
 import { ActionType } from '../types/ActionType';
 
 export function setErrorAction(error: string): ActionModel {
@@ -76,6 +76,19 @@ export function setNoticeAction(
       noticeText,
       noticeUrl,
     },
+  };
+}
+
+export function setKeyPairAction(
+  keyPair: CryptoKeyPair,
+  publicKey: string
+): ActionModel {
+  return {
+    type: ActionType.SET_KEY_PAIR,
+    value: {
+      keyPair,
+      publicKey,
+    } as KeyPairModel,
   };
 }
 

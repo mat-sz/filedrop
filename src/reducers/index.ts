@@ -1,6 +1,12 @@
-import { ActionModel, TransferModel, ClientModel } from '../types/Models';
-import { ActionType } from '../types/ActionType';
 import { Store } from 'redux';
+
+import {
+  ActionModel,
+  TransferModel,
+  ClientModel,
+  KeyPairModel,
+} from '../types/Models';
+import { ActionType } from '../types/ActionType';
 
 export interface StateType {
   welcomed: boolean;
@@ -14,6 +20,8 @@ export interface StateType {
   suggestedName: string;
   network: ClientModel[];
   transfers: TransferModel[];
+  keyPair?: CryptoKeyPair;
+  publicKey?: string;
   noticeText?: string;
   noticeUrl?: string;
 }
@@ -77,6 +85,11 @@ function applicationState(state = initialState, action: ActionModel) {
       break;
     case ActionType.SET_SUGGESTED_NAME:
       newState.suggestedName = action.value as string;
+      break;
+    case ActionType.SET_KEY_PAIR:
+      const keyPairValue = action.value as KeyPairModel;
+      newState.keyPair = keyPairValue.keyPair;
+      newState.publicKey = keyPairValue.publicKey;
       break;
     case ActionType.SET_NETWORK:
       newState.network = action.value as ClientModel[];

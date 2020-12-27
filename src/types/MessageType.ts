@@ -7,6 +7,7 @@ export enum MessageType {
   PING = 'ping',
   RTC_DESCRIPTION = 'rtcDescription',
   RTC_CANDIDATE = 'rtcCandidate',
+  ENCRYPTED = 'encrypted',
 }
 
 export enum ActionMessageActionType {

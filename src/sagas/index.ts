@@ -10,6 +10,7 @@ import {
   ActionMessageModel,
   PingMessageModel,
   Message,
+  KeyPairModel,
 } from '../types/Models';
 import { ActionType } from '../types/ActionType';
 import { StateType } from '../reducers';
@@ -23,7 +24,7 @@ import {
   addTransferAction,
   addIceCandidateAction,
 } from '../actions/transfers';
-import { sendMessageAction } from '../actions/websocket';
+import { connectAction, sendMessageAction } from '../actions/websocket';
 import {
   setNetworkAction,
   setRtcConfigurationAction,
@@ -33,6 +34,8 @@ import {
   setConnectedAction,
   setMaxSizeAction,
   setNoticeAction,
+  setKeyPairAction,
+  setNetworkNameAction,
 } from '../actions/state';
 import { MessageType, ActionMessageActionType } from '../types/MessageType';
 import { title } from '../config';
@@ -48,6 +51,12 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
       yield put(setClientColorAction(msg.clientColor));
       yield put(setMaxSizeAction(msg.maxSize));
       yield put(setNoticeAction(msg.noticeText, msg.noticeUrl));
+
+      const networkName = yield select((state: StateType) => state.networkName);
+
+      if (networkName && networkName !== '') {
+        yield put(setNetworkNameAction(networkName));
+      }
       break;
     case MessageType.TRANSFER:
       const transfer: TransferModel = {
@@ -99,22 +108,15 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
 
 function* connected() {
   yield put(setConnectedAction(true));
-
-  let networkName = yield select((state: StateType) => state.networkName);
-  if (networkName && networkName !== '') {
-    const message: NameMessageModel = {
-      type: MessageType.NAME,
-      networkName: networkName,
-    };
-
-    yield put(sendMessageAction(message));
-  }
 }
 
 function* setName(action: ActionModel) {
+  const publicKey = yield select((state: StateType) => state.publicKey);
+
   const message: NameMessageModel = {
     type: MessageType.NAME,
     networkName: action.value,
+    publicKey,
   };
 
   yield put(sendMessageAction(message));
@@ -280,7 +282,45 @@ function* updateNotificationCount() {
   }
 }
 
+function* createKeys() {
+  // Generate keys.
+  const keyPair: KeyPairModel | undefined = yield call(async () => {
+    try {
+      const keyPair: CryptoKeyPair = (await window.crypto.subtle.generateKey(
+        {
+          name: 'RSA-OAEP',
+          modulusLength: 2048,
+          publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+          hash: 'SHA-256',
+        } as RsaHashedKeyGenParams,
+        true,
+        ['decrypt']
+      )) as CryptoKeyPair;
+
+      const publicKey = JSON.stringify(
+        await crypto.subtle.exportKey('jwk', keyPair.publicKey)
+      );
+
+      return {
+        keyPair,
+        publicKey,
+      };
+    } catch {
+      // In case of failure we default to plaintext communication.
+      return undefined;
+    }
+  });
+
+  if (keyPair) {
+    yield put(setKeyPairAction(keyPair.keyPair, keyPair.publicKey));
+  }
+
+  yield put(connectAction());
+}
+
 export default function* root(dispatch: (action: any) => void) {
+  yield call(() => createKeys());
+
   yield takeEvery(ActionType.DISMISS_WELCOME, welcomed);
 
   yield takeEvery(ActionType.WS_MESSAGE, function* (action: ActionModel) {
