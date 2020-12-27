@@ -136,6 +136,10 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
             yield call(async () => await decryptString(secret, msg.payload))
           );
           if (json && json.type) {
+            if (msg.clientId) {
+              json.clientId = msg.clientId;
+            }
+
             yield put(messageAction(json));
           }
         } catch {}
@@ -144,7 +148,7 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
   }
 }
 
-function* prepareMesage(action: ActionModel) {
+function* prepareMessage(action: ActionModel) {
   const msg = action.value as Message;
 
   if ('targetId' in msg) {
@@ -418,7 +422,7 @@ export default function* root(dispatch: (action: any) => void) {
     // TODO: rewrite this to avoid passing dispatch
     yield call(() => message(action, dispatch));
   });
-  yield takeEvery(ActionType.PREPARE_MESSAGE, prepareMesage);
+  yield takeEvery(ActionType.PREPARE_MESSAGE, prepareMessage);
   yield takeEvery(ActionType.WS_CONNECTED, connected);
   yield takeEvery(ActionType.WS_DISCONNECTED, disconnected);
 
