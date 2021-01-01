@@ -2,7 +2,7 @@ import { put, takeEvery, select, call } from 'redux-saga/effects';
 import { v4 as uuid } from 'uuid';
 import { fromImage } from 'imtool';
 import { fromByteArray, toByteArray } from 'base64-js';
-import { randomKey, encryptString, decryptString } from 'matcrypt';
+import { AES } from 'matcrypt';
 
 import {
   ActionModel,
@@ -133,7 +133,7 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
           const secret = fromByteArray(new Uint8Array(encryptedSecret));
 
           const json = JSON.parse(
-            yield call(async () => await decryptString(secret, msg.payload))
+            yield call(async () => await AES.decryptString(secret, msg.payload))
           );
           if (json && json.type) {
             if (msg.clientId) {
@@ -169,7 +169,7 @@ function* prepareMessage(action: ActionModel) {
             )
         );
 
-        const secret = yield call(async () => await randomKey());
+        const secret = yield call(async () => await AES.randomKey());
         const encryptedSecret = yield call(
           async () =>
             await crypto.subtle.encrypt(
@@ -180,7 +180,7 @@ function* prepareMessage(action: ActionModel) {
         );
 
         const encrypted: string = yield call(
-          async () => await encryptString(secret, JSON.stringify(msg))
+          async () => await AES.encryptString(secret, JSON.stringify(msg))
         );
 
         const message: EncryptedMessageModel = {
