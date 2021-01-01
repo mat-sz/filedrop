@@ -117,15 +117,25 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
       const privateKey = yield select((state: StateType) => state.privateKey);
       if (privateKey) {
         try {
-          const data = Utils.joinArrays(
-            toByteArray(msg.secret),
-            toByteArray(msg.payload)
-          );
-          const json = JSON.parse(
-            textDecoder.decode(
-              yield call(async () => await RSA.decrypt(privateKey, data))
-            )
-          );
+          let json: any = undefined;
+          if (msg.secret) {
+            const data = Utils.joinArrays(
+              toByteArray(msg.secret),
+              toByteArray(msg.payload)
+            );
+
+            json = JSON.parse(
+              textDecoder.decode(
+                yield call(async () => await RSA.decrypt(privateKey, data))
+              )
+            );
+          } else {
+            json = JSON.parse(
+              yield call(
+                async () => await RSA.decryptString(privateKey, msg.payload)
+              )
+            );
+          }
 
           if (json && json.type) {
             if (msg.clientId) {
