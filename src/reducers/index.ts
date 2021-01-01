@@ -1,11 +1,7 @@
 import { Store } from 'redux';
+import { RSA } from 'matcrypt';
 
-import {
-  ActionModel,
-  TransferModel,
-  ClientModel,
-  KeyPairModel,
-} from '../types/Models';
+import { ActionModel, TransferModel, ClientModel } from '../types/Models';
 import { ActionType } from '../types/ActionType';
 
 export interface StateType {
@@ -20,8 +16,8 @@ export interface StateType {
   suggestedName: string;
   network: ClientModel[];
   transfers: TransferModel[];
-  keyPair?: CryptoKeyPair;
   publicKey?: string;
+  privateKey?: string;
   noticeText?: string;
   noticeUrl?: string;
 }
@@ -87,9 +83,9 @@ function applicationState(state = initialState, action: ActionModel) {
       newState.suggestedName = action.value as string;
       break;
     case ActionType.SET_KEY_PAIR:
-      const keyPairValue = action.value as KeyPairModel;
-      newState.keyPair = keyPairValue.keyPair;
+      const keyPairValue = action.value as RSA.KeyPair;
       newState.publicKey = keyPairValue.publicKey;
+      newState.privateKey = keyPairValue.privateKey;
       break;
     case ActionType.SET_NETWORK:
       newState.network = action.value as ClientModel[];

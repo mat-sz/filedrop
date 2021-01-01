@@ -116,8 +116,3 @@ export interface ClientModel {
   clientColor: string;
   publicKey?: string;
 }
-
-export interface KeyPairModel {
-  keyPair: CryptoKeyPair;
-  publicKey: string;
-}
