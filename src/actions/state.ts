@@ -1,6 +1,6 @@
 import { RSA } from 'matcrypt';
 
-import { ActionModel, ClientModel } from '../types/Models';
+import { ActionModel, ChatItemModel, ClientModel } from '../types/Models';
 import { ActionType } from '../types/ActionType';
 
 export function setErrorAction(error: string): ActionModel {
@@ -105,5 +105,19 @@ export function dismissErrorAction(): ActionModel {
   return {
     type: ActionType.DISMISS_ERROR,
     value: null,
+  };
+}
+
+export function addChatItemAction(item: ChatItemModel): ActionModel {
+  return {
+    type: ActionType.ADD_CHAT_ITEM,
+    value: item,
+  };
+}
+
+export function sendMessageAction(message: string): ActionModel {
+  return {
+    type: ActionType.SEND_MESSAGE,
+    value: message,
   };
 }

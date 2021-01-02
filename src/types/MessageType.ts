@@ -8,6 +8,9 @@ export enum MessageType {
   RTC_DESCRIPTION = 'rtcDescription',
   RTC_CANDIDATE = 'rtcCandidate',
   ENCRYPTED = 'encrypted',
+
+  // The following only exist as encrypted messages:
+  CHAT = 'chat',
 }
 
 export enum ActionMessageActionType {

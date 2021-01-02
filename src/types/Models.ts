@@ -71,6 +71,12 @@ export interface RTCCandidateMessageModel extends RTCMessageModel {
   type: MessageType.RTC_CANDIDATE;
 }
 
+export interface ChatMessageModel extends RTCMessageModel {
+  type: MessageType.CHAT;
+  clientId: string;
+  message: string;
+}
+
 export interface EncryptedMessageModel extends MessageModel {
   type: MessageType.ENCRYPTED;
   targetId: string;
@@ -94,6 +100,12 @@ export interface TransferModel {
   time?: number;
   preview?: string;
   state: TransferState;
+}
+
+export interface ChatItemModel {
+  clientId: string;
+  clientColor: string;
+  message: string;
 }
 
 export type TransferUpdateModel = Partial<TransferModel> & {

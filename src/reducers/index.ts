@@ -1,7 +1,12 @@
 import { Store } from 'redux';
 import { RSA } from 'matcrypt';
 
-import { ActionModel, TransferModel, ClientModel } from '../types/Models';
+import {
+  ActionModel,
+  TransferModel,
+  ClientModel,
+  ChatItemModel,
+} from '../types/Models';
 import { ActionType } from '../types/ActionType';
 
 export interface StateType {
@@ -16,6 +21,7 @@ export interface StateType {
   suggestedName: string;
   network: ClientModel[];
   transfers: TransferModel[];
+  chat: ChatItemModel[];
   publicKey?: string;
   privateKey?: string;
   noticeText?: string;
@@ -34,6 +40,7 @@ let initialState: StateType = {
   network: [],
   transfers: [],
   maxSize: 0,
+  chat: [],
 };
 
 export type StoreType = Store<StateType, ActionModel>;
@@ -157,6 +164,9 @@ function applicationState(state = initialState, action: ActionModel) {
         }
         return transfer;
       });
+      break;
+    case ActionType.ADD_CHAT_ITEM:
+      newState.chat = [...newState.chat, action.value as ChatItemModel];
       break;
     default:
       return state;
