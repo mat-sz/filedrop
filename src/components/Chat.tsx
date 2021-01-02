@@ -1,6 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AnimatePresence } from 'framer-motion';
+import CopyToClipboard from 'react-copy-to-clipboard';
+import { FaCopy } from 'react-icons/fa';
 
 import { StateType } from '../reducers';
 import { sendChatMessageAction } from '../actions/state';
@@ -41,6 +43,11 @@ const Chat: React.FC = () => {
                 <div>
                   <ReactTimeago date={item.date} />
                 </div>
+                <CopyToClipboard text={item.message}>
+                  <button className="chat-action">
+                    <FaCopy />
+                  </button>
+                </CopyToClipboard>
               </div>
               <div className="chat-message">{item.message}</div>
             </li>

@@ -622,8 +622,28 @@ nav {
 
   &-info {
     display: flex;
+    align-items: center;
     color: #aaa;
     margin-bottom: 5px;
+
+    & > * {
+      margin-right: 10px;
+    }
+  }
+
+  &-action {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    background: none;
+    padding: 0;
+    color: #aaa;
+    font-size: 1em;
+
+    &:hover {
+      opacity: 0.8;
+      background: none;
+    }
   }
 
   form {
