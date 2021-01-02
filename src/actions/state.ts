@@ -115,9 +115,9 @@ export function addChatItemAction(item: ChatItemModel): ActionModel {
   };
 }
 
-export function sendMessageAction(message: string): ActionModel {
+export function sendChatMessageAction(message: string): ActionModel {
   return {
-    type: ActionType.SEND_MESSAGE,
+    type: ActionType.SEND_CHAT_MESSAGE,
     value: message,
   };
 }

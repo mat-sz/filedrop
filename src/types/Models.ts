@@ -71,9 +71,10 @@ export interface RTCCandidateMessageModel extends RTCMessageModel {
   type: MessageType.RTC_CANDIDATE;
 }
 
-export interface ChatMessageModel extends RTCMessageModel {
+export interface ChatMessageModel extends MessageModel {
   type: MessageType.CHAT;
-  clientId: string;
+  clientId?: string;
+  targetId: string;
   message: string;
 }
 
@@ -103,6 +104,7 @@ export interface TransferModel {
 }
 
 export interface ChatItemModel {
+  id: string;
   clientId: string;
   clientColor: string;
   message: string;
@@ -121,6 +123,7 @@ export type Message =
   | PingMessageModel
   | RTCDescriptionMessageModel
   | RTCCandidateMessageModel
+  | ChatMessageModel
   | EncryptedMessageModel;
 
 export interface ClientModel {

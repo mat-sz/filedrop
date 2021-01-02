@@ -14,6 +14,7 @@ import {
   Message,
   ClientModel,
   EncryptedMessageModel,
+  ChatMessageModel,
 } from '../types/Models';
 import { ActionType } from '../types/ActionType';
 import { StateType } from '../reducers';
@@ -43,6 +44,7 @@ import {
   setNoticeAction,
   setKeyPairAction,
   setNetworkNameAction,
+  addChatItemAction,
 } from '../actions/state';
 import { MessageType, ActionMessageActionType } from '../types/MessageType';
 import { title } from '../config';
@@ -111,6 +113,23 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
       break;
     case MessageType.RTC_CANDIDATE:
       yield put(addIceCandidateAction(msg.transferId, msg.data));
+      break;
+    case MessageType.CHAT:
+      const network: ClientModel[] = yield select(
+        (state: StateType) => state.network
+      );
+      const client = network.find(client => client.clientId === msg.clientId);
+
+      if (client) {
+        yield put(
+          addChatItemAction({
+            id: uuid(),
+            clientColor: client.clientColor,
+            clientId: client.clientId,
+            message: msg.message,
+          })
+        );
+      }
       break;
     case MessageType.ENCRYPTED:
       const privateKey = yield select((state: StateType) => state.privateKey);
@@ -340,6 +359,36 @@ function* rejectTransfer(action: ActionModel) {
   yield put(removeTransferAction(action.value));
 }
 
+function* sendChatMessage(action: ActionModel) {
+  const message = action.value as string;
+  const clientId: string = yield select((state: StateType) => state.clientId);
+  const clientColor: string = yield select(
+    (state: StateType) => state.clientColor
+  );
+  const network: ClientModel[] = yield select(
+    (state: StateType) => state.network
+  );
+
+  for (const client of network) {
+    const model: ChatMessageModel = {
+      type: MessageType.CHAT,
+      targetId: client.clientId,
+      message,
+    };
+
+    yield put(sendMessageAction(model));
+  }
+
+  yield put(
+    addChatItemAction({
+      id: uuid(),
+      clientId,
+      clientColor,
+      message,
+    })
+  );
+}
+
 /**
  * Called after the welcome screen is dismissed.
  */
@@ -400,6 +449,8 @@ export default function* root(dispatch: (action: any) => void) {
 
   yield takeEvery(ActionType.ACCEPT_TRANSFER, acceptTransfer);
   yield takeEvery(ActionType.REJECT_TRANSFER, rejectTransfer);
+
+  yield takeEvery(ActionType.SEND_CHAT_MESSAGE, sendChatMessage);
 
   yield takeEvery(
     [
