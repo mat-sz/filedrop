@@ -160,21 +160,15 @@ function* prepareMessage(action: ActionModel) {
     const target = network?.find(client => client.clientId === msg.targetId);
     if (target && target.publicKey) {
       try {
-        const encrypted: Uint8Array = yield call(
+        const payload: string = yield call(
           async () =>
-            await RSA.encrypt(
-              target.publicKey,
-              textEncoder.encode(JSON.stringify(msg))
-            )
+            await RSA.encryptString(target.publicKey, JSON.stringify(msg))
         );
-
-        const [secret, payload] = Utils.splitArray(encrypted, RSA.secretLength);
 
         const message: EncryptedMessageModel = {
           type: MessageType.ENCRYPTED,
           targetId: msg.targetId,
-          secret: fromByteArray(secret),
-          payload: fromByteArray(payload),
+          payload,
         };
 
         yield put({
