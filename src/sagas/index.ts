@@ -1,7 +1,7 @@
 import { put, takeEvery, select, call } from 'redux-saga/effects';
 import { v4 as uuid } from 'uuid';
 import { fromImage } from 'imtool';
-import { fromByteArray, toByteArray } from 'base64-js';
+import { toByteArray } from 'base64-js';
 import { RSA, Utils } from 'matcrypt';
 
 import {
@@ -47,7 +47,6 @@ import {
 import { MessageType, ActionMessageActionType } from '../types/MessageType';
 import { title } from '../config';
 
-const textEncoder = new TextEncoder();
 const textDecoder = new TextDecoder();
 
 function* message(action: ActionModel, dispatch: (action: any) => void) {
