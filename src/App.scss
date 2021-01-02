@@ -606,7 +606,8 @@ nav {
     padding: 0;
 
     li {
-      display: flex;
+      display: block;
+      text-align: left;
       background-color: rgba(255, 255, 255, 0.1);
       background-image: $dark-gradient;
       padding: 10px;
@@ -617,6 +618,12 @@ nav {
     .target-tile {
       margin-left: 0;
     }
+  }
+
+  &-info {
+    display: flex;
+    color: #aaa;
+    margin-bottom: 5px;
   }
 
   form {

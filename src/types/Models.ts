@@ -105,6 +105,7 @@ export interface TransferModel {
 
 export interface ChatItemModel {
   id: string;
+  date: Date;
   clientId: string;
   clientColor: string;
   message: string;

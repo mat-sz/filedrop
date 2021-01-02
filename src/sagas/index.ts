@@ -124,6 +124,7 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
         yield put(
           addChatItemAction({
             id: uuid(),
+            date: new Date(),
             clientColor: client.clientColor,
             clientId: client.clientId,
             message: msg.message,
@@ -382,6 +383,7 @@ function* sendChatMessage(action: ActionModel) {
   yield put(
     addChatItemAction({
       id: uuid(),
+      date: new Date(),
       clientId,
       clientColor,
       message,
