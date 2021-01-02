@@ -13,7 +13,6 @@ body {
 
 .line {
   background-color: $accent-color;
-  box-shadow: 0px 0px 5px 5px adjust-color($accent-color, $alpha: -0.8);
   height: 5px;
 }
 
