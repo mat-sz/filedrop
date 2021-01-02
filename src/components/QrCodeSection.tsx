@@ -4,6 +4,7 @@ import CopyToClipboard from 'react-copy-to-clipboard';
 import { FaShare, FaCopy } from 'react-icons/fa';
 
 import { showCliToolInfo, title } from '../config';
+import Chat from './Chat';
 
 interface QrCodeSectionProps {
   href: string;
@@ -66,6 +67,8 @@ const QrCodeSection: React.FC<QrCodeSectionProps> = ({ href }) => {
           </div>
         </div>
       </div>
+      <h2>Chat</h2>
+      <Chat />
     </div>
   );
 };

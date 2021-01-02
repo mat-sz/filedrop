@@ -600,6 +600,35 @@ nav {
   }
 }
 
+.chat {
+  ul {
+    list-style-type: none;
+    padding: 0;
+
+    li {
+      display: flex;
+      background-color: rgba(255, 255, 255, 0.1);
+      background-image: $dark-gradient;
+      padding: 10px;
+      border-radius: $border-radius;
+      margin-bottom: 10px;
+    }
+
+    .target-tile {
+      margin-left: 0;
+    }
+  }
+
+  form {
+    display: flex;
+
+    input {
+      flex: 1;
+      margin-right: 10px;
+    }
+  }
+}
+
 div.rc-tooltip {
   div.rc-tooltip-arrow {
     border-top-color: #444;
