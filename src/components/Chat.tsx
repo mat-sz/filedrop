@@ -1,12 +1,16 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import CopyToClipboard from 'react-copy-to-clipboard';
+import ReactTimeago from 'react-timeago';
 import { FaCopy } from 'react-icons/fa';
 
 import { StateType } from '../reducers';
 import { sendChatMessageAction } from '../actions/state';
-import ReactTimeago from 'react-timeago';
+import {
+  animationPropsOpacity,
+  animationPropsSlide,
+} from '../animationSettings';
 
 const Chat: React.FC = () => {
   const chat = useSelector((store: StateType) => store.chat);
@@ -29,10 +33,20 @@ const Chat: React.FC = () => {
 
   return (
     <div className="subsection chat">
+      {chat.length === 0 && (
+        <motion.span {...animationPropsOpacity}>
+          <div>No chat messages... so far.</div>
+        </motion.span>
+      )}
       <ul>
         <AnimatePresence>
           {chat.map(item => (
-            <li key={item.id}>
+            <motion.li
+              className="subsection info-grid"
+              key={item.id}
+              {...animationPropsSlide}
+              aria-label="Chat message"
+            >
               <div className="chat-info">
                 <div
                   className="network-tile target-tile"
@@ -50,7 +64,7 @@ const Chat: React.FC = () => {
                 </CopyToClipboard>
               </div>
               <div className="chat-message">{item.message}</div>
-            </li>
+            </motion.li>
           ))}
         </AnimatePresence>
       </ul>
