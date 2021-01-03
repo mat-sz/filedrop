@@ -1,8 +1,7 @@
 import { put, takeEvery, select, call } from 'redux-saga/effects';
 import { v4 as uuid } from 'uuid';
 import { fromImage } from 'imtool';
-import { toByteArray } from 'base64-js';
-import { RSA, Utils } from 'matcrypt';
+import { RSA } from 'matcrypt';
 
 import {
   ActionModel,
@@ -48,8 +47,6 @@ import {
 } from '../actions/state';
 import { MessageType, ActionMessageActionType } from '../types/MessageType';
 import { title } from '../config';
-
-const textDecoder = new TextDecoder();
 
 function* message(action: ActionModel, dispatch: (action: any) => void) {
   const msg: Message = action.value as Message;
@@ -136,25 +133,11 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
       const privateKey = yield select((state: StateType) => state.privateKey);
       if (privateKey) {
         try {
-          let json: any = undefined;
-          if (msg.secret) {
-            const data = Utils.joinArrays(
-              toByteArray(msg.secret),
-              toByteArray(msg.payload)
-            );
-
-            json = JSON.parse(
-              textDecoder.decode(
-                yield call(async () => await RSA.decrypt(privateKey, data))
-              )
-            );
-          } else {
-            json = JSON.parse(
-              yield call(
-                async () => await RSA.decryptString(privateKey, msg.payload)
-              )
-            );
-          }
+          const json = JSON.parse(
+            yield call(
+              async () => await RSA.decryptString(privateKey, msg.payload)
+            )
+          );
 
           if (json && json.type) {
             if (msg.clientId) {
