@@ -600,11 +600,24 @@ nav {
   }
 }
 
+.ps__rail-y {
+  z-index: 999999;
+
+  background: transparent !important;
+}
+
 .chat {
+  .ps__rail-x {
+    display: none !important;
+  }
+
   ul {
     list-style-type: none;
     padding: 0;
     margin-top: 0;
+    margin-bottom: 5px;
+    max-height: 500px;
+    overflow-x: hidden;
 
     li {
       display: block;

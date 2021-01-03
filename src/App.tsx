@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import GithubCorner from 'react-github-corner';
 
+import 'react-perfect-scrollbar/dist/css/styles.css';
 import 'rc-tooltip/assets/bootstrap_white.css';
 import './App.scss';
 
