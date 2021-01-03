@@ -8,6 +8,7 @@ export interface ActionModel {
 
 export interface MessageModel {
   type: MessageType;
+  secure?: boolean;
 }
 
 export interface WelcomeMessageModel extends MessageModel {

@@ -154,6 +154,8 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
 
 function* prepareMessage(action: ActionModel) {
   const msg = action.value as Message;
+  const secure = !!msg.secure;
+  delete msg['secure'];
 
   if ('targetId' in msg) {
     const network: ClientModel[] = yield select(
@@ -177,16 +179,20 @@ function* prepareMessage(action: ActionModel) {
           type: ActionType.WS_SEND_MESSAGE,
           value: message,
         });
+
         return;
       } catch {}
     }
+  }
+
+  if (secure) {
+    return;
   }
 
   yield put({
     type: ActionType.WS_SEND_MESSAGE,
     value: msg,
   });
-  return;
 }
 
 function* connected() {
@@ -358,6 +364,7 @@ function* sendChatMessage(action: ActionModel) {
       type: MessageType.CHAT,
       targetId: client.clientId,
       message,
+      secure: true,
     };
 
     yield put(sendMessageAction(model));
