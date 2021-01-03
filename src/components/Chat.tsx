@@ -1,18 +1,13 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AnimatePresence, motion } from 'framer-motion';
-import CopyToClipboard from 'react-copy-to-clipboard';
-import ReactTimeago from 'react-timeago';
-import { FaCopy } from 'react-icons/fa';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import Textarea from 'react-expanding-textarea';
 
 import { StateType } from '../reducers';
 import { sendChatMessageAction } from '../actions/state';
-import {
-  animationPropsOpacity,
-  animationPropsSlide,
-} from '../animationSettings';
+import { animationPropsOpacity } from '../animationSettings';
+import ChatItem from './ChatItem';
 
 const Chat: React.FC = () => {
   const chat = useSelector((store: StateType) => store.chat);
@@ -67,30 +62,7 @@ const Chat: React.FC = () => {
       >
         <AnimatePresence>
           {chat.map(item => (
-            <motion.li
-              className="subsection info-grid"
-              key={item.id}
-              {...animationPropsSlide}
-              aria-label="Chat message"
-            >
-              <div className="chat-info">
-                <div
-                  className="network-tile target-tile"
-                  style={{
-                    backgroundColor: item.clientColor,
-                  }}
-                />
-                <div>
-                  <ReactTimeago date={item.date} />
-                </div>
-                <CopyToClipboard text={item.message}>
-                  <button className="chat-action">
-                    <FaCopy />
-                  </button>
-                </CopyToClipboard>
-              </div>
-              <div className="chat-message">{item.message}</div>
-            </motion.li>
+            <ChatItem key={item.id} item={item} />
           ))}
         </AnimatePresence>
       </PerfectScrollbar>
