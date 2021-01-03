@@ -14,6 +14,7 @@ import {
 
 const Chat: React.FC = () => {
   const chat = useSelector((store: StateType) => store.chat);
+  const privateKey = useSelector((store: StateType) => store.privateKey);
   const dispatch = useDispatch();
 
   const [message, setMessage] = useState('');
@@ -30,6 +31,11 @@ const Chat: React.FC = () => {
     },
     [dispatch, message, setMessage]
   );
+
+  // Disable chat if Web Crypto is not supported.
+  if (!privateKey) {
+    return null;
+  }
 
   return (
     <div className="subsection chat">
