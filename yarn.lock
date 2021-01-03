@@ -9579,6 +9579,14 @@ react-error-overlay@^6.0.8:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.8.tgz#474ed11d04fc6bda3af643447d85e9127ed6b5de"
   integrity sha512-HvPuUQnLp5H7TouGq3kzBeioJmXms1wHy9EGjz2OURWBp4qZO6AfGEcnxts1D/CbwPLRAgTMPCEgYhA3sEM4vw==
 
+react-expanding-textarea@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/react-expanding-textarea/-/react-expanding-textarea-2.3.0.tgz#24d8e2fabcab3c11462fdcea857ea92546f6718e"
+  integrity sha512-pY0+SFmlXQyEsnL3mVGyLJPKx0IOwhDK7VtPbujLSnjiQIxa5rYyYAOZ/itrJEG/O50GhBdsupg02wRZnGkJBQ==
+  dependencies:
+    react-with-forwarded-ref "^0.3.3"
+    tslib "^2.0.3"
+
 react-github-corner@^2.3.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/react-github-corner/-/react-github-corner-2.5.0.tgz#e350d0c69f69c075bc0f1d2a6f1df6ee91da31f2"
@@ -9724,6 +9732,13 @@ react-timeago@^5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/react-timeago/-/react-timeago-5.2.0.tgz#d655d40aa55e4fe08a92234481a6aea7f656ab5d"
   integrity sha512-wCEEDGQHMdFh/PLp+Hj5vk9ZoC4KjQ5u0u6+KrrY9rny5LqJ2gZvNNEAS4mhSZDV1i7JLgQI5VQTAux7f+vj2w==
+
+react-with-forwarded-ref@^0.3.3:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/react-with-forwarded-ref/-/react-with-forwarded-ref-0.3.3.tgz#e5842192b4c1f1c668926000facca1ec18f446f6"
+  integrity sha512-rWIxXwSRxUBtxpVy9WLUjPutAtiNohVbz60FZeVvNBiVOQdZ/ll0htaKJmc3KUsd4JsypsWyfuoOba/Ho18PvA==
+  dependencies:
+    tslib "^2.0.3"
 
 react@^16.12.0:
   version "16.14.0"

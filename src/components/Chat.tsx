@@ -5,6 +5,7 @@ import CopyToClipboard from 'react-copy-to-clipboard';
 import ReactTimeago from 'react-timeago';
 import { FaCopy } from 'react-icons/fa';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import Textarea from 'react-expanding-textarea';
 
 import { StateType } from '../reducers';
 import { sendChatMessageAction } from '../actions/state';
@@ -20,8 +21,8 @@ const Chat: React.FC = () => {
   const containerRef = useRef<HTMLElement>(null);
 
   const [message, setMessage] = useState('');
-  const sendMessage = useCallback(
-    (e: React.FormEvent) => {
+  const onSubmit = useCallback(
+    (e: React.FormEvent | React.KeyboardEvent) => {
       e.preventDefault();
 
       if (!message) {
@@ -32,6 +33,14 @@ const Chat: React.FC = () => {
       setMessage('');
     },
     [dispatch, message, setMessage]
+  );
+  const onKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        onSubmit(e);
+      }
+    },
+    [onSubmit]
   );
 
   useEffect(() => {
@@ -85,11 +94,11 @@ const Chat: React.FC = () => {
           ))}
         </AnimatePresence>
       </PerfectScrollbar>
-      <form onSubmit={sendMessage}>
-        <input
-          type="text"
+      <form onSubmit={onSubmit}>
+        <Textarea
           value={message}
-          onChange={e => setMessage(e.target.value)}
+          onKeyDown={onKeyDown}
+          onChange={e => setMessage((e.target as any).value)}
         />
         <button>Send</button>
       </form>
