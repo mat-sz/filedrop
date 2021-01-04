@@ -38,7 +38,12 @@ const Transfers: React.FC = () => {
 
   useEffect(() => {
     const onPaste = (e: ClipboardEvent) => {
-      let files = [];
+      const element = e.target as HTMLElement;
+      if (element.tagName === 'TEXTAREA') {
+        return;
+      }
+
+      const files = [];
       for (let item of e.clipboardData.items) {
         const file = item.getAsFile();
 
