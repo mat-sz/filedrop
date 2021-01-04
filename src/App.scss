@@ -699,10 +699,12 @@ nav {
 
   form {
     display: flex;
+    align-items: center;
 
     textarea {
       flex: 1;
       margin-right: 10px;
+      min-height: 40px;
     }
   }
 }
