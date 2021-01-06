@@ -31,7 +31,7 @@
     "react-copy-to-clipboard": "^5.0.2",
     "react-dom": "^16.12.0",
     "react-dropzone": "^10.2.1",
-    "react-expanding-textarea": "^2.3.0",
+    "react-expanding-textarea": "^2.3.1",
     "react-github-corner": "^2.3.0",
     "react-icons": "^3.9.0",
     "react-perfect-scrollbar": "^1.5.8",
