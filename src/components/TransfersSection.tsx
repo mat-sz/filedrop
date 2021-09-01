@@ -15,7 +15,6 @@ const TransfersSection: React.FC = () => {
       <h2>Your network</h2>
       {!!noticeText && (
         <div className="subsection notice">
-          <strong>Server notice:</strong>{' '}
           {noticeUrl ? <a href={noticeUrl}>{noticeText}</a> : noticeText}
         </div>
       )}
