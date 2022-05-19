@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import GithubCorner from 'react-github-corner';
 
 import 'react-perfect-scrollbar/dist/css/styles.css';
@@ -27,25 +27,13 @@ const App: React.FC = () => {
         />
         <Header />
         <Status />
-        <Switch>
-          {abuseEmail ? (
-            <Route path="/abuse">
-              <Abuse />
-            </Route>
-          ) : null}
-          <Route path="/privacy">
-            <Privacy />
-          </Route>
-          <Route path="/tos">
-            <ToS />
-          </Route>
-          <Route path="/:networkName">
-            <Transfers />
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
+        <Routes>
+          {abuseEmail ? <Route path="/abuse" element={<Abuse />} /> : null}
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/tos" element={<ToS />} />
+          <Route path="/:networkName" element={<Transfers />} />
+          <Route index element={<Home />} />
+        </Routes>
       </div>
     </Router>
   );

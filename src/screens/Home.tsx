@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { StateType } from '../reducers';
@@ -11,7 +11,7 @@ const Home: React.FC = () => {
   const clientId = useSelector((state: StateType) => state.clientId);
   const suggestedName = useSelector((state: StateType) => state.suggestedName);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const currentNetworkName =
@@ -26,9 +26,9 @@ const Home: React.FC = () => {
         )
         .join('');
     if (connected && clientId) {
-      history.replace('/' + currentNetworkName);
+      navigate('/' + currentNetworkName);
     }
-  }, [connected, networkName, history, clientId, suggestedName]);
+  }, [connected, networkName, navigate, clientId, suggestedName]);
 
   return <section className="center">Loading...</section>;
 };

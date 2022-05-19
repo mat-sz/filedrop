@@ -36,7 +36,7 @@ export default function* transferSendFile(
 
   const file = transfer.file;
 
-  const rtcConfiguration = yield select(
+  const rtcConfiguration: RTCConfiguration = yield select(
     (state: StateType) => state.rtcConfiguration
   );
   const connection = new RTCPeerConnection(rtcConfiguration);
@@ -97,7 +97,7 @@ export default function* transferSendFile(
     );
   };
 
-  const bufferSize = connection.sctp?.maxMessageSize || 65535;
+  const bufferSize = (connection as any).sctp?.maxMessageSize || 65535;
 
   channel.addEventListener('open', () => {
     dispatch(

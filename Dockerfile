@@ -1,4 +1,4 @@
-FROM node:alpine as build
+FROM node:18-alpine as build
 
 WORKDIR /app
 ARG REACT_APP_TITLE

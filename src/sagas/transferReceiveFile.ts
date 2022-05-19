@@ -26,7 +26,7 @@ export default function* transferReceiveFile(
   const transfer = filteredTransfers[0];
   if (!transfer) return;
 
-  const rtcConfiguration = yield select(
+  const rtcConfiguration: RTCConfiguration = yield select(
     (state: StateType) => state.rtcConfiguration
   );
   const connection = new RTCPeerConnection(rtcConfiguration);
@@ -149,7 +149,9 @@ export default function* transferReceiveFile(
     async () => await connection.setRemoteDescription(rtcMessage.data)
   );
 
-  const answer = yield call(async () => await connection.createAnswer());
+  const answer: RTCSessionDescriptionInit = yield call(
+    async () => await connection.createAnswer()
+  );
   yield call(async () => await connection.setLocalDescription(answer));
 
   const nextRtcMessage: RTCDescriptionMessageModel = {

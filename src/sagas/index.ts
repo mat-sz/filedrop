@@ -60,7 +60,9 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
       yield put(setMaxSizeAction(msg.maxSize));
       yield put(setNoticeAction(msg.noticeText, msg.noticeUrl));
 
-      const networkName = yield select((state: StateType) => state.networkName);
+      const networkName: string = yield select(
+        (state: StateType) => state.networkName
+      );
 
       if (networkName && networkName !== '') {
         yield put(setNetworkNameAction(networkName));
@@ -130,7 +132,9 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
       }
       break;
     case MessageType.ENCRYPTED:
-      const privateKey = yield select((state: StateType) => state.privateKey);
+      const privateKey: string = yield select(
+        (state: StateType) => state.privateKey
+      );
       if (privateKey) {
         try {
           const json = JSON.parse(
@@ -200,7 +204,7 @@ function* connected() {
 }
 
 function* setName(action: ActionModel) {
-  const publicKey = yield select((state: StateType) => state.publicKey);
+  const publicKey: string = yield select((state: StateType) => state.publicKey);
 
   const message: NameMessageModel = {
     type: MessageType.NAME,
@@ -221,7 +225,7 @@ function* createTransfer(action: ActionModel) {
   let preview: string | undefined = undefined;
 
   if (file.type.startsWith('image/')) {
-    const maxSize = yield select((state: StateType) => state.maxSize);
+    const maxSize: number = yield select((state: StateType) => state.maxSize);
     preview = yield call(async () => {
       try {
         const imtool = await fromImage(file);
