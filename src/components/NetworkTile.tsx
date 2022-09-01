@@ -41,53 +41,52 @@ const NetworkTile: React.FC<NetworkTileProps> = ({ client, onSelect }) => {
   }, [client, onSelect]);
 
   return (
-    <motion.div {...animationPropsRotation} onClick={onClick}>
-      <Tooltip
-        placement="top"
-        overlay={client.clientName}
-        transitionName="rc-tooltip-fade"
-      >
-        {onSelect ? (
-          <div
-            className="network-tile"
-            style={{
-              backgroundColor: client.clientColor,
-            }}
-          >
-            <FaPlus />
-            {!!publicKey && !!client.publicKey && (
-              <div className="secure">
-                <FaLock />
-              </div>
-            )}
-          </div>
-        ) : (
-          <div
-            {...getRootProps()}
-            className={'network-tile ' + (isDragActive ? 'active' : '')}
-            style={{
-              backgroundColor: client.clientColor,
-            }}
-          >
-            <label onClick={preventClick}>
-              <input
-                {...getInputProps({
-                  style: {},
-                })}
-                accept={'*'}
-                tabIndex={1}
-              />
-              Click on this area to start a transfer.
-            </label>
-            <FaPlus />
-            {client.publicKey && (
-              <div className="secure">
-                <FaLock />
-              </div>
-            )}
-          </div>
-        )}
-      </Tooltip>
+    <motion.div
+      {...animationPropsRotation}
+      onClick={onClick}
+      className="network-tile-wrapper"
+    >
+      {onSelect ? (
+        <div
+          className="network-tile"
+          style={{
+            backgroundColor: client.clientColor,
+          }}
+        >
+          <FaPlus />
+          {!!publicKey && !!client.publicKey && (
+            <div className="secure">
+              <FaLock />
+            </div>
+          )}
+        </div>
+      ) : (
+        <div
+          {...getRootProps()}
+          className={'network-tile ' + (isDragActive ? 'active' : '')}
+          style={{
+            backgroundColor: client.clientColor,
+          }}
+        >
+          <label onClick={preventClick}>
+            <input
+              {...getInputProps({
+                style: {},
+              })}
+              accept={'*'}
+              tabIndex={1}
+            />
+            Click on this area to start a transfer.
+          </label>
+          <FaPlus />
+          {client.publicKey && (
+            <div className="secure">
+              <FaLock />
+            </div>
+          )}
+        </div>
+      )}
+      <div className="network-tile-name">{client.clientName}</div>
     </motion.div>
   );
 };
