@@ -35,8 +35,9 @@ import {
 import {
   setNetworkAction,
   setRtcConfigurationAction,
-  setSuggestedNameAction,
+  setSuggestedNetworkNameAction,
   setClientIdAction,
+  setClientNameAction,
   setClientColorAction,
   setConnectedAction,
   setMaxSizeAction,
@@ -53,10 +54,17 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
 
   switch (msg.type) {
     case MessageType.WELCOME:
-      yield put(setRtcConfigurationAction(msg.rtcConfiguration));
-      yield put(setSuggestedNameAction(msg.suggestedName));
+      if (msg.rtcConfiguration) {
+        yield put(setRtcConfigurationAction(msg.rtcConfiguration));
+      }
+
+      if (msg.suggestedNetworkName) {
+        yield put(setSuggestedNetworkNameAction(msg.suggestedNetworkName));
+      }
+
       yield put(setClientIdAction(msg.clientId));
       yield put(setClientColorAction(msg.clientColor));
+      yield put(setClientNameAction(msg.clientName));
       yield put(setMaxSizeAction(msg.maxSize));
       yield put(setNoticeAction(msg.noticeText, msg.noticeUrl));
 
@@ -69,18 +77,20 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
       }
       break;
     case MessageType.TRANSFER:
-      const transfer: TransferModel = {
-        fileName: msg.fileName,
-        fileType: msg.fileType,
-        fileSize: msg.fileSize,
-        transferId: msg.transferId,
-        clientId: msg.clientId,
-        state: TransferState.INCOMING,
-        preview: msg.preview?.startsWith('data:') ? msg.preview : undefined,
-        receiving: true,
-      };
+      if (msg.clientId) {
+        const transfer: TransferModel = {
+          fileName: msg.fileName,
+          fileType: msg.fileType,
+          fileSize: msg.fileSize,
+          transferId: msg.transferId,
+          clientId: msg.clientId,
+          state: TransferState.INCOMING,
+          preview: msg.preview?.startsWith('data:') ? msg.preview : undefined,
+          receiving: true,
+        };
 
-      yield put(addTransferAction(transfer));
+        yield put(addTransferAction(transfer));
+      }
       break;
     case MessageType.ACTION:
       switch (msg.action) {
@@ -166,11 +176,13 @@ function* prepareMessage(action: ActionModel) {
       (state: StateType) => state.network
     );
     const target = network?.find(client => client.clientId === msg.targetId);
-    if (target && target.publicKey) {
+
+    const targetPublicKey = target?.publicKey;
+    if (targetPublicKey) {
       try {
         const payload: string = yield call(
           async () =>
-            await RSA.encryptString(target.publicKey, JSON.stringify(msg))
+            await RSA.encryptString(targetPublicKey, JSON.stringify(msg))
         );
 
         const message: EncryptedMessageModel = {

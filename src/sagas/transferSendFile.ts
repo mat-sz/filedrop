@@ -57,8 +57,8 @@ export default function* transferSendFile(
       transferId: transfer.transferId,
       targetId: transfer.clientId,
       data: {
-        type: connection.localDescription.type,
-        sdp: connection.localDescription.sdp,
+        type: connection.localDescription!.type,
+        sdp: connection.localDescription!.sdp,
       },
     };
 
@@ -118,7 +118,7 @@ export default function* transferSendFile(
     fileReader.addEventListener('load', e => {
       if (complete) return;
 
-      const buffer = e.target.result as ArrayBuffer;
+      const buffer = e.target!.result as ArrayBuffer;
 
       try {
         channel.send(buffer);

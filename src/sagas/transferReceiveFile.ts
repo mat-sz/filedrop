@@ -159,8 +159,8 @@ export default function* transferReceiveFile(
     transferId: transfer.transferId,
     targetId: transfer.clientId,
     data: {
-      type: connection.localDescription.type,
-      sdp: connection.localDescription.sdp,
+      type: connection.localDescription!.type,
+      sdp: connection.localDescription!.sdp,
     },
   };
 

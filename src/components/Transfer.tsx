@@ -155,7 +155,7 @@ const Transfer: React.FC<TransferProps> = ({ transfer }) => {
             {transfer.state === TransferState.IN_PROGRESS ? (
               <motion.div className="progress" {...animationPropsSlide}>
                 <progress value={transfer.progress} max={1} />
-                <div>{Math.round(transfer.speed / 1000)} kB/s</div>
+                <div>{Math.round(transfer.speed! / 1000)} kB/s</div>
               </motion.div>
             ) : null}
           </AnimatePresence>

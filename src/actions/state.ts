@@ -33,16 +33,30 @@ export function setNetworkNameAction(name: string): ActionModel {
   };
 }
 
-export function setSuggestedNameAction(name: string): ActionModel {
+export function setSuggestedNetworkNameAction(name: string): ActionModel {
   return {
-    type: ActionType.SET_SUGGESTED_NAME,
+    type: ActionType.SET_SUGGESTED_NETWORK_NAME,
     value: name,
+  };
+}
+
+export function setLocalNetworkNames(names: string[]): ActionModel {
+  return {
+    type: ActionType.SET_LOCAL_NETWORK_NAMES,
+    value: names,
   };
 }
 
 export function setClientIdAction(id: string): ActionModel {
   return {
     type: ActionType.SET_CLIENT_ID,
+    value: id,
+  };
+}
+
+export function setClientNameAction(id: string): ActionModel {
+  return {
+    type: ActionType.SET_CLIENT_NAME,
     value: id,
   };
 }

@@ -36,11 +36,11 @@ const NetworkTile: React.FC<NetworkTileProps> = ({ client, onSelect }) => {
   };
 
   const onClick = useCallback(() => {
-    onSelect(client.clientId);
+    onSelect?.(client.clientId);
   }, [client, onSelect]);
 
   return (
-    <motion.div {...animationPropsRotation} onClick={onSelect ? onClick : null}>
+    <motion.div {...animationPropsRotation} onClick={onClick}>
       {onSelect ? (
         <div
           className="network-tile"

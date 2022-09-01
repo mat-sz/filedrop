@@ -23,7 +23,9 @@ const Transfers: React.FC = () => {
     setHref(
       window.location.origin + window.location.pathname + window.location.hash
     );
-    dispatch(setNetworkNameAction(networkName));
+    if (networkName) {
+      dispatch(setNetworkNameAction(networkName));
+    }
   }, [setHref, networkName, dispatch]);
 
   useEffect(() => {
@@ -44,7 +46,7 @@ const Transfers: React.FC = () => {
       }
 
       const files = [];
-      for (let item of e.clipboardData.items) {
+      for (let item of e.clipboardData!.items) {
         const file = item.getAsFile();
 
         if (file) {

@@ -9,14 +9,16 @@ const Home: React.FC = () => {
   const networkName = useSelector((state: StateType) => state.networkName);
   const connected = useSelector((state: StateType) => state.connected);
   const clientId = useSelector((state: StateType) => state.clientId);
-  const suggestedName = useSelector((state: StateType) => state.suggestedName);
+  const suggestedNetworkName = useSelector(
+    (state: StateType) => state.suggestedNetworkName
+  );
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const currentNetworkName =
       networkName ||
-      suggestedName ||
+      suggestedNetworkName ||
       new Array(nameLength)
         .fill('')
         .map(() =>
@@ -28,7 +30,7 @@ const Home: React.FC = () => {
     if (connected && clientId) {
       navigate('/' + currentNetworkName);
     }
-  }, [connected, networkName, navigate, clientId, suggestedName]);
+  }, [connected, networkName, navigate, clientId, suggestedNetworkName]);
 
   return <section className="center">Loading...</section>;
 };

@@ -15,7 +15,9 @@ export interface WelcomeMessageModel extends MessageModel {
   type: MessageType.WELCOME;
   clientId: string;
   clientColor: string;
-  suggestedName: string;
+  clientName: string;
+  suggestedNetworkName?: string;
+  localNetworkNames: string[];
   rtcConfiguration?: RTCConfiguration;
   maxSize: number;
   noticeText?: string;
@@ -94,7 +96,7 @@ export interface TransferModel {
   receiving: boolean;
   file?: File;
   blobUrl?: string;
-  clientId?: string;
+  clientId: string;
   peerConnection?: RTCPeerConnection;
   progress?: number;
   speed?: number;
@@ -129,6 +131,7 @@ export type Message =
 
 export interface ClientModel {
   clientId: string;
+  clientName?: string;
   clientColor: string;
   publicKey?: string;
 }

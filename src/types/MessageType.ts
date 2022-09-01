@@ -1,5 +1,6 @@
 export enum MessageType {
   WELCOME = 'welcome',
+  LOCAL_NETWORKS = 'localNetworks',
   NAME = 'name',
   TRANSFER = 'transfer',
   ACTION = 'action',

@@ -12,13 +12,15 @@ import { ActionType } from '../types/ActionType';
 export interface StateType {
   welcomed: boolean;
   connected: boolean;
-  rtcConfiguration: RTCConfiguration;
-  error: string;
-  networkName: string;
-  clientId: string;
-  clientColor: string;
+  rtcConfiguration?: RTCConfiguration;
+  error?: string;
+  networkName?: string;
+  clientId?: string;
+  clientName?: string;
+  clientColor?: string;
   maxSize: number;
-  suggestedName: string;
+  suggestedNetworkName?: string;
+  localNetworkNames: string[];
   network: ClientModel[];
   transfers: TransferModel[];
   chat: ChatItemModel[];
@@ -31,12 +33,7 @@ export interface StateType {
 let initialState: StateType = {
   welcomed: localStorage.getItem('welcomed') === '1',
   connected: false,
-  rtcConfiguration: null,
-  error: null,
-  networkName: null,
-  clientId: null,
-  clientColor: null,
-  suggestedName: null,
+  localNetworkNames: [],
   network: [],
   transfers: [],
   maxSize: 0,
@@ -52,7 +49,7 @@ function applicationState(state = initialState, action: ActionModel) {
       newState.error = action.value as string;
       break;
     case ActionType.DISMISS_ERROR:
-      newState.error = null;
+      newState.error = undefined;
       break;
     case ActionType.DISMISS_WELCOME:
       newState.welcomed = true;
@@ -71,7 +68,7 @@ function applicationState(state = initialState, action: ActionModel) {
           iceServers: rtcConfiguration.iceServers,
         };
       } else {
-        newState.rtcConfiguration = null;
+        newState.rtcConfiguration = undefined;
       }
       break;
     case ActionType.SET_NETWORK_NAME:
@@ -86,8 +83,11 @@ function applicationState(state = initialState, action: ActionModel) {
     case ActionType.SET_MAX_SIZE:
       newState.maxSize = action.value as number;
       break;
-    case ActionType.SET_SUGGESTED_NAME:
-      newState.suggestedName = action.value as string;
+    case ActionType.SET_SUGGESTED_NETWORK_NAME:
+      newState.suggestedNetworkName = action.value as string;
+      break;
+    case ActionType.SET_LOCAL_NETWORK_NAMES:
+      newState.localNetworkNames = action.value as string[];
       break;
     case ActionType.SET_KEY_PAIR:
       const keyPairValue = action.value as RSA.KeyPair;
@@ -131,7 +131,7 @@ function applicationState(state = initialState, action: ActionModel) {
           peerConnection.connectionState !== 'disconnected' &&
           peerConnection.connectionState !== 'failed'
         ) {
-          transfer.peerConnection
+          peerConnection
             .setRemoteDescription(action.value.data)
             .catch(() => {});
         }
@@ -147,9 +147,7 @@ function applicationState(state = initialState, action: ActionModel) {
           peerConnection.connectionState !== 'disconnected' &&
           peerConnection.connectionState !== 'failed'
         ) {
-          transfer.peerConnection
-            .addIceCandidate(action.value.data)
-            .catch(() => {});
+          peerConnection.addIceCandidate(action.value.data).catch(() => {});
         }
         return transfer;
       });

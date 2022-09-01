@@ -16,7 +16,7 @@ const ChatItem: React.FC<ChatItemProps> = ({ item }) => {
   const messageRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    if (messageRef.current?.offsetHeight < 50) {
+    if (messageRef.current!.offsetHeight < 50) {
       setExpanded(true);
     }
   }, [setExpanded]);

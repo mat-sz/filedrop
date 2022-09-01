@@ -13,7 +13,7 @@ const Chat: React.FC = () => {
   const chat = useSelector((store: StateType) => store.chat);
   const privateKey = useSelector((store: StateType) => store.privateKey);
   const dispatch = useDispatch();
-  const containerRef = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLElement | null>(null);
 
   const [message, setMessage] = useState('');
   const onSubmit = useCallback(
