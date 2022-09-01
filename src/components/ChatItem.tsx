@@ -6,6 +6,8 @@ import { FaCopy } from 'react-icons/fa';
 
 import { animationPropsSlide } from '../animationSettings';
 import { ChatItemModel } from '../types/Models';
+import { useSelector } from 'react-redux';
+import { StateType } from '../reducers';
 
 export interface ChatItemProps {
   item: ChatItemModel;
@@ -14,6 +16,9 @@ export interface ChatItemProps {
 const ChatItem: React.FC<ChatItemProps> = ({ item }) => {
   const [expanded, setExpanded] = useState(false);
   const messageRef = useRef<HTMLDivElement>(null);
+  const client = useSelector((state: StateType) =>
+    state.network?.find(client => client.clientId === item.clientId)
+  );
 
   useLayoutEffect(() => {
     if (messageRef.current!.offsetHeight < 50) {
@@ -34,11 +39,12 @@ const ChatItem: React.FC<ChatItemProps> = ({ item }) => {
             backgroundColor: item.clientColor,
           }}
         />
+        <div>{client?.clientName}</div>
         <div>
           <ReactTimeago date={item.date} />
         </div>
         <CopyToClipboard text={item.message}>
-          <button className="chat-action">
+          <button className="icon-button">
             <FaCopy />
           </button>
         </CopyToClipboard>

@@ -47,4 +47,7 @@ export enum ActionType {
   // Chat
   ADD_CHAT_ITEM = 'ADD_CHAT_ITEM',
   SEND_CHAT_MESSAGE = 'SEND_CHAT_MESSAGE',
+
+  // Modals
+  SET_CLIENT_NAME_MODAL = 'SET_CLIENT_NAME_MODAL',
 }

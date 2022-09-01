@@ -7,13 +7,14 @@ import {
   ActionModel,
   TransferModel,
   TransferMessageModel,
-  NameMessageModel,
   ActionMessageModel,
   PingMessageModel,
   Message,
   ClientModel,
   EncryptedMessageModel,
   ChatMessageModel,
+  NetworkNameMessageModel,
+  ClientNameMessageModel,
 } from '../types/Models';
 import { ActionType } from '../types/ActionType';
 import { StateType } from '../reducers';
@@ -54,6 +55,10 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
 
   switch (msg.type) {
     case MessageType.WELCOME:
+      const clientName: string | undefined = yield select(
+        (state: StateType) => state.clientName
+      );
+
       if (msg.rtcConfiguration) {
         yield put(setRtcConfigurationAction(msg.rtcConfiguration));
       }
@@ -62,9 +67,15 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
         yield put(setSuggestedNetworkNameAction(msg.suggestedNetworkName));
       }
 
+      if (clientName) {
+        // If we have a name already, let's use that.
+        yield put(setClientNameAction(clientName));
+      } else if (msg.suggestedClientName) {
+        yield put(setClientNameAction(msg.suggestedClientName));
+      }
+
       yield put(setClientIdAction(msg.clientId));
       yield put(setClientColorAction(msg.clientColor));
-      yield put(setClientNameAction(msg.clientName));
       yield put(setMaxSizeAction(msg.maxSize));
       yield put(setNoticeAction(msg.noticeText, msg.noticeUrl));
 
@@ -215,13 +226,23 @@ function* connected() {
   yield put(setConnectedAction(true));
 }
 
-function* setName(action: ActionModel) {
+function* setNetworkName(action: ActionModel) {
   const publicKey: string = yield select((state: StateType) => state.publicKey);
 
-  const message: NameMessageModel = {
-    type: MessageType.NAME,
+  const message: NetworkNameMessageModel = {
+    type: MessageType.NETWORK_NAME,
     networkName: action.value,
     publicKey,
+  };
+
+  yield put(sendMessageAction(message));
+}
+
+function* setClientName(action: ActionModel) {
+  localStorage.setItem('clientName', action.value);
+  const message: ClientNameMessageModel = {
+    type: MessageType.CLIENT_NAME,
+    clientName: action.value,
   };
 
   yield put(sendMessageAction(message));
@@ -386,6 +407,7 @@ function* sendChatMessage(action: ActionModel) {
     yield put(sendMessageAction(model));
   }
 
+  console.log(clientId);
   yield put(
     addChatItemAction({
       id: uuid(),
@@ -450,7 +472,8 @@ export default function* root(dispatch: (action: any) => void) {
   yield takeEvery(ActionType.WS_CONNECTED, connected);
   yield takeEvery(ActionType.WS_DISCONNECTED, disconnected);
 
-  yield takeEvery(ActionType.SET_NETWORK_NAME, setName);
+  yield takeEvery(ActionType.SET_NETWORK_NAME, setNetworkName);
+  yield takeEvery(ActionType.SET_CLIENT_NAME, setClientName);
 
   yield takeEvery(ActionType.CREATE_TRANSFER, createTransfer);
   yield takeEvery(ActionType.CANCEL_TRANSFER, cancelTransfer);

@@ -135,3 +135,10 @@ export function sendChatMessageAction(message: string): ActionModel {
     value: message,
   };
 }
+
+export function setClientNameModalAction(visible: boolean): ActionModel {
+  return {
+    type: ActionType.SET_CLIENT_NAME_MODAL,
+    value: visible,
+  };
+}

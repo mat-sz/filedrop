@@ -608,6 +608,44 @@ nav {
   background: transparent !important;
 }
 
+.client-name {
+  display: flex;
+  justify-content: center;
+
+  .icon-button {
+    margin-left: 0.5em;
+  }
+}
+
+.client-name-modal {
+  .subsection {
+    width: auto;
+  }
+
+  input {
+    margin-bottom: 1rem;
+  }
+
+  button {
+    margin: 0 0.5rem;
+  }
+}
+
+.icon-button {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  background: none;
+  padding: 0;
+  color: #aaa;
+  font-size: 1em;
+
+  &:hover {
+    opacity: 0.8;
+    background: none;
+  }
+}
+
 .chat {
   .ps__rail-x {
     display: none !important;
@@ -646,21 +684,6 @@ nav {
 
     & > * {
       margin-right: 10px;
-    }
-  }
-
-  &-action {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    background: none;
-    padding: 0;
-    color: #aaa;
-    font-size: 1em;
-
-    &:hover {
-      opacity: 0.8;
-      background: none;
     }
   }
 

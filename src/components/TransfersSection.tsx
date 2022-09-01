@@ -1,14 +1,22 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { FaEdit } from 'react-icons/fa';
 
+import { setClientNameModalAction } from '../actions/state';
 import { StateType } from '../reducers';
 import TransferList from './TransferList';
 import Network from './Network';
 
 const TransfersSection: React.FC = () => {
+  const dispatch = useDispatch();
+  const clientName = useSelector((store: StateType) => store.clientName);
   const clientColor = useSelector((store: StateType) => store.clientColor);
   const noticeText = useSelector((store: StateType) => store.noticeText);
   const noticeUrl = useSelector((store: StateType) => store.noticeUrl);
+
+  const onShowClientNameModal = () => {
+    dispatch(setClientNameModalAction(true));
+  };
 
   return (
     <div>
@@ -30,12 +38,18 @@ const TransfersSection: React.FC = () => {
           </div>
         </div>
         <div className="info">
+          {clientName && (
+            <div className="client-name">
+              <strong>{clientName}</strong>{' '}
+              <button className="icon-button" onClick={onShowClientNameModal}>
+                <FaEdit />
+              </button>
+            </div>
+          )}
           <div>
-            <strong>This is your tile.</strong>
-          </div>
-          <div>
-            Under this section you will see other tiles like this one. Drag and
-            drop your files or click on them to initiate a file transfer.
+            <strong>This is your tile.</strong> Beneath you'll see other tiles
+            just like this one. Drag and drop your files or click on them to
+            initiate a file transfer.
           </div>
         </div>
       </div>

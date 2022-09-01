@@ -11,7 +11,9 @@ interface NetworkProps {
 }
 
 const Network: React.FC<NetworkProps> = ({ onSelect }) => {
-  const network = useSelector((store: StateType) => store.network);
+  const network = useSelector((store: StateType) =>
+    store.network.filter(client => client.clientId !== store.clientId)
+  );
 
   return (
     <div className={'subsection ' + (network.length > 0 ? 'network' : '')}>

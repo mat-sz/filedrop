@@ -10,10 +10,14 @@ import IncompatibleBrowser from '../components/IncompatibleBrowser';
 import ClipboardModal from '../modals/ClipboardModal';
 import WelcomeModal from '../modals/WelcomeModal';
 import { setNetworkNameAction } from '../actions/state';
+import ClientNameModal from '../modals/ClientNameModal';
 
 const Transfers: React.FC = () => {
   const dispatch = useDispatch();
   const welcomed = useSelector((state: StateType) => state.welcomed);
+  const clientNameModal = useSelector(
+    (state: StateType) => state.clientNameModal
+  );
   const [clipboardFiles, setClipboardFiles] = useState<File[]>([]);
   const { networkName } = useParams<{ networkName: string }>();
   const [href, setHref] = useState('');
@@ -80,12 +84,15 @@ const Transfers: React.FC = () => {
       {incompatibleBrowser ? <IncompatibleBrowser /> : null}
       <AnimatePresence>{!welcomed ? <WelcomeModal /> : null}</AnimatePresence>
       <AnimatePresence>
-        {clipboardFiles.length > 0 ? (
+        {clipboardFiles.length > 0 && (
           <ClipboardModal
             files={clipboardFiles}
             dismissClipboard={dismissClipboard}
           />
-        ) : null}
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {clientNameModal && <ClientNameModal />}
       </AnimatePresence>
       <section className="desktop-2col">
         <TransfersSection />

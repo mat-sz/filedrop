@@ -28,16 +28,19 @@ export interface StateType {
   privateKey?: string;
   noticeText?: string;
   noticeUrl?: string;
+  clientNameModal: boolean;
 }
 
 let initialState: StateType = {
   welcomed: localStorage.getItem('welcomed') === '1',
+  clientName: localStorage.getItem('clientName') || undefined,
   connected: false,
   localNetworkNames: [],
   network: [],
   transfers: [],
   maxSize: 0,
   chat: [],
+  clientNameModal: false,
 };
 
 export type StoreType = Store<StateType, ActionModel>;
@@ -80,6 +83,9 @@ function applicationState(state = initialState, action: ActionModel) {
     case ActionType.SET_CLIENT_COLOR:
       newState.clientColor = action.value as string;
       break;
+    case ActionType.SET_CLIENT_NAME:
+      newState.clientName = action.value as string;
+      break;
     case ActionType.SET_MAX_SIZE:
       newState.maxSize = action.value as number;
       break;
@@ -96,9 +102,6 @@ function applicationState(state = initialState, action: ActionModel) {
       break;
     case ActionType.SET_NETWORK:
       newState.network = action.value as ClientModel[];
-      newState.network = newState.network.filter(
-        client => client.clientId !== newState.clientId
-      );
 
       // Remove transfers from now offline clients.
       const clientIds = newState.network.map(client => client.clientId);
@@ -165,6 +168,9 @@ function applicationState(state = initialState, action: ActionModel) {
       break;
     case ActionType.ADD_CHAT_ITEM:
       newState.chat = [...newState.chat, action.value as ChatItemModel];
+      break;
+    case ActionType.SET_CLIENT_NAME_MODAL:
+      newState.clientNameModal = action.value as boolean;
       break;
     default:
       return state;
