@@ -617,6 +617,12 @@ nav {
   }
 }
 
+.actions {
+  button {
+    margin: 0 0.5rem;
+  }
+}
+
 .client-name-modal {
   .subsection {
     width: auto;
@@ -624,10 +630,6 @@ nav {
 
   input {
     margin-bottom: 1rem;
-  }
-
-  button {
-    margin: 0 0.5rem;
   }
 }
 

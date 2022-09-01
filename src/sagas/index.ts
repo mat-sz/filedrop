@@ -46,6 +46,7 @@ import {
   setKeyPairAction,
   setNetworkNameAction,
   addChatItemAction,
+  setLocalNetworkNames,
 } from '../actions/state';
 import { MessageType, ActionMessageActionType } from '../types/MessageType';
 import { title } from '../config';
@@ -74,6 +75,7 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
         yield put(setClientNameAction(msg.suggestedClientName));
       }
 
+      yield put(setLocalNetworkNames(msg.localNetworkNames));
       yield put(setClientIdAction(msg.clientId));
       yield put(setClientColorAction(msg.clientColor));
       yield put(setMaxSizeAction(msg.maxSize));
@@ -86,6 +88,9 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
       if (networkName && networkName !== '') {
         yield put(setNetworkNameAction(networkName));
       }
+      break;
+    case MessageType.LOCAL_NETWORKS:
+      yield put(setLocalNetworkNames(msg.localNetworkNames));
       break;
     case MessageType.TRANSFER:
       if (msg.clientId) {

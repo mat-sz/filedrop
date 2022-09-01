@@ -12,6 +12,7 @@ import ClipboardModal from '../modals/ClipboardModal';
 import WelcomeModal from '../modals/WelcomeModal';
 import { setNetworkNameAction } from '../actions/state';
 import ClientNameModal from '../modals/ClientNameModal';
+import OtherNetworksSection from '../sections/OtherNetworks';
 
 const Transfers: React.FC = () => {
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ const Transfers: React.FC = () => {
     setHref(
       window.location.origin + window.location.pathname + window.location.hash
     );
+
     if (networkName) {
       dispatch(setNetworkNameAction(networkName));
     }
@@ -99,6 +101,7 @@ const Transfers: React.FC = () => {
         <TransfersSection />
         <div>
           <ConnectSection href={href} />
+          <OtherNetworksSection />
           <ChatSection />
         </div>
       </section>

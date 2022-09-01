@@ -26,7 +26,7 @@ const ClientNameModal: React.FC = () => {
   };
 
   return (
-    <motion.div className="modal client-name-modal" {...animationPropsOpacity}>
+    <motion.div className="modal" {...animationPropsOpacity}>
       <div>
         <section>
           <h2>Change client name</h2>
@@ -37,7 +37,7 @@ const ClientNameModal: React.FC = () => {
               value={name}
               onChange={e => setName(e.target.value)}
             />
-            <div>
+            <div className="actions">
               <button onClick={onDismiss}>Cancel</button>
               <button onClick={onSave}>Save</button>
             </div>
