@@ -16,7 +16,6 @@ export const animationPropsRotation = {
   animate: { rotate: 360, scale: 1 },
   exit: { scale: 0 },
   transition: transitionProps,
-  positionTransition: true,
 };
 
 export const animationPropsSlide = {
@@ -24,5 +23,4 @@ export const animationPropsSlide = {
   animate: { x: 0, opacity: 1 },
   exit: { x: -100, opacity: 0 },
   transition: transitionProps,
-  positionTransition: true,
 };

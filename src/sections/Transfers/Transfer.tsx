@@ -10,11 +10,11 @@ import {
   cancelTransferAction,
   rejectTransferAction,
   acceptTransferAction,
-} from '../actions/transfers';
-import { TransferModel } from '../types/Models';
-import { TransferState } from '../types/TransferState';
+} from '../../actions/transfers';
+import { animationPropsSlide } from '../../animationSettings';
+import { TransferModel } from '../../types/Models';
+import { TransferState } from '../../types/TransferState';
 import TransferIcon from './TransferIcon';
-import { animationPropsSlide } from '../animationSettings';
 
 export const cancellableStates = [
   TransferState.IN_PROGRESS,

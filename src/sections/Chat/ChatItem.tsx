@@ -3,11 +3,11 @@ import { motion } from 'framer-motion';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import ReactTimeago from 'react-timeago';
 import { FaCopy } from 'react-icons/fa';
-
-import { animationPropsSlide } from '../animationSettings';
-import { ChatItemModel } from '../types/Models';
 import { useSelector } from 'react-redux';
-import { StateType } from '../reducers';
+
+import { animationPropsSlide } from '../../animationSettings';
+import { ChatItemModel } from '../../types/Models';
+import { StateType } from '../../reducers';
 
 export interface ChatItemProps {
   item: ChatItemModel;

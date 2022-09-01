@@ -18,9 +18,9 @@ import {
   FaHourglassEnd,
 } from 'react-icons/fa';
 
-import { TransferModel } from '../types/Models';
-import { StateType } from '../reducers';
-import { TransferState } from '../types/TransferState';
+import { TransferState } from '../../types/TransferState';
+import { TransferModel } from '../../types/Models';
+import { StateType } from '../../reducers';
 
 const states = {
   [TransferState.INCOMING]: 'Incoming',

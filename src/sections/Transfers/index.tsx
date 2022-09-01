@@ -2,10 +2,10 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FaEdit } from 'react-icons/fa';
 
-import { setClientNameModalAction } from '../actions/state';
-import { StateType } from '../reducers';
+import { setClientNameModalAction } from '../../actions/state';
+import { StateType } from '../../reducers';
+import Network from '../../components/Network';
 import TransferList from './TransferList';
-import Network from './Network';
 
 const TransfersSection: React.FC = () => {
   const dispatch = useDispatch();

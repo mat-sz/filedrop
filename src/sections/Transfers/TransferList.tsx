@@ -2,15 +2,15 @@ import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AnimatePresence } from 'framer-motion';
 
-import Transfer, { cancellableStates } from './Transfer';
-import { StateType } from '../reducers';
+import { StateType } from '../../reducers';
 import {
   acceptTransferAction,
   cancelTransferAction,
   rejectTransferAction,
   removeTransferAction,
-} from '../actions/transfers';
-import { TransferState } from '../types/TransferState';
+} from '../../actions/transfers';
+import { TransferState } from '../../types/TransferState';
+import Transfer, { cancellableStates } from './Transfer';
 
 const TransferList: React.FC = () => {
   const transfers = useSelector((store: StateType) => store.transfers);

@@ -4,9 +4,9 @@ import { AnimatePresence, motion } from 'framer-motion';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import Textarea from 'react-expanding-textarea';
 
-import { StateType } from '../reducers';
-import { sendChatMessageAction } from '../actions/state';
-import { animationPropsOpacity } from '../animationSettings';
+import { StateType } from '../../reducers';
+import { sendChatMessageAction } from '../../actions/state';
+import { animationPropsOpacity } from '../../animationSettings';
 import ChatItem from './ChatItem';
 
 const Chat: React.FC = () => {
@@ -50,31 +50,34 @@ const Chat: React.FC = () => {
   }
 
   return (
-    <div className="subsection chat">
-      {chat.length === 0 && (
-        <motion.span {...animationPropsOpacity}>
-          <div>No chat messages... so far.</div>
-        </motion.span>
-      )}
-      <PerfectScrollbar
-        component="ul"
-        containerRef={element => (containerRef.current = element)}
-      >
-        <AnimatePresence>
-          {chat.map(item => (
-            <ChatItem key={item.id} item={item} />
-          ))}
-        </AnimatePresence>
-      </PerfectScrollbar>
-      <form onSubmit={onSubmit}>
-        <Textarea
-          value={message}
-          onKeyDown={onKeyDown}
-          onChange={e => setMessage((e.target as any).value)}
-        />
-        <button>Send</button>
-      </form>
-    </div>
+    <>
+      <h2>Chat</h2>
+      <div className="subsection chat">
+        {chat.length === 0 && (
+          <motion.span {...animationPropsOpacity}>
+            <div>No chat messages... so far.</div>
+          </motion.span>
+        )}
+        <PerfectScrollbar
+          component="ul"
+          containerRef={element => (containerRef.current = element)}
+        >
+          <AnimatePresence>
+            {chat.map(item => (
+              <ChatItem key={item.id} item={item} />
+            ))}
+          </AnimatePresence>
+        </PerfectScrollbar>
+        <form onSubmit={onSubmit}>
+          <Textarea
+            value={message}
+            onKeyDown={onKeyDown}
+            onChange={e => setMessage((e.target as any).value)}
+          />
+          <button>Send</button>
+        </form>
+      </div>
+    </>
   );
 };
 

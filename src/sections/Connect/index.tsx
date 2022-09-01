@@ -3,16 +3,15 @@ import QrCode from 'qrcode.react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { FaShare, FaCopy } from 'react-icons/fa';
 
-import { showCliToolInfo, title } from '../config';
-import Chat from './Chat';
+import { showCliToolInfo, title } from '../../config';
 
-interface QrCodeSectionProps {
+interface ConnectSectionProps {
   href: string;
 }
 
 const shareSupported = !!(navigator as any).share;
 
-const QrCodeSection: React.FC<QrCodeSectionProps> = ({ href }) => {
+const ConnectSection: React.FC<ConnectSectionProps> = ({ href }) => {
   const [copied, setCopied] = useState(false);
 
   const onCopy = useCallback(() => setCopied(true), [setCopied]);
@@ -24,7 +23,7 @@ const QrCodeSection: React.FC<QrCodeSectionProps> = ({ href }) => {
   }, [href]);
 
   return (
-    <div>
+    <>
       <h2>Connect</h2>
       <div className="qrcode subsection">
         <div className="info">
@@ -67,10 +66,8 @@ const QrCodeSection: React.FC<QrCodeSectionProps> = ({ href }) => {
           </div>
         </div>
       </div>
-      <h2>Chat</h2>
-      <Chat />
-    </div>
+    </>
   );
 };
 
-export default QrCodeSection;
+export default ConnectSection;

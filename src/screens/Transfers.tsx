@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AnimatePresence } from 'framer-motion';
 
 import { StateType } from '../reducers';
-import QrCodeSection from '../components/QrCodeSection';
-import TransfersSection from '../components/TransfersSection';
+import ChatSection from '../sections/Chat';
+import ConnectSection from '../sections/Connect';
+import TransfersSection from '../sections/Transfers';
 import IncompatibleBrowser from '../components/IncompatibleBrowser';
 import ClipboardModal from '../modals/ClipboardModal';
 import WelcomeModal from '../modals/WelcomeModal';
@@ -96,7 +97,10 @@ const Transfers: React.FC = () => {
       </AnimatePresence>
       <section className="desktop-2col">
         <TransfersSection />
-        <QrCodeSection href={href} />
+        <div>
+          <ConnectSection href={href} />
+          <ChatSection />
+        </div>
       </section>
     </>
   );
