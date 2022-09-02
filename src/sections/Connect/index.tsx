@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { QRCodeSVG } from 'qrcode.react';
-import CopyToClipboard from 'react-copy-to-clipboard';
 import { FaShare, FaCopy } from 'react-icons/fa';
 
 import { title } from '../../config';
+import { copy } from '../../utils/copy';
 
 interface ConnectSectionProps {
   href: string;
@@ -12,9 +12,6 @@ interface ConnectSectionProps {
 const shareSupported = !!(navigator as any).share;
 
 const ConnectSection: React.FC<ConnectSectionProps> = ({ href }) => {
-  const [copied, setCopied] = useState(false);
-
-  const onCopy = () => setCopied(true);
   const onShare = () => {
     (navigator as any).share({
       title: title + ' - transfer files',
@@ -32,14 +29,12 @@ const ConnectSection: React.FC<ConnectSectionProps> = ({ href }) => {
       </div>
       <div className="copy">
         <pre>{href}</pre>
-        <CopyToClipboard text={href} onCopy={onCopy}>
-          <button>
-            <FaCopy /> {copied ? 'Copied' : 'Copy'}
-          </button>
-        </CopyToClipboard>
+        <button className="icon-button" onClick={() => copy(href)}>
+          <FaCopy />
+        </button>
         {shareSupported && (
-          <button onClick={onShare}>
-            <FaShare /> Share
+          <button onClick={onShare} className="icon-button">
+            <FaShare />
           </button>
         )}
       </div>

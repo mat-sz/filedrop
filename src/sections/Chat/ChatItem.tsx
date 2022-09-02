@@ -1,5 +1,4 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
-import CopyToClipboard from 'react-copy-to-clipboard';
 import ReactTimeago from 'react-timeago';
 import { FaCopy } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
@@ -8,6 +7,7 @@ import { animationPropsSlide } from '../../animationSettings';
 import { ChatItemModel } from '../../types/Models';
 import { StateType } from '../../reducers';
 import { uuidToColor } from '../../utils/color';
+import { copy } from '../../utils/copy';
 import Animate from '../../components/Animate';
 
 export interface ChatItemProps {
@@ -45,11 +45,9 @@ const ChatItem: React.FC<ChatItemProps> = ({ item }) => {
         <div>
           <ReactTimeago date={item.date} />
         </div>
-        <CopyToClipboard text={item.message}>
-          <button className="icon-button">
-            <FaCopy />
-          </button>
-        </CopyToClipboard>
+        <button className="icon-button" onClick={() => copy(item.message)}>
+          <FaCopy />
+        </button>
       </div>
       <div className="chat-message" ref={messageRef}>
         {item.message}

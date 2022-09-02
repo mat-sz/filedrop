@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import CopyToClipboard from 'react-copy-to-clipboard';
 import filesize from 'filesize';
 import { FaCheck, FaCopy, FaDownload, FaTimes } from 'react-icons/fa';
 
@@ -16,8 +15,9 @@ import { TransferState } from '../../types/TransferState';
 import { FileType } from '../../types/FileType';
 import Tooltip from '../../components/Tooltip';
 import Animate from '../../components/Animate';
-import TransferIcon from './TransferIcon';
 import { fileType } from '../../utils/file';
+import { copy } from '../../utils/copy';
+import TransferIcon from './TransferIcon';
 
 export const cancellableStates = [
   TransferState.IN_PROGRESS,
@@ -142,11 +142,12 @@ const Transfer: React.FC<TransferProps> = ({ transfer }) => {
                   <FaDownload />
                 </a>
                 {transfer.fileType === 'text/plain' ? (
-                  <CopyToClipboard text={text}>
-                    <button className="icon-button transfer-neutral">
-                      <FaCopy />
-                    </button>
-                  </CopyToClipboard>
+                  <button
+                    className="icon-button transfer-neutral"
+                    onClick={() => copy(text)}
+                  >
+                    <FaCopy />
+                  </button>
                 ) : null}
               </>
             ) : null}

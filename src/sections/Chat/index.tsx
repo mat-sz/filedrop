@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AnimatePresence } from 'framer-motion';
 import { ScrollArea } from 'react-nano-scrollbar';
 import Textarea from 'react-expanding-textarea';
+import { FaPaperPlane } from 'react-icons/fa';
 
 import { StateType } from '../../reducers';
 import { sendChatMessageAction } from '../../actions/state';
@@ -53,7 +54,7 @@ const Chat: React.FC = () => {
   return (
     <>
       <h2>Chat</h2>
-      <div className="subsection chat">
+      <div className="subsection chat center">
         {chat.length === 0 && (
           <Animate component="span" {...animationPropsOpacity}>
             <div>No chat messages... so far.</div>
@@ -74,7 +75,9 @@ const Chat: React.FC = () => {
             onKeyDown={onKeyDown}
             onChange={e => setMessage((e.target as any).value)}
           />
-          <button>Send</button>
+          <button className="icon-button">
+            <FaPaperPlane />
+          </button>
         </form>
       </div>
     </>
