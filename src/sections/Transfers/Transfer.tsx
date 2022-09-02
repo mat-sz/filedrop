@@ -113,11 +113,13 @@ const Transfer: React.FC<TransferProps> = ({ transfer }) => {
               </div>
             </Tooltip>
             <div className="metadata">
-              <span>{filesize(transfer.fileSize)}</span>
-              {type !== FileType.UNKNOWN && <span>{types[type]}</span>}
+              <span>{filesize(transfer.fileSize, { pad: true })}</span>
+              {transfer.state === TransferState.INCOMING && (
+                <>{type !== FileType.UNKNOWN && <span>{types[type]}</span>}</>
+              )}
               {transfer.state === TransferState.IN_PROGRESS && (
                 <>
-                  <span>{filesize(transfer.speed!)}/s</span>
+                  <span>{filesize(transfer.speed!, { pad: true })}/s</span>
                   <span>{Math.round(transfer.progress! * 100)}%</span>
                 </>
               )}

@@ -16,15 +16,12 @@ const Network: React.FC<NetworkProps> = ({ onSelect }) => {
   const network = useSelector((store: StateType) =>
     store.network.filter(client => client.clientId !== store.clientId)
   );
+  const className = onSelect ? 'network-select' : 'subsection';
 
   return (
-    <ScrollArea
-      horizontal
-      hideScrollbarY
-      className={onSelect ? 'network-select' : 'subsection'}
-    >
-      <AnimatePresence>
-        {network.length > 0 ? (
+    <AnimatePresence>
+      {network.length > 0 ? (
+        <ScrollArea horizontal hideScrollbarY className={className}>
           <div className="network">
             <AnimatePresence>
               {network.map(client => (
@@ -36,14 +33,18 @@ const Network: React.FC<NetworkProps> = ({ onSelect }) => {
               ))}
             </AnimatePresence>
           </div>
-        ) : (
-          <Animate component="span" {...animationPropsOpacity}>
-            <div>Nobody is connected to your network.</div>
-            <div>Open this website elsewhere to connect.</div>
-          </Animate>
-        )}
-      </AnimatePresence>
-    </ScrollArea>
+        </ScrollArea>
+      ) : (
+        <Animate
+          component="div"
+          className={`${className} center`}
+          {...animationPropsOpacity}
+        >
+          <div>Nobody is connected to your network.</div>
+          <div>Open this website elsewhere to connect.</div>
+        </Animate>
+      )}
+    </AnimatePresence>
   );
 };
 
