@@ -17,12 +17,14 @@ const OtherNetworksSection: React.FC = () => {
   return (
     <>
       <h2>Other local networks</h2>
-      <div className="subsection actions">
-        {localNetworkNames.map(name => (
-          <button key={name} onClick={() => navigate(`/${name}`)}>
-            {name}
-          </button>
-        ))}
+      <div className="subsection">
+        <div className="actions">
+          {localNetworkNames.map(name => (
+            <button key={name} onClick={() => navigate(`/${name}`)}>
+              {name}
+            </button>
+          ))}
+        </div>
       </div>
     </>
   );

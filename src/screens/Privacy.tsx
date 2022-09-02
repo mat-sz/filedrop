@@ -3,8 +3,8 @@ import React from 'react';
 const Privacy: React.FC = () => {
   return (
     <section>
-      <h2>Privacy Policy</h2>
       <div className="subsection left">
+        <h2>Privacy Policy</h2>
         <p>The following user data is processed by the service:</p>
         <ul>
           <li>file metadata such as: file name, size and type,</li>
@@ -32,8 +32,8 @@ const Privacy: React.FC = () => {
         </p>
         <p>
           No HTTP cookies will be stored on your device. The application stores
-          the acknowledgement of the "Welcome" notice in local storage, this
-          can't and won't be used to track users.
+          the client name in local storage, this can't and won't be used to
+          track users.
         </p>
         <p>
           Your IP address may be shared with the other device involved in the

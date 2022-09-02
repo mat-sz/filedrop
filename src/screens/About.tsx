@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 
 import { title } from '../config';
 
-const Welcome: React.FC = () => {
+const About: React.FC = () => {
   return (
     <section>
-      <h2>Welcome</h2>
       <div className="subsection left">
+        <h2>Welcome</h2>
         <p>Welcome to {title}! Let me explain what this website is.</p>
         <p>
           This website allows you to copy files over the network (LAN if both
@@ -46,14 +46,9 @@ const Welcome: React.FC = () => {
           <Link to="/privacy">Privacy Policy</Link> and{' '}
           <Link to="/tos">Terms of Service</Link>.
         </p>
-        <p>
-          Clicking the "Continue" button below this notice will save data
-          (welcomed = '1') into your browser's local storage. This data will be
-          used to avoid showing you this notice in future.
-        </p>
       </div>
     </section>
   );
 };
 
-export default Welcome;
+export default About;

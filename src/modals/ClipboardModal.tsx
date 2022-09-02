@@ -1,10 +1,11 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
-import { motion } from 'framer-motion';
 
 import Network from '../components/Network';
+import Animate from '../components/Animate';
 import { createTransferAction } from '../actions/transfers';
 import { animationPropsOpacity } from '../animationSettings';
+import { FaTimes } from 'react-icons/fa';
 
 interface ClipboardModalProps {
   files: File[];
@@ -17,29 +18,37 @@ const ClipboardModal: React.FC<ClipboardModalProps> = ({
 }) => {
   const dispatch = useDispatch();
 
-  const onSelect = useCallback(
-    (clientId: string) => {
-      for (let file of files) {
-        dispatch(createTransferAction(file, clientId));
-      }
+  const onSelect = (clientId: string) => {
+    for (let file of files) {
+      dispatch(createTransferAction(file, clientId));
+    }
 
-      dismissClipboard();
-    },
-    [dispatch, files, dismissClipboard]
-  );
+    dismissClipboard();
+  };
 
   return (
-    <motion.div className="modal" {...animationPropsOpacity}>
+    <Animate component="div" className="modal" {...animationPropsOpacity}>
       <div>
-        <section>
-          <h2>Send clipboard contents</h2>
+        <div className="subsection left">
+          <h2>
+            Send clipboard contents
+            <button className="icon-button" onClick={dismissClipboard}>
+              <FaTimes />
+            </button>
+          </h2>
+          <p>
+            Sending:{' '}
+            {files.map((file, i) => (
+              <span key={i}>
+                {file.name}
+                {i < files.length - 1 ? ', ' : ''}
+              </span>
+            ))}
+          </p>
           <Network onSelect={onSelect} />
-        </section>
-        <div className="center">
-          <button onClick={dismissClipboard}>Cancel</button>
         </div>
       </div>
-    </motion.div>
+    </Animate>
   );
 };
 

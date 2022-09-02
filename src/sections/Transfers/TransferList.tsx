@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AnimatePresence } from 'framer-motion';
 
@@ -16,22 +16,22 @@ const TransferList: React.FC = () => {
   const transfers = useSelector((store: StateType) => store.transfers);
   const dispatch = useDispatch();
 
-  const acceptAll = useCallback(() => {
+  const acceptAll = () => {
     transfers
       .filter(transfer => transfer.state === TransferState.INCOMING)
       .forEach(transfer => dispatch(acceptTransferAction(transfer.transferId)));
-  }, [transfers, dispatch]);
-  const rejectAll = useCallback(() => {
+  };
+  const rejectAll = () => {
     transfers
       .filter(transfer => transfer.state === TransferState.INCOMING)
       .forEach(transfer => dispatch(rejectTransferAction(transfer.transferId)));
-  }, [transfers, dispatch]);
-  const cancelAll = useCallback(() => {
+  };
+  const cancelAll = () => {
     transfers
       .filter(transfer => cancellableStates.includes(transfer.state))
       .forEach(transfer => dispatch(cancelTransferAction(transfer.transferId)));
-  }, [transfers, dispatch]);
-  const dismissAll = useCallback(() => {
+  };
+  const dismissAll = () => {
     transfers
       .filter(
         transfer =>
@@ -39,14 +39,14 @@ const TransferList: React.FC = () => {
           transfer.state === TransferState.FAILED
       )
       .forEach(transfer => dispatch(removeTransferAction(transfer.transferId)));
-  }, [transfers, dispatch]);
+  };
 
   return (
     <>
       {transfers.length !== 0 && (
         <h2>
           Transfers
-          <div className="buttons">
+          <div className="actions">
             {!!transfers.find(
               transfer => transfer.state === TransferState.INCOMING
             ) && <button onClick={acceptAll}>Accept all</button>}

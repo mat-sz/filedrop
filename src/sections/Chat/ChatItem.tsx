@@ -1,5 +1,4 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import ReactTimeago from 'react-timeago';
 import { FaCopy } from 'react-icons/fa';
@@ -8,6 +7,8 @@ import { useSelector } from 'react-redux';
 import { animationPropsSlide } from '../../animationSettings';
 import { ChatItemModel } from '../../types/Models';
 import { StateType } from '../../reducers';
+import { uuidToColor } from '../../utils/color';
+import Animate from '../../components/Animate';
 
 export interface ChatItemProps {
   item: ChatItemModel;
@@ -27,8 +28,9 @@ const ChatItem: React.FC<ChatItemProps> = ({ item }) => {
   }, [setExpanded]);
 
   return (
-    <motion.li
-      className={'subsection info-grid ' + (expanded ? 'chat-expanded' : '')}
+    <Animate
+      component="li"
+      className={'subsection ' + (expanded ? 'chat-expanded' : '')}
       {...animationPropsSlide}
       aria-label="Chat message"
     >
@@ -36,7 +38,7 @@ const ChatItem: React.FC<ChatItemProps> = ({ item }) => {
         <div
           className="network-tile target-tile"
           style={{
-            backgroundColor: item.clientColor,
+            backgroundColor: uuidToColor(item.clientId),
           }}
         />
         <div>{client?.clientName}</div>
@@ -57,7 +59,7 @@ const ChatItem: React.FC<ChatItemProps> = ({ item }) => {
           Show more
         </button>
       )}
-    </motion.li>
+    </Animate>
   );
 };
 

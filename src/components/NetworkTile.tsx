@@ -1,14 +1,14 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
 import { FaLock, FaPlus } from 'react-icons/fa';
-import { motion } from 'framer-motion';
-import Tooltip from 'rc-tooltip';
 
 import { ClientModel } from '../types/Models';
 import { createTransferAction } from '../actions/transfers';
-import { animationPropsRotation } from '../animationSettings';
+import { animationPropsOpacity } from '../animationSettings';
 import { StateType } from '../reducers';
+import { uuidToColor } from '../utils/color';
+import Animate from './Animate';
 
 interface NetworkTileProps {
   client: ClientModel;
@@ -19,14 +19,11 @@ const NetworkTile: React.FC<NetworkTileProps> = ({ client, onSelect }) => {
   const dispatch = useDispatch();
   const publicKey = useSelector((state: StateType) => state.publicKey);
 
-  const onDrop = useCallback(
-    (files: File[]) => {
-      for (let file of files) {
-        dispatch(createTransferAction(file, client.clientId));
-      }
-    },
-    [dispatch, client.clientId]
-  );
+  const onDrop = (files: File[]) => {
+    for (let file of files) {
+      dispatch(createTransferAction(file, client.clientId));
+    }
+  };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -36,13 +33,14 @@ const NetworkTile: React.FC<NetworkTileProps> = ({ client, onSelect }) => {
     event.preventDefault();
   };
 
-  const onClick = useCallback(() => {
+  const onClick = () => {
     onSelect?.(client.clientId);
-  }, [client, onSelect]);
+  };
 
   return (
-    <motion.div
-      {...animationPropsRotation}
+    <Animate
+      component="div"
+      {...animationPropsOpacity}
       onClick={onClick}
       className="network-tile-wrapper"
     >
@@ -50,7 +48,7 @@ const NetworkTile: React.FC<NetworkTileProps> = ({ client, onSelect }) => {
         <div
           className="network-tile"
           style={{
-            backgroundColor: client.clientColor,
+            backgroundColor: uuidToColor(client.clientId),
           }}
         >
           <FaPlus />
@@ -65,7 +63,7 @@ const NetworkTile: React.FC<NetworkTileProps> = ({ client, onSelect }) => {
           {...getRootProps()}
           className={'network-tile ' + (isDragActive ? 'active' : '')}
           style={{
-            backgroundColor: client.clientColor,
+            backgroundColor: uuidToColor(client.clientId),
           }}
         >
           <label onClick={preventClick}>
@@ -87,7 +85,7 @@ const NetworkTile: React.FC<NetworkTileProps> = ({ client, onSelect }) => {
         </div>
       )}
       <div className="network-tile-name">{client.clientName}</div>
-    </motion.div>
+    </Animate>
   );
 };
 

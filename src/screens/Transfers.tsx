@@ -1,25 +1,18 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { AnimatePresence } from 'framer-motion';
 
-import { StateType } from '../reducers';
 import ChatSection from '../sections/Chat';
 import ConnectSection from '../sections/Connect';
 import TransfersSection from '../sections/Transfers';
 import IncompatibleBrowser from '../components/IncompatibleBrowser';
 import ClipboardModal from '../modals/ClipboardModal';
-import WelcomeModal from '../modals/WelcomeModal';
 import { setNetworkNameAction } from '../actions/state';
-import ClientNameModal from '../modals/ClientNameModal';
 import OtherNetworksSection from '../sections/OtherNetworks';
 
 const Transfers: React.FC = () => {
   const dispatch = useDispatch();
-  const welcomed = useSelector((state: StateType) => state.welcomed);
-  const clientNameModal = useSelector(
-    (state: StateType) => state.clientNameModal
-  );
   const [clipboardFiles, setClipboardFiles] = useState<File[]>([]);
   const { networkName } = useParams<{ networkName: string }>();
   const [href, setHref] = useState('');
@@ -48,7 +41,10 @@ const Transfers: React.FC = () => {
   useEffect(() => {
     const onPaste = (e: ClipboardEvent) => {
       const element = e.target as HTMLElement;
-      if (element.tagName === 'TEXTAREA') {
+      if (
+        document.body.contains(element) &&
+        (element.tagName === 'TEXTAREA' || element.tagName === 'INPUT')
+      ) {
         return;
       }
 
@@ -78,14 +74,13 @@ const Transfers: React.FC = () => {
     };
   });
 
-  const dismissClipboard = useCallback(() => {
+  const dismissClipboard = () => {
     setClipboardFiles([]);
-  }, [setClipboardFiles]);
+  };
 
   return (
     <>
       {incompatibleBrowser ? <IncompatibleBrowser /> : null}
-      <AnimatePresence>{!welcomed ? <WelcomeModal /> : null}</AnimatePresence>
       <AnimatePresence>
         {clipboardFiles.length > 0 && (
           <ClipboardModal
@@ -93,9 +88,6 @@ const Transfers: React.FC = () => {
             dismissClipboard={dismissClipboard}
           />
         )}
-      </AnimatePresence>
-      <AnimatePresence>
-        {clientNameModal && <ClientNameModal />}
       </AnimatePresence>
       <section className="desktop-2col">
         <TransfersSection />

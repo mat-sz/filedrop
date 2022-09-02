@@ -39,7 +39,6 @@ import {
   setSuggestedNetworkNameAction,
   setClientIdAction,
   setClientNameAction,
-  setClientColorAction,
   setConnectedAction,
   setMaxSizeAction,
   setNoticeAction,
@@ -77,7 +76,6 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
 
       yield put(setLocalNetworkNames(msg.localNetworkNames));
       yield put(setClientIdAction(msg.clientId));
-      yield put(setClientColorAction(msg.clientColor));
       yield put(setMaxSizeAction(msg.maxSize));
       yield put(setNoticeAction(msg.noticeText, msg.noticeUrl));
 
@@ -150,7 +148,6 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
           addChatItemAction({
             id: uuid(),
             date: new Date(),
-            clientColor: client.clientColor,
             clientId: client.clientId,
             message: msg.message,
           })
@@ -394,9 +391,6 @@ function* rejectTransfer(action: ActionModel) {
 function* sendChatMessage(action: ActionModel) {
   const message = action.value as string;
   const clientId: string = yield select((state: StateType) => state.clientId);
-  const clientColor: string = yield select(
-    (state: StateType) => state.clientColor
-  );
   const network: ClientModel[] = yield select(
     (state: StateType) => state.network
   );
@@ -418,7 +412,6 @@ function* sendChatMessage(action: ActionModel) {
       id: uuid(),
       date: new Date(),
       clientId,
-      clientColor,
       message,
     })
   );

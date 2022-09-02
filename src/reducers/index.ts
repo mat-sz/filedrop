@@ -10,14 +10,12 @@ import {
 import { ActionType } from '../types/ActionType';
 
 export interface StateType {
-  welcomed: boolean;
   connected: boolean;
   rtcConfiguration?: RTCConfiguration;
   error?: string;
   networkName?: string;
   clientId?: string;
   clientName?: string;
-  clientColor?: string;
   maxSize: number;
   suggestedNetworkName?: string;
   localNetworkNames: string[];
@@ -28,11 +26,9 @@ export interface StateType {
   privateKey?: string;
   noticeText?: string;
   noticeUrl?: string;
-  clientNameModal: boolean;
 }
 
 let initialState: StateType = {
-  welcomed: localStorage.getItem('welcomed') === '1',
   clientName: localStorage.getItem('clientName') || undefined,
   connected: false,
   localNetworkNames: [],
@@ -40,7 +36,6 @@ let initialState: StateType = {
   transfers: [],
   maxSize: 0,
   chat: [],
-  clientNameModal: false,
 };
 
 export type StoreType = Store<StateType, ActionModel>;
@@ -53,9 +48,6 @@ function applicationState(state = initialState, action: ActionModel) {
       break;
     case ActionType.DISMISS_ERROR:
       newState.error = undefined;
-      break;
-    case ActionType.DISMISS_WELCOME:
-      newState.welcomed = true;
       break;
     case ActionType.SET_CONNECTED:
       newState.connected = action.value as boolean;
@@ -79,9 +71,6 @@ function applicationState(state = initialState, action: ActionModel) {
       break;
     case ActionType.SET_CLIENT_ID:
       newState.clientId = action.value as string;
-      break;
-    case ActionType.SET_CLIENT_COLOR:
-      newState.clientColor = action.value as string;
       break;
     case ActionType.SET_CLIENT_NAME:
       newState.clientName = action.value as string;
@@ -168,9 +157,6 @@ function applicationState(state = initialState, action: ActionModel) {
       break;
     case ActionType.ADD_CHAT_ITEM:
       newState.chat = [...newState.chat, action.value as ChatItemModel];
-      break;
-    case ActionType.SET_CLIENT_NAME_MODAL:
-      newState.clientNameModal = action.value as boolean;
       break;
     default:
       return state;

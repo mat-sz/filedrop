@@ -7,14 +7,19 @@ const Abuse: React.FC = () => {
 
   return (
     <section>
-      <h2>Report Abuse</h2>
       <div className="subsection left">
+        <h2>Report Abuse</h2>
         <p className="bold">
-          Are you aware of a breach of our{' '}
-          <Link to="/tos">Terms of Service</Link>? Would you like to send a DMCA
-          takedown request? Please follow the instructions below.
+          Follow the instructions below, if:
+          <ul>
+            <li>
+              you've witnessed usage that goes against the{' '}
+              <Link to="/tos">Terms of Service</Link>,
+            </li>
+            <li>you'd like to submit a DMCA notice.</li>
+          </ul>
         </p>
-        <p>Send me an e-mail directly at: {abuseEmail}</p>
+        <p>Send a message to the following e-mail address: {abuseEmail}</p>
       </div>
     </section>
   );

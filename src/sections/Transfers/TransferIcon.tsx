@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import Tooltip from 'rc-tooltip';
 import {
   FaFile,
   FaFileAlt,
@@ -18,9 +17,13 @@ import {
   FaHourglassEnd,
 } from 'react-icons/fa';
 
+import { uuidToColor } from '../../utils/color';
+import { fileType } from '../../utils/file';
 import { TransferState } from '../../types/TransferState';
 import { TransferModel } from '../../types/Models';
 import { StateType } from '../../reducers';
+import Tooltip from '../../components/Tooltip';
+import { FileType } from '../../types/FileType';
 
 const states = {
   [TransferState.INCOMING]: 'Incoming',
@@ -36,70 +39,63 @@ interface TransferIconProps {
   transfer: TransferModel;
 }
 
-const TransferIcon: React.FC<TransferIconProps> = ({ transfer }) => {
-  const network = useSelector((state: StateType) => state.network);
-  const targetClient = network.find(
-    client => client.clientId === transfer.clientId
-  );
+const typeIcon = (mime: string) => {
+  const type = fileType(mime);
 
-  const typeIcon = (type: string) => {
-    if (type.startsWith('text/') || type.includes('pdf')) {
-      return <FaFileAlt />;
-    } else if (
-      type.includes('zip') ||
-      type.includes('rar') ||
-      type.includes('7z') ||
-      type.includes('compress')
-    ) {
+  switch (type) {
+    case FileType.ARCHIVE:
       return <FaFileArchive />;
-    } else if (type.startsWith('image/')) {
+    case FileType.IMAGE:
       return <FaFileImage />;
-    } else if (type.startsWith('video/')) {
-      return <FaFileVideo />;
-    } else if (type.startsWith('audio/')) {
+    case FileType.AUDIO:
       return <FaFileAudio />;
-    } else if (type.startsWith('application/')) {
+    case FileType.VIDEO:
+      return <FaFileVideo />;
+    case FileType.BINARY:
       return <FaFileAlt />;
-    } else {
+    case FileType.TEXT:
+      return <FaFileAlt />;
+    default:
       return <FaFile />;
-    }
-  };
+  }
+};
 
-  const stateIcon = (state: TransferState, receiving: boolean) => {
-    switch (state) {
-      case TransferState.INCOMING:
-        return <FaArrowDown />;
-      case TransferState.OUTGOING:
-        return <FaArrowUp />;
-      case TransferState.FAILED:
-        return <FaTimes />;
-      case TransferState.IN_PROGRESS:
-        if (receiving) {
-          return <FaAngleDoubleDown />;
-        } else {
-          return <FaAngleDoubleUp />;
-        }
-      case TransferState.CONNECTING:
-        return <FaHourglassHalf />;
-      case TransferState.CONNECTED:
-        return <FaHourglassEnd />;
-      case TransferState.COMPLETE:
-        return <FaCheck />;
-    }
-  };
+const stateIcon = (state: TransferState, receiving: boolean) => {
+  switch (state) {
+    case TransferState.INCOMING:
+      return <FaArrowDown />;
+    case TransferState.OUTGOING:
+      return <FaArrowUp />;
+    case TransferState.FAILED:
+      return <FaTimes />;
+    case TransferState.IN_PROGRESS:
+      if (receiving) {
+        return <FaAngleDoubleDown />;
+      } else {
+        return <FaAngleDoubleUp />;
+      }
+    case TransferState.CONNECTING:
+      return <FaHourglassHalf />;
+    case TransferState.CONNECTED:
+      return <FaHourglassEnd />;
+    case TransferState.COMPLETE:
+      return <FaCheck />;
+  }
+};
+
+const TransferIcon: React.FC<TransferIconProps> = ({ transfer }) => {
+  const targetClient = useSelector((state: StateType) =>
+    state.network.find(client => client.clientId === transfer.clientId)
+  );
 
   return (
     <div className="transfer-icon">
       {targetClient ? (
-        <Tooltip
-          placement="top"
-          overlay={states[transfer.state]}
-          transitionName="rc-tooltip-fade"
-        >
+        <Tooltip content={states[transfer.state]}>
           <div
             className="network-tile target-tile"
             style={{
-              backgroundColor: targetClient.clientColor,
+              backgroundColor: uuidToColor(targetClient.clientId),
             }}
             aria-label={'Transfer state: ' + states[transfer.state]}
           >

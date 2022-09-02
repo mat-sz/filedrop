@@ -1,9 +1,9 @@
-import React, { useState, useCallback } from 'react';
-import QrCode from 'qrcode.react';
+import React, { useState } from 'react';
+import { QRCodeSVG } from 'qrcode.react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { FaShare, FaCopy } from 'react-icons/fa';
 
-import { showCliToolInfo, title } from '../../config';
+import { title } from '../../config';
 
 interface ConnectSectionProps {
   href: string;
@@ -14,59 +14,36 @@ const shareSupported = !!(navigator as any).share;
 const ConnectSection: React.FC<ConnectSectionProps> = ({ href }) => {
   const [copied, setCopied] = useState(false);
 
-  const onCopy = useCallback(() => setCopied(true), [setCopied]);
-  const onShare = useCallback(() => {
+  const onCopy = () => setCopied(true);
+  const onShare = () => {
     (navigator as any).share({
       title: title + ' - transfer files',
       url: href,
     });
-  }, [href]);
+  };
 
   return (
-    <>
-      <h2>Connect</h2>
-      <div className="qrcode subsection">
-        <div className="info">
-          {showCliToolInfo ? (
-            <>
-              To connect to your network and start copying files, scan the QR
-              code below, open the URL on another device, or use the dedicated{' '}
-              <a
-                href="https://github.com/mat-sz/droplol"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                CLI tool
-              </a>{' '}
-              (available on npm).
-            </>
-          ) : (
-            <>
-              To connect to your network and start copying files, scan the QR
-              code below, or open the URL on another device.
-            </>
-          )}
-        </div>
-        <div>
-          <QrCode value={href} />
-        </div>
-        <div>
-          <pre>{href}</pre>
-          <div className="buttons">
-            <CopyToClipboard text={href} onCopy={onCopy}>
-              <button>
-                <FaCopy /> {copied ? 'Copied' : 'Copy'}
-              </button>
-            </CopyToClipboard>
-            {shareSupported && (
-              <button onClick={onShare}>
-                <FaShare /> Share
-              </button>
-            )}
-          </div>
-        </div>
+    <div className="connect center subsection">
+      <div className="info">
+        Open this page on your other device to copy files:
       </div>
-    </>
+      <div>
+        <QRCodeSVG value={href} size={192} className="qrcode" />
+      </div>
+      <div className="copy">
+        <pre>{href}</pre>
+        <CopyToClipboard text={href} onCopy={onCopy}>
+          <button>
+            <FaCopy /> {copied ? 'Copied' : 'Copy'}
+          </button>
+        </CopyToClipboard>
+        {shareSupported && (
+          <button onClick={onShare}>
+            <FaShare /> Share
+          </button>
+        )}
+      </div>
+    </div>
   );
 };
 

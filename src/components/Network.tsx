@@ -1,10 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { AnimatePresence, motion } from 'framer-motion';
+import { ScrollArea } from 'react-nano-scrollbar';
+import { AnimatePresence } from 'framer-motion';
 
+import { animationPropsOpacity } from '../animationSettings';
 import { StateType } from '../reducers';
 import NetworkTile from './NetworkTile';
-import { animationPropsOpacity } from '../animationSettings';
+import Animate from './Animate';
 
 interface NetworkProps {
   onSelect?: (clientId: string) => void;
@@ -16,26 +18,32 @@ const Network: React.FC<NetworkProps> = ({ onSelect }) => {
   );
 
   return (
-    <div className={'subsection ' + (network.length > 0 ? 'network' : '')}>
+    <ScrollArea
+      horizontal
+      hideScrollbarY
+      className={onSelect ? 'network-select' : 'subsection'}
+    >
       <AnimatePresence>
         {network.length > 0 ? (
-          <AnimatePresence>
-            {network.map(client => (
-              <NetworkTile
-                key={client.clientId}
-                client={client}
-                onSelect={onSelect}
-              />
-            ))}
-          </AnimatePresence>
+          <div className="network">
+            <AnimatePresence>
+              {network.map(client => (
+                <NetworkTile
+                  key={client.clientId}
+                  client={client}
+                  onSelect={onSelect}
+                />
+              ))}
+            </AnimatePresence>
+          </div>
         ) : (
-          <motion.span {...animationPropsOpacity}>
+          <Animate component="span" {...animationPropsOpacity}>
             <div>Nobody is connected to your network.</div>
             <div>Open this website elsewhere to connect.</div>
-          </motion.span>
+          </Animate>
         )}
       </AnimatePresence>
-    </div>
+    </ScrollArea>
   );
 };
 

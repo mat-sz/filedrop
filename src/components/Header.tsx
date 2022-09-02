@@ -1,50 +1,39 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { FaGithub, FaInfoCircle, FaTwitter } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-import { abuseEmail, title } from '../config';
+import { title } from '../config';
+import DropIcon from './DropIcon';
 
 const Header: React.FC = () => {
-  const [toggled, setToggled] = useState(false);
-
-  const toggle = () => setToggled(toggled => !toggled);
-  const close = () => setToggled(false);
-
   return (
     <header>
-      <button
-        className={'toggle ' + (toggled ? 'toggled' : '')}
-        onClick={toggle}
-        aria-label={toggled ? 'Close menu' : 'Open menu'}
-      >
-        <div className="bar" />
-        <div className="bar" />
-        <div className="bar" />
-      </button>
       <nav className="menu">
         <h1>
-          <Link to="/" className="logo" onClick={close}>
+          <Link to="/" className="logo">
+            <DropIcon />
             {title}
           </Link>
         </h1>
-        <ul className={toggled ? '' : 'hidden'}>
-          <li>
-            <Link to="/privacy" onClick={close}>
-              privacy policy
-            </Link>
-          </li>
-          <li>
-            <Link to="/tos" onClick={close}>
-              terms of service
-            </Link>
-          </li>
-          {abuseEmail ? (
-            <li>
-              <Link to="/abuse" onClick={close}>
-                report abuse / dmca
-              </Link>
-            </li>
-          ) : null}
-        </ul>
+        <div className="icon-menu">
+          <Link to="/about">
+            <FaInfoCircle />
+          </Link>
+          <a
+            href="https://github.com/mat-sz/filedrop-web"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaGithub />
+          </a>
+          <a
+            href="https://twitter.com/matsz_dev"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaTwitter />
+          </a>
+        </div>
       </nav>
     </header>
   );

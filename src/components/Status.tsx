@@ -1,9 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 
 import { StateType } from '../reducers';
 import { animationPropsOpacity } from '../animationSettings';
+import Animate from './Animate';
 
 const Status: React.FC = () => {
   const connected = useSelector((state: StateType) => state.connected);
@@ -11,9 +12,13 @@ const Status: React.FC = () => {
   return (
     <AnimatePresence>
       {!connected ? (
-        <motion.div {...animationPropsOpacity} className="status error">
+        <Animate
+          component="div"
+          {...animationPropsOpacity}
+          className="status error"
+        >
           <div>Connecting...</div>
-        </motion.div>
+        </Animate>
       ) : null}
     </AnimatePresence>
   );

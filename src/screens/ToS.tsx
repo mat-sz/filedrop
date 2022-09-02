@@ -3,8 +3,8 @@ import React from 'react';
 const ToS: React.FC = () => {
   return (
     <section>
-      <h2>Terms of Service</h2>
       <div className="subsection left">
+        <h2>Terms of Service</h2>
         <p className="bold">
           By using the service (usage is understood by, but not limited to,
           accepting the "Welcome" notice, transferring files, connecting to the

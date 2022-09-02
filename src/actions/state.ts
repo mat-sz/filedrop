@@ -61,13 +61,6 @@ export function setClientNameAction(id: string): ActionModel {
   };
 }
 
-export function setClientColorAction(color: string): ActionModel {
-  return {
-    type: ActionType.SET_CLIENT_COLOR,
-    value: color,
-  };
-}
-
 export function setNetworkAction(network: ClientModel[]): ActionModel {
   return {
     type: ActionType.SET_NETWORK,
@@ -108,13 +101,6 @@ export function setKeyPairAction(
   };
 }
 
-export function dismissWelcomeAction(): ActionModel {
-  return {
-    type: ActionType.DISMISS_WELCOME,
-    value: null,
-  };
-}
-
 export function dismissErrorAction(): ActionModel {
   return {
     type: ActionType.DISMISS_ERROR,
@@ -133,12 +119,5 @@ export function sendChatMessageAction(message: string): ActionModel {
   return {
     type: ActionType.SEND_CHAT_MESSAGE,
     value: message,
-  };
-}
-
-export function setClientNameModalAction(visible: boolean): ActionModel {
-  return {
-    type: ActionType.SET_CLIENT_NAME_MODAL,
-    value: visible,
   };
 }
