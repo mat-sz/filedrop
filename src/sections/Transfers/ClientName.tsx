@@ -49,6 +49,7 @@ const ClientName: React.FC = () => {
             placeholder="Your name"
             value={name}
             onChange={e => setName(e.target.value)}
+            maxLength={32}
           />
           <button onClick={() => onSave()} className="icon-button">
             <FaSave />
