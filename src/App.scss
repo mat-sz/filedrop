@@ -246,6 +246,8 @@ nav {
 }
 
 .transfer-info {
+  flex: 1;
+
   & > div {
     width: 100%;
   }
@@ -833,6 +835,12 @@ nav {
 
   .modal {
     padding: 30px;
+  }
+
+  .metadata {
+    div {
+      display: inline-block;
+    }
   }
 
   footer {

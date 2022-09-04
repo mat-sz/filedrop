@@ -110,6 +110,7 @@ export interface TransferModel {
   progress?: number;
   speed?: number;
   time?: number;
+  timeLeft?: number;
   preview?: string;
   state: TransferState;
 }

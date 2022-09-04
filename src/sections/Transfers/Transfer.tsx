@@ -71,6 +71,19 @@ function shorterFileName(
   return name;
 }
 
+function humanTimeLeft(time?: number) {
+  if (typeof time === 'undefined') {
+    return 'Never';
+  } else if (time === 0) {
+    return 'Almost there...';
+  }
+
+  const minutes = Math.floor(time / 60);
+  const seconds = time % 60;
+
+  return `${minutes}:${seconds.toString().padStart(2, '0')} left`;
+}
+
 const Transfer: React.FC<TransferProps> = ({ transfer }) => {
   const dispatch = useDispatch();
   const [text, setText] = useState('');
@@ -113,14 +126,19 @@ const Transfer: React.FC<TransferProps> = ({ transfer }) => {
               </div>
             </Tooltip>
             <div className="metadata">
-              <span>{filesize(transfer.fileSize, { pad: true })}</span>
-              {transfer.state === TransferState.INCOMING && (
-                <>{type !== FileType.UNKNOWN && <span>{types[type]}</span>}</>
-              )}
+              <span>
+                {filesize(transfer.fileSize, { pad: true, precision: 3 })}
+              </span>
+              {type !== FileType.UNKNOWN && <span>{types[type]}</span>}
               {transfer.state === TransferState.IN_PROGRESS && (
                 <>
-                  <span>{filesize(transfer.speed!, { pad: true })}/s</span>
-                  <span>{Math.round(transfer.progress! * 100)}%</span>
+                  <div>
+                    <span>
+                      {filesize(transfer.speed!, { pad: true, precision: 3 })}/s
+                    </span>
+                    <span>{Math.round(transfer.progress! * 100)}%</span>
+                    <span>{humanTimeLeft(transfer.timeLeft)}</span>
+                  </div>
                 </>
               )}
               {transfer.state === TransferState.FAILED && <span>Failed!</span>}

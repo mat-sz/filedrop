@@ -65,6 +65,7 @@ export default function* transferReceiveFile(
         state: TransferState.FAILED,
         progress: 1,
         speed: 0,
+        timeLeft: 0,
       })
     );
   };
@@ -82,6 +83,7 @@ export default function* transferReceiveFile(
         progress: 1,
         speed: 0,
         time: Math.floor(new Date().getTime() / 1000 - timestamp),
+        timeLeft: 0,
         blobUrl: blobUrl,
       })
     );
@@ -111,12 +113,14 @@ export default function* transferReceiveFile(
       buffer.push(event.data);
       offset += event.data.byteLength;
 
+      const speed = offset / (new Date().getTime() / 1000 - timestamp);
       dispatch(
         updateTransferAction({
           transferId: transfer.transferId,
           state: TransferState.IN_PROGRESS,
           progress: offset / transfer.fileSize,
-          speed: offset / (new Date().getTime() / 1000 - timestamp),
+          speed,
+          timeLeft: Math.round((transfer.fileSize - offset) / speed),
         })
       );
 
