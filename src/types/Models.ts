@@ -143,4 +143,5 @@ export interface ClientModel {
   clientId: string;
   clientName?: string;
   publicKey?: string;
+  isLocal: boolean;
 }

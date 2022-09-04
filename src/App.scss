@@ -386,10 +386,9 @@ nav {
     font-size: 0;
   }
 
-  .secure {
+  .secure,
+  .local {
     position: absolute;
-    top: 5px;
-    left: 5px;
     font-size: 0;
 
     svg {
@@ -397,6 +396,16 @@ nav {
       height: 20px;
       width: 20px;
     }
+  }
+
+  .secure {
+    top: 5px;
+    left: 5px;
+  }
+
+  .local {
+    top: 5px;
+    right: 5px;
   }
 }
 

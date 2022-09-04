@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
-import { FaLock, FaPlus } from 'react-icons/fa';
+import { FaLock, FaNetworkWired, FaPlus } from 'react-icons/fa';
 
 import { ClientModel } from '../types/Models';
 import { createTransferAction } from '../actions/transfers';
@@ -37,6 +37,22 @@ const NetworkTile: React.FC<NetworkTileProps> = ({ client, onSelect }) => {
     onSelect?.(client.clientId);
   };
 
+  const contents = (
+    <>
+      <FaPlus />
+      {!!publicKey && !!client.publicKey && (
+        <div className="secure">
+          <FaLock />
+        </div>
+      )}
+      {client.isLocal && (
+        <div className="local">
+          <FaNetworkWired />
+        </div>
+      )}
+    </>
+  );
+
   return (
     <Animate
       component="div"
@@ -51,12 +67,7 @@ const NetworkTile: React.FC<NetworkTileProps> = ({ client, onSelect }) => {
             backgroundColor: uuidToColor(client.clientId),
           }}
         >
-          <FaPlus />
-          {!!publicKey && !!client.publicKey && (
-            <div className="secure">
-              <FaLock />
-            </div>
-          )}
+          {contents}
         </div>
       ) : (
         <div
@@ -76,12 +87,7 @@ const NetworkTile: React.FC<NetworkTileProps> = ({ client, onSelect }) => {
             />
             Click on this area to start a transfer.
           </label>
-          <FaPlus />
-          {client.publicKey && (
-            <div className="secure">
-              <FaLock />
-            </div>
-          )}
+          {contents}
         </div>
       )}
       <div className="network-tile-name">{client.clientName}</div>
