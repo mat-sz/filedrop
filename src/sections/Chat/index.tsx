@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AnimatePresence } from 'framer-motion';
 import { ScrollArea } from 'react-nano-scrollbar';
 import Textarea from 'react-expanding-textarea';
-import { FaPaperPlane } from 'react-icons/fa';
+import { FaPaperPlane, FaRegCommentDots } from 'react-icons/fa';
 
 import { StateType } from '../../reducers';
 import { sendChatMessageAction } from '../../actions/state';
@@ -52,14 +52,20 @@ const Chat: React.FC = () => {
   }
 
   return (
-    <>
-      <h2>Chat</h2>
-      <div className="subsection chat center">
-        {chat.length === 0 && (
-          <Animate component="span" {...animationPropsOpacity}>
-            <div>No chat messages... so far.</div>
+    <div className="subsection chat">
+      {chat.length === 0 ? (
+        <AnimatePresence>
+          <Animate
+            component="div"
+            className="chat-empty"
+            {...animationPropsOpacity}
+          >
+            <FaRegCommentDots />
+            <h3>It's empty in here.</h3>
+            <div>Start chatting with others in your room.</div>
           </Animate>
-        )}
+        </AnimatePresence>
+      ) : (
         <ScrollArea hideScrollbarX className="chat-items">
           <ul ref={containerRef}>
             <AnimatePresence>
@@ -69,18 +75,18 @@ const Chat: React.FC = () => {
             </AnimatePresence>
           </ul>
         </ScrollArea>
-        <form onSubmit={onSubmit}>
-          <Textarea
-            value={message}
-            onKeyDown={onKeyDown}
-            onChange={e => setMessage((e.target as any).value)}
-          />
-          <button className="icon-button">
-            <FaPaperPlane />
-          </button>
-        </form>
-      </div>
-    </>
+      )}
+      <form onSubmit={onSubmit}>
+        <Textarea
+          value={message}
+          onKeyDown={onKeyDown}
+          onChange={e => setMessage((e.target as any).value)}
+        />
+        <button className="icon-button">
+          <FaPaperPlane />
+        </button>
+      </form>
+    </div>
   );
 };
 
