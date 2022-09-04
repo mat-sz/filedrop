@@ -16,6 +16,7 @@ export interface WelcomeMessageModel extends MessageModel {
   clientId: string;
   suggestedClientName?: string;
   suggestedNetworkName?: string;
+  remoteAddress?: string;
   localNetworkNames: string[];
   rtcConfiguration?: RTCConfiguration;
   maxSize: number;

@@ -10,6 +10,7 @@ import Privacy from './screens/Privacy';
 import ToS from './screens/ToS';
 import Abuse from './screens/Abuse';
 import About from './screens/About';
+import TechnicalInformation from './screens/TechnicalInformation';
 import Header from './components/Header';
 import Status from './components/Status';
 import Footer from './components/Footer';
@@ -31,6 +32,7 @@ const App: React.FC = () => {
           <Route path="/about" element={<About />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/tos" element={<ToS />} />
+          <Route path="/tech" element={<TechnicalInformation />} />
           <Route path="/:networkName" element={<Transfers />} />
           <Route index element={<Home />} />
         </Routes>

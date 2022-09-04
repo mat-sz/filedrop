@@ -16,6 +16,7 @@ export interface StateType {
   networkName?: string;
   clientId?: string;
   clientName?: string;
+  remoteAddress?: string;
   maxSize: number;
   suggestedNetworkName?: string;
   localNetworkNames: string[];
@@ -74,6 +75,9 @@ function applicationState(state = initialState, action: ActionModel) {
       break;
     case ActionType.SET_CLIENT_NAME:
       newState.clientName = action.value as string;
+      break;
+    case ActionType.SET_REMOTE_ADDRESS:
+      newState.remoteAddress = action.value as string;
       break;
     case ActionType.SET_MAX_SIZE:
       newState.maxSize = action.value as number;

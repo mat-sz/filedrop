@@ -19,6 +19,9 @@ const Footer: React.FC = () => {
           </li>
         ) : null}
         <li>
+          <Link to="/tech">Technical Information</Link>
+        </li>
+        <li>
           <a
             href="https://github.com/mat-sz/filedrop-web"
             target="_blank"

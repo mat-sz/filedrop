@@ -46,6 +46,7 @@ import {
   setNetworkNameAction,
   addChatItemAction,
   setLocalNetworkNames,
+  setRemoteAddressAction,
 } from '../actions/state';
 import { MessageType, ActionMessageActionType } from '../types/MessageType';
 import { title } from '../config';
@@ -78,6 +79,7 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
       yield put(setClientIdAction(msg.clientId));
       yield put(setMaxSizeAction(msg.maxSize));
       yield put(setNoticeAction(msg.noticeText, msg.noticeUrl));
+      yield put(setRemoteAddressAction(msg.remoteAddress));
 
       const networkName: string = yield select(
         (state: StateType) => state.networkName

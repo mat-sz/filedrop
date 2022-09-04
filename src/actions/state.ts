@@ -54,10 +54,17 @@ export function setClientIdAction(id: string): ActionModel {
   };
 }
 
-export function setClientNameAction(id: string): ActionModel {
+export function setClientNameAction(name: string): ActionModel {
   return {
     type: ActionType.SET_CLIENT_NAME,
-    value: id,
+    value: name,
+  };
+}
+
+export function setRemoteAddressAction(address?: string): ActionModel {
+  return {
+    type: ActionType.SET_REMOTE_ADDRESS,
+    value: address,
   };
 }
 
