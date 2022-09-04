@@ -14,6 +14,22 @@ export interface ChatItemProps {
   item: ChatItemModel;
 }
 
+const urlify = (text: string): React.ReactNode => {
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+
+  return text.split(urlRegex).map((part, i) => {
+    if (part.match(urlRegex)) {
+      return (
+        <a href={part} key={i}>
+          {part}
+        </a>
+      );
+    }
+
+    return part;
+  });
+};
+
 const ChatItem: React.FC<ChatItemProps> = ({ item }) => {
   const [expanded, setExpanded] = useState(false);
   const messageRef = useRef<HTMLDivElement>(null);
@@ -50,7 +66,7 @@ const ChatItem: React.FC<ChatItemProps> = ({ item }) => {
         </button>
       </div>
       <div className="chat-message" ref={messageRef}>
-        {item.message}
+        {urlify(item.message)}
       </div>
       {!expanded && (
         <button className="chat-message-more" onClick={() => setExpanded(true)}>
