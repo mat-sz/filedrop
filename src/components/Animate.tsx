@@ -1,5 +1,5 @@
-import { usePresence } from 'framer-motion';
 import React, { HTMLAttributes, useEffect, useRef } from 'react';
+import { usePresence } from 'framer-motion';
 
 interface AnimateProps extends HTMLAttributes<HTMLElement> {
   component?: 'div' | 'span' | 'li';
@@ -20,6 +20,7 @@ const Animate: React.FC<AnimateProps> = props => {
       if (componentRef.current && animate && exit) {
         const animation = new Animation(
           new KeyframeEffect(componentRef.current, [animate, exit], {
+            fill: 'forwards',
             easing: 'ease-in-out',
             duration: 250,
           })
@@ -37,6 +38,7 @@ const Animate: React.FC<AnimateProps> = props => {
     } else if (componentRef.current && initial && animate) {
       const animation = new Animation(
         new KeyframeEffect(componentRef.current, [initial, animate], {
+          fill: 'forwards',
           easing: 'ease-in-out',
           duration: 250,
         })
