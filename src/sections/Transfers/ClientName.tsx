@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { FaEdit, FaSave, FaTimes } from 'react-icons/fa';
+import { FaEdit, FaCheck, FaTimes } from 'react-icons/fa';
 
 import { setClientNameAction } from '../../actions/state';
 import { StateType } from '../../reducers';
@@ -52,7 +52,7 @@ const ClientName: React.FC = () => {
             maxLength={32}
           />
           <button onClick={() => onSave()} className="icon-button">
-            <FaSave />
+            <FaCheck />
           </button>
           <button onClick={() => onCancel()} className="icon-button">
             <FaTimes />

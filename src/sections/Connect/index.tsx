@@ -1,6 +1,6 @@
 import React from 'react';
 import { QRCodeSVG } from 'qrcode.react';
-import { FaShare, FaCopy } from 'react-icons/fa';
+import { FaPaperPlane, FaCopy } from 'react-icons/fa';
 
 import { title } from '../../config';
 import { copy } from '../../utils/copy';
@@ -34,7 +34,7 @@ const ConnectSection: React.FC<ConnectSectionProps> = ({ href }) => {
         </button>
         {shareSupported && (
           <button onClick={onShare} className="icon-button">
-            <FaShare />
+            <FaPaperPlane />
           </button>
         )}
       </div>
