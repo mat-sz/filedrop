@@ -1,5 +1,4 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
-import ReactTimeago from 'react-timeago';
 import { FaCopy } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 
@@ -59,7 +58,7 @@ const ChatItem: React.FC<ChatItemProps> = ({ item }) => {
         />
         <div>{client?.clientName}</div>
         <div>
-          <ReactTimeago date={item.date} />
+          {item.date.toLocaleTimeString('en-US', { timeStyle: 'short' })}
         </div>
         <button className="icon-button" onClick={() => copy(item.message)}>
           <FaCopy />
