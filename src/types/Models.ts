@@ -1,5 +1,6 @@
 import { TransferState } from './TransferState';
 import { MessageType, ActionMessageActionType } from './MessageType';
+import { DeviceType } from './DeviceType';
 
 export interface ActionModel {
   type: string;
@@ -33,6 +34,7 @@ export interface NetworkNameMessageModel extends MessageModel {
   type: MessageType.NETWORK_NAME;
   networkName: string;
   publicKey?: string;
+  deviceType?: DeviceType;
 }
 
 export interface ClientNameMessageModel extends MessageModel {
@@ -146,4 +148,5 @@ export interface ClientModel {
   clientName?: string;
   publicKey?: string;
   isLocal: boolean;
+  deviceType?: DeviceType;
 }
