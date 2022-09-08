@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import filesize from 'filesize';
 import { FaCheck, FaCopy, FaDownload, FaTimes } from 'react-icons/fa';
 
 import {
@@ -15,7 +14,8 @@ import { TransferState } from '../../types/TransferState';
 import { FileType } from '../../types/FileType';
 import Tooltip from '../../components/Tooltip';
 import Animate from '../../components/Animate';
-import { fileType } from '../../utils/file';
+import { fileType, formatFileName, formatFileSize } from '../../utils/file';
+import { humanTimeLeft } from '../../utils/time';
 import { copy } from '../../utils/copy';
 import TransferIcon from './TransferIcon';
 
@@ -38,50 +38,6 @@ const types = {
 
 interface TransferProps {
   transfer: TransferModel;
-}
-
-function shorterFileName(
-  name: string,
-  fileNameLength = 32,
-  replacementCharacter = '…'
-) {
-  const dotIndex = name.lastIndexOf('.');
-  const half = Math.floor(fileNameLength / 2);
-
-  if (dotIndex !== -1) {
-    const extension = name.substr(dotIndex);
-    const fileName = name.substr(0, dotIndex);
-
-    if (fileName.length > fileNameLength) {
-      return (
-        fileName.substr(0, half) +
-        replacementCharacter +
-        fileName.substr(fileName.length - (half + 1)) +
-        extension
-      );
-    }
-  } else if (name.length > 24) {
-    return (
-      name.substr(0, half) +
-      replacementCharacter +
-      name.substr(name.length - (half + 1))
-    );
-  }
-
-  return name;
-}
-
-function humanTimeLeft(time?: number) {
-  if (typeof time === 'undefined') {
-    return 'Never';
-  } else if (time === 0) {
-    return 'Almost there...';
-  }
-
-  const minutes = Math.floor(time / 60);
-  const seconds = time % 60;
-
-  return `${minutes}:${seconds.toString().padStart(2, '0')} left`;
 }
 
 const Transfer: React.FC<TransferProps> = ({ transfer }) => {
@@ -122,20 +78,16 @@ const Transfer: React.FC<TransferProps> = ({ transfer }) => {
           <div className="transfer-info">
             <Tooltip content={transfer.fileName}>
               <div className="filename">
-                {shorterFileName(transfer.fileName)}
+                {formatFileName(transfer.fileName)}
               </div>
             </Tooltip>
             <div className="metadata">
-              <span>
-                {filesize(transfer.fileSize, { pad: true, precision: 3 })}
-              </span>
+              <span>{formatFileSize(transfer.fileSize)}</span>
               {type !== FileType.UNKNOWN && <span>{types[type]}</span>}
               {transfer.state === TransferState.IN_PROGRESS && (
                 <>
                   <div>
-                    <span>
-                      {filesize(transfer.speed!, { pad: true, precision: 3 })}/s
-                    </span>
+                    <span>{formatFileSize(transfer.speed!)}/s</span>
                     <span>{Math.round(transfer.progress! * 100)}%</span>
                     <span>{humanTimeLeft(transfer.timeLeft)}</span>
                   </div>

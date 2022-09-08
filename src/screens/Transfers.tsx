@@ -6,17 +6,17 @@ import { AnimatePresence } from 'framer-motion';
 import ChatSection from '../sections/Chat';
 import ConnectSection from '../sections/Connect';
 import TransfersSection from '../sections/Transfers';
+import OtherNetworksSection from '../sections/OtherNetworks';
 import IncompatibleBrowser from '../components/IncompatibleBrowser';
 import ClipboardModal from '../modals/ClipboardModal';
 import { setNetworkNameAction } from '../actions/state';
-import OtherNetworksSection from '../sections/OtherNetworks';
+import { isBrowserCompatible } from '../utils/browser';
 
 const Transfers: React.FC = () => {
   const dispatch = useDispatch();
   const [clipboardFiles, setClipboardFiles] = useState<File[]>([]);
   const { networkName } = useParams<{ networkName: string }>();
   const [href, setHref] = useState('');
-  const [incompatibleBrowser, setIncompatibleBrowser] = useState(false);
 
   useEffect(() => {
     setHref(
@@ -27,16 +27,6 @@ const Transfers: React.FC = () => {
       dispatch(setNetworkNameAction(networkName));
     }
   }, [setHref, networkName, dispatch]);
-
-  useEffect(() => {
-    setIncompatibleBrowser(
-      !(
-        'RTCPeerConnection' in window &&
-        'WebSocket' in window &&
-        'FileReader' in window
-      )
-    );
-  }, []);
 
   useEffect(() => {
     const onPaste = (e: ClipboardEvent) => {
@@ -80,7 +70,7 @@ const Transfers: React.FC = () => {
 
   return (
     <>
-      {incompatibleBrowser ? <IncompatibleBrowser /> : null}
+      {isBrowserCompatible ? <IncompatibleBrowser /> : null}
       <AnimatePresence>
         {clipboardFiles.length > 0 && (
           <ClipboardModal

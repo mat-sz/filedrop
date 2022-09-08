@@ -1,17 +1,17 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { StateType } from '../reducers';
+import {
+  isFileReaderSupported,
+  isORTCSupported,
+  isWebRTCSupported,
+  isWebSocketSupported,
+} from '../utils/browser';
 
 const TechnicalInformation: React.FC = () => {
   const remoteAddress = useSelector(
     (state: StateType) => state.remoteAddress || 'Connecting?'
   );
-
-  const isWebRTCSupported = 'RTCPeerConnection' in window;
-  const isORTCSupported = 'RTCIceGatherer' in window;
-  const isWebSocketsSupported =
-    'WebSocket' in window && 2 === window.WebSocket.CLOSING;
-  const isFileReaderSupported = 'FileReader' in window;
 
   return (
     <section>
@@ -31,7 +31,7 @@ const TechnicalInformation: React.FC = () => {
             <strong>ORTC:</strong> {isORTCSupported ? 'Yes' : 'No'}
           </li>
           <li>
-            <strong>WebSockets:</strong> {isWebSocketsSupported ? 'Yes' : 'No'}
+            <strong>WebSockets:</strong> {isWebSocketSupported ? 'Yes' : 'No'}
           </li>
           <li>
             <strong>FileReader API:</strong>{' '}

@@ -1,6 +1,8 @@
+import filesize from 'filesize';
+
 import { FileType } from '../types/FileType';
 
-export const fileType = (type?: string) => {
+export function fileType(type?: string): FileType {
   if (!type) {
     return FileType.UNKNOWN;
   }
@@ -25,4 +27,39 @@ export const fileType = (type?: string) => {
   }
 
   return FileType.UNKNOWN;
-};
+}
+
+export function formatFileName(
+  name: string,
+  fileNameLength = 32,
+  replacementCharacter = '…'
+): string {
+  const dotIndex = name.lastIndexOf('.');
+  const half = Math.floor(fileNameLength / 2);
+
+  if (dotIndex !== -1) {
+    const extension = name.substr(dotIndex);
+    const fileName = name.substr(0, dotIndex);
+
+    if (fileName.length > fileNameLength) {
+      return (
+        fileName.substr(0, half) +
+        replacementCharacter +
+        fileName.substr(fileName.length - (half + 1)) +
+        extension
+      );
+    }
+  } else if (name.length > 24) {
+    return (
+      name.substr(0, half) +
+      replacementCharacter +
+      name.substr(name.length - (half + 1))
+    );
+  }
+
+  return name;
+}
+
+export function formatFileSize(size: number): string {
+  return filesize(size, { pad: true, precision: 3 });
+}
