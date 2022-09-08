@@ -3,6 +3,7 @@ import { v4 as uuid } from 'uuid';
 import { fromImage } from 'imtool';
 import { RSA } from 'matcrypt';
 
+import { title } from '../config';
 import {
   ActionModel,
   TransferModel,
@@ -17,10 +18,11 @@ import {
   ClientNameMessageModel,
 } from '../types/Models';
 import { ActionType } from '../types/ActionType';
+import { TransferState } from '../types/TransferState';
+import { MessageType, ActionMessageActionType } from '../types/MessageType';
 import { StateType } from '../reducers';
 import transferSendFile from './transferSendFile';
 import transferReceiveFile from './transferReceiveFile';
-import { TransferState } from '../types/TransferState';
 import {
   setRemoteDescriptionAction,
   removeTransferAction,
@@ -48,8 +50,7 @@ import {
   setLocalNetworkNames,
   setRemoteAddressAction,
 } from '../actions/state';
-import { MessageType, ActionMessageActionType } from '../types/MessageType';
-import { title } from '../config';
+import { deviceType } from '../utils/browser';
 
 function* message(action: ActionModel, dispatch: (action: any) => void) {
   const msg: Message = action.value as Message;
@@ -237,6 +238,7 @@ function* setNetworkName(action: ActionModel) {
     type: MessageType.NETWORK_NAME,
     networkName: action.value,
     publicKey,
+    deviceType,
   };
 
   yield put(sendMessageAction(message));
