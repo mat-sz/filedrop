@@ -392,7 +392,8 @@ nav {
   }
 
   .secure,
-  .local {
+  .local,
+  .device {
     position: absolute;
     font-size: 0;
 
@@ -411,6 +412,11 @@ nav {
   .local {
     top: 5px;
     right: 5px;
+  }
+
+  .device {
+    bottom: 5px;
+    left: 5px;
   }
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
-import { FaLock, FaNetworkWired, FaPlus } from 'react-icons/fa';
+import { FaLock, FaMobile, FaNetworkWired, FaPlus } from 'react-icons/fa';
 
 import { ClientModel } from '../types/Models';
 import { createTransferAction } from '../actions/transfers';
@@ -9,6 +9,7 @@ import { animationPropsOpacity } from '../animationSettings';
 import { StateType } from '../reducers';
 import { uuidToColor } from '../utils/color';
 import Animate from './Animate';
+import { DeviceType } from '../types/DeviceType';
 
 interface NetworkTileProps {
   client: ClientModel;
@@ -48,6 +49,11 @@ const NetworkTile: React.FC<NetworkTileProps> = ({ client, onSelect }) => {
       {client.isLocal && (
         <div className="local">
           <FaNetworkWired />
+        </div>
+      )}
+      {client.deviceType === DeviceType.MOBILE && (
+        <div className="device">
+          <FaMobile />
         </div>
       )}
     </>
