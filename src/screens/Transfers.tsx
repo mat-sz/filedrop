@@ -70,7 +70,7 @@ const Transfers: React.FC = () => {
 
   return (
     <>
-      {isBrowserCompatible ? <IncompatibleBrowser /> : null}
+      {!isBrowserCompatible ? <IncompatibleBrowser /> : null}
       <AnimatePresence>
         {clipboardFiles.length > 0 && (
           <ClipboardModal
