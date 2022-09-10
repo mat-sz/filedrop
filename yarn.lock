@@ -5176,10 +5176,10 @@ import-local@^3.0.2:
     pkg-dir "^4.2.0"
     resolve-cwd "^3.0.0"
 
-imtool@^1.1.5:
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/imtool/-/imtool-1.1.6.tgz#b40fd19bc6fe55994549f9f6e197dd992a41045a"
-  integrity sha512-ejHG1jy0s7VL5ZyIfVULzAxiJvPYRH1ZksEcSjqX3cOZilI+pwnX6qPKfB+zgLjIWqDEAODyda7cSL3Qf9lSsg==
+imtool@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/imtool/-/imtool-1.2.0.tgz#2304202cf3efe7c281475ff670a6187221eb0117"
+  integrity sha512-pVfYSxO0sduSscOVHX/cPmmMzFXk3ol+b0U1l5QqMpqm835rwJaFIvc9XdhsDyBcSdCmfTKuNZ2Q1uOyxkGF8Q==
 
 imurmurhash@^0.1.4:
   version "0.1.4"

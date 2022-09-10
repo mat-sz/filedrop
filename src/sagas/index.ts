@@ -1,6 +1,6 @@
 import { put, takeEvery, select, call } from 'redux-saga/effects';
 import { v4 as uuid } from 'uuid';
-import { fromImage } from 'imtool';
+import { canvas } from 'imtool';
 import { RSA } from 'matcrypt';
 
 import { title } from '../config';
@@ -267,10 +267,11 @@ function* createTransfer(action: ActionModel) {
     const maxSize: number = yield select((state: StateType) => state.maxSize);
     preview = yield call(async () => {
       try {
-        const imtool = await fromImage(file);
-        imtool.thumbnail(100, true);
+        const newCanvas = await canvas.fromFile(file);
+        const url = canvas
+          .thumbnail(newCanvas, 100, true)
+          .toDataURL('image/jpeg', 0.65);
 
-        const url = await imtool.toDataURL();
         // Ensure the URL isn't too long.
         if (url.length < maxSize * 0.75) {
           return url;

@@ -17,7 +17,7 @@
     "i18next": "^21.9.1",
     "i18next-browser-languagedetector": "^6.1.5",
     "i18next-http-backend": "^1.4.1",
-    "imtool": "^1.1.5",
+    "imtool": "^1.2.0",
     "lint-staged": "^12.4.1",
     "matcrypt": "^1.2.2",
     "prettier": "^2.6.2",
