@@ -2937,7 +2937,7 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.2.tgz#e83e3a7e3f300b34cb9d87f615fa0cbf357690ee"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
-base64-js@^1.3.1, base64-js@^1.5.1:
+base64-js@^1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.5.1.tgz#1b1b440160a5bf7ad40b650f095963481903930a"
   integrity sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==
@@ -6354,12 +6354,12 @@ makeerror@1.0.12:
   dependencies:
     tmpl "1.0.5"
 
-matcrypt@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/matcrypt/-/matcrypt-1.2.2.tgz#12bad350e304fe32f6d9a64a2350f501de9732e0"
-  integrity sha512-dLdZ4X7o3Te9Mbw1OxjR9QNeE4QTNqK9Mrbznk/wd9oojsItISFXOBh+Oez1FktzAj4NO7vb070fVUI+I20zqA==
+matcrypt@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/matcrypt/-/matcrypt-1.3.0.tgz#d8928a910b66299e162e1a5c0d4d0ee1844e6872"
+  integrity sha512-bn7ckPnApHoguMA5dmuo87CMptbtUtREeejAf6XbsANyv/RU9NDh+OjcHz7s6hoM6j0VQgye2zXZjCDLzkjauQ==
   dependencies:
-    base64-js "^1.3.1"
+    base64-js "^1.5.1"
 
 mdn-data@2.0.14:
   version "2.0.14"
