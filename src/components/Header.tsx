@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { FaGithub, FaInfoCircle, FaTwitter } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
@@ -6,6 +7,8 @@ import { title } from '../config';
 import DropIcon from './DropIcon';
 
 const Header: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <header>
       <nav className="menu">
@@ -16,13 +19,14 @@ const Header: React.FC = () => {
           </Link>
         </h1>
         <div className="icon-menu">
-          <Link to="/about">
+          <Link to="/about" title={t('sections.about')}>
             <FaInfoCircle />
           </Link>
           <a
             href="https://github.com/mat-sz/filedrop-web"
             target="_blank"
             rel="noopener noreferrer"
+            title={t('sections.github')}
           >
             <FaGithub />
           </a>
@@ -30,6 +34,7 @@ const Header: React.FC = () => {
             href="https://twitter.com/matsz_dev"
             target="_blank"
             rel="noopener noreferrer"
+            title={t('sections.twitter')}
           >
             <FaTwitter />
           </a>

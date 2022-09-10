@@ -1,14 +1,13 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const IncompatibleBrowser: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="subsection warning">
-      <h2>Incompatible browser</h2>
-      <p>
-        Your browser does not support the technologies required for the app to
-        work. You can still try to use the app, but it's not guaranteed it'll
-        work.
-      </p>
+      <h2>{t('incompatibleBrowser.title')}</h2>
+      <p>{t('incompatibleBrowser.body')}</p>
     </div>
   );
 };

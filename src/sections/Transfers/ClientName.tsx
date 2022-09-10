@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { FaEdit, FaCheck, FaTimes } from 'react-icons/fa';
 
 import { setClientNameAction } from '../../actions/state';
 import { StateType } from '../../reducers';
 
 const ClientName: React.FC = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const clientName = useSelector((store: StateType) => store.clientName);
 
@@ -46,7 +48,7 @@ const ClientName: React.FC = () => {
         <>
           <input
             type="text"
-            placeholder="Your name"
+            placeholder={t('yourName')}
             value={name}
             onChange={e => setName(e.target.value)}
             maxLength={32}

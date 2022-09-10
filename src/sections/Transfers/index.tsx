@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { FaLock, FaMobile } from 'react-icons/fa';
 
 import { StateType } from '../../reducers';
@@ -11,6 +12,7 @@ import TransferList from './TransferList';
 import ClientName from './ClientName';
 
 const TransfersSection: React.FC = () => {
+  const { t } = useTranslation();
   const clientId = useSelector((store: StateType) => store.clientId);
   const noticeText = useSelector((store: StateType) => store.noticeText);
   const noticeUrl = useSelector((store: StateType) => store.noticeUrl);
@@ -41,15 +43,13 @@ const TransfersSection: React.FC = () => {
                 <FaMobile />
               </div>
             )}
-            You
+            {t('you')}
           </div>
         </div>
         <div className="info">
           <ClientName />
           <div>
-            <strong>This is your tile.</strong> Beneath you'll see other tiles
-            just like this one. Drag and drop your files or click on them to
-            initiate a file transfer.
+            <strong>{t('yourTile.title')}</strong> {t('yourTile.body')}
           </div>
         </div>
       </div>

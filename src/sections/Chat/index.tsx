@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { AnimatePresence } from 'framer-motion';
 import { ScrollArea } from 'react-nano-scrollbar';
 import Textarea from 'react-expanding-textarea';
@@ -12,6 +13,7 @@ import Animate from '../../components/Animate';
 import ChatItem from './ChatItem';
 
 const Chat: React.FC = () => {
+  const { t } = useTranslation();
   const chat = useSelector((store: StateType) => store.chat);
   const privateKey = useSelector((store: StateType) => store.privateKey);
   const dispatch = useDispatch();
@@ -61,8 +63,8 @@ const Chat: React.FC = () => {
             {...animationPropsOpacity}
           >
             <FaRegCommentDots />
-            <h3>It's empty in here.</h3>
-            <div>Start chatting with others in your room.</div>
+            <h3>{t('emptyChat.title')}</h3>
+            <div>{t('emptyChat.body')}</div>
           </Animate>
         </AnimatePresence>
       ) : (
@@ -81,6 +83,7 @@ const Chat: React.FC = () => {
           value={message}
           onKeyDown={onKeyDown}
           onChange={e => setMessage((e.target as any).value)}
+          placeholder={t('chat.message')}
         />
         <button className="icon-button">
           <FaPaperPlane />

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { ScrollArea } from 'react-nano-scrollbar';
+import { useTranslation } from 'react-i18next';
 import { AnimatePresence } from 'framer-motion';
 
 import { animationPropsOpacity } from '../animationSettings';
@@ -13,6 +14,7 @@ interface NetworkProps {
 }
 
 const Network: React.FC<NetworkProps> = ({ onSelect }) => {
+  const { t } = useTranslation();
   const network = useSelector((store: StateType) =>
     store.network.filter(client => client.clientId !== store.clientId)
   );
@@ -40,8 +42,8 @@ const Network: React.FC<NetworkProps> = ({ onSelect }) => {
           className={`${className} center`}
           {...animationPropsOpacity}
         >
-          <div>Nobody is connected to your network.</div>
-          <div>Open this website elsewhere to connect.</div>
+          <div>{t('emptyNetwork.title')}</div>
+          <div>{t('emptyNetwork.body')}</div>
         </Animate>
       )}
     </AnimatePresence>

@@ -1,25 +1,28 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { abuseEmail } from '../config';
 
 const Footer: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <footer>
       <ul>
         <li>
-          <Link to="/privacy">Privacy Policy</Link>
+          <Link to="/privacy">{t('sections.privacy')}</Link>
         </li>
         <li>
-          <Link to="/tos">Terms of Service</Link>
+          <Link to="/tos">{t('sections.terms')}</Link>
         </li>
         {abuseEmail ? (
           <li>
-            <Link to="/abuse">Report abuse / DMCA</Link>
+            <Link to="/abuse">{t('sections.abuse')}</Link>
           </li>
         ) : null}
         <li>
-          <Link to="/tech">Technical Information</Link>
+          <Link to="/tech">{t('sections.tech')}</Link>
         </li>
         <li>
           <a
@@ -27,7 +30,7 @@ const Footer: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Source Code
+            {t('sections.github')}
           </a>
         </li>
       </ul>

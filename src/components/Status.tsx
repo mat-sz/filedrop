@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { AnimatePresence } from 'framer-motion';
 
 import { StateType } from '../reducers';
@@ -8,6 +9,7 @@ import Animate from './Animate';
 
 const Status: React.FC = () => {
   const connected = useSelector((state: StateType) => state.connected);
+  const { t } = useTranslation();
 
   return (
     <AnimatePresence>
@@ -17,7 +19,7 @@ const Status: React.FC = () => {
           {...animationPropsOpacity}
           className="status error"
         >
-          <div>Connecting...</div>
+          <div>{t('state.connecting')}</div>
         </Animate>
       ) : null}
     </AnimatePresence>

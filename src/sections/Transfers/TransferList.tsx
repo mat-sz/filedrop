@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { AnimatePresence } from 'framer-motion';
 
 import { StateType } from '../../reducers';
@@ -13,6 +14,7 @@ import { TransferState } from '../../types/TransferState';
 import Transfer, { cancellableStates } from './Transfer';
 
 const TransferList: React.FC = () => {
+  const { t } = useTranslation();
   const transfers = useSelector((store: StateType) => store.transfers);
   const dispatch = useDispatch();
 
@@ -45,22 +47,38 @@ const TransferList: React.FC = () => {
     <>
       {transfers.length !== 0 && (
         <h2>
-          Transfers
+          {t('transfers.title')}
           <div className="actions">
             {!!transfers.find(
               transfer => transfer.state === TransferState.INCOMING
-            ) && <button onClick={acceptAll}>Accept all</button>}
+            ) && (
+              <button onClick={acceptAll}>
+                {t('transfers.actions.acceptAll')}
+              </button>
+            )}
             {!!transfers.find(
               transfer => transfer.state === TransferState.INCOMING
-            ) && <button onClick={rejectAll}>Reject all</button>}
+            ) && (
+              <button onClick={rejectAll}>
+                {t('transfers.actions.rejectAll')}
+              </button>
+            )}
             {!!transfers.find(
               transfer =>
                 transfer.state === TransferState.COMPLETE ||
                 transfer.state === TransferState.FAILED
-            ) && <button onClick={dismissAll}>Dismiss all</button>}
+            ) && (
+              <button onClick={dismissAll}>
+                {t('transfers.actions.dismissAll')}
+              </button>
+            )}
             {!!transfers.find(transfer =>
               cancellableStates.includes(transfer.state)
-            ) && <button onClick={cancelAll}>Cancel all</button>}
+            ) && (
+              <button onClick={cancelAll}>
+                {t('transfers.actions.cancelAll')}
+              </button>
+            )}
           </div>
         </h2>
       )}

@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
-import { FaCopy } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { FaCopy } from 'react-icons/fa';
 
 import { animationPropsSlide } from '../../animationSettings';
 import { ChatItemModel } from '../../types/Models';
@@ -30,6 +31,7 @@ const urlify = (text: string): React.ReactNode => {
 };
 
 const ChatItem: React.FC<ChatItemProps> = ({ item }) => {
+  const { t, i18n } = useTranslation();
   const [expanded, setExpanded] = useState(false);
   const messageRef = useRef<HTMLDivElement>(null);
   const client = useSelector((state: StateType) =>
@@ -58,7 +60,7 @@ const ChatItem: React.FC<ChatItemProps> = ({ item }) => {
         />
         <div>{client?.clientName}</div>
         <div>
-          {item.date.toLocaleTimeString('en-US', { timeStyle: 'short' })}
+          {item.date.toLocaleTimeString(i18n.language, { timeStyle: 'short' })}
         </div>
         <button className="icon-button" onClick={() => copy(item.message)}>
           <FaCopy />
@@ -69,7 +71,7 @@ const ChatItem: React.FC<ChatItemProps> = ({ item }) => {
       </div>
       {!expanded && (
         <button className="chat-message-more" onClick={() => setExpanded(true)}>
-          Show more
+          {t('chat.showMore')}
         </button>
       )}
     </Animate>

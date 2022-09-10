@@ -1,11 +1,12 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { FaTimes } from 'react-icons/fa';
 
 import Network from '../components/Network';
 import Animate from '../components/Animate';
 import { createTransferAction } from '../actions/transfers';
 import { animationPropsOpacity } from '../animationSettings';
-import { FaTimes } from 'react-icons/fa';
 
 interface ClipboardModalProps {
   files: File[];
@@ -16,7 +17,9 @@ const ClipboardModal: React.FC<ClipboardModalProps> = ({
   files,
   dismissClipboard,
 }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
+  const fileNames = files.map((file, i) => file.name).join(', ');
 
   const onSelect = (clientId: string) => {
     for (let file of files) {
@@ -31,20 +34,12 @@ const ClipboardModal: React.FC<ClipboardModalProps> = ({
       <div>
         <div className="subsection left">
           <h2>
-            Send clipboard contents
+            {t('clipboard.title')}
             <button className="icon-button" onClick={dismissClipboard}>
               <FaTimes />
             </button>
           </h2>
-          <p>
-            Sending:{' '}
-            {files.map((file, i) => (
-              <span key={i}>
-                {file.name}
-                {i < files.length - 1 ? ', ' : ''}
-              </span>
-            ))}
-          </p>
+          <p>{t('clipboard.body', { fileNames })}</p>
           <Network onSelect={onSelect} />
         </div>
       </div>

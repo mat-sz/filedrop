@@ -1,9 +1,9 @@
 export enum FileType {
-  UNKNOWN,
-  TEXT,
-  ARCHIVE,
-  IMAGE,
-  VIDEO,
-  AUDIO,
-  BINARY,
+  UNKNOWN = 'unknown',
+  TEXT = 'text',
+  ARCHIVE = 'archive',
+  IMAGE = 'image',
+  VIDEO = 'video',
+  AUDIO = 'audio',
+  BINARY = 'binary',
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
+import { useTranslation } from 'react-i18next';
 import { FaLock, FaMobile, FaNetworkWired, FaPlus } from 'react-icons/fa';
 
 import { ClientModel } from '../types/Models';
@@ -17,6 +18,7 @@ interface NetworkTileProps {
 }
 
 const NetworkTile: React.FC<NetworkTileProps> = ({ client, onSelect }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const publicKey = useSelector((state: StateType) => state.publicKey);
 
@@ -91,7 +93,7 @@ const NetworkTile: React.FC<NetworkTileProps> = ({ client, onSelect }) => {
               accept={'*'}
               tabIndex={1}
             />
-            Click on this area to start a transfer.
+            {t('tile')}
           </label>
           {contents}
         </div>

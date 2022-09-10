@@ -24,16 +24,7 @@ import { TransferModel } from '../../types/Models';
 import { StateType } from '../../reducers';
 import Tooltip from '../../components/Tooltip';
 import { FileType } from '../../types/FileType';
-
-const states = {
-  [TransferState.INCOMING]: 'Incoming',
-  [TransferState.OUTGOING]: 'Outgoing',
-  [TransferState.CONNECTING]: 'Connecting...',
-  [TransferState.CONNECTED]: 'Connected!',
-  [TransferState.IN_PROGRESS]: 'In progress...',
-  [TransferState.COMPLETE]: 'Complete!',
-  [TransferState.FAILED]: 'Failed!',
-};
+import { useTranslation } from 'react-i18next';
 
 interface TransferIconProps {
   transfer: TransferModel;
@@ -84,6 +75,7 @@ const stateIcon = (state: TransferState, receiving: boolean) => {
 };
 
 const TransferIcon: React.FC<TransferIconProps> = ({ transfer }) => {
+  const { t } = useTranslation();
   const targetClient = useSelector((state: StateType) =>
     state.network.find(client => client.clientId === transfer.clientId)
   );
@@ -91,20 +83,25 @@ const TransferIcon: React.FC<TransferIconProps> = ({ transfer }) => {
   return (
     <div className="transfer-icon">
       {targetClient ? (
-        <Tooltip content={states[transfer.state]}>
+        <Tooltip content={t(`transferState.${transfer.state}`)}>
           <div
             className="network-tile target-tile"
             style={{
               backgroundColor: uuidToColor(targetClient.clientId),
             }}
-            aria-label={'Transfer state: ' + states[transfer.state]}
+            aria-label={t('transfers.icon.state', {
+              state: t(`transferState.${transfer.state}`),
+            })}
           >
             {stateIcon(transfer.state, transfer.receiving)}
           </div>
         </Tooltip>
       ) : null}
       {transfer.preview ? (
-        <img src={transfer.preview} alt={'Preview: ' + transfer.fileName} />
+        <img
+          src={transfer.preview}
+          alt={t('transfers.icon.preview', { fileName: transfer.fileName })}
+        />
       ) : (
         typeIcon(transfer.fileType)
       )}

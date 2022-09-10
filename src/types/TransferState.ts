@@ -1,9 +1,9 @@
 export enum TransferState {
-  INCOMING,
-  OUTGOING,
-  CONNECTING,
-  CONNECTED,
-  IN_PROGRESS,
-  COMPLETE,
-  FAILED,
+  INCOMING = 'incoming',
+  OUTGOING = 'outgoing',
+  CONNECTING = 'connecting',
+  CONNECTED = 'connected',
+  IN_PROGRESS = 'inProgress',
+  COMPLETE = 'complete',
+  FAILED = 'failed',
 }

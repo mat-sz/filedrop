@@ -8,6 +8,7 @@ import {
   ChatItemModel,
 } from '../types/Models';
 import { ActionType } from '../types/ActionType';
+import { TransferState } from '../types/TransferState';
 
 export interface StateType {
   connected: boolean;
@@ -37,6 +38,16 @@ let initialState: StateType = {
   transfers: [],
   maxSize: 0,
   chat: [],
+};
+
+const stateSort: Record<TransferState, number> = {
+  [TransferState.INCOMING]: 0,
+  [TransferState.OUTGOING]: 2,
+  [TransferState.CONNECTING]: 1,
+  [TransferState.CONNECTED]: 1,
+  [TransferState.IN_PROGRESS]: 1,
+  [TransferState.COMPLETE]: 5,
+  [TransferState.FAILED]: 6,
 };
 
 export type StoreType = Store<StateType, ActionModel>;
@@ -167,7 +178,7 @@ function applicationState(state = initialState, action: ActionModel) {
   }
 
   newState.transfers = newState.transfers.sort((a, b) => {
-    return b.state - a.state;
+    return stateSort[b.state] - stateSort[a.state];
   });
 
   return newState;

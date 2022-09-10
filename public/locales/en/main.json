@@ -1,0 +1,75 @@
+{
+  "sections": {
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "abuse": "Report abuse / DMCA",
+    "tech": "Technical Information",
+    "github": "Source Code",
+    "twitter": "Follow me on Twitter",
+    "about": "About"
+  },
+  "incompatibleBrowser": {
+    "title": "Incompatible browser",
+    "body": "Your browser does not support the technologies required for the app to work. You can still try to use the app, but it's not guaranteed it'll work."
+  },
+  "emptyNetwork": {
+    "title": "Nobody is connected to your network.",
+    "body": "Open this website elsewhere to connect."
+  },
+  "tile": "Click on this area to start a transfer.",
+  "state": {
+    "connecting": "Connecting...",
+    "loading": "Loading..."
+  },
+  "clipboard": {
+    "title": "Send clipboard contents",
+    "body": "Sending: {{fileNames}}"
+  },
+  "chat": {
+    "showMore": "Show more",
+    "message": "Message"
+  },
+  "emptyChat": {
+    "title": "It's empty in here.",
+    "body": "Start chatting with others in your room."
+  },
+  "connect": "Open this page on your other device to copy files:",
+  "otherNetworks": "Other local networks",
+  "you": "You",
+  "yourTile": {
+    "title": "This is your tile.",
+    "body": "Beneath you'll see other tiles just like this one. Drag and drop your files or click on them to initiate a file transfer."
+  },
+  "transfers": {
+    "title": "Transfers",
+    "actions": {
+      "acceptAll": "Accept all",
+      "rejectAll": "Reject all",
+      "cancelAll": "Cancel all",
+      "dismissAll": "Dismiss all"
+    },
+    "icon": {
+      "state": "Transfer state: {{state}}",
+      "preview": "Preview: {{fileName}}"
+    }
+  },
+  "fileType": {
+    "unknown": "",
+    "text": "Text file",
+    "archive": "Archive",
+    "image": "Image",
+    "video": "Video",
+    "audio": "Audio",
+    "binary": "Binary file"
+  },
+  "transferState": {
+    "incoming": "Incoming",
+    "outgoing": "Outgoing",
+    "connecting": "Connecting...",
+    "connected": "Connected",
+    "inProgress": "In progress...",
+    "complete": "Complete",
+    "failed": "Failed :("
+  },
+  "yourName": "Your name"
+}

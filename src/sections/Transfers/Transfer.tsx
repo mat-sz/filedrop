@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { FaCheck, FaCopy, FaDownload, FaTimes } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 
 import {
   removeTransferAction,
@@ -26,21 +27,12 @@ export const cancellableStates = [
   TransferState.OUTGOING,
 ];
 
-const types = {
-  [FileType.UNKNOWN]: '',
-  [FileType.TEXT]: 'Text file',
-  [FileType.ARCHIVE]: 'Archive',
-  [FileType.IMAGE]: 'Image',
-  [FileType.VIDEO]: 'Video',
-  [FileType.AUDIO]: 'Audio',
-  [FileType.BINARY]: 'Binary file',
-};
-
 interface TransferProps {
   transfer: TransferModel;
 }
 
 const Transfer: React.FC<TransferProps> = ({ transfer }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [text, setText] = useState('');
 
@@ -83,7 +75,9 @@ const Transfer: React.FC<TransferProps> = ({ transfer }) => {
             </Tooltip>
             <div className="metadata">
               <span>{formatFileSize(transfer.fileSize)}</span>
-              {type !== FileType.UNKNOWN && <span>{types[type]}</span>}
+              {type !== FileType.UNKNOWN && (
+                <span>{t(`fileType.${type}`)}</span>
+              )}
               {transfer.state === TransferState.IN_PROGRESS && (
                 <>
                   <div>

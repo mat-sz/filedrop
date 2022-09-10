@@ -1,10 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-
-import { StateType } from '../../reducers';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
+import { StateType } from '../../reducers';
+
 const OtherNetworksSection: React.FC = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const localNetworkNames = useSelector((store: StateType) =>
     store.localNetworkNames.filter(name => name !== store.networkName)
@@ -16,7 +18,7 @@ const OtherNetworksSection: React.FC = () => {
 
   return (
     <div className="subsection">
-      <h2>Other local networks</h2>
+      <h2>{t('otherNetworks')}</h2>
       <div className="actions">
         {localNetworkNames.map(name => (
           <button key={name} onClick={() => navigate(`/${name}`)}>
