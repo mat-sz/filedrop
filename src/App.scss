@@ -849,10 +849,6 @@ nav {
     }
   }
 
-  section {
-    margin-bottom: 60px;
-  }
-
   footer {
     position: fixed;
     bottom: 0;
@@ -870,6 +866,10 @@ nav {
 
   .actions {
     justify-content: flex-start;
+  }
+
+  .chat {
+    margin-bottom: 65px;
   }
 }
 
