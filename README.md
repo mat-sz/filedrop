@@ -1,6 +1,6 @@
 # filedrop-web
 
-Easy WebRTC file transfer. [CLI tool is available here.](https://github.com/mat-sz/droplol)
+Easy peer-to-peer file transfer.
 
 <p align="center">
     <a href="https://drop.lol/">
@@ -34,7 +34,6 @@ The following variables are used in the build process:
 | `REACT_APP_SERVER`             | `ws://[hostname]:5000/ws` | WebSockets server location.                                                 |
 | `REACT_APP_USE_BROWSER_ROUTER` | `0`                       | `1` if you want the application to use BrowserRouter instead of HashRouter. |
 | `REACT_APP_ABUSE_EMAIL`        | null                      | E-mail to show in the Abuse section.                                        |
-| `REACT_APP_SHOW_CLI_TOOL_INFO` | `0`                       | `1` if you want to link to [droplol](https://github.com/mat-sz/droplol).    |
 
 ## FAQ
 
