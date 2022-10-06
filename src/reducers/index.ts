@@ -83,7 +83,6 @@ function applicationState(state = initialState, action: ActionModel) {
               : replaceUrlParameters(server.urls),
           })),
         };
-        console.log(newState.rtcConfiguration);
       } else {
         newState.rtcConfiguration = undefined;
       }
