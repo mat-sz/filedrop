@@ -9,6 +9,7 @@ import {
 } from '../types/Models';
 import { ActionType } from '../types/ActionType';
 import { TransferState } from '../types/TransferState';
+import { replaceUrlParameters } from '../utils/url';
 
 export interface StateType {
   connected: boolean;
@@ -70,10 +71,19 @@ function applicationState(state = initialState, action: ActionModel) {
       // If the server is allowed to set other properties it may result in a potential privacy breach.
       // Let's make sure that doesn't happen.
       // TODO: add other properties if neccessary.
-      if (rtcConfiguration.iceServers) {
+      if (
+        rtcConfiguration.iceServers &&
+        Array.isArray(rtcConfiguration.iceServers)
+      ) {
         newState.rtcConfiguration = {
-          iceServers: rtcConfiguration.iceServers,
+          iceServers: rtcConfiguration.iceServers.map(server => ({
+            ...server,
+            urls: Array.isArray(server.urls)
+              ? server.urls.map(replaceUrlParameters)
+              : replaceUrlParameters(server.urls),
+          })),
         };
+        console.log(newState.rtcConfiguration);
       } else {
         newState.rtcConfiguration = undefined;
       }
