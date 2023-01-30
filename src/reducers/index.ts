@@ -106,7 +106,7 @@ function applicationState(state = initialState, action: ActionModel) {
       newState.suggestedNetworkName = action.value as string;
       break;
     case ActionType.SET_LOCAL_NETWORK_NAMES:
-      newState.localNetworkNames = action.value as string[];
+      newState.localNetworkNames = (action.value || []) as string[];
       break;
     case ActionType.SET_KEY_PAIR:
       const keyPairValue = action.value as RSA.KeyPair;
