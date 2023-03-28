@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { FaTimes } from 'react-icons/fa';
 
 import Network from '../components/Network';
-import Animate from '../components/Animate';
+import { motion } from '../animate';
 import { createTransferAction } from '../actions/transfers';
 import { animationPropsOpacity } from '../animationSettings';
 
@@ -30,7 +30,7 @@ const ClipboardModal: React.FC<ClipboardModalProps> = ({
   };
 
   return (
-    <Animate component="div" className="modal" {...animationPropsOpacity}>
+    <motion.div className="modal" {...animationPropsOpacity}>
       <div>
         <div className="subsection left">
           <h2>
@@ -43,7 +43,7 @@ const ClipboardModal: React.FC<ClipboardModalProps> = ({
           <Network onSelect={onSelect} />
         </div>
       </div>
-    </Animate>
+    </motion.div>
   );
 };
 

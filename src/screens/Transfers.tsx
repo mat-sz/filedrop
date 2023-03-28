@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from '../animate';
 
 import ChatSection from '../sections/Chat';
 import ConnectSection from '../sections/Connect';

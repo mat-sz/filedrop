@@ -9,7 +9,7 @@ import { createTransferAction } from '../actions/transfers';
 import { animationPropsOpacity } from '../animationSettings';
 import { StateType } from '../reducers';
 import { uuidToColor } from '../utils/color';
-import Animate from './Animate';
+import { motion } from '../animate';
 import { DeviceType } from '../types/DeviceType';
 
 interface NetworkTileProps {
@@ -62,8 +62,7 @@ const NetworkTile: React.FC<NetworkTileProps> = ({ client, onSelect }) => {
   );
 
   return (
-    <Animate
-      component="div"
+    <motion.div
       {...animationPropsOpacity}
       onClick={onClick}
       className="network-tile-wrapper"
@@ -99,7 +98,7 @@ const NetworkTile: React.FC<NetworkTileProps> = ({ client, onSelect }) => {
         </div>
       )}
       <div className="network-tile-name">{client.clientName}</div>
-    </Animate>
+    </motion.div>
   );
 };
 

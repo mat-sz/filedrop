@@ -2,12 +2,11 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { ScrollArea } from 'react-nano-scrollbar';
 import { useTranslation } from 'react-i18next';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from '../animate';
 
 import { animationPropsOpacity } from '../animationSettings';
 import { StateType } from '../reducers';
 import NetworkTile from './NetworkTile';
-import Animate from './Animate';
 
 interface NetworkProps {
   onSelect?: (clientId: string) => void;
@@ -37,14 +36,13 @@ const Network: React.FC<NetworkProps> = ({ onSelect }) => {
           </div>
         </ScrollArea>
       ) : (
-        <Animate
-          component="div"
+        <motion.div
           className={`${className} center`}
           {...animationPropsOpacity}
         >
           <div>{t('emptyNetwork.title')}</div>
           <div>{t('emptyNetwork.body')}</div>
-        </Animate>
+        </motion.div>
       )}
     </AnimatePresence>
   );

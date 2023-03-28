@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from '../../animate';
 import { ScrollArea } from 'react-nano-scrollbar';
 import Textarea from 'react-expanding-textarea';
 import { FaPaperPlane, FaRegCommentDots } from 'react-icons/fa';
@@ -9,7 +9,6 @@ import { FaPaperPlane, FaRegCommentDots } from 'react-icons/fa';
 import { StateType } from '../../reducers';
 import { sendChatMessageAction } from '../../actions/state';
 import { animationPropsOpacity } from '../../animationSettings';
-import Animate from '../../components/Animate';
 import ChatItem from './ChatItem';
 
 const Chat: React.FC = () => {
@@ -57,15 +56,11 @@ const Chat: React.FC = () => {
     <div className="subsection chat">
       {chat.length === 0 ? (
         <AnimatePresence>
-          <Animate
-            component="div"
-            className="chat-empty"
-            {...animationPropsOpacity}
-          >
+          <motion.div className="chat-empty" {...animationPropsOpacity}>
             <FaRegCommentDots />
             <h3>{t('emptyChat.title')}</h3>
             <div>{t('emptyChat.body')}</div>
-          </Animate>
+          </motion.div>
         </AnimatePresence>
       ) : (
         <ScrollArea hideScrollbarX className="chat-items">

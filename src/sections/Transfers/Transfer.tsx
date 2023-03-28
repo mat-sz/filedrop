@@ -14,7 +14,7 @@ import { TransferModel } from '../../types/Models';
 import { TransferState } from '../../types/TransferState';
 import { FileType } from '../../types/FileType';
 import Tooltip from '../../components/Tooltip';
-import Animate from '../../components/Animate';
+import { motion } from '../../animate';
 import { fileType, formatFileName, formatFileSize } from '../../utils/file';
 import { humanTimeLeft } from '../../utils/time';
 import { copy } from '../../utils/copy';
@@ -56,8 +56,7 @@ const Transfer: React.FC<TransferProps> = ({ transfer }) => {
   const type = fileType(transfer.fileType);
 
   return (
-    <Animate
-      component="li"
+    <motion.li
       className="subsection info-grid"
       {...animationPropsSlide}
       aria-label="Transfer"
@@ -151,7 +150,7 @@ const Transfer: React.FC<TransferProps> = ({ transfer }) => {
           </div>
         </div>
       </div>
-    </Animate>
+    </motion.li>
   );
 };
 

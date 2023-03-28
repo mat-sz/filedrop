@@ -8,7 +8,7 @@ import { ChatItemModel } from '../../types/Models';
 import { StateType } from '../../reducers';
 import { uuidToColor } from '../../utils/color';
 import { copy } from '../../utils/copy';
-import Animate from '../../components/Animate';
+import { motion } from '../../animate';
 
 export interface ChatItemProps {
   item: ChatItemModel;
@@ -45,8 +45,7 @@ const ChatItem: React.FC<ChatItemProps> = ({ item }) => {
   }, [setExpanded]);
 
   return (
-    <Animate
-      component="li"
+    <motion.li
       className={'subsection ' + (expanded ? 'chat-expanded' : '')}
       {...animationPropsSlide}
       aria-label="Chat message"
@@ -74,7 +73,7 @@ const ChatItem: React.FC<ChatItemProps> = ({ item }) => {
           {t('chat.showMore')}
         </button>
       )}
-    </Animate>
+    </motion.li>
   );
 };
 
