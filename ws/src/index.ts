@@ -10,8 +10,7 @@ import fastifyHttpProxy from '@fastify/http-proxy';
 import { WSClient } from './WSClient';
 import { ClientManager, maxSize } from './ClientManager';
 import { isMessageModel } from './utils/validation';
-
-const useProxy = process.env.WS_USE_PROXY === '1';
+import { host, port, useProxy } from './config';
 
 const clientManager = new ClientManager();
 const app = Fastify();
@@ -62,10 +61,6 @@ app.register(async function (fastify) {
     });
   });
 });
-
-// Configuration
-const host = process.env.WS_HOST || '127.0.0.1';
-const port = parseInt(process.env.WS_PORT || '5000');
 
 app.listen({ host, port });
 

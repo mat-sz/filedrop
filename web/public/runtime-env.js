@@ -1,1 +1,0 @@
-window.__RUNTIME_CONFIG__ = {"NODE_ENV":"development","REACT_APP_TITLE":"filedrop","REACT_APP_USE_BROWSER_ROUTER":"1","REACT_APP_ABUSE_EMAIL":"nobody@example.com"};

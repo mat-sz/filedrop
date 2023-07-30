@@ -2,8 +2,9 @@ import React from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { useTranslation } from 'react-i18next';
 import { FaPaperPlane, FaCopy } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 
-import { title } from '../../config';
+import { StateType } from '../../reducers';
 import { copy } from '../../utils/copy';
 import { isShareSupported } from '../../utils/browser';
 
@@ -12,10 +13,11 @@ interface ConnectSectionProps {
 }
 
 const ConnectSection: React.FC<ConnectSectionProps> = ({ href }) => {
+  const appName = useSelector((state: StateType) => state.appName);
   const { t } = useTranslation();
   const onShare = () => {
     (navigator as any).share({
-      title: title + ' - transfer files',
+      title: appName + ' - transfer files',
       url: href,
     });
   };

@@ -1,14 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { title } from '../config';
-
 const About: React.FC = () => {
   return (
     <section>
       <div className="subsection left">
         <h2>Welcome</h2>
-        <p>Welcome to {title}! Let me explain what this website is.</p>
+        <p>Welcome to filedrop! Let me explain what this website is.</p>
         <p>
           This website allows you to copy files over the network (LAN if both
           devices are on the same local network and support WebRTC, otherwise
@@ -34,7 +32,7 @@ const About: React.FC = () => {
           </ol>
         </p>
         <p>
-          {title} is open source!
+          filedrop is open source!
           <a href="https://github.com/mat-sz/filedrop">
             The code is available on GitHub.
           </a>

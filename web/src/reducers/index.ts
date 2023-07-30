@@ -10,6 +10,7 @@ import {
 import { ActionType } from '../types/ActionType';
 import { TransferState } from '../types/TransferState';
 import { replaceUrlParameters } from '../utils/url';
+import { defaultAppName } from '../config';
 
 export interface StateType {
   connected: boolean;
@@ -29,6 +30,7 @@ export interface StateType {
   privateKey?: string;
   noticeText?: string;
   noticeUrl?: string;
+  appName: string;
 }
 
 let initialState: StateType = {
@@ -39,6 +41,7 @@ let initialState: StateType = {
   transfers: [],
   maxSize: 0,
   chat: [],
+  appName: defaultAppName,
 };
 
 const stateSort: Record<TransferState, number> = {
@@ -64,6 +67,9 @@ function applicationState(state = initialState, action: ActionModel) {
       break;
     case ActionType.SET_CONNECTED:
       newState.connected = action.value as boolean;
+      break;
+    case ActionType.SET_APP_NAME:
+      newState.appName = action.value as string;
       break;
     case ActionType.SET_RTC_CONFIGURATION:
       const rtcConfiguration = action.value as RTCConfiguration;

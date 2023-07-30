@@ -14,13 +14,9 @@ import TechnicalInformation from './screens/TechnicalInformation';
 import Header from './components/Header';
 import Status from './components/Status';
 import Footer from './components/Footer';
-import { Router, abuseEmail, title } from './config';
+import { Router, abuseEmail } from './config';
 
 const App: React.FC = () => {
-  useEffect(() => {
-    document.title = title;
-  }, []);
-
   return (
     <Router>
       <div className="app">

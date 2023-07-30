@@ -18,6 +18,7 @@ import {
   WelcomeMessageModel,
 } from './types/Models';
 import { MessageType } from './types/MessageType';
+import { appName } from './config';
 
 export const maxClientNameLength = 32;
 export const maxSize = parseInt(process.env.WS_MAX_SIZE || '65536');
@@ -48,6 +49,7 @@ export class ClientManager {
         maxSize,
         noticeText,
         noticeUrl,
+        appName,
       } as WelcomeMessageModel)
     );
   }

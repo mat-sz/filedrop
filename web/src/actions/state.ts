@@ -3,6 +3,13 @@ import { RSA } from 'matcrypt';
 import { ActionModel, ChatItemModel, ClientModel } from '../types/Models';
 import { ActionType } from '../types/ActionType';
 
+export function setAppName(name: string): ActionModel {
+  return {
+    type: ActionType.SET_APP_NAME,
+    value: name,
+  };
+}
+
 export function setErrorAction(error: string): ActionModel {
   return {
     type: ActionType.SET_ERROR,

@@ -3,7 +3,6 @@ import { v4 as uuid } from 'uuid';
 import { canvas } from 'imtool';
 import { RSA } from 'matcrypt';
 
-import { title } from '../config';
 import {
   ActionModel,
   TransferModel,
@@ -49,6 +48,7 @@ import {
   addChatItemAction,
   setLocalNetworkNames,
   setRemoteAddressAction,
+  setAppName,
 } from '../actions/state';
 import { deviceType } from '../utils/browser';
 
@@ -57,6 +57,11 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
 
   switch (msg.type) {
     case MessageType.WELCOME:
+      if (msg.appName) {
+        yield put(setAppName(msg.appName));
+        document.title = msg.appName;
+      }
+
       const clientName: string | undefined = yield select(
         (state: StateType) => state.clientName
       );
@@ -436,10 +441,11 @@ function* updateNotificationCount() {
     transfer => transfer.state === TransferState.INCOMING
   );
 
+  const appName: string = yield select((state: StateType) => state.appName);
   if (incomingTransfers.length > 0) {
-    document.title = '(' + incomingTransfers.length + ') ' + title;
+    document.title = '(' + incomingTransfers.length + ') ' + appName;
   } else {
-    document.title = title;
+    document.title = appName;
   }
 }
 

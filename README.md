@@ -21,7 +21,7 @@ Easy peer-to-peer file transfer.
 Clone the repo and run the following command:
 
 ```
-PORT=80 TITLE=filedrop TURN_SECRET=CHANGE_ME docker-compose up --build --force-recreate
+PORT=80 APP_NAME=filedrop TURN_SECRET=CHANGE_ME docker-compose up --build --force-recreate
 ```
 
 Make sure docker and docker-compose are installed and your user is in the docker group. In case another reverse proxy is used make sure to change the default port (from 80) and to add the `X-Forwarded-For` header with client's IP address.
@@ -40,7 +40,7 @@ The following variables are used in the build process of the frontend:
 
 | Variable                       | Default value | Description                                                                 |
 | ------------------------------ | ------------- | --------------------------------------------------------------------------- |
-| `REACT_APP_TITLE`              | `filedrop`    | Application title.                                                          |
+| `REACT_APP_NAME`               | `filedrop`    | Application title.                                                          |
 | `REACT_APP_USE_BROWSER_ROUTER` | `0`           | `1` if you want the application to use BrowserRouter instead of HashRouter. |
 | `REACT_APP_ABUSE_EMAIL`        | null          | E-mail to show in the Abuse section.                                        |
 
@@ -48,6 +48,7 @@ The following variables are used in the WebSockets server:
 
 | Variable          | Default value                   | Description                                                                       |
 | ----------------- | ------------------------------- | --------------------------------------------------------------------------------- |
+| `WS_APP_NAME`     | `filedrop`                      | Application title.                                                                |
 | `WS_HOST`         | `127.0.0.1`                     | IP address to bind to.                                                            |
 | `WS_PORT`         | `5000`                          | Port to bind to.                                                                  |
 | `WS_BEHIND_PROXY` | `no`                            | Set to `yes` if you want the application to respect the `X-Forwarded-For` header. |

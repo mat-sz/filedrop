@@ -13,6 +13,7 @@ export enum ActionType {
   SET_MAX_SIZE = 'SET_MAX_SIZE',
   SET_NOTICE = 'SET_NOTICE',
   SET_KEY_PAIR = 'SET_KEY_PAIR',
+  SET_APP_NAME = 'SET_APP_NAME',
 
   // Dismiss
   DISMISS_ERROR = 'DISMISS_ERROR',

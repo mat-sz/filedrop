@@ -2,11 +2,13 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaGithub, FaInfoCircle, FaTwitter } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-import { title } from '../config';
 import DropIcon from './DropIcon';
+import { StateType } from '../reducers';
 
 const Header: React.FC = () => {
+  const appName = useSelector((state: StateType) => state.appName);
   const { t } = useTranslation();
 
   return (
@@ -15,7 +17,7 @@ const Header: React.FC = () => {
         <h1>
           <Link to="/" className="logo">
             <DropIcon />
-            {title}
+            {appName}
           </Link>
         </h1>
         <div className="icon-menu">

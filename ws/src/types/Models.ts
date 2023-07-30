@@ -28,6 +28,7 @@ export interface WelcomeMessageModel extends MessageModel {
   maxSize: number;
   noticeText?: string;
   noticeUrl?: string;
+  appName?: string;
 }
 
 export interface LocalNetworksMessageModel extends MessageModel {
