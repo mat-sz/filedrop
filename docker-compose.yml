@@ -17,7 +17,7 @@ services:
       - '${PORT}:5000'
 
   coturn:
-    image: instrumentisto/coturn
+    image: coturn/coturn
     command: --use-auth-secret --static-auth-secret=${TURN_SECRET} --no-tls --no-dtls
     ports:
       - '3478:3478'

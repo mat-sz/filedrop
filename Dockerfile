@@ -13,8 +13,9 @@ COPY . /app
 
 RUN apk add --no-cache bash
 RUN yarn install
+RUN yarn build
 EXPOSE 5000
 
 COPY /web/.env.example /web/.env
 
-CMD ["yarn", "start"]
+CMD ["yarn", "start:prod"]
