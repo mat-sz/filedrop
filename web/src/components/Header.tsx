@@ -23,7 +23,7 @@ const Header: React.FC = () => {
             <FaInfoCircle />
           </Link>
           <a
-            href="https://github.com/mat-sz/filedrop-web"
+            href="https://github.com/mat-sz/filedrop"
             target="_blank"
             rel="noopener noreferrer"
             title={t('sections.github')}

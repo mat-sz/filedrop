@@ -35,7 +35,7 @@ const About: React.FC = () => {
         </p>
         <p>
           {title} is open source!
-          <a href="https://github.com/mat-sz/filedrop-web">
+          <a href="https://github.com/mat-sz/filedrop">
             The code is available on GitHub.
           </a>
           If you enjoy using this app please consider giving that project a

@@ -10,7 +10,7 @@ Easy peer-to-peer file transfer.
 
 <p align="center">
     <a href="https://drop.lol/">
-        <img src="https://raw.githubusercontent.com/mat-sz/filedrop-web/master/filedrop.gif" alt="Screenshot">
+        <img src="https://raw.githubusercontent.com/mat-sz/filedrop/master/filedrop.gif" alt="Screenshot">
     </a>
 </p>
 
