@@ -1,4 +1,4 @@
-# filedrop-web
+# filedrop
 
 Easy peer-to-peer file transfer.
 
@@ -16,24 +16,51 @@ Easy peer-to-peer file transfer.
 
 ## Self-hosting
 
-A docker-compose configuration is available in the [filedrop-docker](https://github.com/mat-sz/filedrop-docker) repository.
+### Docker
 
-Installation can be achieved without Docker as well:
+Clone the repo and run the following command:
 
-> First you need to clone, build and run [filedrop-ws](https://github.com/mat-sz/filedrop-ws) and a TURN server (like [coturn](https://github.com/coturn/coturn)), read the README in filedrop-ws for more information on configuration.
+```
+PORT=80 TITLE=filedrop TURN_SECRET=CHANGE_ME docker-compose up --build --force-recreate
+```
+
+Make sure docker and docker-compose are installed and your user is in the docker group. In case another reverse proxy is used make sure to change the default port (from 80) and to add the `X-Forwarded-For` header with client's IP address.
+
+TURN uses TCP port 3478 and UDP ports 49152-65535.
+
+### Manual
+
+> First you need to set up a TURN server (like [coturn](https://github.com/coturn/coturn)).
 >
-> Then you need to clone this project, point it to the WebSockets backend (filedrop-ws) (in .env.local), build it and place it on some static file server (I use nginx for that). I also use nginx to proxy the back end through it. [Here's a guide on how to achieve that.](https://www.nginx.com/blog/websocket-nginx/)
+> Then you need to clone this repository, run `yarn build` and then `yarn start`. I also use nginx to proxy the back end through it. [Here's a guide on how to achieve that.](https://www.nginx.com/blog/websocket-nginx/)
 
 ### Environment variables
 
-The following variables are used in the build process:
+The following variables are used in the build process of the frontend:
 
-| Variable                       | Default value             | Description                                                                 |
-| ------------------------------ | ------------------------- | --------------------------------------------------------------------------- |
-| `REACT_APP_TITLE`              | `filedrop`                | Application title.                                                          |
-| `REACT_APP_SERVER`             | `ws://[hostname]:5000/ws` | WebSockets server location.                                                 |
-| `REACT_APP_USE_BROWSER_ROUTER` | `0`                       | `1` if you want the application to use BrowserRouter instead of HashRouter. |
-| `REACT_APP_ABUSE_EMAIL`        | null                      | E-mail to show in the Abuse section.                                        |
+| Variable                       | Default value | Description                                                                 |
+| ------------------------------ | ------------- | --------------------------------------------------------------------------- |
+| `REACT_APP_TITLE`              | `filedrop`    | Application title.                                                          |
+| `REACT_APP_USE_BROWSER_ROUTER` | `0`           | `1` if you want the application to use BrowserRouter instead of HashRouter. |
+| `REACT_APP_ABUSE_EMAIL`        | null          | E-mail to show in the Abuse section.                                        |
+
+The following variables are used in the WebSockets server:
+
+| Variable          | Default value                   | Description                                                                       |
+| ----------------- | ------------------------------- | --------------------------------------------------------------------------------- |
+| `WS_HOST`         | `127.0.0.1`                     | IP address to bind to.                                                            |
+| `WS_PORT`         | `5000`                          | Port to bind to.                                                                  |
+| `WS_BEHIND_PROXY` | `no`                            | Set to `yes` if you want the application to respect the `X-Forwarded-For` header. |
+| `WS_MAX_SIZE`     | `65536`                         | The limit should accommodate preview images (100x100 thumbnails).                 |
+| `STUN_SERVER`     | `stun:stun1.l.google.com:19302` | STUN server address.                                                              |
+| `TURN_MODE`       | `default`                       | `default` for static credentials, `hmac` for time-limited credentials.            |
+| `TURN_SERVER`     | null                            | TURN server address.                                                              |
+| `TURN_USERNAME`   | null                            | TURN username.                                                                    |
+| `TURN_CREDENTIAL` | null                            | TURN credential (password).                                                       |
+| `TURN_SECRET`     | null                            | TURN secret (required for `hmac`).                                                |
+| `TURN_EXPIRY`     | `3600`                          | TURN token expiration time (when in `hmac` mode), in seconds.                     |
+| `NOTICE_TEXT`     | null                            | Text of the notice to be displayed for all clients.                               |
+| `NOTICE_URL`      | null                            | URL the notice should link to.                                                    |
 
 ## FAQ
 
@@ -58,3 +85,53 @@ While [ShareDrop](https://github.com/cowbell/sharedrop) and [SnapDrop](https://g
 ### How is it related to the other projects you've mentioned?
 
 I don't use PeerJS (while the other two projects do) and I also host TURN and WebSocket servers myself (instead of relying on Firebase). Sometimes you may get connected to Google's STUN server (always if a TURN server is not provided in the configuration).
+
+## HTTPS setup
+
+### Setup with a reverse proxy in front of nginx
+
+1. Configure your reverse proxy to proxy requests to `127.0.0.1:PORT` and then follow your usual instructions for using SSL certificates with said proxy.
+2. Rebuild the application.
+3. Make sure the TURN server can be connected to from the outside.
+
+#### Nginx configuration example
+
+More details available here: https://www.nginx.com/blog/websocket-nginx/
+
+```nginx
+worker_processes auto;
+
+events {
+  worker_connections 1024;
+}
+
+http {
+  upstream filedrop {
+    server 127.0.0.1:5000; # 5000 = PORT
+  }
+
+  map $http_upgrade $connection_upgrade {
+    default upgrade;
+    '' close;
+  }
+
+  # ...
+
+  server {
+    listen 80;
+    # server_name should be configured here.
+    # HTTPS should be configured here. (certbot will handle this for you, if you're using Let's Encrypt.)
+
+    # ...
+
+    location / {
+      proxy_pass http://filedrop;
+      proxy_http_version 1.1;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header Host $host;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection $connection_upgrade;
+    }
+  }
+}
+```

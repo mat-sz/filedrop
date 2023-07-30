@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import 'react-nano-scrollbar/dist/index.css';
@@ -14,9 +14,13 @@ import TechnicalInformation from './screens/TechnicalInformation';
 import Header from './components/Header';
 import Status from './components/Status';
 import Footer from './components/Footer';
-import { Router, abuseEmail } from './config';
+import { Router, abuseEmail, title } from './config';
 
 const App: React.FC = () => {
+  useEffect(() => {
+    document.title = title;
+  }, []);
+
   return (
     <Router>
       <div className="app">

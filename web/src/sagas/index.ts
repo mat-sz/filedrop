@@ -411,7 +411,6 @@ function* sendChatMessage(action: ActionModel) {
     yield put(sendMessageAction(model));
   }
 
-  console.log(clientId);
   yield put(
     addChatItemAction({
       id: uuid(),
