@@ -38,30 +38,30 @@ TURN uses TCP port 3478 and UDP ports 49152-65535.
 
 The following variables are used in the build process of the frontend:
 
-| Variable                       | Default value | Description                                                                 |
-| ------------------------------ | ------------- | --------------------------------------------------------------------------- |
-| `REACT_APP_NAME`               | `filedrop`    | Application title.                                                          |
-| `REACT_APP_USE_BROWSER_ROUTER` | `0`           | `1` if you want the application to use BrowserRouter instead of HashRouter. |
-| `REACT_APP_ABUSE_EMAIL`        | null          | E-mail to show in the Abuse section.                                        |
+| Variable                      | Default value | Description                                                                 |
+| ----------------------------- | ------------- | --------------------------------------------------------------------------- |
+| `VITE_APP_NAME`               | `filedrop`    | Application title.                                                          |
+| `VITE_APP_USE_BROWSER_ROUTER` | `0`           | `1` if you want the application to use BrowserRouter instead of HashRouter. |
+| `VITE_APP_ABUSE_EMAIL`        | null          | E-mail to show in the Abuse section.                                        |
 
 The following variables are used in the WebSockets server:
 
-| Variable          | Default value                   | Description                                                                       |
-| ----------------- | ------------------------------- | --------------------------------------------------------------------------------- |
-| `WS_APP_NAME`     | `filedrop`                      | Application title.                                                                |
-| `WS_HOST`         | `127.0.0.1`                     | IP address to bind to.                                                            |
-| `WS_PORT`         | `5000`                          | Port to bind to.                                                                  |
-| `WS_BEHIND_PROXY` | `no`                            | Set to `yes` if you want the application to respect the `X-Forwarded-For` header. |
-| `WS_MAX_SIZE`     | `65536`                         | The limit should accommodate preview images (100x100 thumbnails).                 |
-| `STUN_SERVER`     | `stun:stun1.l.google.com:19302` | STUN server address.                                                              |
-| `TURN_MODE`       | `default`                       | `default` for static credentials, `hmac` for time-limited credentials.            |
-| `TURN_SERVER`     | null                            | TURN server address.                                                              |
-| `TURN_USERNAME`   | null                            | TURN username.                                                                    |
-| `TURN_CREDENTIAL` | null                            | TURN credential (password).                                                       |
-| `TURN_SECRET`     | null                            | TURN secret (required for `hmac`).                                                |
-| `TURN_EXPIRY`     | `3600`                          | TURN token expiration time (when in `hmac` mode), in seconds.                     |
-| `NOTICE_TEXT`     | null                            | Text of the notice to be displayed for all clients.                               |
-| `NOTICE_URL`      | null                            | URL the notice should link to.                                                    |
+| Variable                 | Default value                   | Description                                                                     |
+| ------------------------ | ------------------------------- | ------------------------------------------------------------------------------- |
+| `WS_APP_NAME`            | `filedrop`                      | Application title.                                                              |
+| `WS_HOST`                | `127.0.0.1`                     | IP address to bind to.                                                          |
+| `WS_PORT`                | `5000`                          | Port to bind to.                                                                |
+| `WS_USE_X_FORWARDED_FOR` | `0`                             | Set to `1` if you want the application to respect the `X-Forwarded-For` header. |
+| `WS_MAX_SIZE`            | `65536`                         | The limit should accommodate preview images (100x100 thumbnails).               |
+| `STUN_SERVER`            | `stun:stun1.l.google.com:19302` | STUN server address.                                                            |
+| `TURN_MODE`              | `default`                       | `default` for static credentials, `hmac` for time-limited credentials.          |
+| `TURN_SERVER`            | null                            | TURN server address.                                                            |
+| `TURN_USERNAME`          | null                            | TURN username.                                                                  |
+| `TURN_CREDENTIAL`        | null                            | TURN credential (password).                                                     |
+| `TURN_SECRET`            | null                            | TURN secret (required for `hmac`).                                              |
+| `TURN_EXPIRY`            | `3600`                          | TURN token expiration time (when in `hmac` mode), in seconds.                   |
+| `NOTICE_TEXT`            | null                            | Text of the notice to be displayed for all clients.                             |
+| `NOTICE_URL`             | null                            | URL the notice should link to.                                                  |
 
 ## FAQ
 

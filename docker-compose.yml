@@ -6,14 +6,13 @@ services:
       dockerfile: Dockerfile
     environment:
       - WS_HOST=0.0.0.0
-      - WS_BEHIND_PROXY=yes
       - WS_APP_NAME=${APP_NAME}
       - TURN_MODE=hmac
       - TURN_SERVER=turn:(hostname)
       - TURN_USERNAME=filedrop
       - TURN_SECRET=${TURN_SECRET}
-      - REACT_APP_NAME=${APP_NAME}
-      - REACT_APP_USE_BROWSER_ROUTER=1
+      - VITE_APP_NAME=${APP_NAME}
+      - VITE_APP_USE_BROWSER_ROUTER=1
     ports:
       - '${PORT}:5000'
 

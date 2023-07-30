@@ -18,12 +18,7 @@ import {
   WelcomeMessageModel,
 } from './types/Models';
 import { MessageType } from './types/MessageType';
-import { appName } from './config';
-
-export const maxClientNameLength = 32;
-export const maxSize = parseInt(process.env.WS_MAX_SIZE || '65536');
-export const noticeText = process.env.NOTICE_TEXT;
-export const noticeUrl = process.env.NOTICE_URL;
+import { appName, maxSize, noticeText, noticeUrl } from './config';
 
 export class ClientManager {
   private clients: Client[] = [];

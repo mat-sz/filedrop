@@ -11,7 +11,9 @@
     "@types/react": "^18.0.18",
     "@types/react-dom": "^18.0.4",
     "@types/uuid": "^8.3.4",
+    "@vitejs/plugin-react": "^4.0.3",
     "base64-js": "^1.5.1",
+    "filesize": "^10.0.8",
     "i18next": "^21.9.1",
     "i18next-browser-languagedetector": "^6.1.5",
     "i18next-http-backend": "^1.4.1",
@@ -27,14 +29,14 @@
     "react-nano-scrollbar": "^0.0.4",
     "react-redux": "^8.0.1",
     "react-router-dom": "^6.3.0",
-    "react-scripts": "^5.0.1",
     "redux": "^4.2.0",
     "redux-saga": "^1.1.3",
     "sass": "^1.51.0",
     "source-map-explorer": "^2.5.2",
     "typescript": "~4.6.4",
     "typesocket": "^1.0.2",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "vite": "^4.4.7"
   },
   "husky": {
     "hooks": {
@@ -47,11 +49,11 @@
     ]
   },
   "scripts": {
+    "start": "vite",
+    "build": "tsc && vite build",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "start": "NODE_ENV=development runtime-env-cra --config-name=./public/runtime-env.js && react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
   },
   "eslintConfig": {
     "extends": "react-app"

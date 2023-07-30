@@ -1,4 +1,4 @@
-import filesize from 'filesize';
+import { filesize } from 'filesize';
 
 import { FileType } from '../types/FileType';
 
@@ -61,5 +61,5 @@ export function formatFileName(
 }
 
 export function formatFileSize(size: number): string {
-  return filesize(size, { pad: true, precision: 3 });
+  return filesize(size, { pad: true, precision: 3 }) as string;
 }

@@ -1,6 +1,3 @@
-import dotenv from 'dotenv-flow';
-dotenv.config();
-
 import { resolve } from 'path';
 import Fastify from 'fastify';
 import fastifyWebsocket from '@fastify/websocket';
@@ -8,9 +5,9 @@ import fastifyStatic from '@fastify/static';
 import fastifyHttpProxy from '@fastify/http-proxy';
 
 import { WSClient } from './WSClient';
-import { ClientManager, maxSize } from './ClientManager';
+import { ClientManager } from './ClientManager';
 import { isMessageModel } from './utils/validation';
-import { host, port, useProxy } from './config';
+import { host, maxSize, port, useProxy } from './config';
 
 const clientManager = new ClientManager();
 const app = Fastify();

@@ -4,10 +4,7 @@ import { FastifyRequest } from 'fastify';
 
 import { Client } from './types/Client';
 import { generateClientName } from './utils/name';
-
-const acceptForwardedFor =
-  process.env.WS_BEHIND_PROXY === 'true' ||
-  process.env.WS_BEHIND_PROXY === 'yes';
+import { acceptForwardedFor } from './config';
 
 export class WSClient implements Client {
   readonly clientId = uuid();
