@@ -3,19 +3,38 @@
   "private": true,
   "workspaces": [
     "web",
-    "ws"
+    "ws",
+    "types"
   ],
   "scripts": {
-    "start": "WS_USE_PROXY=1 nx run-many -t start -p web ws",
-    "build": "nx run-many -t build -p web ws",
+    "prepare": "nx run-many -t build -p @filedrop/types",
+    "start": "WS_USE_PROXY=1 nx run-many -t start -p @filedrop/web @filedrop/ws",
+    "build": "nx run-many -t build",
     "start:prod": "cd ws && yarn start:prod",
-    "test": "nx run-many -t test -p ws"
+    "test": "nx run-many -t test -p @filedrop/ws",
+    "lint": "nx run-many -t lint"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write"
+    ],
+    "__tests__/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write"
+    ]
   },
   "devDependencies": {
-    "eslint": "^8.35.0",
+    "@typescript-eslint/eslint-plugin": "^6.2.0",
+    "@typescript-eslint/parser": "^6.2.0",
+    "eslint": "^8.46.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.1.2",
+    "nx": "16.5.5",
     "prettier": "^2.8.4",
-    "nx": "16.5.5"
+    "typescript": "^5.1.6"
   }
 }

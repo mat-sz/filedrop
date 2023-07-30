@@ -2,23 +2,23 @@ import { put, takeEvery, select, call } from 'redux-saga/effects';
 import { v4 as uuid } from 'uuid';
 import { canvas } from 'imtool';
 import { RSA } from 'matcrypt';
-
 import {
-  ActionModel,
-  TransferModel,
   TransferMessageModel,
   ActionMessageModel,
   PingMessageModel,
   Message,
-  ClientModel,
   EncryptedMessageModel,
   ChatMessageModel,
   NetworkNameMessageModel,
   ClientNameMessageModel,
-} from '../types/Models';
+  MessageType,
+  ActionMessageActionType,
+  ClientModel,
+} from '@filedrop/types';
+
+import { TransferModel, ActionModel } from '../types/Models';
 import { ActionType } from '../types/ActionType';
 import { TransferState } from '../types/TransferState';
-import { MessageType, ActionMessageActionType } from '../types/MessageType';
 import { StateType } from '../reducers';
 import transferSendFile from './transferSendFile';
 import transferReceiveFile from './transferReceiveFile';

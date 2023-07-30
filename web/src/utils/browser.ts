@@ -1,4 +1,4 @@
-import { DeviceType } from '../types/DeviceType';
+import { DeviceType } from '@filedrop/types';
 
 export const isShareSupported = !!(navigator as any).share;
 export const isWebRTCSupported = 'RTCPeerConnection' in window;

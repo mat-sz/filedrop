@@ -1,0 +1,12 @@
+{
+  "name": "@filedrop/types",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {},
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint . --ext ts,tsx"
+  },
+  "main": "build/index.js",
+  "types": "build/index.d.ts"
+}

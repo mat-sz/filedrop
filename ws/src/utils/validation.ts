@@ -1,5 +1,4 @@
 import Joi from 'joi';
-
 import {
   MessageModel,
   NetworkNameMessageModel,
@@ -9,9 +8,10 @@ import {
   RTCDescriptionMessageModel,
   RTCCandidateMessageModel,
   EncryptedMessageModel,
-} from '../types/Models';
-import { MessageType, ActionMessageActionType } from '../types/MessageType';
-import { DeviceType } from '../types/DeviceType';
+  MessageType,
+  ActionMessageActionType,
+  DeviceType,
+} from '@filedrop/types';
 
 const messageModelSchema = Joi.object({
   type: Joi.string().alphanum().required(),

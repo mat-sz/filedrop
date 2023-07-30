@@ -1,11 +1,14 @@
 import { v4 as uuid } from 'uuid';
+import {
+  ActionMessageActionType,
+  TargetedMessageModel,
+  ActionMessageModel,
+  MessageType,
+} from '@filedrop/types';
 
 import { ClientManager } from '../src/ClientManager';
 import { Client } from '../src/types/Client';
 import { generateClientName } from '../src/utils/name';
-import { MessageType, ActionMessageActionType } from '../src/types/MessageType';
-import { TargetedMessageModel, ActionMessageModel } from '../src/types/Models';
-
 export class TestClient implements Client {
   readonly clientId = uuid();
   clientName = generateClientName();

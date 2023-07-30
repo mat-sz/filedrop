@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["esnext"],
+    "target": "ES2020",
+    "lib": ["ES2020"],
     "outDir": "./build",
     "allowJs": true,
     "skipLibCheck": true,

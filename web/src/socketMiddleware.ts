@@ -1,8 +1,8 @@
 import { MiddlewareAPI } from 'redux';
 import { TypeSocket } from 'typesocket';
+import { MessageModel } from '@filedrop/types';
 
 import { ActionType } from './types/ActionType';
-import { MessageModel } from './types/Models';
 import {
   connectedAction,
   disconnectedAction,

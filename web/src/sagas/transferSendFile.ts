@@ -1,16 +1,16 @@
 import { put, select } from 'redux-saga/effects';
-
 import {
-  TransferModel,
   ActionMessageModel,
   RTCDescriptionMessageModel,
   RTCCandidateMessageModel,
-} from '../types/Models';
+  MessageType,
+} from '@filedrop/types';
+
+import { TransferModel } from '../types/Models';
 import { StateType } from '../reducers';
 import { TransferState } from '../types/TransferState';
 import { updateTransferAction } from '../actions/transfers';
 import { sendMessageAction } from '../actions/websocket';
-import { MessageType } from '../types/MessageType';
 
 export default function* transferSendFile(
   actionMessage: ActionMessageModel,

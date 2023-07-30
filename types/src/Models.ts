@@ -11,6 +11,7 @@ export interface ClientModel {
 
 export interface MessageModel {
   type: MessageType;
+  secure?: boolean;
 }
 
 export interface TargetedMessageModel extends MessageModel {
@@ -75,18 +76,25 @@ export interface PingMessageModel extends MessageModel {
   timestamp: number;
 }
 
-export interface RTCDescriptionMessageModel extends TargetedMessageModel {
-  type: MessageType.RTC_DESCRIPTION;
+export interface RTCMessageModel extends TargetedMessageModel {
   data: any;
   transferId: string;
   clientId?: string;
 }
 
-export interface RTCCandidateMessageModel extends TargetedMessageModel {
+export interface RTCDescriptionMessageModel extends RTCMessageModel {
+  type: MessageType.RTC_DESCRIPTION;
+}
+
+export interface RTCCandidateMessageModel extends RTCMessageModel {
   type: MessageType.RTC_CANDIDATE;
-  data: any;
-  transferId: string;
+}
+
+export interface ChatMessageModel extends MessageModel {
+  type: MessageType.CHAT;
   clientId?: string;
+  targetId: string;
+  message: string;
 }
 
 export interface EncryptedMessageModel extends TargetedMessageModel {
@@ -94,3 +102,17 @@ export interface EncryptedMessageModel extends TargetedMessageModel {
   payload: string;
   clientId?: string;
 }
+
+export type Message =
+  | WelcomeMessageModel
+  | LocalNetworksMessageModel
+  | NetworkNameMessageModel
+  | ClientNameMessageModel
+  | TransferMessageModel
+  | ActionMessageModel
+  | NetworkMessageModel
+  | PingMessageModel
+  | RTCDescriptionMessageModel
+  | RTCCandidateMessageModel
+  | ChatMessageModel
+  | EncryptedMessageModel;

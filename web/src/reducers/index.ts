@@ -1,12 +1,8 @@
 import { Store } from 'redux';
 import { RSA } from 'matcrypt';
+import { ClientModel } from '@filedrop/types';
 
-import {
-  ActionModel,
-  TransferModel,
-  ClientModel,
-  ChatItemModel,
-} from '../types/Models';
+import { ActionModel, TransferModel, ChatItemModel } from '../types/Models';
 import { ActionType } from '../types/ActionType';
 import { TransferState } from '../types/TransferState';
 import { replaceUrlParameters } from '../utils/url';

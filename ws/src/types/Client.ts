@@ -1,4 +1,4 @@
-import { DeviceType } from './DeviceType';
+import { DeviceType } from '@filedrop/types';
 
 export interface Client {
   readonly clientId: string;

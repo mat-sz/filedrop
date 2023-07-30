@@ -1,4 +1,6 @@
-import { ActionModel, MessageModel } from '../types/Models';
+import { MessageModel } from '@filedrop/types';
+
+import { ActionModel } from '../types/Models';
 import { ActionType } from '../types/ActionType';
 
 export function sendMessageAction(message: MessageModel): ActionModel {

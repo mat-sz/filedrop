@@ -1,6 +1,7 @@
 import { RSA } from 'matcrypt';
+import { ClientModel } from '@filedrop/types';
 
-import { ActionModel, ChatItemModel, ClientModel } from '../types/Models';
+import { ActionModel, ChatItemModel } from '../types/Models';
 import { ActionType } from '../types/ActionType';
 
 export function setAppName(name: string): ActionModel {

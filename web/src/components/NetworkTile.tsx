@@ -3,14 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
 import { FaLock, FaMobile, FaNetworkWired, FaPlus } from 'react-icons/fa';
+import { DeviceType, ClientModel } from '@filedrop/types';
 
-import { ClientModel } from '../types/Models';
 import { createTransferAction } from '../actions/transfers';
 import { animationPropsOpacity } from '../animationSettings';
 import { StateType } from '../reducers';
 import { uuidToColor } from '../utils/color';
 import { motion } from '../animate';
-import { DeviceType } from '../types/DeviceType';
 
 interface NetworkTileProps {
   client: ClientModel;

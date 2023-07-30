@@ -1,3 +1,13 @@
+import {
+  LocalNetworksMessageModel,
+  MessageModel,
+  NetworkMessageModel,
+  TargetedMessageModel,
+  WelcomeMessageModel,
+  MessageType,
+  ClientModel,
+} from '@filedrop/types';
+
 import { Client } from './types/Client';
 import { rtcConfiguration } from './utils/rtcConfiguration';
 import {
@@ -9,15 +19,6 @@ import {
   isRTCCandidateMessageModel,
   isEncryptedMessageModel,
 } from './utils/validation';
-import {
-  ClientModel,
-  LocalNetworksMessageModel,
-  MessageModel,
-  NetworkMessageModel,
-  TargetedMessageModel,
-  WelcomeMessageModel,
-} from './types/Models';
-import { MessageType } from './types/MessageType';
 import { appName, maxSize, noticeText, noticeUrl } from './config';
 
 export class ClientManager {
