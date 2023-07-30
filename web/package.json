@@ -2,12 +2,17 @@
   "name": "@filedrop/web",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "@filedrop/types": "*",
+  "type": "module",
+  "devDependencies": {
     "@testing-library/dom": "^8.17.1",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^14.2.0",
+    "source-map-explorer": "^2.5.2",
+    "vite": "^4.4.7"
+  },
+  "dependencies": {
+    "@filedrop/types": "*",
     "@types/node": "^17.0.35",
     "@types/react": "^18.0.18",
     "@types/react-dom": "^18.0.4",
@@ -34,10 +39,8 @@
     "redux": "^4.2.0",
     "redux-saga": "^1.1.3",
     "sass": "^1.51.0",
-    "source-map-explorer": "^2.5.2",
     "typesocket": "^1.0.2",
-    "uuid": "^8.3.2",
-    "vite": "^4.4.7"
+    "uuid": "^8.3.2"
   },
   "scripts": {
     "start": "vite",
