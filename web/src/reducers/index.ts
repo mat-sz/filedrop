@@ -20,6 +20,7 @@ export interface StateType {
   suggestedNetworkName?: string;
   localNetworkNames: string[];
   network: ClientModel[];
+  clientCache: ClientModel[];
   transfers: TransferModel[];
   chat: ChatItemModel[];
   publicKey?: string;
@@ -35,6 +36,7 @@ let initialState: StateType = {
   connected: false,
   localNetworkNames: [],
   network: [],
+  clientCache: [],
   transfers: [],
   maxSize: 0,
   chat: [],
@@ -121,12 +123,11 @@ function applicationState(state = initialState, action: ActionModel) {
       break;
     case ActionType.SET_NETWORK:
       newState.network = action.value as ClientModel[];
-
-      // Remove transfers from now offline clients.
       const clientIds = newState.network.map(client => client.clientId);
-      newState.transfers = newState.transfers.filter(transfer =>
-        transfer.clientId ? clientIds.includes(transfer.clientId) : true
+      const cached = newState.clientCache.filter(
+        client => !clientIds.includes(client.clientId)
       );
+      newState.clientCache = [...cached, ...newState.network];
       break;
     case ActionType.SET_NOTICE:
       const notice = action.value as {

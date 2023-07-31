@@ -35,7 +35,7 @@ const ChatItem: React.FC<ChatItemProps> = ({ item }) => {
   const [expanded, setExpanded] = useState(false);
   const messageRef = useRef<HTMLDivElement>(null);
   const client = useSelector((state: StateType) =>
-    state.network?.find(client => client.clientId === item.clientId)
+    state.clientCache.find(client => client.clientId === item.clientId)
   );
 
   useLayoutEffect(() => {
