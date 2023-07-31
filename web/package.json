@@ -8,12 +8,11 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^14.2.0",
-    "source-map-explorer": "^2.5.2",
-    "vite": "^4.4.7"
+    "vite": "^4.4.7",
+    "vite-bundle-visualizer": "^0.10.0"
   },
   "dependencies": {
     "@filedrop/types": "*",
-    "@types/node": "^17.0.35",
     "@types/react": "^18.0.18",
     "@types/react-dom": "^18.0.4",
     "@types/uuid": "^8.3.4",
@@ -45,7 +44,7 @@
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",
-    "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "analyze": "vite-bundle-visualizer",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
