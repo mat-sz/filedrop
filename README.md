@@ -42,13 +42,13 @@ The following variables are used in the build process of the frontend:
 | ----------------------------- | ------------- | --------------------------------------------------------------------------- |
 | `VITE_APP_NAME`               | `filedrop`    | Application title.                                                          |
 | `VITE_APP_USE_BROWSER_ROUTER` | `0`           | `1` if you want the application to use BrowserRouter instead of HashRouter. |
-| `VITE_APP_ABUSE_EMAIL`        | null          | E-mail to show in the Abuse section.                                        |
 
 The following variables are used in the WebSockets server:
 
 | Variable                 | Default value                   | Description                                                                     |
 | ------------------------ | ------------------------------- | ------------------------------------------------------------------------------- |
 | `WS_APP_NAME`            | `filedrop`                      | Application title.                                                              |
+| `WS_ABUSE_EMAIL`         | null                            | E-mail to show in the Abuse section.                                            |
 | `WS_HOST`                | `127.0.0.1`                     | IP address to bind to.                                                          |
 | `WS_PORT`                | `5000`                          | Port to bind to.                                                                |
 | `WS_USE_X_FORWARDED_FOR` | `0`                             | Set to `1` if you want the application to respect the `X-Forwarded-For` header. |

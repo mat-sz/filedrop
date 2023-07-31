@@ -36,13 +36,19 @@ describe('ClientManager', () => {
     const clientManager = new ClientManager();
 
     const client = new TestClient();
+    clientManager.sendAppInfo(client);
+
+    expect(JSON.parse(client.lastMessage)).toMatchObject({
+      type: MessageType.APP_INFO,
+    });
+
     clientManager.handleMessage(client, {
       type: MessageType.INITIALIZE,
       secret: 'ABCABCABCABC',
     } as InitializeMessageModel);
 
     expect(JSON.parse(client.lastMessage)).toMatchObject({
-      type: MessageType.WELCOME,
+      type: MessageType.CLIENT_INFO,
       clientId: client.clientId,
       suggestedClientName: client.clientName,
     });
@@ -191,7 +197,7 @@ describe('ClientManager', () => {
     clientManager.handleMessage(client1, targetedMessage);
 
     expect(JSON.parse(client2.lastMessage)).toMatchObject({
-      type: MessageType.WELCOME,
+      type: MessageType.CLIENT_INFO,
     });
   });
 });

@@ -4,6 +4,7 @@ export const useProxy = process.env.WS_USE_PROXY === '1';
 export const host = process.env.WS_HOST || '127.0.0.1';
 export const port = parseInt(process.env.WS_PORT || '5000');
 export const appName = process.env.WS_APP_NAME || undefined;
+export const abuseEmail = process.env.WS_ABUSE_EMAIL || undefined;
 
 export const maxClientNameLength = 32;
 export const maxSize = parseInt(process.env.WS_MAX_SIZE || '65536');

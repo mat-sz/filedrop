@@ -3,9 +3,10 @@ import {
   MessageModel,
   NetworkMessageModel,
   TargetedMessageModel,
-  WelcomeMessageModel,
   MessageType,
   ClientModel,
+  AppInfoMessageModel,
+  ClientInfoMessageModel,
 } from '@filedrop/types';
 
 import { Client } from './types/Client.js';
@@ -20,7 +21,13 @@ import {
   isEncryptedMessageModel,
   isInitializeMessageModel,
 } from './utils/validation.js';
-import { appName, maxSize, noticeText, noticeUrl } from './config.js';
+import {
+  abuseEmail,
+  appName,
+  maxSize,
+  noticeText,
+  noticeUrl,
+} from './config.js';
 import { secretToId } from './utils/id.js';
 
 export class ClientManager {
@@ -28,6 +35,20 @@ export class ClientManager {
 
   constructor() {
     this.sendNetworkMessage = this.sendNetworkMessage.bind(this);
+  }
+
+  sendAppInfo(client: Client) {
+    const message: AppInfoMessageModel = {
+      type: MessageType.APP_INFO,
+      remoteAddress: client.remoteAddress,
+      maxSize,
+      noticeText,
+      noticeUrl,
+      appName,
+      abuseEmail,
+    };
+
+    client.send(JSON.stringify(message));
   }
 
   handleMessage(client: Client, message: MessageModel) {
@@ -47,21 +68,16 @@ export class ClientManager {
 
       this.clients.push(client);
 
-      client.send(
-        JSON.stringify({
-          type: MessageType.WELCOME,
-          clientId: client.clientId,
-          suggestedClientName: client.clientName,
-          suggestedNetworkName: localNetworkNames[0],
-          remoteAddress: client.remoteAddress,
-          localNetworkNames,
-          rtcConfiguration: rtcConfiguration(client.clientId),
-          maxSize,
-          noticeText,
-          noticeUrl,
-          appName,
-        } as WelcomeMessageModel)
-      );
+      const clientInfoMessage: ClientInfoMessageModel = {
+        type: MessageType.CLIENT_INFO,
+        clientId: client.clientId,
+        suggestedClientName: client.clientName,
+        suggestedNetworkName: localNetworkNames[0],
+        localNetworkNames,
+        rtcConfiguration: rtcConfiguration(client.clientId),
+      };
+      client.send(JSON.stringify(clientInfoMessage));
+
       return;
     }
 

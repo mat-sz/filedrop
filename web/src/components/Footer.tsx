@@ -1,10 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { abuseEmail } from '../config';
+import { StateType } from '../reducers';
 
 const Footer: React.FC = () => {
+  const abuseEmail = useSelector((state: StateType) => state.abuseEmail);
   const { t } = useTranslation();
 
   return (
@@ -16,11 +18,11 @@ const Footer: React.FC = () => {
         <li>
           <Link to="/tos">{t('sections.terms')}</Link>
         </li>
-        {abuseEmail ? (
+        {abuseEmail && (
           <li>
             <Link to="/abuse">{t('sections.abuse')}</Link>
           </li>
-        ) : null}
+        )}
         <li>
           <Link to="/tech">{t('sections.tech')}</Link>
         </li>

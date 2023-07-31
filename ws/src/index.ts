@@ -35,6 +35,8 @@ app.register(async function (fastify) {
     const ws = connection.socket;
     const client = new WSClient(ws, req);
 
+    clientManager.sendAppInfo(client);
+
     ws.on('error', error => {
       console.log('[ERROR (Handled)]', error.message);
     });

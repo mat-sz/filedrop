@@ -1,6 +1,7 @@
 export enum MessageType {
   INITIALIZE = 'initialize',
-  WELCOME = 'welcome',
+  APP_INFO = 'appInfo',
+  CLIENT_INFO = 'clientInfo',
   LOCAL_NETWORKS = 'localNetworks',
   NETWORK_NAME = 'networkName',
   CLIENT_NAME = 'clientName',

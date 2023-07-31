@@ -50,6 +50,7 @@ import {
   setLocalNetworkNames,
   setRemoteAddressAction,
   setAppName,
+  setAbuseEmail,
 } from '../actions/state';
 import { deviceType } from '../utils/browser';
 import { randomString } from '../utils/string';
@@ -60,12 +61,22 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
   const msg: Message = action.value as Message;
 
   switch (msg.type) {
-    case MessageType.WELCOME:
+    case MessageType.APP_INFO:
       if (msg.appName) {
         yield put(setAppName(msg.appName));
         document.title = msg.appName;
       }
 
+      if (msg.abuseEmail) {
+        yield put(setAbuseEmail(msg.abuseEmail));
+      }
+
+      yield put(setMaxSizeAction(msg.maxSize));
+      yield put(setNoticeAction(msg.noticeText, msg.noticeUrl));
+      yield put(setRemoteAddressAction(msg.remoteAddress));
+
+      break;
+    case MessageType.CLIENT_INFO:
       const clientName: string | undefined = yield select(
         (state: StateType) => state.clientName
       );
@@ -87,9 +98,6 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
 
       yield put(setLocalNetworkNames(msg.localNetworkNames));
       yield put(setClientIdAction(msg.clientId));
-      yield put(setMaxSizeAction(msg.maxSize));
-      yield put(setNoticeAction(msg.noticeText, msg.noticeUrl));
-      yield put(setRemoteAddressAction(msg.remoteAddress));
 
       const networkName: string = yield select(
         (state: StateType) => state.networkName

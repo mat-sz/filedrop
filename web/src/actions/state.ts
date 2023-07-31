@@ -11,6 +11,13 @@ export function setAppName(name: string): ActionModel {
   };
 }
 
+export function setAbuseEmail(email: string): ActionModel {
+  return {
+    type: ActionType.SET_ABUSE_EMAIL,
+    value: email,
+  };
+}
+
 export function setErrorAction(error: string): ActionModel {
   return {
     type: ActionType.SET_ERROR,

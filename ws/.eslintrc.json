@@ -21,6 +21,7 @@
   "rules": {
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "no-empty": "off",
-    "@typescript-eslint/no-explicit-any": "off"
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-non-null-assertion": "off"
   }
 }

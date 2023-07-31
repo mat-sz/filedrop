@@ -24,18 +24,23 @@ export interface InitializeMessageModel extends MessageModel {
   publicKey?: string;
 }
 
-export interface WelcomeMessageModel extends MessageModel {
-  type: MessageType.WELCOME;
-  clientId: string;
-  suggestedClientName?: string;
-  suggestedNetworkName?: string;
+export interface AppInfoMessageModel extends MessageModel {
+  type: MessageType.APP_INFO;
   remoteAddress?: string;
-  localNetworkNames: string[];
-  rtcConfiguration?: any;
   maxSize: number;
   noticeText?: string;
   noticeUrl?: string;
   appName?: string;
+  abuseEmail?: string;
+}
+
+export interface ClientInfoMessageModel extends MessageModel {
+  type: MessageType.CLIENT_INFO;
+  clientId: string;
+  suggestedClientName?: string;
+  suggestedNetworkName?: string;
+  localNetworkNames: string[];
+  rtcConfiguration?: any;
 }
 
 export interface LocalNetworksMessageModel extends MessageModel {
@@ -110,7 +115,8 @@ export interface EncryptedMessageModel extends TargetedMessageModel {
 
 export type Message =
   | InitializeMessageModel
-  | WelcomeMessageModel
+  | AppInfoMessageModel
+  | ClientInfoMessageModel
   | LocalNetworksMessageModel
   | NetworkNameMessageModel
   | ClientNameMessageModel

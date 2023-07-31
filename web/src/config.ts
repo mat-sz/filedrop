@@ -8,4 +8,3 @@ export const nameLength = 5;
 export const Router: any = import.meta.env.REACT_APP_USE_BROWSER_ROUTER
   ? BrowserRouter
   : HashRouter;
-export const abuseEmail = import.meta.env.REACT_APP_ABUSE_EMAIL;

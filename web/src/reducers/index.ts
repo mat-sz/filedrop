@@ -27,6 +27,7 @@ export interface StateType {
   noticeText?: string;
   noticeUrl?: string;
   appName: string;
+  abuseEmail?: string;
 }
 
 let initialState: StateType = {
@@ -66,6 +67,9 @@ function applicationState(state = initialState, action: ActionModel) {
       break;
     case ActionType.SET_APP_NAME:
       newState.appName = action.value as string;
+      break;
+    case ActionType.SET_ABUSE_EMAIL:
+      newState.abuseEmail = action.value as string;
       break;
     case ActionType.SET_RTC_CONFIGURATION:
       const rtcConfiguration = action.value as RTCConfiguration;
