@@ -11,6 +11,7 @@ import {
   MessageType,
   ActionMessageActionType,
   DeviceType,
+  InitializeMessageModel,
 } from '@filedrop/types';
 
 const messageModelSchema = Joi.object({
@@ -19,11 +20,16 @@ const messageModelSchema = Joi.object({
   .unknown(true)
   .required();
 
+const initializeMessageModelSchema = Joi.object({
+  type: Joi.string().equal(MessageType.INITIALIZE).required(),
+  secret: Joi.string().min(10).max(128).required(),
+  publicKey: Joi.string(),
+}).required();
+
 const validDeviceTypes = Object.values(DeviceType);
 const networkNameMessageModelSchema = Joi.object({
   type: Joi.string().equal(MessageType.NETWORK_NAME).required(),
   networkName: Joi.string().alphanum().max(10).required(),
-  publicKey: Joi.string(),
   deviceType: Joi.string().equal(...validDeviceTypes),
 }).required();
 
@@ -35,7 +41,7 @@ const clientNameMessageModelSchema = Joi.object({
 const transferMessageModelSchema = Joi.object({
   type: Joi.string().equal(MessageType.TRANSFER).required(),
   transferId: Joi.string().uuid().required(),
-  targetId: Joi.string().uuid().required(),
+  targetId: Joi.string().hex().required(),
   fileName: Joi.string().required(),
   fileSize: Joi.number().required(),
   fileType: Joi.string().required(),
@@ -45,7 +51,7 @@ const validActions = Object.values(ActionMessageActionType);
 const actionMessageModelSchema = Joi.object({
   type: Joi.string().equal(MessageType.ACTION).required(),
   transferId: Joi.string().uuid().required(),
-  targetId: Joi.string().uuid().required(),
+  targetId: Joi.string().hex().required(),
   action: Joi.string()
     .equal(...validActions)
     .required(),
@@ -54,7 +60,7 @@ const actionMessageModelSchema = Joi.object({
 const rtcDescriptionMessageModelSchema = Joi.object({
   type: Joi.string().equal(MessageType.RTC_DESCRIPTION).required(),
   transferId: Joi.string().uuid().required(),
-  targetId: Joi.string().uuid().required(),
+  targetId: Joi.string().hex().required(),
   data: Joi.object({
     type: Joi.string().required(),
     sdp: Joi.string().required(),
@@ -64,18 +70,24 @@ const rtcDescriptionMessageModelSchema = Joi.object({
 const rtcCandidateMessageModelSchema = Joi.object({
   type: Joi.string().equal(MessageType.RTC_CANDIDATE).required(),
   transferId: Joi.string().uuid().required(),
-  targetId: Joi.string().uuid().required(),
+  targetId: Joi.string().hex().required(),
   data: Joi.object().required(),
 }).required();
 
 const encryptedMessageModelSchema = Joi.object({
   type: Joi.string().equal(MessageType.ENCRYPTED).required(),
   payload: Joi.string().base64().required(),
-  targetId: Joi.string().uuid().required(),
+  targetId: Joi.string().hex().required(),
 }).required();
 
 export function isMessageModel(message: any): message is MessageModel {
   return !messageModelSchema.validate(message).error;
+}
+
+export function isInitializeMessageModel(
+  message: MessageModel | InitializeMessageModel
+): message is InitializeMessageModel {
+  return !initializeMessageModelSchema.validate(message).error;
 }
 
 export function isNetworkNameMessageModel(

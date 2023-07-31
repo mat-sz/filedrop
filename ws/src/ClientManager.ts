@@ -18,8 +18,10 @@ import {
   isRTCDescriptionMessageModel,
   isRTCCandidateMessageModel,
   isEncryptedMessageModel,
+  isInitializeMessageModel,
 } from './utils/validation.js';
 import { appName, maxSize, noticeText, noticeUrl } from './config.js';
+import { secretToId } from './utils/id.js';
 
 export class ClientManager {
   private clients: Client[] = [];
@@ -28,33 +30,46 @@ export class ClientManager {
     this.sendNetworkMessage = this.sendNetworkMessage.bind(this);
   }
 
-  addClient(client: Client) {
-    const localNetworkNames = this.getLocalNetworkNames(client);
-
-    this.clients.push(client);
-
-    client.send(
-      JSON.stringify({
-        type: MessageType.WELCOME,
-        clientId: client.clientId,
-        suggestedClientName: client.clientName,
-        suggestedNetworkName: localNetworkNames[0],
-        remoteAddress: client.remoteAddress,
-        localNetworkNames,
-        rtcConfiguration: rtcConfiguration(client.clientId),
-        maxSize,
-        noticeText,
-        noticeUrl,
-        appName,
-      } as WelcomeMessageModel)
-    );
-  }
-
   handleMessage(client: Client, message: MessageModel) {
     client.lastSeen = new Date();
 
-    if (isNetworkNameMessageModel(message)) {
+    if (isInitializeMessageModel(message)) {
+      if (client.initialized) {
+        return;
+      }
+
+      client.initialized = true;
+      client.secret = message.secret;
+      client.clientId = secretToId(client.secret);
       client.publicKey = message.publicKey;
+
+      const localNetworkNames = this.getLocalNetworkNames(client);
+
+      this.clients.push(client);
+
+      client.send(
+        JSON.stringify({
+          type: MessageType.WELCOME,
+          clientId: client.clientId,
+          suggestedClientName: client.clientName,
+          suggestedNetworkName: localNetworkNames[0],
+          remoteAddress: client.remoteAddress,
+          localNetworkNames,
+          rtcConfiguration: rtcConfiguration(client.clientId),
+          maxSize,
+          noticeText,
+          noticeUrl,
+          appName,
+        } as WelcomeMessageModel)
+      );
+      return;
+    }
+
+    if (!client.initialized || !client.clientId) {
+      return;
+    }
+
+    if (isNetworkNameMessageModel(message)) {
       client.deviceType = message.deviceType;
       this.setNetworkName(client, message.networkName.toUpperCase());
     } else if (isClientNameMessageModel(message)) {
@@ -124,7 +139,7 @@ export class ClientManager {
       try {
         const clients: ClientModel[] = sortedClients.map(otherClient => {
           return {
-            clientId: otherClient.clientId,
+            clientId: otherClient.clientId!,
             clientName: otherClient.clientName,
             publicKey: otherClient.publicKey,
             isLocal: otherClient.remoteAddress === client.remoteAddress,

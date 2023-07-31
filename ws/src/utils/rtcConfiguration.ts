@@ -9,14 +9,14 @@ import {
   turnCredential,
 } from '../config.js';
 
-export const rtcConfiguration = (clientId: string) => {
+export const rtcConfiguration = (clientId?: string) => {
   const iceServers = [];
 
   iceServers.push({
     urls: stunServer,
   });
 
-  if (turnServer && turnUsername) {
+  if (turnServer && turnUsername && clientId) {
     if (turnMode === 'hmac' && turnSecret) {
       const timestamp = Math.floor(new Date().getTime() / 1000) + turnExpiry;
       const username = timestamp + ':' + clientId;

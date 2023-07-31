@@ -14,6 +14,7 @@ import {
   MessageType,
   ActionMessageActionType,
   ClientModel,
+  InitializeMessageModel,
 } from '@filedrop/types';
 
 import { TransferModel, ActionModel } from '../types/Models';
@@ -51,6 +52,9 @@ import {
   setAppName,
 } from '../actions/state';
 import { deviceType } from '../utils/browser';
+import { randomString } from '../utils/string';
+
+const secret = randomString(64);
 
 function* message(action: ActionModel, dispatch: (action: any) => void) {
   const msg: Message = action.value as Message;
@@ -234,15 +238,20 @@ function* prepareMessage(action: ActionModel) {
 
 function* connected() {
   yield put(setConnectedAction(true));
+
+  const publicKey: string = yield select((state: StateType) => state.publicKey);
+  const message: InitializeMessageModel = {
+    type: MessageType.INITIALIZE,
+    secret,
+    publicKey,
+  };
+  yield put(sendMessageAction(message));
 }
 
 function* setNetworkName(action: ActionModel) {
-  const publicKey: string = yield select((state: StateType) => state.publicKey);
-
   const message: NetworkNameMessageModel = {
     type: MessageType.NETWORK_NAME,
     networkName: action.value,
-    publicKey,
     deviceType,
   };
 

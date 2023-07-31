@@ -23,7 +23,7 @@
     "i18next": "^21.9.1",
     "i18next-browser-languagedetector": "^6.1.5",
     "i18next-http-backend": "^1.4.1",
-    "imtool": "^1.2.0",
+    "imtool": "^1.2.1",
     "matcrypt": "^1.3.0",
     "qrcode.react": "^3.0.2",
     "react": "^18.1.0",

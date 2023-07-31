@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { StateType } from '../reducers';
 import { nameCharacterSet, nameLength } from '../config';
+import { randomString } from '../utils/string';
 
 const Home: React.FC = () => {
   const { t } = useTranslation();
@@ -21,14 +22,7 @@ const Home: React.FC = () => {
     const currentNetworkName =
       networkName ||
       suggestedNetworkName ||
-      new Array(nameLength)
-        .fill('')
-        .map(() =>
-          nameCharacterSet.charAt(
-            Math.floor(Math.random() * nameCharacterSet.length)
-          )
-        )
-        .join('');
+      randomString(nameLength, nameCharacterSet);
     if (connected && clientId) {
       navigate('/' + currentNetworkName);
     }

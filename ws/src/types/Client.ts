@@ -1,7 +1,7 @@
 import { DeviceType } from '@filedrop/types';
 
 export interface Client {
-  readonly clientId: string;
+  clientId?: string;
   clientName?: string;
   readonly firstSeen: Date;
   lastSeen: Date;
@@ -10,6 +10,8 @@ export interface Client {
   readonly readyState: number;
   publicKey?: string;
   deviceType?: DeviceType;
+  initialized: boolean;
+  secret?: string;
 
   send(data: string): void;
   close(): void;

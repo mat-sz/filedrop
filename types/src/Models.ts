@@ -18,6 +18,12 @@ export interface TargetedMessageModel extends MessageModel {
   targetId: string;
 }
 
+export interface InitializeMessageModel extends MessageModel {
+  type: MessageType.INITIALIZE;
+  secret: string;
+  publicKey?: string;
+}
+
 export interface WelcomeMessageModel extends MessageModel {
   type: MessageType.WELCOME;
   clientId: string;
@@ -40,7 +46,6 @@ export interface LocalNetworksMessageModel extends MessageModel {
 export interface NetworkNameMessageModel extends MessageModel {
   type: MessageType.NETWORK_NAME;
   networkName: string;
-  publicKey?: string;
   deviceType?: DeviceType;
 }
 
@@ -104,6 +109,7 @@ export interface EncryptedMessageModel extends TargetedMessageModel {
 }
 
 export type Message =
+  | InitializeMessageModel
   | WelcomeMessageModel
   | LocalNetworksMessageModel
   | NetworkNameMessageModel

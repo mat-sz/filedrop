@@ -1,18 +1,22 @@
-import { v4 as uuid } from 'uuid';
 import WebSocket from 'ws';
 import { FastifyRequest } from 'fastify';
+import { DeviceType } from '@filedrop/types';
 
 import { Client } from './types/Client.js';
 import { generateClientName } from './utils/name.js';
 import { acceptForwardedFor } from './config.js';
 
 export class WSClient implements Client {
-  readonly clientId = uuid();
   readonly firstSeen = new Date();
   clientName?: string = generateClientName();
   lastSeen = new Date();
   readonly remoteAddress?: string;
   networkName?: string = undefined;
+  publicKey?: string;
+  deviceType?: DeviceType;
+  initialized = false;
+  secret?: string;
+  clientId?: string;
 
   constructor(private ws: WebSocket, req: FastifyRequest) {
     const address =
