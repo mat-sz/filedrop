@@ -51,11 +51,6 @@ a {
     & > * {
       margin: 5px 0;
     }
-
-    button,
-    .button {
-      margin: 5px;
-    }
   }
 }
 
@@ -90,7 +85,7 @@ button,
 
 section {
   position: relative;
-  margin: 20px;
+  margin: 15px;
 }
 
 .desktop-2col {
@@ -169,7 +164,7 @@ progress {
   overflow: hidden;
   height: 6px;
   display: block;
-  margin-top: 4px;
+  margin: 4px 0;
 
   &::-moz-progress-bar {
     background-color: desaturate($accent-color, 50%);
@@ -209,7 +204,7 @@ footer {
 
   ul {
     list-style: none;
-    padding: 20px;
+    padding: 15px;
     margin: 0;
 
     li:first-child {
@@ -266,8 +261,8 @@ nav {
 
 .subsection {
   background: #1e1e1e;
-  padding: 20px;
-  margin: 20px 0;
+  padding: 15px;
+  margin: 15px 0;
   position: relative;
   border-radius: 5px;
 
@@ -276,9 +271,8 @@ nav {
   }
 
   h2 {
-    padding: 0 20px;
-    margin: 0 -20px;
-    margin-bottom: 10px;
+    padding: 0;
+    margin-bottom: 15px;
   }
 }
 
@@ -362,6 +356,14 @@ nav {
         width: auto;
       }
     }
+  }
+}
+
+.transfer {
+  &:not(:last-child) {
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #333;
   }
 }
 
@@ -477,14 +479,13 @@ nav {
 }
 
 .info-grid {
-  display: grid;
-  grid-template-columns: 75px 1fr;
-  grid-gap: 25px;
+  display: flex;
 
   .image {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0;
   }
 
   .info {
@@ -493,16 +494,27 @@ nav {
     justify-content: center;
     align-items: flex-start;
     text-align: left;
+    flex: 1;
+    margin-left: 15px;
 
     .filename {
       word-break: break-word;
       font-weight: bold;
+      display: flex;
+      align-items: center;
+
+      .target-tile {
+        margin: 0;
+        margin-right: 5px;
+      }
     }
 
     .metadata {
+      display: flex;
+      justify-content: space-between;
       font-size: 0.8rem;
 
-      span {
+      span:not(:last-child) {
         margin-right: 10px;
       }
     }
@@ -514,13 +526,13 @@ nav {
 }
 
 .target-tile {
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
   margin: 0 10px;
 
   svg {
-    width: 15px;
-    height: 15px;
+    width: 10px;
+    height: 10px;
   }
 }
 
@@ -534,6 +546,11 @@ nav {
   background-color: #111;
   padding: 10px 0;
   border-radius: 5px;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   .tooltip-wrapper {
     position: absolute;
@@ -542,18 +559,14 @@ nav {
     z-index: 500;
   }
 
-  .target-tile {
-    border-radius: 10px;
-  }
-
   & > svg {
-    width: 75px;
-    height: 55px;
+    width: auto;
+    height: 35px;
   }
 
   & > img {
-    width: 75px;
-    height: 75px;
+    width: 60px;
+    height: 60px;
     margin: -10px 0;
     border-radius: 5px;
   }
@@ -619,10 +632,9 @@ nav {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 0 -5px;
 
-  & > * {
-    margin: 0 5px;
+  & > *:not(:last-child) {
+    margin-right: 10px;
   }
 }
 
@@ -694,6 +706,7 @@ nav {
     font-size: 0.8rem;
     width: max-content;
     max-width: 300px;
+    font-weight: normal;
   }
 }
 
@@ -838,18 +851,12 @@ nav {
 @media screen and (min-width: 768px) {
   .desktop-2col {
     display: grid;
-    grid-gap: 20px;
+    grid-gap: 15px;
     grid-template-columns: minmax(0, 2fr) 1fr;
   }
 
   .modal {
     padding: 30px;
-  }
-
-  .metadata {
-    div {
-      display: inline-block;
-    }
   }
 
   footer {
@@ -862,7 +869,7 @@ nav {
       li {
         display: inline-block;
         padding: 0 10px;
-        border-right: 1px solid white;
+        border-right: 1px solid #333;
       }
     }
   }

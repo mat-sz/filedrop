@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { FaCheck, FaCopy, FaDownload, FaTimes } from 'react-icons/fa';
-import { useTranslation } from 'react-i18next';
 
 import {
   removeTransferAction,
@@ -12,13 +11,14 @@ import {
 import { animationPropsSlide } from '../../animationSettings';
 import { TransferModel } from '../../types/Models';
 import { TransferState } from '../../types/TransferState';
-import { FileType } from '../../types/FileType';
 import Tooltip from '../../components/Tooltip';
 import { motion } from '../../animate';
-import { fileType, formatFileName, formatFileSize } from '../../utils/file';
+import { formatFileName, formatFileSize } from '../../utils/file';
 import { humanTimeLeft } from '../../utils/time';
 import { copy } from '../../utils/copy';
 import TransferIcon from './TransferIcon';
+import TransferTarget from './TransferTarget';
+import { useTranslation } from 'react-i18next';
 
 export const cancellableStates = [
   TransferState.IN_PROGRESS,
@@ -53,11 +53,12 @@ const Transfer: React.FC<TransferProps> = ({ transfer }) => {
     }
   }, [transfer]);
 
-  const type = fileType(transfer.fileType);
+  const formattedOffset = transfer.offset && formatFileSize(transfer.offset);
+  const formattedSize = formatFileSize(transfer.fileSize);
 
   return (
     <motion.li
-      className="subsection info-grid"
+      className="transfer info-grid"
       {...animationPropsSlide}
       aria-label="Transfer"
     >
@@ -67,32 +68,39 @@ const Transfer: React.FC<TransferProps> = ({ transfer }) => {
       <div className="info">
         <div className="space-between">
           <div className="transfer-info">
-            <Tooltip content={transfer.fileName}>
-              <div className="filename">
-                {formatFileName(transfer.fileName)}
-              </div>
-            </Tooltip>
-            <div className="metadata">
-              <span>{formatFileSize(transfer.fileSize)}</span>
-              {type !== FileType.UNKNOWN && (
-                <span>{t(`fileType.${type}`)}</span>
-              )}
-              {transfer.state === TransferState.IN_PROGRESS && (
-                <>
-                  <div>
-                    <span>{formatFileSize(transfer.speed!)}/s</span>
-                    <span>{Math.round(transfer.progress! * 100)}%</span>
-                    <span>{humanTimeLeft(transfer.timeLeft)}</span>
-                  </div>
-                </>
-              )}
-              {transfer.state === TransferState.FAILED && <span>Failed!</span>}
+            <div className="filename">
+              <TransferTarget transfer={transfer} />
+              <Tooltip content={transfer.fileName}>
+                <span>{formatFileName(transfer.fileName)}</span>
+              </Tooltip>
             </div>
             {transfer.state === TransferState.IN_PROGRESS ? (
               <div>
-                <progress value={transfer.progress} max={1} />
+                <progress
+                  value={(transfer.offset || 0) / transfer.fileSize}
+                  max={1}
+                />
               </div>
             ) : null}
+            <div className="metadata">
+              <div>
+                <span>
+                  {formattedOffset
+                    ? t('transfers.progress', {
+                        offset: formattedOffset,
+                        size: formattedSize,
+                      })
+                    : formattedSize}
+                </span>
+              </div>
+              {transfer.state === TransferState.IN_PROGRESS && (
+                <div className="transfer-progress">
+                  <span>{formatFileSize(transfer.speed!)}/s</span>
+                  <span>{humanTimeLeft(transfer.timeLeft)}</span>
+                </div>
+              )}
+              {transfer.state === TransferState.FAILED && <span>Failed!</span>}
+            </div>
           </div>
           <div className="actions">
             {transfer.state === TransferState.COMPLETE && transfer.blobUrl ? (

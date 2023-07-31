@@ -51,7 +51,8 @@
     "icon": {
       "state": "Transfer state: {{state}}",
       "preview": "Preview: {{fileName}}"
-    }
+    },
+    "progress": "{{offset}} of {{size}}"
   },
   "fileType": {
     "unknown": "",

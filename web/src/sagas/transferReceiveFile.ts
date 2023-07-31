@@ -63,7 +63,7 @@ export default function* transferReceiveFile(
       updateTransferAction({
         transferId: transfer.transferId,
         state: TransferState.FAILED,
-        progress: 1,
+        offset: undefined,
         speed: 0,
         timeLeft: 0,
       })
@@ -80,7 +80,7 @@ export default function* transferReceiveFile(
       updateTransferAction({
         transferId: transfer.transferId,
         state: TransferState.COMPLETE,
-        progress: 1,
+        offset: undefined,
         speed: 0,
         time: Math.floor(new Date().getTime() / 1000 - timestamp),
         timeLeft: 0,
@@ -118,7 +118,7 @@ export default function* transferReceiveFile(
         updateTransferAction({
           transferId: transfer.transferId,
           state: TransferState.IN_PROGRESS,
-          progress: offset / transfer.fileSize,
+          offset,
           speed,
           timeLeft: Math.round((transfer.fileSize - offset) / speed),
         })

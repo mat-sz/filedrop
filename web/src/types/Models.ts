@@ -15,7 +15,7 @@ export interface TransferModel {
   blobUrl?: string;
   clientId: string;
   peerConnection?: RTCPeerConnection;
-  progress?: number;
+  offset?: number;
   speed?: number;
   time?: number;
   timeLeft?: number;

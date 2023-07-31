@@ -3946,10 +3946,10 @@ import-fresh@^3.2.1:
     parent-module "^1.0.0"
     resolve-from "^4.0.0"
 
-imtool@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/imtool/-/imtool-1.2.0.tgz#2304202cf3efe7c281475ff670a6187221eb0117"
-  integrity sha512-pVfYSxO0sduSscOVHX/cPmmMzFXk3ol+b0U1l5QqMpqm835rwJaFIvc9XdhsDyBcSdCmfTKuNZ2Q1uOyxkGF8Q==
+imtool@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/imtool/-/imtool-1.2.1.tgz#d579296c97e4caaf39fdc94b911cd980a1179ec5"
+  integrity sha512-zvjGP9GmWPymXpu3O/3oKLIPj69bxJgk86LSlShd9xta3rEuqdjNGI8TbgeEvmyncYE01kfiA8gd3ACptBch4g==
 
 imurmurhash@^0.1.4:
   version "0.1.4"

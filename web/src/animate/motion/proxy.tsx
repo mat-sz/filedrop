@@ -20,10 +20,9 @@ function createMotionComponent<Props extends {}>(
   Component: ComponentType<Props>
 ) {
   function MotionComponent(
-    props: Props & MotionProps,
+    { initial, animate, exit, ...props }: Props & MotionProps,
     externalRef?: React.Ref<HTMLElement | SVGElement>
   ) {
-    const { initial, animate, exit } = props;
     const [isPresent, safeToRemove] = usePresence();
     const componentRef = React.useRef<HTMLElement | SVGElement | null>(null);
 
@@ -74,7 +73,7 @@ function createMotionComponent<Props extends {}>(
       }
     }, [isPresent, safeToRemove, initial, animate, exit]);
 
-    return <Component ref={componentRef} {...props} />;
+    return <Component ref={componentRef} {...(props as any)} />;
   }
 
   return React.forwardRef(MotionComponent);
