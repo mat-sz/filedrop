@@ -1,52 +1,51 @@
 import React from 'react';
+import clsx from 'clsx';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { FaLock, FaMobile } from 'react-icons/fa';
 import { DeviceType } from '@filedrop/types';
 
+import styles from './index.module.scss';
 import { StateType } from '../../reducers';
-import Network from '../../components/Network';
-import { uuidToColor } from '../../utils/color';
-import { deviceType } from '../../utils/browser';
-import TransferList from './TransferList';
-import ClientName from './ClientName';
+import { Network } from '../../components/Network';
+import { deviceType, isBrowserCompatible } from '../../utils/browser';
+import { TransferList } from './TransferList';
+import { ClientName } from './ClientName';
+import { TargetTile } from '../../components/TargetTile';
+import { IncompatibleBrowser } from '../../components/IncompatibleBrowser';
 
-const TransfersSection: React.FC = () => {
+export const TransfersSection: React.FC = () => {
   const { t } = useTranslation();
-  const clientId = useSelector((store: StateType) => store.clientId);
+  const client = useSelector((store: StateType) =>
+    store.network?.find(client => client.clientId === store.clientId)
+  );
   const noticeText = useSelector((store: StateType) => store.noticeText);
   const noticeUrl = useSelector((store: StateType) => store.noticeUrl);
   const publicKey = useSelector((state: StateType) => state.publicKey);
 
+  if (!client) {
+    return null;
+  }
+
   return (
     <div>
+      {!isBrowserCompatible ? <IncompatibleBrowser /> : null}
       {!!noticeText && (
-        <div className="subsection notice">
+        <div className={clsx('subsection', 'notice')}>
           {noticeUrl ? <a href={noticeUrl}>{noticeText}</a> : noticeText}
         </div>
       )}
-      <div className="subsection info-grid">
-        <div className="image">
-          <div
-            className="network-tile"
-            style={{
-              backgroundColor: uuidToColor(clientId),
-            }}
+      <div className={clsx('subsection', styles.grid)}>
+        <div className={styles.image}>
+          <TargetTile
+            variant="big"
+            client={client}
+            secure={!!publicKey}
+            mobile={deviceType === DeviceType.MOBILE}
           >
-            {!!publicKey && (
-              <div className="secure">
-                <FaLock />
-              </div>
-            )}
-            {deviceType === DeviceType.MOBILE && (
-              <div className="device">
-                <FaMobile />
-              </div>
-            )}
             {t('you')}
-          </div>
+          </TargetTile>
         </div>
-        <div className="info">
+        <div className={styles.info}>
           <ClientName />
           <div>
             <strong>{t('yourTile.title')}</strong> {t('yourTile.body')}
@@ -58,5 +57,3 @@ const TransfersSection: React.FC = () => {
     </div>
   );
 };
-
-export default TransfersSection;

@@ -1,0 +1,14 @@
+.iconButton {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  background: none;
+  padding: 0;
+  color: #aaa;
+  font-size: 1rem;
+
+  &:hover {
+    opacity: 0.8;
+    background: none;
+  }
+}

@@ -18,6 +18,7 @@
     "@types/uuid": "^8.3.4",
     "@vitejs/plugin-react": "^4.0.3",
     "base64-js": "^1.5.1",
+    "clsx": "^2.0.0",
     "eslint-config-react-app": "^7.0.1",
     "filesize": "^10.0.8",
     "i18next": "^21.9.1",

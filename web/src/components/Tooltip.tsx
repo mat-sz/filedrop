@@ -1,4 +1,7 @@
 import React from 'react';
+import clsx from 'clsx';
+
+import styles from './Tooltip.module.scss';
 
 interface TooltipProps {
   content: React.ReactNode;
@@ -6,17 +9,15 @@ interface TooltipProps {
   children: React.ReactNode;
 }
 
-const Tooltip: React.FC<TooltipProps> = ({
+export const Tooltip: React.FC<TooltipProps> = ({
   content,
   children,
   wrapperClassName,
 }) => {
   return (
-    <div className={`tooltip-wrapper ${wrapperClassName ?? ''}`}>
+    <div className={clsx(styles.wrapper, wrapperClassName)}>
       {children}
-      <div className="tooltip">{content}</div>
+      <div className={styles.tooltip}>{content}</div>
     </div>
   );
 };
-
-export default Tooltip;

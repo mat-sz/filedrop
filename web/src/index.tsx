@@ -2,11 +2,12 @@ import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 
-import App from './App';
-import createStore from './store';
+import { Loading } from './components/Loading';
+import { App } from './App';
+import { newStore } from './store';
 import './i18n';
 
-const store = createStore();
+const store = newStore();
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -14,7 +15,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Suspense fallback={<section className="center">Loading...</section>}>
+      <Suspense fallback={<Loading>Loading...</Loading>}>
         <App />
       </Suspense>
     </Provider>

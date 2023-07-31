@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { AnimatePresence } from '../../animate';
 
+import styles from './TransferList.module.scss';
 import { StateType } from '../../reducers';
 import {
   acceptTransferAction,
@@ -11,9 +12,9 @@ import {
   removeTransferAction,
 } from '../../actions/transfers';
 import { TransferState } from '../../types/TransferState';
-import Transfer, { cancellableStates } from './Transfer';
+import { Transfer, cancellableStates } from './Transfer';
 
-const TransferList: React.FC = () => {
+export const TransferList: React.FC = () => {
   const { t } = useTranslation();
   const transfers = useSelector((store: StateType) => store.transfers);
   const dispatch = useDispatch();
@@ -49,7 +50,7 @@ const TransferList: React.FC = () => {
         <div className="subsection">
           <h2>
             {t('transfers.title')}
-            <div className="actions">
+            <div className={styles.actions}>
               {!!transfers.find(
                 transfer => transfer.state === TransferState.INCOMING
               ) && (
@@ -82,7 +83,7 @@ const TransferList: React.FC = () => {
               )}
             </div>
           </h2>
-          <ul className="center queue">
+          <ul className={styles.queue}>
             <AnimatePresence>
               {transfers.map(transfer => (
                 <Transfer key={transfer.transferId} transfer={transfer} />
@@ -94,5 +95,3 @@ const TransferList: React.FC = () => {
     </>
   );
 };
-
-export default TransferList;

@@ -55,7 +55,7 @@ const stateSort: Record<TransferState, number> = {
 
 export type StoreType = Store<StateType, ActionModel>;
 
-function applicationState(state = initialState, action: ActionModel) {
+export function applicationState(state = initialState, action: ActionModel) {
   const newState = { ...state };
   switch (action.type) {
     case ActionType.SET_ERROR:
@@ -199,5 +199,3 @@ function applicationState(state = initialState, action: ActionModel) {
 
   return newState;
 }
-
-export default applicationState;

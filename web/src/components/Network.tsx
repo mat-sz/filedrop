@@ -2,28 +2,30 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { ScrollArea } from 'react-nano-scrollbar';
 import { useTranslation } from 'react-i18next';
-import { AnimatePresence, motion } from '../animate';
+import clsx from 'clsx';
 
+import { AnimatePresence, motion } from '../animate';
+import styles from './Network.module.scss';
 import { animationPropsOpacity } from '../animationSettings';
 import { StateType } from '../reducers';
-import NetworkTile from './NetworkTile';
+import { NetworkTile } from './NetworkTile';
 
 interface NetworkProps {
   onSelect?: (clientId: string) => void;
 }
 
-const Network: React.FC<NetworkProps> = ({ onSelect }) => {
+export const Network: React.FC<NetworkProps> = ({ onSelect }) => {
   const { t } = useTranslation();
   const network = useSelector((store: StateType) =>
     store.network.filter(client => client.clientId !== store.clientId)
   );
-  const className = onSelect ? 'network-select' : 'subsection';
+  const className = onSelect ? styles.select : 'subsection';
 
   return (
     <AnimatePresence>
       {network.length > 0 ? (
         <ScrollArea horizontal hideScrollbarY className={className}>
-          <div className="network">
+          <div className={styles.network}>
             <AnimatePresence>
               {network.map(client => (
                 <NetworkTile
@@ -37,7 +39,7 @@ const Network: React.FC<NetworkProps> = ({ onSelect }) => {
         </ScrollArea>
       ) : (
         <motion.div
-          className={`${className} center`}
+          className={clsx(className, styles.empty)}
           {...animationPropsOpacity}
         >
           <div>{t('emptyNetwork.title')}</div>
@@ -47,5 +49,3 @@ const Network: React.FC<NetworkProps> = ({ onSelect }) => {
     </AnimatePresence>
   );
 };
-
-export default Network;

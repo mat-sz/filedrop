@@ -3,11 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
+import { Loading } from '../components/Loading';
 import { StateType } from '../reducers';
 import { nameCharacterSet, nameLength } from '../config';
 import { randomString } from '../utils/string';
 
-const Home: React.FC = () => {
+export const Home: React.FC = () => {
   const { t } = useTranslation();
   const networkName = useSelector((state: StateType) => state.networkName);
   const connected = useSelector((state: StateType) => state.connected);
@@ -28,7 +29,5 @@ const Home: React.FC = () => {
     }
   }, [connected, networkName, navigate, clientId, suggestedNetworkName]);
 
-  return <section className="center">{t('state.loading')}</section>;
+  return <Loading>{t('state.loading')}</Loading>;
 };
-
-export default Home;

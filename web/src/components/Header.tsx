@@ -4,23 +4,24 @@ import { FaGithub, FaInfoCircle, FaTwitter } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import DropIcon from './DropIcon';
+import styles from './Header.module.scss';
 import { StateType } from '../reducers';
+import { DropIcon } from './DropIcon';
 
-const Header: React.FC = () => {
+export const Header: React.FC = () => {
   const appName = useSelector((state: StateType) => state.appName);
   const { t } = useTranslation();
 
   return (
-    <header>
-      <nav className="menu">
+    <header className={styles.header}>
+      <nav className={styles.menu}>
         <h1>
-          <Link to="/" className="logo">
+          <Link to="/" className={styles.logo}>
             <DropIcon />
             {appName}
           </Link>
         </h1>
-        <div className="icon-menu">
+        <div className={styles.right}>
           <Link to="/about" title={t('sections.about')}>
             <FaInfoCircle />
           </Link>
@@ -45,5 +46,3 @@ const Header: React.FC = () => {
     </header>
   );
 };
-
-export default Header;

@@ -1,0 +1,63 @@
+.wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+
+  &:not(:last-child) {
+    margin-right: 10px;
+  }
+}
+
+.tile {
+  margin: 0;
+  position: relative;
+
+  input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: block;
+    background: transparent;
+    opacity: 0.01;
+    cursor: pointer;
+    font-size: 0;
+  }
+}
+
+.tile {
+  cursor: pointer;
+
+  label {
+    cursor: pointer;
+    position: absolute;
+    opacity: 0.01;
+  }
+
+  .plus {
+    transition: 0.1s ease-in-out color;
+    color: rgba(0, 0, 0, 0.25);
+    font-size: 40px;
+  }
+
+  &.active,
+  &:hover,
+  &:focus-within {
+    box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.5);
+
+    svg {
+      color: rgba(0, 0, 0, 0.5);
+    }
+  }
+}
+
+.name {
+  pointer-events: none;
+  text-align: center;
+  width: 75px;
+  font-size: 0.8rem;
+  margin-top: 10px;
+  color: white;
+  word-break: break-word;
+}

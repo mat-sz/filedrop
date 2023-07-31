@@ -1,28 +1,33 @@
 import React from 'react';
+import clsx from 'clsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
-import { FaLock, FaMobile, FaNetworkWired, FaPlus } from 'react-icons/fa';
+import { FaPlus } from 'react-icons/fa';
 import { DeviceType, ClientModel } from '@filedrop/types';
 
+import styles from './NetworkTile.module.scss';
 import { createTransferAction } from '../actions/transfers';
 import { animationPropsOpacity } from '../animationSettings';
 import { StateType } from '../reducers';
-import { uuidToColor } from '../utils/color';
 import { motion } from '../animate';
+import { TargetTile } from './TargetTile';
 
 interface NetworkTileProps {
   client: ClientModel;
   onSelect?: (clientId: string) => void;
 }
 
-const NetworkTile: React.FC<NetworkTileProps> = ({ client, onSelect }) => {
+export const NetworkTile: React.FC<NetworkTileProps> = ({
+  client,
+  onSelect,
+}) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const publicKey = useSelector((state: StateType) => state.publicKey);
 
   const onDrop = (files: File[]) => {
-    for (let file of files) {
+    for (const file of files) {
       dispatch(createTransferAction(file, client.clientId));
     }
   };
@@ -39,50 +44,24 @@ const NetworkTile: React.FC<NetworkTileProps> = ({ client, onSelect }) => {
     onSelect?.(client.clientId);
   };
 
-  const contents = (
-    <>
-      <FaPlus />
-      {!!publicKey && !!client.publicKey && (
-        <div className="secure">
-          <FaLock />
-        </div>
-      )}
-      {client.isLocal && (
-        <div className="local">
-          <FaNetworkWired />
-        </div>
-      )}
-      {client.deviceType === DeviceType.MOBILE && (
-        <div className="device">
-          <FaMobile />
-        </div>
-      )}
-    </>
-  );
+  const dragProps = onSelect ? {} : getRootProps();
 
   return (
     <motion.div
       {...animationPropsOpacity}
       onClick={onClick}
-      className="network-tile-wrapper"
+      className={styles.wrapper}
     >
-      {onSelect ? (
-        <div
-          className="network-tile"
-          style={{
-            backgroundColor: uuidToColor(client.clientId),
-          }}
-        >
-          {contents}
-        </div>
-      ) : (
-        <div
-          {...getRootProps()}
-          className={'network-tile ' + (isDragActive ? 'active' : '')}
-          style={{
-            backgroundColor: uuidToColor(client.clientId),
-          }}
-        >
+      <TargetTile
+        {...dragProps}
+        client={client}
+        variant="big"
+        className={clsx(styles.tile, { active: isDragActive })}
+        secure={!!publicKey && !!client.publicKey}
+        local={client.isLocal}
+        mobile={client.deviceType === DeviceType.MOBILE}
+      >
+        {!onSelect && (
           <label onClick={preventClick}>
             <input
               {...getInputProps({
@@ -93,12 +72,10 @@ const NetworkTile: React.FC<NetworkTileProps> = ({ client, onSelect }) => {
             />
             {t('tile')}
           </label>
-          {contents}
-        </div>
-      )}
-      <div className="network-tile-name">{client.clientName}</div>
+        )}
+        <FaPlus className={styles.plus} />
+      </TargetTile>
+      <div className={styles.name}>{client.clientName}</div>
     </motion.div>
   );
 };
-
-export default NetworkTile;

@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import clsx from 'clsx';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { FaCheck, FaCopy, FaDownload, FaTimes } from 'react-icons/fa';
 
+import styles from './Transfer.module.scss';
 import {
   removeTransferAction,
   cancelTransferAction,
@@ -11,14 +14,14 @@ import {
 import { animationPropsSlide } from '../../animationSettings';
 import { TransferModel } from '../../types/Models';
 import { TransferState } from '../../types/TransferState';
-import Tooltip from '../../components/Tooltip';
 import { motion } from '../../animate';
 import { formatFileName, formatFileSize } from '../../utils/file';
 import { humanTimeLeft } from '../../utils/time';
 import { copy } from '../../utils/copy';
-import TransferIcon from './TransferIcon';
-import TransferTarget from './TransferTarget';
-import { useTranslation } from 'react-i18next';
+import { Tooltip } from '../../components/Tooltip';
+import { TransferIcon } from './TransferIcon';
+import { TransferTarget } from './TransferTarget';
+import { IconButton } from '../../components/IconButton';
 
 export const cancellableStates = [
   TransferState.IN_PROGRESS,
@@ -31,7 +34,7 @@ interface TransferProps {
   transfer: TransferModel;
 }
 
-const Transfer: React.FC<TransferProps> = ({ transfer }) => {
+export const Transfer: React.FC<TransferProps> = ({ transfer }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [text, setText] = useState('');
@@ -58,108 +61,83 @@ const Transfer: React.FC<TransferProps> = ({ transfer }) => {
 
   return (
     <motion.li
-      className="transfer info-grid"
+      className={clsx(styles.transfer, 'info-grid')}
       {...animationPropsSlide}
       aria-label="Transfer"
     >
-      <div className="image">
-        <TransferIcon transfer={transfer} />
-      </div>
-      <div className="info">
-        <div className="space-between">
-          <div className="transfer-info">
-            <div className="filename">
-              <TransferTarget transfer={transfer} />
-              <Tooltip content={transfer.fileName}>
-                <span>{formatFileName(transfer.fileName)}</span>
-              </Tooltip>
+      <TransferIcon transfer={transfer} />
+      <div className={styles.info}>
+        <div className={styles.state}>
+          <div className={styles.filename}>
+            <TransferTarget transfer={transfer} />
+            <Tooltip content={transfer.fileName}>
+              <span>{formatFileName(transfer.fileName)}</span>
+            </Tooltip>
+          </div>
+          {transfer.state === TransferState.IN_PROGRESS ? (
+            <div>
+              <progress
+                value={(transfer.offset || 0) / transfer.fileSize}
+                max={1}
+              />
             </div>
-            {transfer.state === TransferState.IN_PROGRESS ? (
-              <div>
-                <progress
-                  value={(transfer.offset || 0) / transfer.fileSize}
-                  max={1}
-                />
-              </div>
-            ) : null}
-            <div className="metadata">
-              <div>
-                <span>
-                  {formattedOffset
-                    ? t('transfers.progress', {
-                        offset: formattedOffset,
-                        size: formattedSize,
-                      })
-                    : formattedSize}
-                </span>
-              </div>
-              {transfer.state === TransferState.IN_PROGRESS && (
-                <div className="transfer-progress">
-                  <span>{formatFileSize(transfer.speed!)}/s</span>
-                  <span>{humanTimeLeft(transfer.timeLeft)}</span>
-                </div>
-              )}
+          ) : null}
+          <div className={styles.metadata}>
+            <div>
+              <span>
+                {formattedOffset
+                  ? t('transfers.progress', {
+                      offset: formattedOffset,
+                      size: formattedSize,
+                    })
+                  : formattedSize}
+              </span>
               {transfer.state === TransferState.FAILED && <span>Failed!</span>}
             </div>
+            {transfer.state === TransferState.IN_PROGRESS && (
+              <div className={styles.progress}>
+                <span>{formatFileSize(transfer.speed!)}/s</span>
+                <span>{humanTimeLeft(transfer.timeLeft)}</span>
+              </div>
+            )}
           </div>
-          <div className="actions">
-            {transfer.state === TransferState.COMPLETE && transfer.blobUrl ? (
-              <>
-                <a
-                  className="button icon-button transfer-neutral"
-                  href={transfer.blobUrl}
-                  download={transfer.fileName}
-                >
-                  <FaDownload />
-                </a>
-                {transfer.fileType === 'text/plain' ? (
-                  <button
-                    className="icon-button transfer-neutral"
-                    onClick={() => copy(text)}
-                  >
-                    <FaCopy />
-                  </button>
-                ) : null}
-              </>
-            ) : null}
-            {transfer.state === TransferState.COMPLETE ||
-            transfer.state === TransferState.FAILED ? (
-              <button
-                onClick={dismissTransfer}
-                className="icon-button transfer-neutral"
-              >
+        </div>
+        <div className={styles.actions}>
+          {transfer.state === TransferState.COMPLETE && transfer.blobUrl ? (
+            <>
+              <IconButton href={transfer.blobUrl} download={transfer.fileName}>
+                <FaDownload />
+              </IconButton>
+              {transfer.fileType === 'text/plain' ? (
+                <IconButton onClick={() => copy(text)}>
+                  <FaCopy />
+                </IconButton>
+              ) : null}
+            </>
+          ) : null}
+          {transfer.state === TransferState.COMPLETE ||
+          transfer.state === TransferState.FAILED ? (
+            <IconButton onClick={dismissTransfer}>
+              <FaTimes />
+            </IconButton>
+          ) : null}
+          {transfer.state === TransferState.INCOMING ? (
+            <>
+              <IconButton onClick={acceptTransfer} className={styles.positive}>
+                <FaCheck />
+              </IconButton>
+              <IconButton onClick={rejectTransfer} className={styles.negative}>
                 <FaTimes />
-              </button>
-            ) : null}
-            {transfer.state === TransferState.INCOMING ? (
-              <>
-                <button
-                  onClick={acceptTransfer}
-                  className="icon-button transfer-positive"
-                >
-                  <FaCheck />
-                </button>
-                <button
-                  onClick={rejectTransfer}
-                  className="icon-button transfer-negative"
-                >
-                  <FaTimes />
-                </button>
-              </>
-            ) : null}
-            {cancellableStates.includes(transfer.state) ? (
-              <button
-                onClick={cancelTransfer}
-                className="icon-button transfer-negative"
-              >
-                <FaTimes />
-              </button>
-            ) : null}
-          </div>
+              </IconButton>
+            </>
+          ) : null}
+          {cancellableStates.includes(transfer.state) ? (
+            <IconButton onClick={cancelTransfer} className={styles.negative}>
+              <FaTimes />
+            </IconButton>
+          ) : null}
         </div>
       </div>
     </motion.li>
   );
 };
-
-export default Transfer;

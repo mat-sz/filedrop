@@ -1,0 +1,22 @@
+.text {
+  background: #1e1e1e;
+  padding: 15px;
+  margin: 15px;
+  position: relative;
+  border-radius: 5px;
+
+  a {
+    font-weight: bold;
+  }
+
+  h2 {
+    padding: 0;
+    margin-bottom: 15px;
+  }
+
+  p:last-child,
+  ol:last-child,
+  ul:last-child {
+    margin-bottom: 0;
+  }
+}

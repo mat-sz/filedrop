@@ -21,8 +21,8 @@ import { TransferModel, ActionModel } from '../types/Models';
 import { ActionType } from '../types/ActionType';
 import { TransferState } from '../types/TransferState';
 import { StateType } from '../reducers';
-import transferSendFile from './transferSendFile';
-import transferReceiveFile from './transferReceiveFile';
+import { transferSendFile } from './transferSendFile';
+import { transferReceiveFile } from './transferReceiveFile';
 import {
   setRemoteDescriptionAction,
   removeTransferAction,
@@ -484,7 +484,7 @@ function* createKeys() {
   yield put(connectAction());
 }
 
-export default function* root(dispatch: (action: any) => void) {
+export function* root(dispatch: (action: any) => void) {
   yield call(() => createKeys());
 
   yield takeEvery(ActionType.DISMISS_WELCOME, welcomed);

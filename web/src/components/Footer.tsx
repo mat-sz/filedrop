@@ -3,14 +3,15 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import styles from './Footer.module.scss';
 import { StateType } from '../reducers';
 
-const Footer: React.FC = () => {
+export const Footer: React.FC = () => {
   const abuseEmail = useSelector((state: StateType) => state.abuseEmail);
   const { t } = useTranslation();
 
   return (
-    <footer>
+    <footer className={styles.footer}>
       <ul>
         <li>
           <Link to="/privacy">{t('sections.privacy')}</Link>
@@ -39,5 +40,3 @@ const Footer: React.FC = () => {
     </footer>
   );
 };
-
-export default Footer;

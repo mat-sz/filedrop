@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import {
   FaTimes,
   FaArrowDown,
@@ -11,12 +12,12 @@ import {
   FaHourglassEnd,
 } from 'react-icons/fa';
 
-import { uuidToColor } from '../../utils/color';
+import styles from './TransferTarget.module.scss';
 import { TransferState } from '../../types/TransferState';
 import { TransferModel } from '../../types/Models';
 import { StateType } from '../../reducers';
-import Tooltip from '../../components/Tooltip';
-import { useTranslation } from 'react-i18next';
+import { Tooltip } from '../../components/Tooltip';
+import { TargetTile } from '../../components/TargetTile';
 
 interface TransferIconProps {
   transfer: TransferModel;
@@ -45,7 +46,7 @@ const stateIcon = (state: TransferState, receiving: boolean) => {
   }
 };
 
-const TransferTarget: React.FC<TransferIconProps> = ({ transfer }) => {
+export const TransferTarget: React.FC<TransferIconProps> = ({ transfer }) => {
   const { t } = useTranslation();
   const targetClient = useSelector((state: StateType) =>
     state.clientCache.find(client => client.clientId === transfer.clientId)
@@ -57,19 +58,15 @@ const TransferTarget: React.FC<TransferIconProps> = ({ transfer }) => {
 
   return (
     <Tooltip content={t(`transferState.${transfer.state}`)}>
-      <div
-        className="network-tile target-tile"
-        style={{
-          backgroundColor: uuidToColor(targetClient.clientId),
-        }}
+      <TargetTile
+        className={styles.tile}
+        client={targetClient}
         aria-label={t('transfers.icon.state', {
           state: t(`transferState.${transfer.state}`),
         })}
       >
         {stateIcon(transfer.state, transfer.receiving)}
-      </div>
+      </TargetTile>
     </Tooltip>
   );
 };
-
-export default TransferTarget;

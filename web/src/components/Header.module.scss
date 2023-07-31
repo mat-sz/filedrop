@@ -1,0 +1,48 @@
+.header {
+  background: #222;
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  padding: 15px 0;
+  border-bottom: 1px solid #111;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+
+  h1 {
+    line-height: 1.5;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 24px;
+    position: relative;
+    z-index: 500;
+
+    svg {
+      fill: var(--accent-color);
+      height: 24px;
+      width: auto;
+      margin-right: 6px;
+    }
+  }
+
+  .right {
+    font-size: 0;
+
+    a {
+      margin-left: 10px;
+
+      svg {
+        height: 1.4rem;
+        width: auto;
+      }
+    }
+  }
+}

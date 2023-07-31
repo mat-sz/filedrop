@@ -3,17 +3,19 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { FaTimes } from 'react-icons/fa';
 
-import Network from '../components/Network';
+import styles from './ClipboardModal.module.scss';
 import { motion } from '../animate';
 import { createTransferAction } from '../actions/transfers';
 import { animationPropsOpacity } from '../animationSettings';
+import { Network } from '../components/Network';
+import { IconButton } from '../components/IconButton';
 
 interface ClipboardModalProps {
   files: File[];
   dismissClipboard: () => void;
 }
 
-const ClipboardModal: React.FC<ClipboardModalProps> = ({
+export const ClipboardModal: React.FC<ClipboardModalProps> = ({
   files,
   dismissClipboard,
 }) => {
@@ -30,14 +32,14 @@ const ClipboardModal: React.FC<ClipboardModalProps> = ({
   };
 
   return (
-    <motion.div className="modal" {...animationPropsOpacity}>
+    <motion.div className={styles.modal} {...animationPropsOpacity}>
       <div>
         <div className="subsection left">
           <h2>
             {t('clipboard.title')}
-            <button className="icon-button" onClick={dismissClipboard}>
+            <IconButton onClick={dismissClipboard}>
               <FaTimes />
-            </button>
+            </IconButton>
           </h2>
           <p>{t('clipboard.body', { fileNames })}</p>
           <Network onSelect={onSelect} />
@@ -46,5 +48,3 @@ const ClipboardModal: React.FC<ClipboardModalProps> = ({
     </motion.div>
   );
 };
-
-export default ClipboardModal;

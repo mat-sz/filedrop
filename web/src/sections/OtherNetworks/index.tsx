@@ -3,9 +3,10 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
+import styles from './index.module.scss';
 import { StateType } from '../../reducers';
 
-const OtherNetworksSection: React.FC = () => {
+export const OtherNetworksSection: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const localNetworkNames = useSelector((store: StateType) =>
@@ -19,7 +20,7 @@ const OtherNetworksSection: React.FC = () => {
   return (
     <div className="subsection">
       <h2>{t('otherNetworks')}</h2>
-      <div className="actions">
+      <div className={styles.list}>
         {localNetworkNames.map(name => (
           <button key={name} onClick={() => navigate(`/${name}`)}>
             {name}
@@ -29,5 +30,3 @@ const OtherNetworksSection: React.FC = () => {
     </div>
   );
 };
-
-export default OtherNetworksSection;

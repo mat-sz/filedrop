@@ -12,7 +12,7 @@ import { TransferState } from '../types/TransferState';
 import { updateTransferAction } from '../actions/transfers';
 import { sendMessageAction } from '../actions/websocket';
 
-export default function* transferSendFile(
+export function* transferSendFile(
   actionMessage: ActionMessageModel,
   dispatch: (action: any) => void
 ) {

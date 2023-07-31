@@ -7,18 +7,18 @@ import './App.scss';
 
 import { Router } from './config';
 import { StateType } from './reducers';
-import Home from './screens/Home';
-import Transfers from './screens/Transfers';
-import Privacy from './screens/Privacy';
-import ToS from './screens/ToS';
-import Abuse from './screens/Abuse';
-import About from './screens/About';
-import TechnicalInformation from './screens/TechnicalInformation';
-import Header from './components/Header';
-import Status from './components/Status';
-import Footer from './components/Footer';
+import { Home } from './screens/Home';
+import { Transfers } from './screens/Transfers';
+import { Privacy } from './screens/Privacy';
+import { ToS } from './screens/ToS';
+import { Abuse } from './screens/Abuse';
+import { About } from './screens/About';
+import { TechnicalInformation } from './screens/TechnicalInformation';
+import { Header } from './components/Header';
+import { Status } from './components/Status';
+import { Footer } from './components/Footer';
 
-const App: React.FC = () => {
+export const App: React.FC = () => {
   const abuseEmail = useSelector((state: StateType) => state.abuseEmail);
 
   return (
@@ -40,5 +40,3 @@ const App: React.FC = () => {
     </Router>
   );
 };
-
-export default App;

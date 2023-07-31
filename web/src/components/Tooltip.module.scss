@@ -1,0 +1,26 @@
+.wrapper {
+  position: relative;
+
+  &:hover {
+    .tooltip {
+      opacity: 1;
+    }
+  }
+
+  .tooltip {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.1s ease-in-out all;
+    transform: translate(-50%, -100%);
+    background: #111;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    width: max-content;
+    max-width: 300px;
+    font-weight: normal;
+  }
+}

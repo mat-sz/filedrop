@@ -3,16 +3,15 @@ import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { AnimatePresence } from '../animate';
 
-import ChatSection from '../sections/Chat';
-import ConnectSection from '../sections/Connect';
-import TransfersSection from '../sections/Transfers';
-import OtherNetworksSection from '../sections/OtherNetworks';
-import IncompatibleBrowser from '../components/IncompatibleBrowser';
-import ClipboardModal from '../modals/ClipboardModal';
+import styles from './Transfers.module.scss';
+import { ChatSection } from '../sections/Chat';
+import { ConnectSection } from '../sections/Connect';
+import { TransfersSection } from '../sections/Transfers';
+import { OtherNetworksSection } from '../sections/OtherNetworks';
+import { ClipboardModal } from '../modals/ClipboardModal';
 import { setNetworkNameAction } from '../actions/state';
-import { isBrowserCompatible } from '../utils/browser';
 
-const Transfers: React.FC = () => {
+export const Transfers: React.FC = () => {
   const dispatch = useDispatch();
   const [clipboardFiles, setClipboardFiles] = useState<File[]>([]);
   const { networkName } = useParams<{ networkName: string }>();
@@ -70,7 +69,6 @@ const Transfers: React.FC = () => {
 
   return (
     <>
-      {!isBrowserCompatible ? <IncompatibleBrowser /> : null}
       <AnimatePresence>
         {clipboardFiles.length > 0 && (
           <ClipboardModal
@@ -79,16 +77,14 @@ const Transfers: React.FC = () => {
           />
         )}
       </AnimatePresence>
-      <section className="desktop-2col">
+      <div className={styles.transfers}>
         <TransfersSection />
         <div>
           <ConnectSection href={href} />
           <OtherNetworksSection />
           <ChatSection />
         </div>
-      </section>
+      </div>
     </>
   );
 };
-
-export default Transfers;

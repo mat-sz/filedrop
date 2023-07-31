@@ -11,7 +11,7 @@ import { TransferState } from '../types/TransferState';
 import { updateTransferAction } from '../actions/transfers';
 import { sendMessageAction } from '../actions/websocket';
 
-export default function* transferReceiveFile(
+export function* transferReceiveFile(
   rtcMessage: RTCDescriptionMessageModel,
   dispatch: (action: any) => void
 ) {

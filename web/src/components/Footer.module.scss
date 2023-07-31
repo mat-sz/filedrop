@@ -1,0 +1,35 @@
+.footer {
+  background: #222;
+  border-top: 1px solid #111;
+
+  ul {
+    list-style: none;
+    padding: 15px;
+    margin: 0;
+
+    li:first-child {
+      padding-left: 0;
+    }
+
+    li:last-child {
+      border-right: none;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    ul {
+      li {
+        display: inline-block;
+        padding: 0 10px;
+        border-right: 1px solid #333;
+      }
+    }
+  }
+}

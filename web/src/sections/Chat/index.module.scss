@@ -1,0 +1,94 @@
+.chat {
+  .empty {
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 10px;
+
+    & > * {
+      opacity: 0.7;
+    }
+
+    svg {
+      height: 100px;
+      width: 100px;
+      margin-bottom: 20px;
+    }
+  }
+
+  .items {
+    border-radius: 5px;
+    margin-bottom: 10px;
+
+    & > div:first-child {
+      width: 100%;
+      height: 300px;
+      max-height: 300px;
+    }
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: safe flex-end;
+
+    li {
+      display: block;
+      text-align: left;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 10px;
+      margin-bottom: 10px;
+      margin-top: 0;
+      position: relative;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  form {
+    display: flex;
+    align-items: center;
+    background: rgba(90, 90, 90, 0.4);
+    border-radius: 5px;
+
+    button {
+      margin-right: 15px;
+    }
+
+    textarea {
+      resize: none;
+      flex: 1;
+      margin-right: 10px;
+      min-height: 40px;
+      background: none;
+      padding: 10px 15px;
+      color: white;
+      border: none;
+      font-size: 0.8rem;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  span {
+    display: block;
+    margin-bottom: 0;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .chat {
+    margin-bottom: 65px;
+  }
+}

@@ -2,13 +2,16 @@ import React, { useLayoutEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { FaCopy } from 'react-icons/fa';
+import clsx from 'clsx';
 
+import styles from './ChatItem.module.scss';
 import { animationPropsSlide } from '../../animationSettings';
 import { ChatItemModel } from '../../types/Models';
 import { StateType } from '../../reducers';
-import { uuidToColor } from '../../utils/color';
 import { copy } from '../../utils/copy';
 import { motion } from '../../animate';
+import { TargetTile } from '../../components/TargetTile';
+import { IconButton } from '../../components/IconButton';
 
 export interface ChatItemProps {
   item: ChatItemModel;
@@ -30,7 +33,7 @@ const urlify = (text: string): React.ReactNode => {
   });
 };
 
-const ChatItem: React.FC<ChatItemProps> = ({ item }) => {
+export const ChatItem: React.FC<ChatItemProps> = ({ item }) => {
   const { t, i18n } = useTranslation();
   const [expanded, setExpanded] = useState(false);
   const messageRef = useRef<HTMLDivElement>(null);
@@ -46,35 +49,28 @@ const ChatItem: React.FC<ChatItemProps> = ({ item }) => {
 
   return (
     <motion.li
-      className={'subsection ' + (expanded ? 'chat-expanded' : '')}
+      className={clsx('subsection', { [styles.expanded]: expanded })}
       {...animationPropsSlide}
       aria-label="Chat message"
     >
-      <div className="chat-info">
-        <div
-          className="network-tile target-tile"
-          style={{
-            backgroundColor: uuidToColor(item.clientId),
-          }}
-        />
+      <div className={styles.info}>
+        {client && <TargetTile client={client} />}
         <div>{client?.clientName}</div>
         <div>
           {item.date.toLocaleTimeString(i18n.language, { timeStyle: 'short' })}
         </div>
-        <button className="icon-button" onClick={() => copy(item.message)}>
+        <IconButton onClick={() => copy(item.message)}>
           <FaCopy />
-        </button>
+        </IconButton>
       </div>
-      <div className="chat-message" ref={messageRef}>
+      <div className={styles.message} ref={messageRef}>
         {urlify(item.message)}
       </div>
       {!expanded && (
-        <button className="chat-message-more" onClick={() => setExpanded(true)}>
+        <button className={styles.more} onClick={() => setExpanded(true)}>
           {t('chat.showMore')}
         </button>
       )}
     </motion.li>
   );
 };
-
-export default ChatItem;

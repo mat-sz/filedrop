@@ -3,16 +3,19 @@ import { QRCodeSVG } from 'qrcode.react';
 import { useTranslation } from 'react-i18next';
 import { FaPaperPlane, FaCopy } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
+import clsx from 'clsx';
 
+import styles from './index.module.scss';
 import { StateType } from '../../reducers';
 import { copy } from '../../utils/copy';
 import { isShareSupported } from '../../utils/browser';
+import { IconButton } from '../../components/IconButton';
 
 interface ConnectSectionProps {
   href: string;
 }
 
-const ConnectSection: React.FC<ConnectSectionProps> = ({ href }) => {
+export const ConnectSection: React.FC<ConnectSectionProps> = ({ href }) => {
   const appName = useSelector((state: StateType) => state.appName);
   const { t } = useTranslation();
   const onShare = () => {
@@ -23,24 +26,22 @@ const ConnectSection: React.FC<ConnectSectionProps> = ({ href }) => {
   };
 
   return (
-    <div className="connect center subsection">
-      <div className="info">{t('connect')}</div>
+    <div className={clsx(styles.connect, 'subsection')}>
+      <div className={styles.info}>{t('connect')}</div>
       <div>
-        <QRCodeSVG value={href} size={192} className="qrcode" />
+        <QRCodeSVG value={href} size={192} className={styles.qrcode} />
       </div>
-      <div className="copy">
+      <div className={styles.copy}>
         <pre>{href}</pre>
-        <button className="icon-button" onClick={() => copy(href)}>
+        <IconButton onClick={() => copy(href)}>
           <FaCopy />
-        </button>
+        </IconButton>
         {isShareSupported && (
-          <button onClick={onShare} className="icon-button">
+          <IconButton onClick={onShare}>
             <FaPaperPlane />
-          </button>
+          </IconButton>
         )}
       </div>
     </div>
   );
 };
-
-export default ConnectSection;

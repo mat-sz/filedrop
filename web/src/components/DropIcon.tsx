@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DropIcon: React.FC = () => {
+export const DropIcon: React.FC = () => {
   return (
     <svg
       version="1.1"
@@ -16,5 +16,3 @@ const DropIcon: React.FC = () => {
     </svg>
   );
 };
-
-export default DropIcon;

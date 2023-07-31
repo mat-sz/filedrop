@@ -1,0 +1,44 @@
+.info {
+  display: flex;
+  align-items: center;
+  color: #aaa;
+  margin-bottom: 5px;
+
+  & > * {
+    margin-right: 10px;
+  }
+}
+
+.message {
+  position: relative;
+  white-space: pre-wrap;
+  max-height: 50px;
+  overflow: hidden;
+  user-select: text;
+
+  .more {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.4) 0%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    color: white;
+
+    &:hover {
+      background: linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.4) 0%,
+        rgba(0, 0, 0, 0) 100%
+      );
+    }
+  }
+}
+
+.expanded .message {
+  max-height: unset;
+}

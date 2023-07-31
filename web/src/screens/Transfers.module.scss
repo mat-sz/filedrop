@@ -1,0 +1,15 @@
+.transfers {
+  margin: 15px;
+
+  & > div > :first-child {
+    margin-top: 0;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .transfers {
+    display: grid;
+    grid-gap: 15px;
+    grid-template-columns: minmax(0, 2fr) 1fr;
+  }
+}

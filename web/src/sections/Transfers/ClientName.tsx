@@ -3,10 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { FaEdit, FaCheck, FaTimes } from 'react-icons/fa';
 
+import styles from './ClientName.module.scss';
 import { setClientNameAction } from '../../actions/state';
 import { StateType } from '../../reducers';
+import { IconButton } from '../../components/IconButton';
 
-const ClientName: React.FC = () => {
+export const ClientName: React.FC = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const clientName = useSelector((store: StateType) => store.clientName);
@@ -36,13 +38,13 @@ const ClientName: React.FC = () => {
   };
 
   return (
-    <div className="client-name">
+    <div className={styles.clientName}>
       {!isEditing ? (
         <>
           <strong>{clientName}</strong>{' '}
-          <button className="icon-button" onClick={() => onEdit()}>
+          <IconButton onClick={onEdit}>
             <FaEdit />
-          </button>
+          </IconButton>
         </>
       ) : (
         <>
@@ -53,16 +55,14 @@ const ClientName: React.FC = () => {
             onChange={e => setName(e.target.value)}
             maxLength={32}
           />
-          <button onClick={() => onSave()} className="icon-button">
+          <IconButton onClick={onSave}>
             <FaCheck />
-          </button>
-          <button onClick={() => onCancel()} className="icon-button">
+          </IconButton>
+          <IconButton onClick={onCancel}>
             <FaTimes />
-          </button>
+          </IconButton>
         </>
       )}
     </div>
   );
 };
-
-export default ClientName;

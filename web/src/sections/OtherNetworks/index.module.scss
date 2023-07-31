@@ -1,0 +1,9 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
+  & > *:not(:last-child) {
+    margin-right: 10px;
+  }
+}

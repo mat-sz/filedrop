@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   FaFile,
   FaFileAlt,
@@ -8,10 +9,10 @@ import {
   FaFileArchive,
 } from 'react-icons/fa';
 
+import styles from './TransferIcon.module.scss';
 import { fileType } from '../../utils/file';
 import { TransferModel } from '../../types/Models';
 import { FileType } from '../../types/FileType';
-import { useTranslation } from 'react-i18next';
 
 interface TransferIconProps {
   transfer: TransferModel;
@@ -38,11 +39,11 @@ const typeIcon = (mime: string) => {
   }
 };
 
-const TransferIcon: React.FC<TransferIconProps> = ({ transfer }) => {
+export const TransferIcon: React.FC<TransferIconProps> = ({ transfer }) => {
   const { t } = useTranslation();
 
   return (
-    <div className="transfer-icon">
+    <div className={styles.icon}>
       {transfer.preview ? (
         <img
           src={transfer.preview}
@@ -54,5 +55,3 @@ const TransferIcon: React.FC<TransferIconProps> = ({ transfer }) => {
     </div>
   );
 };
-
-export default TransferIcon;

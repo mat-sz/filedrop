@@ -1,0 +1,57 @@
+.tile {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 20px;
+  transition: 0.1s ease-in-out box-shadow;
+  background-image: var(--dark-gradient);
+  border-radius: 5px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  position: relative;
+  overflow: hidden;
+  text-shadow: none;
+
+  svg {
+    font-size: 10px;
+  }
+
+  .secure,
+  .local,
+  .device {
+    position: absolute;
+    font-size: 0;
+
+    svg {
+      fill: rgba(0, 0, 0, 0.1);
+      height: 20px;
+      width: 20px;
+    }
+  }
+
+  .secure {
+    top: 5px;
+    left: 5px;
+  }
+
+  .local {
+    top: 5px;
+    right: 5px;
+  }
+
+  .device {
+    bottom: 5px;
+    left: 5px;
+  }
+
+  &.small {
+    width: 20px;
+    height: 20px;
+  }
+
+  &.big {
+    width: 75px;
+    height: 75px;
+  }
+}

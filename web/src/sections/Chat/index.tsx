@@ -5,13 +5,16 @@ import { AnimatePresence, motion } from '../../animate';
 import { ScrollArea } from 'react-nano-scrollbar';
 import Textarea from 'react-expanding-textarea';
 import { FaPaperPlane, FaRegCommentDots } from 'react-icons/fa';
+import clsx from 'clsx';
 
+import styles from './index.module.scss';
 import { StateType } from '../../reducers';
 import { sendChatMessageAction } from '../../actions/state';
 import { animationPropsOpacity } from '../../animationSettings';
-import ChatItem from './ChatItem';
+import { ChatItem } from './ChatItem';
+import { IconButton } from '../../components/IconButton';
 
-const Chat: React.FC = () => {
+export const ChatSection: React.FC = () => {
   const { t } = useTranslation();
   const chat = useSelector((store: StateType) => store.chat);
   const privateKey = useSelector((store: StateType) => store.privateKey);
@@ -53,17 +56,17 @@ const Chat: React.FC = () => {
   }
 
   return (
-    <div className="subsection chat">
+    <div className={clsx('subsection', styles.chat)}>
       {chat.length === 0 ? (
         <AnimatePresence>
-          <motion.div className="chat-empty" {...animationPropsOpacity}>
+          <motion.div className={styles.empty} {...animationPropsOpacity}>
             <FaRegCommentDots />
             <h3>{t('emptyChat.title')}</h3>
             <div>{t('emptyChat.body')}</div>
           </motion.div>
         </AnimatePresence>
       ) : (
-        <ScrollArea hideScrollbarX className="chat-items">
+        <ScrollArea hideScrollbarX className={styles.items}>
           <ul ref={containerRef}>
             <AnimatePresence>
               {chat.map(item => (
@@ -80,12 +83,10 @@ const Chat: React.FC = () => {
           onChange={e => setMessage((e.target as any).value)}
           placeholder={t('chat.message')}
         />
-        <button className="icon-button">
+        <IconButton>
           <FaPaperPlane />
-        </button>
+        </IconButton>
       </form>
     </div>
   );
 };
-
-export default Chat;
