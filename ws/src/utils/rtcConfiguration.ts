@@ -7,7 +7,7 @@ import {
   turnSecret,
   turnExpiry,
   turnCredential,
-} from '../config';
+} from '../config.js';
 
 export const rtcConfiguration = (clientId: string) => {
   const iceServers = [];

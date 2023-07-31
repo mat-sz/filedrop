@@ -1,3 +1,3 @@
-export * from './DeviceType';
-export * from './MessageType';
-export * from './Models';
+export * from './DeviceType.js';
+export * from './MessageType.js';
+export * from './Models.js';

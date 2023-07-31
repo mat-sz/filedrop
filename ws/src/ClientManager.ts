@@ -8,8 +8,8 @@ import {
   ClientModel,
 } from '@filedrop/types';
 
-import { Client } from './types/Client';
-import { rtcConfiguration } from './utils/rtcConfiguration';
+import { Client } from './types/Client.js';
+import { rtcConfiguration } from './utils/rtcConfiguration.js';
 import {
   isNetworkNameMessageModel,
   isClientNameMessageModel,
@@ -18,8 +18,8 @@ import {
   isRTCDescriptionMessageModel,
   isRTCCandidateMessageModel,
   isEncryptedMessageModel,
-} from './utils/validation';
-import { appName, maxSize, noticeText, noticeUrl } from './config';
+} from './utils/validation.js';
+import { appName, maxSize, noticeText, noticeUrl } from './config.js';
 
 export class ClientManager {
   private clients: Client[] = [];

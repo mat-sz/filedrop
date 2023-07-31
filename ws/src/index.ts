@@ -4,10 +4,10 @@ import fastifyWebsocket from '@fastify/websocket';
 import fastifyStatic from '@fastify/static';
 import fastifyHttpProxy from '@fastify/http-proxy';
 
-import { WSClient } from './WSClient';
-import { ClientManager } from './ClientManager';
-import { isMessageModel } from './utils/validation';
-import { host, maxSize, port, useProxy } from './config';
+import { WSClient } from './WSClient.js';
+import { ClientManager } from './ClientManager.js';
+import { isMessageModel } from './utils/validation.js';
+import { host, maxSize, port, useProxy } from './config.js';
 
 const clientManager = new ClientManager();
 const app = Fastify();

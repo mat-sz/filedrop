@@ -2,9 +2,9 @@ import { v4 as uuid } from 'uuid';
 import WebSocket from 'ws';
 import { FastifyRequest } from 'fastify';
 
-import { Client } from './types/Client';
-import { generateClientName } from './utils/name';
-import { acceptForwardedFor } from './config';
+import { Client } from './types/Client.js';
+import { generateClientName } from './utils/name.js';
+import { acceptForwardedFor } from './config.js';
 
 export class WSClient implements Client {
   readonly clientId = uuid();

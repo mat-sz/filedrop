@@ -1,5 +1,5 @@
-import { DeviceType } from './DeviceType';
-import { MessageType, ActionMessageActionType } from './MessageType';
+import { DeviceType } from './DeviceType.js';
+import { MessageType, ActionMessageActionType } from './MessageType.js';
 
 export interface ClientModel {
   clientId: string;
