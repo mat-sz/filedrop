@@ -4,6 +4,9 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
+      args:
+        - VITE_APP_NAME=${APP_NAME}
+        - VITE_APP_USE_BROWSER_ROUTER=1
     environment:
       - WS_HOST=0.0.0.0
       - WS_APP_NAME=${APP_NAME}
@@ -11,8 +14,6 @@ services:
       - TURN_SERVER=turn:(hostname)
       - TURN_USERNAME=filedrop
       - TURN_SECRET=${TURN_SECRET}
-      - VITE_APP_NAME=${APP_NAME}
-      - VITE_APP_USE_BROWSER_ROUTER=1
     ports:
       - '${PORT}:5000'
 

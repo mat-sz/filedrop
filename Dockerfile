@@ -5,6 +5,9 @@ FROM node:19-alpine as build
 ARG BUILD_DATE
 ARG VERSION
 
+ARG VITE_APP_USE_BROWSER_ROUTER
+ARG VITE_APP_NAME
+
 LABEL build_version="filedrop version: ${VERSION}, Build Date: ${BUILD_DATE}"
 
 WORKDIR /app
@@ -15,7 +18,5 @@ RUN apk add --no-cache bash
 RUN yarn install
 RUN yarn build
 EXPOSE 5000
-
-COPY /web/.env.example /web/.env
 
 CMD ["yarn", "start:prod"]
