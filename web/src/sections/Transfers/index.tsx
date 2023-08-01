@@ -7,6 +7,7 @@ import { AnimatePresence } from '../../animate';
 import { StateType } from '../../reducers';
 import { Transfer } from './Transfer';
 import { Actions } from './Actions';
+import { Total } from './Total';
 
 export const TransfersSection: React.FC = () => {
   const { t } = useTranslation();
@@ -21,6 +22,7 @@ export const TransfersSection: React.FC = () => {
             <Actions />
           </div>
           <ul className={styles.queue}>
+            <Total />
             <AnimatePresence>
               {transfers.map(transfer => (
                 <Transfer key={transfer.transferId} transfer={transfer} />

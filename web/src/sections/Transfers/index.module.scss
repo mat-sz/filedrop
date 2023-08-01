@@ -6,8 +6,10 @@
   li {
     animation: fadeIn 0.4s ease-in-out 0s 1;
 
-    & > * {
-      margin: 5px 0;
+    &:not(:last-child) {
+      padding-bottom: 15px;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #333;
     }
   }
 }
