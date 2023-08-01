@@ -1,0 +1,89 @@
+$toggle-indicator-size: 24px; // changing this number will resize the whole toggle
+$track-height: $toggle-indicator-size + 6;
+$track-width: $toggle-indicator-size * 2.5;
+$highContrastModeSupport: solid 2px transparent;
+
+$indicator: #fff;
+$track-border: #5a72b5;
+$track-background: #777777;
+$track-background-checked: #3ea74e;
+
+$speed: 0.2s;
+
+// Toggle specific styles
+.toggle {
+  align-items: center;
+  border-radius: 100px;
+  display: flex;
+  margin-bottom: 16px;
+
+  &:last-of-type {
+    margin: 0;
+  }
+}
+
+// Since we can't style the checkbox directly, we "hide" it so we can draw the toggle.
+.input {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+
+  &:disabled + .track {
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+}
+
+.track {
+  background: $track-background;
+  border: 1px solid transparent;
+  border-radius: 100px;
+  cursor: pointer;
+  display: flex;
+  height: $track-height;
+  margin-right: 12px;
+  position: relative;
+  width: $track-width;
+  transition: background $speed ease-in-out;
+}
+
+.indicator {
+  align-items: center;
+  background: $indicator;
+  border-radius: $toggle-indicator-size;
+  bottom: 2px;
+  display: flex;
+  height: $toggle-indicator-size;
+  justify-content: center;
+  left: 2px;
+  outline: $highContrastModeSupport;
+  position: absolute;
+  transition: $speed;
+  width: $toggle-indicator-size;
+}
+
+.checkmark {
+  fill: $track-background-checked;
+  height: $toggle-indicator-size - 4;
+  width: $toggle-indicator-size - 4;
+  opacity: 0;
+  transition: opacity $speed ease-in-out;
+}
+
+.input:checked + .track {
+  background: $track-background-checked;
+
+  .indicator {
+    background: $indicator;
+    transform: translateX($track-width - $track-height);
+
+    .checkmark {
+      opacity: 1;
+      transition: opacity $speed ease-in-out;
+    }
+  }
+}

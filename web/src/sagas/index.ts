@@ -29,6 +29,7 @@ import {
   updateTransferAction,
   addTransferAction,
   addIceCandidateAction,
+  acceptTransferAction,
 } from '../actions/transfers';
 import {
   connectAction,
@@ -124,6 +125,13 @@ function* message(action: ActionModel) {
         };
 
         yield put(addTransferAction(transfer));
+
+        const autoAccept: boolean = yield select(
+          (state: StateType) => state.autoAccept
+        );
+        if (autoAccept) {
+          yield put(acceptTransferAction(transfer.transferId));
+        }
       }
       break;
     case MessageType.ACTION:

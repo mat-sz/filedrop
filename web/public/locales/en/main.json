@@ -40,6 +40,9 @@
     "title": "This is your tile.",
     "body": "Beneath you'll see other tiles just like this one. Drag and drop your files or click on them to initiate a file transfer."
   },
+  "settings": {
+    "autoAccept": "Automatically accept all incoming transfers"
+  },
   "transfers": {
     "title": "Transfers",
     "actions": {

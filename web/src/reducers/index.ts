@@ -29,6 +29,7 @@ export interface StateType {
   noticeUrl?: string;
   appName: string;
   abuseEmail?: string;
+  autoAccept: boolean;
 }
 
 let initialState: StateType = {
@@ -41,6 +42,7 @@ let initialState: StateType = {
   maxSize: 0,
   chat: [],
   appName: defaultAppName,
+  autoAccept: false,
 };
 
 const stateSort: Record<TransferState, number> = {
@@ -63,6 +65,9 @@ export function applicationState(state = initialState, action: ActionModel) {
       break;
     case ActionType.DISMISS_ERROR:
       newState.error = undefined;
+      break;
+    case ActionType.SET_AUTO_ACCEPT:
+      newState.autoAccept = action.value as boolean;
       break;
     case ActionType.SET_CONNECTED:
       newState.connected = action.value as boolean;

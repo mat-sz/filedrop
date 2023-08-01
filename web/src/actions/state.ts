@@ -25,6 +25,13 @@ export function setErrorAction(error: string): ActionModel {
   };
 }
 
+export function setAutoAcceptAction(autoAccept: boolean): ActionModel {
+  return {
+    type: ActionType.SET_AUTO_ACCEPT,
+    value: autoAccept,
+  };
+}
+
 export function setConnectedAction(connected: boolean): ActionModel {
   return {
     type: ActionType.SET_CONNECTED,

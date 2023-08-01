@@ -13,6 +13,8 @@ export enum ActionType {
   SET_MAX_SIZE = 'SET_MAX_SIZE',
   SET_NOTICE = 'SET_NOTICE',
   SET_KEY_PAIR = 'SET_KEY_PAIR',
+
+  // App info
   SET_APP_NAME = 'SET_APP_NAME',
   SET_ABUSE_EMAIL = 'SET_ABUSE_EMAIL',
 
@@ -48,4 +50,7 @@ export enum ActionType {
   // Chat
   ADD_CHAT_ITEM = 'ADD_CHAT_ITEM',
   SEND_CHAT_MESSAGE = 'SEND_CHAT_MESSAGE',
+
+  // Settings
+  SET_AUTO_ACCEPT = 'SET_AUTO_ACCEPT',
 }
