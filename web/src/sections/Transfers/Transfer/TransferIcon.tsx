@@ -10,9 +10,9 @@ import {
 } from 'react-icons/fa';
 
 import styles from './TransferIcon.module.scss';
-import { fileType } from '../../utils/file';
-import { TransferModel } from '../../types/Models';
-import { FileType } from '../../types/FileType';
+import { fileType } from '../../../utils/file';
+import { TransferModel } from '../../../types/Models';
+import { FileType } from '../../../types/FileType';
 
 interface TransferIconProps {
   transfer: TransferModel;

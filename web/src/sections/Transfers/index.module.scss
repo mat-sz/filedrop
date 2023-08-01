@@ -1,20 +1,23 @@
-.grid {
-  display: flex;
+.queue {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 
-  .image {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
+  li {
+    animation: fadeIn 0.4s ease-in-out 0s 1;
+
+    & > * {
+      margin: 5px 0;
+    }
   }
+}
 
-  .info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    text-align: left;
-    flex: 1;
-    margin-left: 15px;
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+
+  h2 {
+    margin: 0;
   }
 }

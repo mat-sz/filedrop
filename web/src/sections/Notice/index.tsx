@@ -1,12 +1,11 @@
 import React from 'react';
 import clsx from 'clsx';
 import { useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 
-import styles from './Notice.module.scss';
+import styles from './index.module.scss';
 import { StateType } from '../../reducers';
 
-export const Notice: React.FC = () => {
+export const NoticeSection: React.FC = () => {
   const noticeText = useSelector((store: StateType) => store.noticeText);
   const noticeUrl = useSelector((store: StateType) => store.noticeUrl);
 

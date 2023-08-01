@@ -13,7 +13,7 @@ export const newStore = (): StoreType => {
     applyMiddleware(socketMiddleware(wsServer), sagaMiddleware)
   );
 
-  sagaMiddleware.run(root, store.dispatch);
+  sagaMiddleware.run(root);
 
   return store;
 };

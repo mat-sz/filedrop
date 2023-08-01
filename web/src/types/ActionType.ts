@@ -18,7 +18,6 @@ export enum ActionType {
 
   // Dismiss
   DISMISS_ERROR = 'DISMISS_ERROR',
-  DISMISS_WELCOME = 'DISMISS_WELCOME',
 
   // Web Sockets
   PREPARE_MESSAGE = 'PREPARE_MESSAGE',

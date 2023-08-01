@@ -1,0 +1,13 @@
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  button {
+    padding: 5px 20px;
+  }
+
+  & > *:not(:last-child) {
+    margin-right: 10px;
+  }
+}

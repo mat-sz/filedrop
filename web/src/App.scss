@@ -19,6 +19,19 @@ a {
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+button {
+  transition: 0.1s ease-in-out all;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+  text-shadow: none;
+
+  &:hover {
+    box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.5);
+  }
+}
+
 html,
 body,
 #root {
@@ -50,26 +63,6 @@ input {
   border-radius: 5px;
 }
 
-button {
-  display: inline-block;
-  background-color: rgba(255, 255, 255, 0.75);
-  transition: 0.1s ease-in-out all;
-  border: none;
-  color: black;
-  padding: 10px 20px;
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 14px;
-  text-shadow: none;
-  border-radius: 5px;
-
-  &:hover {
-    text-decoration: none;
-    background-color: white;
-    box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.5);
-  }
-}
-
 h1,
 h2,
 h3,
@@ -77,57 +70,23 @@ h3,
   text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.75);
 }
 
+h1 {
+  margin: 0;
+}
+
 h2,
 h3 {
-  padding: 0 10px;
-  text-align: left;
   text-transform: uppercase;
   letter-spacing: 3px;
-  font-size: 16px;
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  button {
-    padding: 5px 20px;
-  }
+  margin: 0;
 }
 
 h2 {
   font-size: 20px;
-  color: white;
 }
 
-progress {
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
-  border-radius: 8px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  overflow: hidden;
-  height: 6px;
-  display: block;
-  margin: 4px 0;
-
-  &::-moz-progress-bar {
-    background-color: var(--accent-color);
-  }
-
-  &::-webkit-progress-value {
-    background-color: var(--accent-color);
-  }
-
-  &::-webkit-progress-bar {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-  }
-}
-
-h1,
-h2,
 h3 {
-  margin: 0;
+  font-size: 16px;
 }
 
 .subsection {
@@ -136,15 +95,6 @@ h3 {
   margin: 15px 0;
   position: relative;
   border-radius: 5px;
-
-  a {
-    font-weight: bold;
-  }
-
-  h2 {
-    padding: 0;
-    margin-bottom: 15px;
-  }
 }
 
 /* Animations */

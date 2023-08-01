@@ -1,8 +1,14 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const IncompatibleBrowser: React.FC = () => {
+import { isBrowserCompatible } from '../../utils/browser';
+
+export const IncompatibleBrowserSection: React.FC = () => {
   const { t } = useTranslation();
+
+  if (isBrowserCompatible) {
+    return null;
+  }
 
   return (
     <div className="subsection">

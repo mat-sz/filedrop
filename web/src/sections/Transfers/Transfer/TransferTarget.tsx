@@ -13,11 +13,11 @@ import {
 } from 'react-icons/fa';
 
 import styles from './TransferTarget.module.scss';
-import { TransferState } from '../../types/TransferState';
-import { TransferModel } from '../../types/Models';
-import { StateType } from '../../reducers';
-import { Tooltip } from '../../components/Tooltip';
-import { TargetTile } from '../../components/TargetTile';
+import { TransferState } from '../../../types/TransferState';
+import { TransferModel } from '../../../types/Models';
+import { StateType } from '../../../reducers';
+import { Tooltip } from '../../../components/Tooltip';
+import { TargetTile } from '../../../components/TargetTile';
 
 interface TransferIconProps {
   transfer: TransferModel;

@@ -1,0 +1,61 @@
+.transfer {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-gap: 15px;
+  align-items: center;
+
+  .state {
+    progress {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 8px;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      overflow: hidden;
+      height: 6px;
+      display: block;
+      margin: 4px 0;
+      width: 100%;
+
+      &::-moz-progress-bar {
+        background-color: var(--accent-color);
+      }
+
+      &::-webkit-progress-value {
+        background-color: var(--accent-color);
+      }
+
+      &::-webkit-progress-bar {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+      }
+    }
+
+    .filename {
+      word-break: break-word;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+    }
+
+    .metadata {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+
+      span:not(:last-child) {
+        margin-right: 10px;
+      }
+    }
+
+    .progress {
+      text-align: center;
+    }
+  }
+
+  &:not(:last-child) {
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #333;
+  }
+}

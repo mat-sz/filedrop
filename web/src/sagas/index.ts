@@ -57,7 +57,7 @@ import { randomString } from '../utils/string';
 
 const secret = randomString(64);
 
-function* message(action: ActionModel, dispatch: (action: any) => void) {
+function* message(action: ActionModel) {
   const msg: Message = action.value as Message;
 
   switch (msg.type) {
@@ -133,7 +133,7 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
           yield put(removeTransferAction(msg.transferId));
           break;
         case ActionMessageActionType.ACCEPT:
-          yield call(() => transferSendFile(msg, dispatch));
+          yield call(transferSendFile, msg);
           break;
       }
       break;
@@ -151,7 +151,7 @@ function* message(action: ActionModel, dispatch: (action: any) => void) {
       if (msg.data.type === 'answer') {
         yield put(setRemoteDescriptionAction(msg.transferId, msg.data));
       } else {
-        yield call(() => transferReceiveFile(msg, dispatch));
+        yield call(transferReceiveFile, msg);
       }
       break;
     case MessageType.RTC_CANDIDATE:
@@ -443,13 +443,6 @@ function* sendChatMessage(action: ActionModel) {
   );
 }
 
-/**
- * Called after the welcome screen is dismissed.
- */
-function* welcomed() {
-  yield call(() => localStorage.setItem('welcomed', '1'));
-}
-
 function* updateNotificationCount() {
   const transfers: TransferModel[] = yield select(
     (state: StateType) => state.transfers
@@ -484,15 +477,10 @@ function* createKeys() {
   yield put(connectAction());
 }
 
-export function* root(dispatch: (action: any) => void) {
-  yield call(() => createKeys());
+export function* root() {
+  yield call(createKeys);
 
-  yield takeEvery(ActionType.DISMISS_WELCOME, welcomed);
-
-  yield takeEvery(ActionType.WS_MESSAGE, function* (action: ActionModel) {
-    // TODO: rewrite this to avoid passing dispatch
-    yield call(() => message(action, dispatch));
-  });
+  yield takeEvery(ActionType.WS_MESSAGE, message);
   yield takeEvery(ActionType.PREPARE_MESSAGE, prepareMessage);
   yield takeEvery(ActionType.WS_CONNECTED, connected);
   yield takeEvery(ActionType.WS_DISCONNECTED, disconnected);

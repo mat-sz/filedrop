@@ -1,15 +1,14 @@
 import React from 'react';
 import clsx from 'clsx';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
 import { FaPlus } from 'react-icons/fa';
-import { DeviceType, ClientModel } from '@filedrop/types';
+import { ClientModel } from '@filedrop/types';
 
 import styles from './NetworkTile.module.scss';
 import { createTransferAction } from '../actions/transfers';
 import { animationPropsOpacity } from '../animationSettings';
-import { StateType } from '../reducers';
 import { motion } from '../animate';
 import { TargetTile } from './TargetTile';
 
@@ -24,7 +23,6 @@ export const NetworkTile: React.FC<NetworkTileProps> = ({
 }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const publicKey = useSelector((state: StateType) => state.publicKey);
 
   const onDrop = (files: File[]) => {
     for (const file of files) {
@@ -57,9 +55,6 @@ export const NetworkTile: React.FC<NetworkTileProps> = ({
         client={client}
         variant="big"
         className={clsx(styles.tile, { active: isDragActive })}
-        secure={!!publicKey && !!client.publicKey}
-        local={client.isLocal}
-        mobile={client.deviceType === DeviceType.MOBILE}
       >
         {!onSelect && (
           <label onClick={preventClick}>

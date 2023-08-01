@@ -16,26 +16,31 @@
   overflow: hidden;
   user-select: text;
 
-  .more {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
+  a {
+    font-weight: bold;
+  }
+}
+
+.more {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  color: white;
+  padding: 10px 0;
+
+  &:hover {
     background: linear-gradient(
       0deg,
       rgba(0, 0, 0, 0.4) 0%,
       rgba(0, 0, 0, 0) 100%
     );
-    color: white;
-
-    &:hover {
-      background: linear-gradient(
-        0deg,
-        rgba(0, 0, 0, 0.4) 0%,
-        rgba(0, 0, 0, 0) 100%
-      );
-    }
   }
 }
 

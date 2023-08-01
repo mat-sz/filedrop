@@ -1,20 +1,144 @@
-import { put, select, call } from 'redux-saga/effects';
+import { call, put, select, take } from 'redux-saga/effects';
+import { eventChannel, END, EventChannel, buffers } from 'redux-saga';
 import {
   RTCDescriptionMessageModel,
   RTCCandidateMessageModel,
   MessageType,
 } from '@filedrop/types';
 
-import { TransferModel } from '../types/Models';
+import { ActionModel, TransferModel } from '../types/Models';
 import { StateType } from '../reducers';
 import { TransferState } from '../types/TransferState';
 import { updateTransferAction } from '../actions/transfers';
 import { sendMessageAction } from '../actions/websocket';
 
-export function* transferReceiveFile(
-  rtcMessage: RTCDescriptionMessageModel,
-  dispatch: (action: any) => void
+function handleConnection(
+  transfer: TransferModel,
+  connection: RTCPeerConnection
 ) {
+  return eventChannel<ActionModel>(emitter => {
+    connection.addEventListener('icecandidate', e => {
+      if (!e || !e.candidate) return;
+
+      const candidateMessage: RTCCandidateMessageModel = {
+        type: MessageType.RTC_CANDIDATE,
+        targetId: transfer.clientId,
+        transferId: transfer.transferId,
+        data: e.candidate,
+      };
+
+      emitter(sendMessageAction(candidateMessage));
+    });
+
+    const timestamp = new Date().getTime() / 1000;
+    const buffer: BlobPart[] = [];
+    let offset = 0;
+
+    let complete = false;
+    const onFailure = () => {
+      complete = true;
+
+      emitter(
+        updateTransferAction({
+          transferId: transfer.transferId,
+          state: TransferState.FAILED,
+          offset: undefined,
+          speed: 0,
+          timeLeft: 0,
+        })
+      );
+
+      emitter(END);
+    };
+
+    const onComplete = () => {
+      complete = true;
+
+      const blob = new Blob(buffer);
+      const blobUrl = URL.createObjectURL(blob);
+
+      emitter(
+        updateTransferAction({
+          transferId: transfer.transferId,
+          state: TransferState.COMPLETE,
+          offset: undefined,
+          speed: 0,
+          time: Math.floor(new Date().getTime() / 1000 - timestamp),
+          timeLeft: 0,
+          blobUrl: blobUrl,
+        })
+      );
+
+      const element = document.createElement('a');
+      element.setAttribute('href', blobUrl);
+      element.setAttribute('download', transfer.fileName);
+
+      element.style.display = 'none';
+      element.click();
+
+      connection.close();
+
+      emitter(END);
+    };
+
+    connection.addEventListener('datachannel', event => {
+      emitter(
+        updateTransferAction({
+          transferId: transfer.transferId,
+          state: TransferState.CONNECTED,
+        })
+      );
+
+      const channel = event.channel;
+
+      channel.binaryType = 'arraybuffer';
+      channel.addEventListener('message', event => {
+        buffer.push(event.data);
+        offset += event.data.byteLength;
+
+        const speed = offset / (new Date().getTime() / 1000 - timestamp);
+        emitter(
+          updateTransferAction({
+            transferId: transfer.transferId,
+            state: TransferState.IN_PROGRESS,
+            offset,
+            speed,
+            timeLeft: Math.round((transfer.fileSize - offset) / speed),
+          })
+        );
+
+        if (offset >= transfer.fileSize) {
+          onComplete();
+          channel.close();
+        }
+      });
+
+      channel.addEventListener('close', () => {
+        if (offset < transfer.fileSize) {
+          onFailure();
+        } else if (!complete) {
+          onComplete();
+        }
+      });
+    });
+
+    connection.addEventListener('iceconnectionstatechange', () => {
+      if (
+        (connection.iceConnectionState === 'failed' ||
+          connection.iceConnectionState === 'disconnected') &&
+        !complete
+      ) {
+        onFailure();
+      }
+    });
+
+    return () => {
+      connection.close();
+    };
+  }, buffers.expanding());
+}
+
+export function* transferReceiveFile(rtcMessage: RTCDescriptionMessageModel) {
   const transfers: TransferModel[] = yield select(
     (state: StateType) => state.transfers
   );
@@ -38,116 +162,11 @@ export function* transferReceiveFile(
     })
   );
 
-  connection.addEventListener('icecandidate', e => {
-    if (!e || !e.candidate) return;
-
-    const candidateMessage: RTCCandidateMessageModel = {
-      type: MessageType.RTC_CANDIDATE,
-      targetId: transfer.clientId,
-      transferId: transfer.transferId,
-      data: e.candidate,
-    };
-
-    dispatch(sendMessageAction(candidateMessage));
-  });
-
-  const timestamp = new Date().getTime() / 1000;
-  const buffer: BlobPart[] = [];
-  let offset = 0;
-
-  let complete = false;
-  const onFailure = () => {
-    complete = true;
-
-    dispatch(
-      updateTransferAction({
-        transferId: transfer.transferId,
-        state: TransferState.FAILED,
-        offset: undefined,
-        speed: 0,
-        timeLeft: 0,
-      })
-    );
-  };
-
-  const onComplete = () => {
-    complete = true;
-
-    const blob = new Blob(buffer);
-    const blobUrl = URL.createObjectURL(blob);
-
-    dispatch(
-      updateTransferAction({
-        transferId: transfer.transferId,
-        state: TransferState.COMPLETE,
-        offset: undefined,
-        speed: 0,
-        time: Math.floor(new Date().getTime() / 1000 - timestamp),
-        timeLeft: 0,
-        blobUrl: blobUrl,
-      })
-    );
-
-    const element = document.createElement('a');
-    element.setAttribute('href', blobUrl);
-    element.setAttribute('download', transfer.fileName);
-
-    element.style.display = 'none';
-    element.click();
-
-    connection.close();
-  };
-
-  connection.addEventListener('datachannel', event => {
-    dispatch(
-      updateTransferAction({
-        transferId: transfer.transferId,
-        state: TransferState.CONNECTED,
-      })
-    );
-
-    const channel = event.channel;
-
-    channel.binaryType = 'arraybuffer';
-    channel.addEventListener('message', event => {
-      buffer.push(event.data);
-      offset += event.data.byteLength;
-
-      const speed = offset / (new Date().getTime() / 1000 - timestamp);
-      dispatch(
-        updateTransferAction({
-          transferId: transfer.transferId,
-          state: TransferState.IN_PROGRESS,
-          offset,
-          speed,
-          timeLeft: Math.round((transfer.fileSize - offset) / speed),
-        })
-      );
-
-      if (offset >= transfer.fileSize) {
-        onComplete();
-        channel.close();
-      }
-    });
-
-    channel.addEventListener('close', () => {
-      if (offset < transfer.fileSize) {
-        onFailure();
-      } else if (!complete) {
-        onComplete();
-      }
-    });
-  });
-
-  connection.addEventListener('iceconnectionstatechange', () => {
-    if (
-      (connection.iceConnectionState === 'failed' ||
-        connection.iceConnectionState === 'disconnected') &&
-      !complete
-    ) {
-      onFailure();
-    }
-  });
+  const channel: EventChannel<ActionModel> = yield call(
+    handleConnection,
+    transfer,
+    connection
+  );
 
   yield call(
     async () => await connection.setRemoteDescription(rtcMessage.data)
@@ -169,4 +188,12 @@ export function* transferReceiveFile(
   };
 
   yield put(sendMessageAction(nextRtcMessage));
+
+  try {
+    while (true) {
+      const action: ActionModel = yield take(channel);
+      yield put(action);
+    }
+  } finally {
+  }
 }

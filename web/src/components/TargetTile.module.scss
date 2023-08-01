@@ -22,12 +22,9 @@
   .device {
     position: absolute;
     font-size: 0;
-
-    svg {
-      fill: rgba(0, 0, 0, 0.1);
-      height: 20px;
-      width: 20px;
-    }
+    fill: rgba(0, 0, 0, 0.1);
+    height: 20px;
+    width: 20px;
   }
 
   .secure {

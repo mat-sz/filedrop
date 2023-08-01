@@ -1,17 +1,25 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { createSelector } from 'reselect';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './index.module.scss';
 import { StateType } from '../../reducers';
+import { Button } from '../../components/Button';
+
+const namesSelector = createSelector(
+  [
+    (state: StateType) => state.localNetworkNames,
+    (state: StateType) => state.networkName,
+  ],
+  (names, networkName) => names.filter(name => name !== networkName)
+);
 
 export const OtherNetworksSection: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const localNetworkNames = useSelector((store: StateType) =>
-    store.localNetworkNames.filter(name => name !== store.networkName)
-  );
+  const localNetworkNames = useSelector(namesSelector);
 
   if (localNetworkNames.length === 0) {
     return null;
@@ -19,12 +27,12 @@ export const OtherNetworksSection: React.FC = () => {
 
   return (
     <div className="subsection">
-      <h2>{t('otherNetworks')}</h2>
+      <div className={styles.header}>{t('otherNetworks')}</div>
       <div className={styles.list}>
         {localNetworkNames.map(name => (
-          <button key={name} onClick={() => navigate(`/${name}`)}>
+          <Button key={name} onClick={() => navigate(`/${name}`)}>
             {name}
-          </button>
+          </Button>
         ))}
       </div>
     </div>

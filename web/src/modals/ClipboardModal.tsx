@@ -34,7 +34,7 @@ export const ClipboardModal: React.FC<ClipboardModalProps> = ({
   return (
     <motion.div className={styles.modal} {...animationPropsOpacity}>
       <div>
-        <div className="subsection left">
+        <div className="subsection">
           <h2>
             {t('clipboard.title')}
             <IconButton onClick={dismissClipboard}>

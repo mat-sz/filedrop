@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { createSelector } from 'reselect';
 import { ScrollArea } from 'react-nano-scrollbar';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
@@ -14,11 +15,14 @@ interface NetworkProps {
   onSelect?: (clientId: string) => void;
 }
 
+const networkSelector = createSelector(
+  [(state: StateType) => state.network, (state: StateType) => state.clientId],
+  (network, clientId) => network.filter(client => client.clientId !== clientId)
+);
+
 export const Network: React.FC<NetworkProps> = ({ onSelect }) => {
   const { t } = useTranslation();
-  const network = useSelector((store: StateType) =>
-    store.network.filter(client => client.clientId !== store.clientId)
-  );
+  const network = useSelector(networkSelector);
   const className = onSelect ? styles.select : 'subsection';
 
   return (

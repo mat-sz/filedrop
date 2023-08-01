@@ -4,12 +4,16 @@ import { useDispatch } from 'react-redux';
 import { AnimatePresence } from '../animate';
 
 import styles from './Transfers.module.scss';
-import { ChatSection } from '../sections/Chat';
-import { ConnectSection } from '../sections/Connect';
-import { TransfersSection } from '../sections/Transfers';
-import { OtherNetworksSection } from '../sections/OtherNetworks';
 import { ClipboardModal } from '../modals/ClipboardModal';
 import { setNetworkNameAction } from '../actions/state';
+import { IncompatibleBrowserSection } from '../sections/IncompatibleBrowser';
+import { YourTileSection } from '../sections/YourTile';
+import { NoticeSection } from '../sections/Notice';
+import { NetworkSection } from '../sections/Network';
+import { TransfersSection } from '../sections/Transfers';
+import { ConnectSection } from '../sections/Connect';
+import { OtherNetworksSection } from '../sections/OtherNetworks';
+import { ChatSection } from '../sections/Chat';
 
 export const Transfers: React.FC = () => {
   const dispatch = useDispatch();
@@ -78,7 +82,13 @@ export const Transfers: React.FC = () => {
         )}
       </AnimatePresence>
       <div className={styles.transfers}>
-        <TransfersSection />
+        <div>
+          <IncompatibleBrowserSection />
+          <NoticeSection />
+          <YourTileSection />
+          <NetworkSection />
+          <TransfersSection />
+        </div>
         <div>
           <ConnectSection href={href} />
           <OtherNetworksSection />

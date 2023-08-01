@@ -3,7 +3,11 @@ import clsx from 'clsx';
 
 import styles from './IconButton.module.scss';
 
-interface IconButtonProps extends React.HTMLProps<HTMLButtonElement> {
+interface IconButtonProps
+  extends React.DetailedHTMLProps<
+    React.HTMLAttributes<HTMLButtonElement>,
+    HTMLButtonElement
+  > {
   href?: string;
   download?: string;
 }
