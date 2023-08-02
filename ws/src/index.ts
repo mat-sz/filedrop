@@ -19,8 +19,19 @@ if (useProxy) {
 } else {
   const STATIC_ROOT = resolve('../web/build');
 
-  app.setNotFoundHandler((_, reply) => {
-    reply.sendFile('index.html', STATIC_ROOT);
+  app.setNotFoundHandler((req, reply) => {
+    const split = req.url.split('/');
+
+    if (split.length === 2) {
+      // For paths like /xyz we want to send the frontend.
+      // This will not interfere with 404 errors for
+      // truly not found files.
+      reply.sendFile('index.html', STATIC_ROOT);
+      return;
+    }
+
+    reply.status(404);
+    reply.send('Not found');
   });
   app.register(fastifyStatic, {
     root: STATIC_ROOT,
