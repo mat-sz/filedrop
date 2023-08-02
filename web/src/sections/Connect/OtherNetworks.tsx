@@ -4,7 +4,7 @@ import { createSelector } from 'reselect';
 import { useTranslation } from 'react-i18not';
 import { useNavigate } from 'react-router-dom';
 
-import styles from './index.module.scss';
+import styles from './OtherNetworks.module.scss';
 import { StateType } from '../../reducers';
 import { Button } from '../../components/Button';
 
@@ -16,7 +16,7 @@ const namesSelector = createSelector(
   (names, networkName) => names.filter(name => name !== networkName)
 );
 
-export const OtherNetworksSection: React.FC = () => {
+export const OtherNetworks: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const localNetworkNames = useSelector(namesSelector);
@@ -26,7 +26,7 @@ export const OtherNetworksSection: React.FC = () => {
   }
 
   return (
-    <div className="subsection">
+    <div>
       <div className={styles.header}>{t('otherNetworks')}</div>
       <div className={styles.list}>
         {localNetworkNames.map(name => (

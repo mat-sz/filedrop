@@ -24,12 +24,9 @@ export const YourTileSection: React.FC = () => {
         )}
         <div className={styles.info}>
           <ClientName />
-          <div>
-            <strong>{t('yourTile.title')}</strong> {t('yourTile.body')}
-          </div>
+          <Settings />
         </div>
       </div>
-      <Settings />
     </div>
   );
 };

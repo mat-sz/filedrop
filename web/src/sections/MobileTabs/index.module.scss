@@ -1,0 +1,18 @@
+.tabs {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  background: #222;
+  border-top: 1px solid #111;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 10px;
+}
+
+@media screen and (min-width: 768px) {
+  .tabs {
+    display: none;
+  }
+}

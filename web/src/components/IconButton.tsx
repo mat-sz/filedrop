@@ -10,6 +10,7 @@ interface IconButtonProps
   > {
   href?: string;
   download?: string;
+  round?: boolean;
 }
 
 export const IconButton: React.FC<IconButtonProps> = ({
@@ -17,12 +18,17 @@ export const IconButton: React.FC<IconButtonProps> = ({
   className,
   href,
   download,
+  round,
   ...props
 }) => {
   if (href) {
     return (
       <a
-        className={clsx(styles.iconButton, className)}
+        className={clsx(
+          styles.iconButton,
+          { [styles.round]: round },
+          className
+        )}
         href={href}
         download={download}
       >
@@ -32,7 +38,10 @@ export const IconButton: React.FC<IconButtonProps> = ({
   }
 
   return (
-    <button className={clsx(styles.iconButton, className)} {...props}>
+    <button
+      className={clsx(styles.iconButton, { [styles.round]: round }, className)}
+      {...props}
+    >
       {children}
     </button>
   );

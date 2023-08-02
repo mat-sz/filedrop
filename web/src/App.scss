@@ -92,7 +92,7 @@ h3 {
 .subsection {
   background: #1e1e1e;
   padding: 15px;
-  margin: 15px 0;
+  margin-bottom: 15px;
   position: relative;
   border-radius: 5px;
 }
@@ -116,5 +116,41 @@ h3 {
 
   100% {
     opacity: 0;
+  }
+}
+
+.mobileHidden {
+  display: none !important;
+}
+
+.mobileFlex {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+@media screen and (min-width: 768px) {
+  .mobileFlex {
+    display: block;
+    flex: unset;
+  }
+
+  .mobileHidden {
+    display: block !important;
+  }
+
+  .desktopHidden {
+    display: none !important;
   }
 }

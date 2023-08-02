@@ -3,6 +3,14 @@
   align-items: center;
 
   button {
+    svg {
+      font-size: 1.4rem;
+    }
+
     margin-left: 0.5em;
+  }
+
+  input {
+    padding: 5px 10px;
   }
 }

@@ -32,11 +32,13 @@ export const About: React.FC = () => {
           <li>Accept the transfer on another device.</li>
         </ol>
       </p>
+      <p>filedrop is open source!</p>
       <p>
-        filedrop is open source!
         <a href="https://github.com/mat-sz/filedrop">
           The code is available on GitHub.
         </a>
+      </p>
+      <p>
         If you enjoy using this app please consider giving that project a star.
         You can also report issues there or help the project by creating a pull
         request.

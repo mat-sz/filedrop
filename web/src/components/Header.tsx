@@ -1,6 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18not';
-import { FaGithub, FaInfoCircle, FaTwitter } from 'react-icons/fa';
+import {
+  IoLogoGithub,
+  IoInformationCircle,
+  IoLogoTwitter,
+} from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -23,7 +27,7 @@ export const Header: React.FC = () => {
         </h1>
         <div className={styles.right}>
           <Link to="/about" title={t('sections.about')}>
-            <FaInfoCircle />
+            <IoInformationCircle />
           </Link>
           <a
             href="https://github.com/mat-sz/filedrop"
@@ -31,7 +35,7 @@ export const Header: React.FC = () => {
             rel="noopener noreferrer"
             title={t('sections.github')}
           >
-            <FaGithub />
+            <IoLogoGithub />
           </a>
           <a
             href="https://twitter.com/matsz_dev"
@@ -39,7 +43,7 @@ export const Header: React.FC = () => {
             rel="noopener noreferrer"
             title={t('sections.twitter')}
           >
-            <FaTwitter />
+            <IoLogoTwitter />
           </a>
         </div>
       </nav>

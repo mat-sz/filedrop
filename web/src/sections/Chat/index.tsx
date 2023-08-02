@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18not';
 import { AnimatePresence, motion } from 'nanoanim';
 import { ScrollArea } from 'react-nano-scrollbar';
 import Textarea from 'react-expanding-textarea';
-import { FaPaperPlane, FaRegCommentDots } from 'react-icons/fa';
+import { IoSend, IoChatbox } from 'react-icons/io5';
 import clsx from 'clsx';
 
 import styles from './index.module.scss';
@@ -56,11 +56,11 @@ export const ChatSection: React.FC = () => {
   }
 
   return (
-    <div className={clsx('subsection', styles.chat)}>
+    <div className={clsx('subsection', 'mobileFlex', styles.chat)}>
       {chat.length === 0 ? (
         <AnimatePresence>
           <motion.div className={styles.empty} {...animationPropsOpacity}>
-            <FaRegCommentDots />
+            <IoChatbox />
             <h3>{t('emptyChat.title')}</h3>
             <div>{t('emptyChat.body')}</div>
           </motion.div>
@@ -84,7 +84,7 @@ export const ChatSection: React.FC = () => {
           placeholder={t('chat.message')}
         />
         <IconButton>
-          <FaPaperPlane />
+          <IoSend />
         </IconButton>
       </form>
     </div>

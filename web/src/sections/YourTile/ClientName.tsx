@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18not';
-import { FaEdit, FaCheck, FaTimes } from 'react-icons/fa';
+import { IoPencil, IoCheckmarkCircle, IoCloseCircle } from 'react-icons/io5';
 
 import styles from './ClientName.module.scss';
 import { setClientNameAction } from '../../actions/state';
@@ -43,7 +43,7 @@ export const ClientName: React.FC = () => {
         <>
           <strong>{clientName}</strong>{' '}
           <IconButton onClick={onEdit}>
-            <FaEdit />
+            <IoPencil />
           </IconButton>
         </>
       ) : (
@@ -56,10 +56,10 @@ export const ClientName: React.FC = () => {
             maxLength={32}
           />
           <IconButton onClick={onSave}>
-            <FaCheck />
+            <IoCheckmarkCircle />
           </IconButton>
           <IconButton onClick={onCancel}>
-            <FaTimes />
+            <IoCloseCircle />
           </IconButton>
         </>
       )}

@@ -2,10 +2,16 @@
   display: inline-flex;
 }
 
-.select {
-  margin-top: 10px;
+.wrapper {
+  padding-top: 15px;
+  margin-top: 15px;
+  border-top: 1px solid #333;
 }
 
 .empty {
   text-align: center;
+
+  button {
+    margin-top: 10px;
+  }
 }

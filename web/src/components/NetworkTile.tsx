@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18not';
 import { motion } from 'nanoanim';
-import { FaPlus } from 'react-icons/fa';
+import { IoAdd } from 'react-icons/io5';
 import { ClientModel } from '@filedrop/types';
 
 import styles from './NetworkTile.module.scss';
@@ -68,7 +68,7 @@ export const NetworkTile: React.FC<NetworkTileProps> = ({
             {t('tile')}
           </label>
         )}
-        <FaPlus className={styles.plus} />
+        <IoAdd className={styles.plus} />
       </TargetTile>
       <div className={styles.name}>{client.clientName}</div>
     </motion.div>

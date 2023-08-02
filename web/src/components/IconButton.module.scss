@@ -11,4 +11,19 @@
     opacity: 0.8;
     background: none;
   }
+
+  &.round {
+    width: 1.7rem;
+    height: 1.7rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #222;
+    background: #aaa;
+    border-radius: 100%;
+
+    svg {
+      font-size: 0.9rem;
+    }
+  }
 }

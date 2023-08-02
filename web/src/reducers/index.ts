@@ -30,6 +30,7 @@ export interface StateType {
   appName: string;
   abuseEmail?: string;
   autoAccept: boolean;
+  tab: string;
 }
 
 let initialState: StateType = {
@@ -43,6 +44,7 @@ let initialState: StateType = {
   chat: [],
   appName: defaultAppName,
   autoAccept: false,
+  tab: 'transfers',
 };
 
 const stateSort: Record<TransferState, number> = {
@@ -60,6 +62,9 @@ export type StoreType = Store<StateType, ActionModel>;
 export function applicationState(state = initialState, action: ActionModel) {
   const newState = { ...state };
   switch (action.type) {
+    case ActionType.SET_TAB:
+      newState.tab = action.value as string;
+      break;
     case ActionType.SET_ERROR:
       newState.error = action.value as string;
       break;

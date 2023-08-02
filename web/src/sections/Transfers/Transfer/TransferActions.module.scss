@@ -1,27 +1,23 @@
 .actions {
   font-size: 0;
+  display: flex;
+  align-items: center;
 
   button,
   a {
-    margin-left: 1rem;
+    margin-left: 0.5rem;
+    font-size: 0;
 
     svg {
-      height: 1.6rem;
-      width: 1.4rem;
+      font-size: 2rem;
     }
 
     &.positive {
-      color: green;
+      color: #3ea74e;
     }
 
     &.negative {
-      color: #ff3737;
-    }
-  }
-
-  a {
-    svg {
-      width: 1.2rem;
+      color: #ff5656;
     }
   }
 }

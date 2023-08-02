@@ -25,6 +25,13 @@ export function setErrorAction(error: string): ActionModel {
   };
 }
 
+export function setTabAction(tab: string): ActionModel {
+  return {
+    type: ActionType.SET_TAB,
+    value: tab,
+  };
+}
+
 export function setAutoAcceptAction(autoAccept: boolean): ActionModel {
   return {
     type: ActionType.SET_AUTO_ACCEPT,

@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18not';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import clsx from 'clsx';
 
 import styles from './Footer.module.scss';
 import { StateType } from '../reducers';
@@ -11,7 +12,7 @@ export const Footer: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <footer className={styles.footer}>
+    <footer className={clsx('subsection', styles.footer)}>
       <ul>
         <li>
           <Link to="/privacy">{t('sections.privacy')}</Link>

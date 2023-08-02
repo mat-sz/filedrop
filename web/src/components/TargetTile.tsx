@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { useSelector } from 'react-redux';
-import { FaLock, FaMobile, FaNetworkWired } from 'react-icons/fa';
+import { IoLockClosed, IoPhoneLandscape, IoHome } from 'react-icons/io5';
 import { ClientModel, DeviceType } from '@filedrop/types';
 
 import styles from './TargetTile.module.scss';
@@ -34,9 +34,9 @@ export const TargetTile = React.forwardRef<
     >
       {variant === 'big' && (
         <>
-          {isSecure && <FaLock className={styles.secure} />}
-          {isLocal && <FaNetworkWired className={styles.local} />}
-          {isMobile && <FaMobile className={styles.device} />}
+          {isSecure && <IoLockClosed className={styles.secure} />}
+          {isLocal && <IoHome className={styles.local} />}
+          {isMobile && <IoPhoneLandscape className={styles.device} />}
         </>
       )}
       {children}

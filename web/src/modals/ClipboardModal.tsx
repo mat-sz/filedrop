@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18not';
 import { motion } from 'nanoanim';
-import { FaTimes } from 'react-icons/fa';
+import { IoClose } from 'react-icons/io5';
 
 import styles from './ClipboardModal.module.scss';
 import { createTransferAction } from '../actions/transfers';
@@ -32,18 +32,20 @@ export const ClipboardModal: React.FC<ClipboardModalProps> = ({
   };
 
   return (
-    <motion.div className={styles.modal} {...animationPropsOpacity}>
-      <div>
-        <div className="subsection">
-          <h2>
-            {t('clipboard.title')}
-            <IconButton onClick={dismissClipboard}>
-              <FaTimes />
-            </IconButton>
-          </h2>
-          <p>{t('clipboard.body', { fileNames })}</p>
-          <Network onSelect={onSelect} />
-        </div>
+    <motion.div
+      className={styles.modal}
+      onClick={dismissClipboard}
+      {...animationPropsOpacity}
+    >
+      <div className="subsection" onClick={e => e.stopPropagation()}>
+        <h2>
+          {t('clipboard.title')}
+          <IconButton onClick={dismissClipboard}>
+            <IoClose />
+          </IconButton>
+        </h2>
+        <p>{t('clipboard.body', { fileNames })}</p>
+        <Network onSelect={onSelect} />
       </div>
     </motion.div>
   );

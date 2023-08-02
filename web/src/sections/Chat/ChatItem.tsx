@@ -2,7 +2,7 @@ import React, { useLayoutEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18not';
 import { motion } from 'nanoanim';
-import { FaCopy } from 'react-icons/fa';
+import { IoCopy } from 'react-icons/io5';
 import clsx from 'clsx';
 
 import styles from './ChatItem.module.scss';
@@ -60,7 +60,7 @@ export const ChatItem: React.FC<ChatItemProps> = ({ item }) => {
           {item.date.toLocaleTimeString(language, { timeStyle: 'short' })}
         </div>
         <IconButton onClick={() => copy(item.message)}>
-          <FaCopy />
+          <IoCopy />
         </IconButton>
       </div>
       <div className={styles.message} ref={messageRef}>

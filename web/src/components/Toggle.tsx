@@ -31,7 +31,7 @@ export const Toggle: React.FC<ToggleProps> = ({ label, value, onChange }) => {
           </span>
         </span>
       </span>
-      {label}
+      <span className={styles.label}>{label}</span>
     </label>
   );
 };

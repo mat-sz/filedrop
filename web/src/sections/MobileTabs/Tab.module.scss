@@ -1,0 +1,20 @@
+.tab {
+  background: #333;
+  color: white;
+  flex: 1;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 0;
+
+  &:not(:last-child) {
+    margin-right: 10px;
+  }
+
+  svg {
+    font-size: 1.5rem;
+  }
+
+  &.active {
+    background: #444;
+  }
+}

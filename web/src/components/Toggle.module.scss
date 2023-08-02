@@ -1,4 +1,4 @@
-$toggle-indicator-size: 24px; // changing this number will resize the whole toggle
+$toggle-indicator-size: 16px; // changing this number will resize the whole toggle
 $track-height: $toggle-indicator-size + 6;
 $track-width: $toggle-indicator-size * 2.5;
 $highContrastModeSupport: solid 2px transparent;
@@ -86,4 +86,8 @@ $speed: 0.2s;
       transition: opacity $speed ease-in-out;
     }
   }
+}
+
+.label {
+  font-size: 0.9rem;
 }

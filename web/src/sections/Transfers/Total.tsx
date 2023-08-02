@@ -2,12 +2,12 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18not';
 import { createSelector } from 'reselect';
+import { IoArrowDown, IoArrowUp } from 'react-icons/io5';
 
 import styles from './Total.module.scss';
 import { StateType } from '../../reducers';
 import { formatFileSize } from '../../utils/file';
 import { TransferState } from '../../types/TransferState';
-import { FaArrowDown, FaArrowUp } from 'react-icons/fa';
 
 const activeTransfersSelector = createSelector(
   [(state: StateType) => state.transfers],
@@ -59,10 +59,10 @@ export const Total: React.FC = () => {
       </div>
       <div>
         <span>
-          <FaArrowDown /> {formatFileSize(downloadSpeedSum)}/s
+          <IoArrowDown /> {formatFileSize(downloadSpeedSum)}/s
         </span>
         <span>
-          <FaArrowUp /> {formatFileSize(uploadSpeedSum)}/s
+          <IoArrowUp /> {formatFileSize(uploadSpeedSum)}/s
         </span>
       </div>
     </li>
