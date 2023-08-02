@@ -1,11 +1,11 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18not';
+import { motion } from 'nanoanim';
 
 import styles from './index.module.scss';
 import { animationPropsSlide } from '../../../animationSettings';
 import { TransferModel } from '../../../types/Models';
 import { TransferState } from '../../../types/TransferState';
-import { motion } from '../../../animate';
 import { formatFileName, formatFileSize } from '../../../utils/file';
 import { humanTimeLeft } from '../../../utils/time';
 import { Tooltip } from '../../../components/Tooltip';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { QRCodeSVG } from 'qrcode.react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18not';
 import { FaPaperPlane, FaCopy } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import clsx from 'clsx';

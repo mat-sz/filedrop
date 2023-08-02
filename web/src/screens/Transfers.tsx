@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { AnimatePresence } from '../animate';
+import { AnimatePresence } from 'nanoanim';
 
 import styles from './Transfers.module.scss';
 import { ClipboardModal } from '../modals/ClipboardModal';

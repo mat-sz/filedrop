@@ -2,10 +2,10 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
 import { ScrollArea } from 'react-nano-scrollbar';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18not';
+import { AnimatePresence, motion } from 'nanoanim';
 import clsx from 'clsx';
 
-import { AnimatePresence, motion } from '../animate';
 import styles from './Network.module.scss';
 import { animationPropsOpacity } from '../animationSettings';
 import { StateType } from '../reducers';

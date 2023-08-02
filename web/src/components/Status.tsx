@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import { AnimatePresence, motion } from '../animate';
+import { useTranslation } from 'react-i18not';
+import { AnimatePresence, motion } from 'nanoanim';
 import clsx from 'clsx';
 
 import styles from './Status.module.scss';

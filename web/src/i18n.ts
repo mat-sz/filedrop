@@ -1,21 +1,9 @@
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
-import Backend from 'i18next-http-backend';
-import LanguageDetector from 'i18next-browser-languagedetector';
+import { init } from 'i18not';
 
-i18n
-  .use(Backend)
-  .use(LanguageDetector)
-  .use(initReactI18next)
-  .init({
-    ns: ['main'],
-    defaultNS: 'main',
-    load: 'languageOnly',
-    backend: {
-      loadPath: '/locales/{{lng}}/{{ns}}.json',
-    },
-    fallbackLng: 'en',
-    interpolation: {
-      escapeValue: false,
-    },
-  });
+init({
+  ns: ['main'],
+  defaultNS: 'main',
+  load: 'languageOnly',
+  loadPath: '/locales/{{lng}}/{{ns}}.json',
+  fallbackLng: 'en',
+});

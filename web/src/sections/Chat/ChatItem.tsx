@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18not';
+import { motion } from 'nanoanim';
 import { FaCopy } from 'react-icons/fa';
 import clsx from 'clsx';
 
@@ -9,7 +10,6 @@ import { animationPropsSlide } from '../../animationSettings';
 import { ChatItemModel } from '../../types/Models';
 import { StateType } from '../../reducers';
 import { copy } from '../../utils/copy';
-import { motion } from '../../animate';
 import { TargetTile } from '../../components/TargetTile';
 import { IconButton } from '../../components/IconButton';
 
@@ -34,7 +34,7 @@ const urlify = (text: string): React.ReactNode => {
 };
 
 export const ChatItem: React.FC<ChatItemProps> = ({ item }) => {
-  const { t, i18n } = useTranslation();
+  const { t, language } = useTranslation();
   const [expanded, setExpanded] = useState(false);
   const messageRef = useRef<HTMLDivElement>(null);
   const client = useSelector((state: StateType) =>
@@ -57,7 +57,7 @@ export const ChatItem: React.FC<ChatItemProps> = ({ item }) => {
         {client && <TargetTile client={client} />}
         <div>{client?.clientName}</div>
         <div>
-          {item.date.toLocaleTimeString(i18n.language, { timeStyle: 'short' })}
+          {item.date.toLocaleTimeString(language, { timeStyle: 'short' })}
         </div>
         <IconButton onClick={() => copy(item.message)}>
           <FaCopy />

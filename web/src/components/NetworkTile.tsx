@@ -2,14 +2,14 @@ import React from 'react';
 import clsx from 'clsx';
 import { useDispatch } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18not';
+import { motion } from 'nanoanim';
 import { FaPlus } from 'react-icons/fa';
 import { ClientModel } from '@filedrop/types';
 
 import styles from './NetworkTile.module.scss';
 import { createTransferAction } from '../actions/transfers';
 import { animationPropsOpacity } from '../animationSettings';
-import { motion } from '../animate';
 import { TargetTile } from './TargetTile';
 
 interface NetworkTileProps {

@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18not';
+import { AnimatePresence } from 'nanoanim';
 
 import styles from './index.module.scss';
-import { AnimatePresence } from '../../animate';
 import { StateType } from '../../reducers';
 import { Transfer } from './Transfer';
 import { Actions } from './Actions';

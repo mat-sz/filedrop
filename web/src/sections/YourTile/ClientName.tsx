@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18not';
 import { FaEdit, FaCheck, FaTimes } from 'react-icons/fa';
 
 import styles from './ClientName.module.scss';

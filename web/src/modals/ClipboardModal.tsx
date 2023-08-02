@@ -1,10 +1,10 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18not';
+import { motion } from 'nanoanim';
 import { FaTimes } from 'react-icons/fa';
 
 import styles from './ClipboardModal.module.scss';
-import { motion } from '../animate';
 import { createTransferAction } from '../actions/transfers';
 import { animationPropsOpacity } from '../animationSettings';
 import { Network } from '../components/Network';

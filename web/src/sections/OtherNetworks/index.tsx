@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18not';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './index.module.scss';

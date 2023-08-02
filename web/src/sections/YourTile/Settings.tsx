@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18not';
 import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './Settings.module.scss';

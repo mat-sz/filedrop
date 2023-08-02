@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import { AnimatePresence, motion } from '../../animate';
+import { useTranslation } from 'react-i18not';
+import { AnimatePresence, motion } from 'nanoanim';
 import { ScrollArea } from 'react-nano-scrollbar';
 import Textarea from 'react-expanding-textarea';
 import { FaPaperPlane, FaRegCommentDots } from 'react-icons/fa';
