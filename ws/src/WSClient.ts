@@ -1,6 +1,6 @@
 import WebSocket from 'ws';
 import { FastifyRequest } from 'fastify';
-import { DeviceType } from '@filedrop/types';
+import { DeviceType, MessageModel } from '@filedrop/types';
 
 import { Client } from './types/Client.js';
 import { generateClientName } from './utils/name.js';
@@ -26,7 +26,11 @@ export class WSClient implements Client {
     this.remoteAddress = typeof address === 'string' ? address : address?.[0];
   }
 
-  send(data: string) {
+  send(message: MessageModel) {
+    this.sendRaw(JSON.stringify(message));
+  }
+
+  sendRaw(data: string) {
     if (this.ws.readyState !== 1) {
       return;
     }

@@ -1,4 +1,4 @@
-import { DeviceType } from '@filedrop/types';
+import { DeviceType, MessageModel } from '@filedrop/types';
 
 export interface Client {
   clientId?: string;
@@ -13,6 +13,7 @@ export interface Client {
   initialized: boolean;
   secret?: string;
 
-  send(data: string): void;
+  send(data: MessageModel): void;
+  sendRaw(data: string): void;
   close(): void;
 }

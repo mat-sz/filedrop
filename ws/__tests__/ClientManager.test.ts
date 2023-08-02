@@ -22,7 +22,11 @@ export class TestClient implements Client {
   clientId?: string;
   secret?: string;
   initialized = false;
-  send(data: string) {
+  send(message: any) {
+    this.lastMessage = JSON.stringify(message);
+  }
+
+  sendRaw(data: string) {
     this.lastMessage = data;
   }
 

@@ -7,6 +7,7 @@ import {
   ClientModel,
   AppInfoMessageModel,
   ClientInfoMessageModel,
+  PingMessageModel,
 } from '@filedrop/types';
 
 import { Client } from './types/Client.js';
@@ -48,7 +49,7 @@ export class ClientManager {
       abuseEmail,
     };
 
-    client.send(JSON.stringify(message));
+    client.send(message);
   }
 
   handleMessage(client: Client, message: MessageModel) {
@@ -76,7 +77,7 @@ export class ClientManager {
         localNetworkNames,
         rtcConfiguration: rtcConfiguration(client.clientId),
       };
-      client.send(JSON.stringify(clientInfoMessage));
+      client.send(clientInfoMessage);
 
       return;
     }
@@ -89,8 +90,11 @@ export class ClientManager {
       client.deviceType = message.deviceType;
       this.setNetworkName(client, message.networkName.toUpperCase());
     } else if (isClientNameMessageModel(message)) {
-      client.clientName = message.clientName;
-      this.setNetworkName(client, client.networkName);
+      const clients = this.clients.filter(c => c.clientId === client.clientId);
+
+      for (const client of clients) {
+        this.setNetworkName(client, client.networkName);
+      }
     } else if (
       isActionMessageModel(message) ||
       isRTCDescriptionMessageModel(message) ||
@@ -117,35 +121,46 @@ export class ClientManager {
       return;
     }
 
-    const data = JSON.stringify({
+    const data = {
       ...message,
       clientId: fromClientId,
-    });
+    };
 
     const targets = this.clients.filter(c => c.clientId === message.targetId);
-    targets.forEach(client => client.send(data));
+    this.broadcast(data, targets);
   }
 
   sendLocalNetworksMessage(client: Client) {
     const localClients = this.getLocalClients(client);
     const localNetworkNames = this.getLocalNetworkNames(client);
 
-    const localNetworksMessage = JSON.stringify({
+    const localNetworksMessage: LocalNetworksMessageModel = {
       type: MessageType.LOCAL_NETWORKS,
       localNetworkNames,
-    } as LocalNetworksMessageModel);
+    };
+    this.broadcast(localNetworksMessage, localClients);
+  }
 
-    localClients.forEach(client => {
-      try {
-        client.send(localNetworksMessage);
-      } catch {}
-    });
+  getNetworkClients(networkName: string): Client[] {
+    const clients = this.clients.filter(
+      client => client.networkName === networkName
+    );
+
+    const uniqueClients: Client[] = [];
+
+    for (const client of clients) {
+      if (!uniqueClients.find(c => c.clientId === client.clientId)) {
+        uniqueClients.push(client);
+      }
+    }
+
+    uniqueClients.sort((a, b) => b.firstSeen.getTime() - a.firstSeen.getTime());
+
+    return uniqueClients;
   }
 
   sendNetworkMessage(networkName: string) {
-    const networkClients = this.clients.filter(
-      client => client.networkName === networkName
-    );
+    const networkClients = this.getNetworkClients(networkName);
 
     const sortedClients = networkClients.sort(
       (a, b) => b.firstSeen.getTime() - a.firstSeen.getTime()
@@ -163,10 +178,10 @@ export class ClientManager {
           };
         });
 
-        const networkMessage = JSON.stringify({
+        const networkMessage: NetworkMessageModel = {
           type: MessageType.NETWORK,
           clients,
-        } as NetworkMessageModel);
+        };
 
         client.send(networkMessage);
       } catch {}
@@ -207,20 +222,29 @@ export class ClientManager {
     return [...networkNames.values()];
   }
 
-  pingClients() {
-    const pingMessage = JSON.stringify({
-      type: MessageType.PING,
-      timestamp: new Date().getTime(),
-    });
+  broadcast(message: MessageModel, clients?: Client[]) {
+    if (!clients) {
+      clients = this.clients;
+    }
+    const data = JSON.stringify(message);
 
-    this.clients.forEach(client => {
+    for (const client of clients) {
       try {
-        client.send(pingMessage);
+        client.sendRaw(data);
       } catch {
         this.removeClient(client);
         client.close();
       }
-    });
+    }
+  }
+
+  pingClients() {
+    const pingMessage: PingMessageModel = {
+      type: MessageType.PING,
+      timestamp: new Date().getTime(),
+    };
+
+    this.broadcast(pingMessage);
   }
 
   removeClient(client: Client) {
