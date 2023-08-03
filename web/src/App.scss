@@ -92,9 +92,12 @@ h3 {
 .subsection {
   background: #1e1e1e;
   padding: 15px;
-  margin-bottom: 15px;
   position: relative;
   border-radius: 5px;
+
+  &:not(:last-child) {
+    margin-bottom: 15px;
+  }
 }
 
 /* Animations */
@@ -138,6 +141,7 @@ h3 {
   display: flex;
   flex-direction: column;
   flex: 1;
+  padding-bottom: 65px;
 }
 
 @media screen and (min-width: 768px) {
