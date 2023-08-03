@@ -83,6 +83,7 @@ $speed: 0.2s;
 
     .checkmark {
       opacity: 1;
+      font-size: 0;
       transition: opacity $speed ease-in-out;
     }
   }

@@ -4,6 +4,6 @@ init({
   ns: ['main'],
   defaultNS: 'main',
   load: 'languageOnly',
-  loadPath: '/locales/{{lng}}/{{ns}}.json',
+  loadPath: `/locales/{{lng}}/{{ns}}.json?uuid=${__BUILD_UUID__}`,
   fallbackLng: 'en',
 });
