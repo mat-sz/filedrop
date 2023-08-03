@@ -45,6 +45,7 @@ const transferMessageModelSchema = Joi.object({
   fileName: Joi.string().required(),
   fileSize: Joi.number().required(),
   fileType: Joi.string().required(),
+  preview: Joi.string().uri({ scheme: 'data' }).optional(),
 }).required();
 
 const validActions = Object.values(ActionMessageActionType);

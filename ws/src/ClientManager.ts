@@ -93,25 +93,19 @@ export class ClientManager {
       const clients = this.clients.filter(c => c.clientId === client.clientId);
 
       for (const client of clients) {
-        this.setNetworkName(client, client.networkName);
+        client.clientName = message.clientName;
+
+        if (client.networkName) {
+          this.setNetworkName(client, client.networkName);
+        }
       }
     } else if (
       isActionMessageModel(message) ||
       isRTCDescriptionMessageModel(message) ||
       isRTCCandidateMessageModel(message) ||
-      isEncryptedMessageModel(message)
+      isEncryptedMessageModel(message) ||
+      isTransferMessageModel(message)
     ) {
-      this.sendMessage(client.clientId, message);
-    } else if (isTransferMessageModel(message)) {
-      // Ensure all previews are data URLs for safety.
-      if (
-        message.preview &&
-        (typeof message.preview !== 'string' ||
-          !message.preview.startsWith('data:'))
-      ) {
-        return;
-      }
-
       this.sendMessage(client.clientId, message);
     }
   }
