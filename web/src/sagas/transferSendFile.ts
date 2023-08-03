@@ -53,7 +53,7 @@ function handleConnection(
     const channel = connection.createDataChannel('sendDataChannel');
     channel.binaryType = 'arraybuffer';
 
-    const timestamp = new Date().getTime() / 1000;
+    const start = new Date().getTime();
 
     let complete = false;
     const onFailure = () => {
@@ -70,9 +70,9 @@ function handleConnection(
       );
     };
 
-    const bufferSize = (connection as any).sctp?.maxMessageSize || 65535;
-
     channel.addEventListener('open', () => {
+      const bufferSize = connection.sctp?.maxMessageSize || 65535;
+
       emitter(
         updateTransferAction({
           transferId: transfer.transferId,
@@ -84,13 +84,13 @@ function handleConnection(
       let offset = 0;
 
       const nextSlice = (currentOffset: number) => {
-        const slice = file.slice(offset, currentOffset + bufferSize);
+        const slice = file.slice(currentOffset, currentOffset + bufferSize);
         fileReader.readAsArrayBuffer(slice);
       };
 
+      let lastUpdate = 0;
       fileReader.addEventListener('load', e => {
         if (complete) return;
-
         const buffer = e.target!.result as ArrayBuffer;
 
         try {
@@ -103,16 +103,23 @@ function handleConnection(
 
         offset += buffer.byteLength;
 
-        const speed = offset / (new Date().getTime() / 1000 - timestamp);
-        emitter(
-          updateTransferAction({
-            transferId: transfer.transferId,
-            state: TransferState.IN_PROGRESS,
-            offset,
-            speed,
-            timeLeft: Math.round((file.size - offset) / speed),
-          })
-        );
+        const now = new Date().getTime();
+        const elapsed = (now - start) / 1000;
+
+        if (now - lastUpdate > 50) {
+          lastUpdate = now;
+          const speed = offset / elapsed;
+          emitter(
+            updateTransferAction({
+              transferId: transfer.transferId,
+              state: TransferState.IN_PROGRESS,
+              offset,
+              speed,
+              time: Math.floor(elapsed),
+              timeLeft: Math.round((file.size - offset) / speed),
+            })
+          );
+        }
 
         if (offset >= file.size) {
           emitter(
@@ -121,7 +128,7 @@ function handleConnection(
               state: TransferState.COMPLETE,
               offset: undefined,
               speed: 0,
-              time: Math.floor(new Date().getTime() / 1000 - timestamp),
+              time: Math.floor(elapsed),
               timeLeft: 0,
             })
           );

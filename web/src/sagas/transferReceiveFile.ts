@@ -30,7 +30,7 @@ function handleConnection(
       emitter(sendMessageAction(candidateMessage));
     });
 
-    const timestamp = new Date().getTime() / 1000;
+    const start = new Date().getTime();
     const buffer: BlobPart[] = [];
     let offset = 0;
 
@@ -57,13 +57,16 @@ function handleConnection(
       const blob = new Blob(buffer);
       const blobUrl = URL.createObjectURL(blob);
 
+      const now = new Date().getTime();
+      const elapsed = (now - start) / 1000;
+
       emitter(
         updateTransferAction({
           transferId: transfer.transferId,
           state: TransferState.COMPLETE,
           offset: undefined,
           speed: 0,
-          time: Math.floor(new Date().getTime() / 1000 - timestamp),
+          time: Math.floor(elapsed),
           timeLeft: 0,
           blobUrl: blobUrl,
         })
@@ -90,22 +93,30 @@ function handleConnection(
       );
 
       const channel = event.channel;
-
       channel.binaryType = 'arraybuffer';
+
+      let lastUpdate = 0;
       channel.addEventListener('message', event => {
         buffer.push(event.data);
         offset += event.data.byteLength;
 
-        const speed = offset / (new Date().getTime() / 1000 - timestamp);
-        emitter(
-          updateTransferAction({
-            transferId: transfer.transferId,
-            state: TransferState.IN_PROGRESS,
-            offset,
-            speed,
-            timeLeft: Math.round((transfer.fileSize - offset) / speed),
-          })
-        );
+        const now = new Date().getTime();
+        const elapsed = (now - start) / 1000;
+
+        if (now - lastUpdate > 50) {
+          lastUpdate = now;
+          const speed = offset / elapsed;
+          emitter(
+            updateTransferAction({
+              transferId: transfer.transferId,
+              state: TransferState.IN_PROGRESS,
+              offset,
+              speed,
+              time: Math.floor(elapsed),
+              timeLeft: Math.round((transfer.fileSize - offset) / speed),
+            })
+          );
+        }
 
         if (offset >= transfer.fileSize) {
           onComplete();
