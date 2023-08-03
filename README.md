@@ -18,15 +18,33 @@ Easy peer-to-peer file transfer.
 
 ### Docker
 
+#### Requirements:
+
+- docker
+- docker-compose
+- bash
+- openssl
+
 Clone the repo and run the following command:
 
 ```
-PORT=80 APP_NAME=filedrop TURN_SECRET=CHANGE_ME docker-compose up --build --force-recreate
+./docker-start.sh
 ```
 
-Make sure docker and docker-compose are installed and your user is in the docker group. In case another reverse proxy is used make sure to change the default port (from 80) and to add the `X-Forwarded-For` header with client's IP address.
+Make sure that your user is in the docker group.
+
+In case another reverse proxy is used make sure to change the default port (from 80) and to add the `X-Forwarded-For` header with client's IP address.
 
 TURN uses TCP port 3478 and UDP ports 49152-65535.
+
+#### docker-start.sh arguments
+
+| Option       | Description                                     |
+| ------------ | ----------------------------------------------- |
+| `-n <name>`  | Sets application name.                          |
+| `-e <email>` | Sets contact email.                             |
+| `-p <port>`  | Sets port for the application to be exposed at. |
+| `-f`         | Enables WS_USE_X_FORWARDED_FOR.                 |
 
 ### Manual
 

@@ -10,6 +10,8 @@ services:
     environment:
       - WS_HOST=0.0.0.0
       - WS_APP_NAME=${APP_NAME}
+      - WS_ABUSE_EMAIL=${ABUSE_EMAIL}
+      - WS_USE_X_FORWARDED_FOR=${USE_X_FORWARDED_FOR}
       - TURN_MODE=hmac
       - TURN_SERVER=turn:(hostname)
       - TURN_USERNAME=filedrop
@@ -19,7 +21,16 @@ services:
 
   coturn:
     image: coturn/coturn
-    command: --use-auth-secret --static-auth-secret=${TURN_SECRET} --no-tls --no-dtls
-    ports:
-      - '3478:3478'
-      - '49152-65535:49152-65535/udp'
+    command:
+      - --log-file=stdout
+      - --use-auth-secret
+      - --static-auth-secret=${TURN_SECRET}
+      - --no-multicast-peers
+      - --no-tls
+      - --no-dtls
+      - --no-software-attribute
+      - --fingerprint
+      - --no-cli
+    network_mode: host
+    depends_on:
+      - filedrop
