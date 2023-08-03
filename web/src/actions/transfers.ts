@@ -35,13 +35,6 @@ export function acceptTransferAction(transferId: string): ActionModel {
   };
 }
 
-export function rejectTransferAction(transferId: string): ActionModel {
-  return {
-    type: ActionType.REJECT_TRANSFER,
-    value: transferId,
-  };
-}
-
 export function cancelTransferAction(transferId: string): ActionModel {
   return {
     type: ActionType.CANCEL_TRANSFER,

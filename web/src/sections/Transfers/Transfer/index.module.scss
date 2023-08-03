@@ -33,23 +33,46 @@
 
     .filename {
       word-break: break-word;
-      font-weight: bold;
       display: flex;
       align-items: center;
     }
 
     .metadata {
-      display: flex;
-      justify-content: space-between;
+      display: grid;
       font-size: 0.8rem;
+      grid-template-columns: 1fr 1fr;
+      justify-content: center;
+      color: #aaa;
 
-      span:not(:last-child) {
-        margin-right: 10px;
+      & > *:nth-child(2),
+      & > *:nth-child(4) {
+        display: flex;
+        justify-content: flex-end;
       }
     }
 
     .progress {
       text-align: center;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .transfer {
+    .state {
+      .metadata {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+
+        & > *:not(:first-child):not(:last-child) {
+          display: flex;
+          justify-content: center;
+        }
+
+        & > *:last-child {
+          display: flex;
+          justify-content: flex-end;
+        }
+      }
     }
   }
 }

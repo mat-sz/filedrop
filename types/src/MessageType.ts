@@ -19,6 +19,5 @@ export enum MessageType {
 
 export enum ActionMessageActionType {
   ACCEPT = 'accept',
-  REJECT = 'reject',
   CANCEL = 'cancel',
 }

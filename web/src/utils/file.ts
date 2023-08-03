@@ -38,22 +38,22 @@ export function formatFileName(
   const half = Math.floor(fileNameLength / 2);
 
   if (dotIndex !== -1) {
-    const extension = name.substr(dotIndex);
-    const fileName = name.substr(0, dotIndex);
+    const extension = name.substring(dotIndex);
+    const fileName = name.substring(0, dotIndex);
 
     if (fileName.length > fileNameLength) {
       return (
-        fileName.substr(0, half) +
+        fileName.substring(0, half) +
         replacementCharacter +
-        fileName.substr(fileName.length - (half + 1)) +
+        fileName.substring(fileName.length - (half + 1)) +
         extension
       );
     }
   } else if (name.length > 24) {
     return (
-      name.substr(0, half) +
+      name.substring(0, half) +
       replacementCharacter +
-      name.substr(name.length - (half + 1))
+      name.substring(name.length - (half + 1))
     );
   }
 

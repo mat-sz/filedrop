@@ -11,7 +11,7 @@ export function setAppName(name: string): ActionModel {
   };
 }
 
-export function setAbuseEmail(email: string): ActionModel {
+export function setAbuseEmailAction(email: string): ActionModel {
   return {
     type: ActionType.SET_ABUSE_EMAIL,
     value: email,

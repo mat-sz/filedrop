@@ -51,7 +51,7 @@ import {
   setLocalNetworkNames,
   setRemoteAddressAction,
   setAppName,
-  setAbuseEmail,
+  setAbuseEmailAction,
 } from '../actions/state';
 import { deviceType } from '../utils/browser';
 import { randomString } from '../utils/string';
@@ -69,7 +69,7 @@ function* message(action: ActionModel) {
       }
 
       if (msg.abuseEmail) {
-        yield put(setAbuseEmail(msg.abuseEmail));
+        yield put(setAbuseEmailAction(msg.abuseEmail));
       }
 
       yield put(setMaxSizeAction(msg.maxSize));
@@ -137,7 +137,6 @@ function* message(action: ActionModel) {
     case MessageType.ACTION:
       switch (msg.action) {
         case ActionMessageActionType.CANCEL:
-        case ActionMessageActionType.REJECT:
           yield put(removeTransferAction(msg.transferId));
           break;
         case ActionMessageActionType.ACCEPT:
@@ -398,31 +397,6 @@ function* acceptTransfer(action: ActionModel) {
   );
 }
 
-function* rejectTransfer(action: ActionModel) {
-  const transfers: TransferModel[] = yield select(
-    (state: StateType) => state.transfers
-  );
-  const filteredTransfers: TransferModel[] = transfers.filter(
-    transfer =>
-      transfer.state === TransferState.INCOMING &&
-      transfer.transferId === action.value
-  );
-  if (filteredTransfers.length === 0) return;
-
-  const transfer = filteredTransfers[0];
-  if (!transfer) return;
-
-  const model: ActionMessageModel = {
-    type: MessageType.ACTION,
-    transferId: transfer.transferId,
-    targetId: transfer.clientId,
-    action: ActionMessageActionType.REJECT,
-  };
-
-  yield put(sendMessageAction(model));
-  yield put(removeTransferAction(action.value));
-}
-
 function* sendChatMessage(action: ActionModel) {
   const message = action.value as string;
   const clientId: string = yield select((state: StateType) => state.clientId);
@@ -497,10 +471,9 @@ export function* root() {
   yield takeEvery(ActionType.SET_CLIENT_NAME, setClientName);
 
   yield takeEvery(ActionType.CREATE_TRANSFER, createTransfer);
-  yield takeEvery(ActionType.CANCEL_TRANSFER, cancelTransfer);
 
   yield takeEvery(ActionType.ACCEPT_TRANSFER, acceptTransfer);
-  yield takeEvery(ActionType.REJECT_TRANSFER, rejectTransfer);
+  yield takeEvery(ActionType.CANCEL_TRANSFER, cancelTransfer);
 
   yield takeEvery(ActionType.SEND_CHAT_MESSAGE, sendChatMessage);
 

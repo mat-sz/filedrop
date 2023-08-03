@@ -3,11 +3,13 @@
   flex-wrap: wrap;
   align-items: center;
 
-  button {
-    padding: 5px 20px;
-  }
+  button,
+  a {
+    margin-left: 0.5rem;
+    font-size: 0;
 
-  & > *:not(:last-child) {
-    margin-right: 10px;
+    svg {
+      font-size: 2rem;
+    }
   }
 }

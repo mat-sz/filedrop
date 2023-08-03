@@ -9,22 +9,13 @@ import {
 
 import styles from './TransferActions.module.scss';
 import {
-  removeTransferAction,
   cancelTransferAction,
-  rejectTransferAction,
   acceptTransferAction,
 } from '../../../actions/transfers';
 import { TransferModel } from '../../../types/Models';
 import { TransferState } from '../../../types/TransferState';
 import { copy } from '../../../utils/copy';
 import { IconButton } from '../../../components/IconButton';
-
-export const cancellableStates = [
-  TransferState.IN_PROGRESS,
-  TransferState.CONNECTING,
-  TransferState.CONNECTED,
-  TransferState.OUTGOING,
-];
 
 interface TransferProps {
   transfer: TransferModel;
@@ -36,12 +27,8 @@ export const TransferActions: React.FC<TransferProps> = ({ transfer }) => {
 
   const acceptTransfer = () =>
     dispatch(acceptTransferAction(transfer.transferId));
-  const rejectTransfer = () =>
-    dispatch(rejectTransferAction(transfer.transferId));
   const cancelTransfer = () =>
     dispatch(cancelTransferAction(transfer.transferId));
-  const dismissTransfer = () =>
-    dispatch(removeTransferAction(transfer.transferId));
 
   useEffect(() => {
     if (transfer.fileType === 'text/plain' && transfer.blobUrl) {
@@ -69,27 +56,14 @@ export const TransferActions: React.FC<TransferProps> = ({ transfer }) => {
           ) : null}
         </>
       ) : null}
-      {transfer.state === TransferState.COMPLETE ||
-      transfer.state === TransferState.FAILED ? (
-        <IconButton onClick={dismissTransfer}>
-          <IoCloseCircle />
-        </IconButton>
-      ) : null}
       {transfer.state === TransferState.INCOMING ? (
-        <>
-          <IconButton onClick={acceptTransfer} className={styles.positive}>
-            <IoCheckmarkCircle />
-          </IconButton>
-          <IconButton onClick={rejectTransfer} className={styles.negative}>
-            <IoCloseCircle />
-          </IconButton>
-        </>
-      ) : null}
-      {cancellableStates.includes(transfer.state) ? (
-        <IconButton onClick={cancelTransfer} className={styles.negative}>
-          <IoCloseCircle />
+        <IconButton onClick={acceptTransfer} className={styles.positive}>
+          <IoCheckmarkCircle />
         </IconButton>
       ) : null}
+      <IconButton onClick={cancelTransfer}>
+        <IoCloseCircle />
+      </IconButton>
     </div>
   );
 };

@@ -7,13 +7,11 @@ import { animationPropsSlide } from '../../../animationSettings';
 import { TransferModel } from '../../../types/Models';
 import { TransferState } from '../../../types/TransferState';
 import { formatFileName, formatFileSize } from '../../../utils/file';
-import { humanTimeLeft } from '../../../utils/time';
+import { humanTimeElapsed, humanTimeLeft } from '../../../utils/time';
 import { Tooltip } from '../../../components/Tooltip';
 import { TransferIcon } from './TransferIcon';
 import { TransferTarget } from './TransferTarget';
-import { TransferActions, cancellableStates } from './TransferActions';
-
-export { cancellableStates };
+import { TransferActions } from './TransferActions';
 
 interface TransferProps {
   transfer: TransferModel;
@@ -36,7 +34,12 @@ export const Transfer: React.FC<TransferProps> = ({ transfer }) => {
         <div className={styles.filename}>
           <TransferTarget transfer={transfer} />
           <Tooltip content={transfer.fileName}>
-            <span>{formatFileName(transfer.fileName)}</span>
+            <span className="mobileHidden">
+              {formatFileName(transfer.fileName)}
+            </span>
+            <span className="desktopHidden">
+              {formatFileName(transfer.fileName, 8)}
+            </span>
           </Tooltip>
         </div>
         {transfer.state === TransferState.IN_PROGRESS ? (
@@ -46,22 +49,21 @@ export const Transfer: React.FC<TransferProps> = ({ transfer }) => {
           />
         ) : null}
         <div className={styles.metadata}>
-          <div>
-            <span>
-              {formattedOffset
-                ? t('transfers.progress', {
-                    offset: formattedOffset,
-                    size: formattedSize,
-                  })
-                : formattedSize}
-            </span>
-            {transfer.state === TransferState.FAILED && <span>Failed!</span>}
-          </div>
+          <span>
+            {formattedOffset
+              ? t('transfers.progress', {
+                  offset: formattedOffset,
+                  size: formattedSize,
+                })
+              : formattedSize}
+          </span>
+          {transfer.state === TransferState.FAILED && <span>Failed!</span>}
+          <span>{humanTimeElapsed(transfer.time)}</span>
           {transfer.state === TransferState.IN_PROGRESS && (
-            <div className={styles.progress}>
+            <>
               <span>{formatFileSize(transfer.speed!)}/s</span>
               <span>{humanTimeLeft(transfer.timeLeft)}</span>
-            </div>
+            </>
           )}
         </div>
       </div>

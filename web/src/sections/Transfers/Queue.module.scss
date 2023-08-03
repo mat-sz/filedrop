@@ -1,0 +1,26 @@
+.queue {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    animation: fadeIn 0.4s ease-in-out 0s 1;
+
+    &:not(:last-child) {
+      padding-bottom: 15px;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #333;
+    }
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+
+  h3 {
+    margin: 0;
+    padding: 5px 0;
+  }
+}

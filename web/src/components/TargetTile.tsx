@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { useSelector } from 'react-redux';
-import { IoLockClosed, IoPhoneLandscape, IoHome } from 'react-icons/io5';
+import { IoLockClosed, IoPhonePortrait, IoHome } from 'react-icons/io5';
 import { ClientModel, DeviceType } from '@filedrop/types';
 
 import styles from './TargetTile.module.scss';
@@ -36,7 +36,7 @@ export const TargetTile = React.forwardRef<
         <>
           {isSecure && <IoLockClosed className={styles.secure} />}
           {isLocal && <IoHome className={styles.local} />}
-          {isMobile && <IoPhoneLandscape className={styles.device} />}
+          {isMobile && <IoPhonePortrait className={styles.device} />}
         </>
       )}
       {children}

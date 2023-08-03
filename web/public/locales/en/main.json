@@ -41,12 +41,11 @@
     "autoAccept": "Automatically accept all incoming transfers"
   },
   "transfers": {
-    "title": "Transfers",
-    "actions": {
-      "acceptAll": "Accept all",
-      "rejectAll": "Reject all",
-      "cancelAll": "Cancel all",
-      "dismissAll": "Dismiss all"
+    "title": {
+      "incoming": "Incoming transfers",
+      "outgoing": "Outgoing transfers",
+      "active": "Active transfers",
+      "complete": "Complete transfers"
     },
     "icon": {
       "state": "Transfer state: {{state}}",
