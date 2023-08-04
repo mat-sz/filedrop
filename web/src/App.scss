@@ -148,6 +148,10 @@ h3 {
   .mobileFlex {
     display: block;
     flex: unset;
+
+    .subsection {
+      margin-bottom: 15px;
+    }
   }
 
   .mobileHidden {

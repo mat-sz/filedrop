@@ -22,7 +22,7 @@ export const Queue: React.FC<Props> = ({ transfers, title }) => {
             <Actions transfers={transfers} />
           </div>
           <ul className={styles.queue}>
-            <Total />
+            <Total transfers={transfers} />
             <AnimatePresence>
               {transfers.map(transfer => (
                 <Transfer key={transfer.transferId} transfer={transfer} />

@@ -1,23 +1,17 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18not';
-import { createSelector } from 'reselect';
 import { IoArrowDown, IoArrowUp } from 'react-icons/io5';
 
 import styles from './Total.module.scss';
-import { StateType } from '../../reducers';
 import { formatFileSize } from '../../utils/file';
-import { TransferState } from '../../types/TransferState';
+import { TransferModel } from '../../types/Models';
 
-const activeTransfersSelector = createSelector(
-  [(state: StateType) => state.transfers],
-  transfers =>
-    transfers.filter(transfers => transfers.state === TransferState.IN_PROGRESS)
-);
+interface Props {
+  transfers: TransferModel[];
+}
 
-export const Total: React.FC = () => {
+export const Total: React.FC<Props> = ({ transfers }) => {
   const { t } = useTranslation();
-  const transfers = useSelector(activeTransfersSelector);
 
   if (transfers.length < 2) {
     return null;

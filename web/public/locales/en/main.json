@@ -42,10 +42,10 @@
   },
   "transfers": {
     "title": {
-      "incoming": "Incoming transfers",
-      "outgoing": "Outgoing transfers",
-      "active": "Active transfers",
-      "complete": "Complete transfers"
+      "incoming": "Incoming",
+      "outgoing": "Outgoing",
+      "active": "Active",
+      "complete": "Complete"
     },
     "icon": {
       "state": "Transfer state: {{state}}",
