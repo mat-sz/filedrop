@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { observer } from 'mobx-react-lite';
 
-import { StateType } from '../reducers';
 import { TextSection } from '../components/TextSection';
+import { applicationStore } from '../stores/ApplicationStore';
 
-export const Abuse: React.FC = () => {
-  const abuseEmail = useSelector((state: StateType) => state.abuseEmail);
+export const Abuse: React.FC = observer(() => {
+  const abuseEmail = applicationStore.abuseEmail;
 
   if (!abuseEmail) {
     return null;
@@ -28,4 +28,4 @@ export const Abuse: React.FC = () => {
       <p>Send a message to the following e-mail address: {abuseEmail}</p>
     </TextSection>
   );
-};
+});

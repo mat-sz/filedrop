@@ -1,17 +1,17 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18not';
 
 import styles from './index.module.scss';
-import { StateType } from '../../reducers';
 import { TargetTile } from '../../components/TargetTile';
 import { ClientName } from './ClientName';
 import { Settings } from './Settings';
+import { observer } from 'mobx-react-lite';
+import { applicationStore } from '../../stores/ApplicationStore';
 
-export const YourTileSection: React.FC = () => {
+export const YourTileSection: React.FC = observer(() => {
   const { t } = useTranslation();
-  const client = useSelector((store: StateType) =>
-    store.network?.find(client => client.clientId === store.clientId)
+  const client = applicationStore.networkStore.network.find(
+    client => client.clientId === applicationStore.networkStore.clientId
   );
 
   return (
@@ -29,4 +29,4 @@ export const YourTileSection: React.FC = () => {
       </div>
     </div>
   );
-};
+});

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { AnimatePresence } from 'nanoanim';
 import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { observer } from 'mobx-react-lite';
 import clsx from 'clsx';
 
 import styles from './Home.module.scss';
 import { ClipboardModal } from '../modals/ClipboardModal';
-import { setNetworkNameAction } from '../actions/state';
 import { IncompatibleBrowserSection } from '../sections/IncompatibleBrowser';
 import { YourTileSection } from '../sections/YourTile';
 import { NoticeSection } from '../sections/Notice';
@@ -15,14 +14,13 @@ import { TransfersSection } from '../sections/Transfers';
 import { ConnectSection } from '../sections/Connect';
 import { ChatSection } from '../sections/Chat';
 import { MobileTabs } from '../sections/MobileTabs';
-import { StateType } from '../reducers';
+import { applicationStore } from '../stores/ApplicationStore';
 
-export const Home: React.FC = () => {
-  const dispatch = useDispatch();
+export const Home: React.FC = observer(() => {
   const [clipboardFiles, setClipboardFiles] = useState<File[]>([]);
   const { networkName } = useParams<{ networkName: string }>();
   const [href, setHref] = useState('');
-  const tab = useSelector((state: StateType) => state.tab);
+  const tab = applicationStore.tab;
 
   useEffect(() => {
     setHref(
@@ -30,9 +28,9 @@ export const Home: React.FC = () => {
     );
 
     if (networkName) {
-      dispatch(setNetworkNameAction(networkName));
+      applicationStore.networkStore.updateNetworkName(networkName);
     }
-  }, [setHref, networkName, dispatch]);
+  }, [setHref, networkName]);
 
   useEffect(() => {
     const onPaste = (e: ClipboardEvent) => {
@@ -112,4 +110,4 @@ export const Home: React.FC = () => {
       <MobileTabs />
     </>
   );
-};
+});

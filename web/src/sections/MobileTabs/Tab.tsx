@@ -1,29 +1,27 @@
 import React from 'react';
 import clsx from 'clsx';
+import { observer } from 'mobx-react-lite';
+import { runInAction } from 'mobx';
 
 import styles from './Tab.module.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { StateType } from '../../reducers';
-import { setTabAction } from '../../actions/state';
+import { applicationStore } from '../../stores/ApplicationStore';
 
 interface Props {
   id: string;
 }
 
-export const Tab: React.FC<React.PropsWithChildren<Props>> = ({
-  id,
-  children,
-}) => {
-  const isActive = useSelector((state: StateType) => state.tab === id);
-  const dispatch = useDispatch();
+export const Tab: React.FC<React.PropsWithChildren<Props>> = observer(
+  ({ id, children }) => {
+    const isActive = applicationStore.tab === id;
 
-  return (
-    <button
-      className={clsx(styles.tab, { [styles.active]: isActive })}
-      onClick={() => dispatch(setTabAction(id))}
-      role="tab"
-    >
-      {children}
-    </button>
-  );
-};
+    return (
+      <button
+        className={clsx(styles.tab, { [styles.active]: isActive })}
+        onClick={() => runInAction(() => (applicationStore.tab = id))}
+        role="tab"
+      >
+        {children}
+      </button>
+    );
+  }
+);

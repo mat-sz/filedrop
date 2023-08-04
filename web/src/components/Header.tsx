@@ -6,14 +6,13 @@ import {
   IoLogoTwitter,
 } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { observer } from 'mobx-react-lite';
 
 import styles from './Header.module.scss';
-import { StateType } from '../reducers';
 import { DropIcon } from './DropIcon';
+import { applicationStore } from '../stores/ApplicationStore';
 
-export const Header: React.FC = () => {
-  const appName = useSelector((state: StateType) => state.appName);
+export const Header: React.FC = observer(() => {
   const { t } = useTranslation();
 
   return (
@@ -22,7 +21,7 @@ export const Header: React.FC = () => {
         <h1>
           <Link to="/" className={styles.logo}>
             <DropIcon />
-            {appName}
+            {applicationStore.appName}
           </Link>
         </h1>
         <div className={styles.right}>
@@ -49,4 +48,4 @@ export const Header: React.FC = () => {
       </nav>
     </header>
   );
-};
+});

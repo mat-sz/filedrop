@@ -1,14 +1,14 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18not';
 
-import { StateType } from '../../reducers';
 import { Queue } from './Queue';
 import { TransferState } from '../../types/TransferState';
+import { observer } from 'mobx-react-lite';
+import { applicationStore } from '../../stores/ApplicationStore';
 
-export const TransfersSection: React.FC = () => {
+export const TransfersSection: React.FC = observer(() => {
   const { t } = useTranslation();
-  const transfers = useSelector((store: StateType) => store.transfers);
+  const transfers = applicationStore.networkStore.transfers;
 
   const incomingTransfers = transfers.filter(
     transfer => transfer.state === TransferState.INCOMING
@@ -45,4 +45,4 @@ export const TransfersSection: React.FC = () => {
       />
     </>
   );
-};
+});

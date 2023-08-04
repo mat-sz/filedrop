@@ -1,27 +1,21 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { createSelector } from 'reselect';
 import { useTranslation } from 'react-i18not';
 import { useNavigate } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 
 import styles from './OtherNetworks.module.scss';
-import { StateType } from '../../reducers';
 import { Button } from '../../components/Button';
+import { applicationStore } from '../../stores/ApplicationStore';
 
-const namesSelector = createSelector(
-  [
-    (state: StateType) => state.localNetworkNames,
-    (state: StateType) => state.networkName,
-  ],
-  (names, networkName) => names.filter(name => name !== networkName)
-);
-
-export const OtherNetworks: React.FC = () => {
+export const OtherNetworks: React.FC = observer(() => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const localNetworkNames = useSelector(namesSelector);
 
-  if (localNetworkNames.length === 0) {
+  const localNetworkNames = applicationStore.localNetworkNames?.filter(
+    name => name !== applicationStore.networkStore.networkName
+  );
+
+  if (!localNetworkNames?.length) {
     return null;
   }
 
@@ -37,4 +31,4 @@ export const OtherNetworks: React.FC = () => {
       </div>
     </div>
   );
-};
+});

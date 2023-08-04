@@ -11,11 +11,11 @@ import {
 
 import styles from './TransferIcon.module.scss';
 import { fileType } from '../../../utils/file';
-import { TransferModel } from '../../../types/Models';
 import { FileType } from '../../../types/FileType';
+import { Transfer } from '../../../stores/Transfer';
 
 interface TransferIconProps {
-  transfer: TransferModel;
+  transfer: Transfer;
 }
 
 const typeIcon = (mime: string) => {

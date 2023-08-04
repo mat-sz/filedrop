@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18not';
 import { IoPencil, IoCheckmarkCircle, IoCloseCircle } from 'react-icons/io5';
+import { observer } from 'mobx-react-lite';
 
 import styles from './ClientName.module.scss';
-import { setClientNameAction } from '../../actions/state';
-import { StateType } from '../../reducers';
 import { IconButton } from '../../components/IconButton';
+import { applicationStore } from '../../stores/ApplicationStore';
 
-export const ClientName: React.FC = () => {
+export const ClientName: React.FC = observer(() => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const clientName = useSelector((store: StateType) => store.clientName);
+  const clientName = applicationStore.networkStore.clientName;
 
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState(clientName);
@@ -29,7 +27,7 @@ export const ClientName: React.FC = () => {
     setIsEditing(false);
 
     if (name) {
-      dispatch(setClientNameAction(name));
+      applicationStore.networkStore.updateClientName(name);
     }
   };
 
@@ -65,4 +63,4 @@ export const ClientName: React.FC = () => {
       )}
     </div>
   );
-};
+});

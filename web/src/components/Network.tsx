@@ -1,31 +1,26 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { createSelector } from 'reselect';
 import { ScrollArea } from 'react-nano-scrollbar';
 import { useTranslation } from 'react-i18not';
+import { observer } from 'mobx-react-lite';
 import { AnimatePresence, motion } from 'nanoanim';
 import clsx from 'clsx';
 
 import styles from './Network.module.scss';
-import { setTabAction } from '../actions/state';
 import { animationPropsOpacity } from '../animationSettings';
-import { StateType } from '../reducers';
 import { NetworkTile } from './NetworkTile';
 import { Button } from './Button';
+import { applicationStore } from '../stores/ApplicationStore';
+import { runInAction } from 'mobx';
 
 interface NetworkProps {
   onSelect?: (clientId: string) => void;
 }
 
-const networkSelector = createSelector(
-  [(state: StateType) => state.network, (state: StateType) => state.clientId],
-  (network, clientId) => network.filter(client => client.clientId !== clientId)
-);
-
-export const Network: React.FC<NetworkProps> = ({ onSelect }) => {
+export const Network: React.FC<NetworkProps> = observer(({ onSelect }) => {
   const { t } = useTranslation();
-  const network = useSelector(networkSelector);
-  const dispatch = useDispatch();
+  const network = applicationStore.networkStore.network.filter(
+    client => client.clientId !== applicationStore.networkStore.clientId
+  );
 
   return (
     <AnimatePresence>
@@ -50,7 +45,9 @@ export const Network: React.FC<NetworkProps> = ({ onSelect }) => {
           <div>
             <Button
               className="desktopHidden"
-              onClick={() => dispatch(setTabAction('connect'))}
+              onClick={() =>
+                runInAction(() => (applicationStore.tab = 'connect'))
+              }
             >
               {t('emptyNetwork.qr')}
             </Button>
@@ -59,4 +56,4 @@ export const Network: React.FC<NetworkProps> = ({ onSelect }) => {
       )}
     </AnimatePresence>
   );
-};
+});

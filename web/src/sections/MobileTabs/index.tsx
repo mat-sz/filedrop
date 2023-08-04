@@ -1,13 +1,13 @@
 import React from 'react';
 import { IoQrCode, IoChatbubbles, IoHome } from 'react-icons/io5';
-import { useSelector } from 'react-redux';
+import { observer } from 'mobx-react-lite';
 
 import styles from './index.module.scss';
-import { StateType } from '../../reducers';
 import { Tab } from './Tab';
+import { applicationStore } from '../../stores/ApplicationStore';
 
-export const MobileTabs: React.FC = () => {
-  const privateKey = useSelector((store: StateType) => store.privateKey);
+export const MobileTabs: React.FC = observer(() => {
+  const privateKey = applicationStore.privateKey;
 
   return (
     <div className={styles.tabs} role="tablist">
@@ -24,4 +24,4 @@ export const MobileTabs: React.FC = () => {
       )}
     </div>
   );
-};
+});

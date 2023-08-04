@@ -1,24 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18not';
 import { AnimatePresence, motion } from 'nanoanim';
 import { ScrollArea } from 'react-nano-scrollbar';
 import Textarea from 'react-expanding-textarea';
+import { observer } from 'mobx-react-lite';
 import { IoSend, IoChatbox } from 'react-icons/io5';
 import clsx from 'clsx';
 
 import styles from './index.module.scss';
-import { StateType } from '../../reducers';
-import { sendChatMessageAction } from '../../actions/state';
 import { animationPropsOpacity } from '../../animationSettings';
 import { ChatItem } from './ChatItem';
 import { IconButton } from '../../components/IconButton';
+import { applicationStore } from '../../stores/ApplicationStore';
 
-export const ChatSection: React.FC = () => {
+export const ChatSection: React.FC = observer(() => {
   const { t } = useTranslation();
-  const chat = useSelector((store: StateType) => store.chat);
-  const privateKey = useSelector((store: StateType) => store.privateKey);
-  const dispatch = useDispatch();
+  const chat = applicationStore.networkStore.chat;
+  const privateKey = applicationStore.privateKey;
   const containerRef = useRef<HTMLUListElement | null>(null);
 
   const [message, setMessage] = useState('');
@@ -29,7 +27,7 @@ export const ChatSection: React.FC = () => {
       return;
     }
 
-    dispatch(sendChatMessageAction(message));
+    applicationStore.networkStore.sendChatMessage(message);
     setMessage('');
   };
 
@@ -48,7 +46,7 @@ export const ChatSection: React.FC = () => {
         inline: 'start',
       });
     }
-  }, [chat]);
+  }, [chat.length]);
 
   // Disable chat if Web Crypto is not supported.
   if (!privateKey) {
@@ -89,4 +87,4 @@ export const ChatSection: React.FC = () => {
       </form>
     </div>
   );
-};
+});

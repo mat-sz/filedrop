@@ -1,23 +1,16 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 
 import styles from './Actions.module.scss';
-import {
-  acceptTransferAction,
-  cancelTransferAction,
-} from '../../actions/transfers';
 import { TransferState } from '../../types/TransferState';
 import { IconButton } from '../../components/IconButton';
 import { IoCheckmarkDoneCircle, IoCloseCircle } from 'react-icons/io5';
-import { TransferModel } from '../../types/Models';
+import { Transfer } from '../../stores/Transfer';
 
 interface Props {
-  transfers: TransferModel[];
+  transfers: Transfer[];
 }
 
 export const Actions: React.FC<Props> = ({ transfers }) => {
-  const dispatch = useDispatch();
-
   if (transfers.length <= 1) {
     return;
   }
@@ -28,12 +21,12 @@ export const Actions: React.FC<Props> = ({ transfers }) => {
     );
 
     for (const transfer of acceptable) {
-      dispatch(acceptTransferAction(transfer.transferId));
+      transfer.accept();
     }
   };
   const cancelAll = () => {
     for (const transfer of transfers) {
-      dispatch(cancelTransferAction(transfer.transferId));
+      transfer.cancel();
     }
   };
 

@@ -1,7 +1,6 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { observer } from 'mobx-react-lite';
 
-import { StateType } from '../reducers';
 import {
   isFileReaderSupported,
   isORTCSupported,
@@ -9,11 +8,10 @@ import {
   isWebSocketSupported,
 } from '../utils/browser';
 import { TextSection } from '../components/TextSection';
+import { applicationStore } from '../stores/ApplicationStore';
 
-export const TechnicalInformation: React.FC = () => {
-  const remoteAddress = useSelector(
-    (state: StateType) => state.remoteAddress || 'Connecting?'
-  );
+export const TechnicalInformation: React.FC = observer(() => {
+  const remoteAddress = applicationStore.remoteAddress;
 
   return (
     <TextSection>
@@ -41,4 +39,4 @@ export const TechnicalInformation: React.FC = () => {
       </ul>
     </TextSection>
   );
-};
+});

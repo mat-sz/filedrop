@@ -1,17 +1,17 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18not';
 import { motion } from 'nanoanim';
 import { IoCopy } from 'react-icons/io5';
+import { observer } from 'mobx-react-lite';
 import clsx from 'clsx';
 
 import styles from './ChatItem.module.scss';
 import { animationPropsSlide } from '../../animationSettings';
 import { ChatItemModel } from '../../types/Models';
-import { StateType } from '../../reducers';
 import { copy } from '../../utils/copy';
 import { TargetTile } from '../../components/TargetTile';
 import { IconButton } from '../../components/IconButton';
+import { applicationStore } from '../../stores/ApplicationStore';
 
 export interface ChatItemProps {
   item: ChatItemModel;
@@ -33,12 +33,12 @@ const urlify = (text: string): React.ReactNode => {
   });
 };
 
-export const ChatItem: React.FC<ChatItemProps> = ({ item }) => {
+export const ChatItem: React.FC<ChatItemProps> = observer(({ item }) => {
   const { t, language } = useTranslation();
   const [expanded, setExpanded] = useState(false);
   const messageRef = useRef<HTMLDivElement>(null);
-  const client = useSelector((state: StateType) =>
-    state.clientCache.find(client => client.clientId === item.clientId)
+  const client = applicationStore.networkStore.clientCache.find(
+    client => client.clientId === item.clientId
   );
 
   useLayoutEffect(() => {
@@ -73,4 +73,4 @@ export const ChatItem: React.FC<ChatItemProps> = ({ item }) => {
       )}
     </motion.li>
   );
-};
+});

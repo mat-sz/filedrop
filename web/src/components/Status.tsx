@@ -1,20 +1,19 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18not';
 import { AnimatePresence, motion } from 'nanoanim';
+import { observer } from 'mobx-react-lite';
 import clsx from 'clsx';
 
 import styles from './Status.module.scss';
-import { StateType } from '../reducers';
 import { animationPropsOpacity } from '../animationSettings';
+import { applicationStore } from '../stores/ApplicationStore';
 
-export const Status: React.FC = () => {
-  const connected = useSelector((state: StateType) => state.connected);
+export const Status: React.FC = observer(() => {
   const { t } = useTranslation();
 
   return (
     <AnimatePresence>
-      {!connected ? (
+      {!applicationStore.connected ? (
         <motion.div
           {...animationPropsOpacity}
           className={clsx(styles.status, styles.error)}
@@ -24,4 +23,4 @@ export const Status: React.FC = () => {
       ) : null}
     </AnimatePresence>
   );
-};
+});

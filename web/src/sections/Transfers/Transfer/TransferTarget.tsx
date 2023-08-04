@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18not';
 import {
   FaTimes,
@@ -11,16 +10,17 @@ import {
   FaHourglassHalf,
   FaHourglassEnd,
 } from 'react-icons/fa';
+import { observer } from 'mobx-react-lite';
 
 import styles from './TransferTarget.module.scss';
 import { TransferState } from '../../../types/TransferState';
-import { TransferModel } from '../../../types/Models';
-import { StateType } from '../../../reducers';
 import { Tooltip } from '../../../components/Tooltip';
 import { TargetTile } from '../../../components/TargetTile';
+import { Transfer } from '../../../stores/Transfer';
+import { applicationStore } from '../../../stores/ApplicationStore';
 
 interface TransferIconProps {
-  transfer: TransferModel;
+  transfer: Transfer;
 }
 
 const stateIcon = (state: TransferState, receiving: boolean) => {
@@ -46,27 +46,29 @@ const stateIcon = (state: TransferState, receiving: boolean) => {
   }
 };
 
-export const TransferTarget: React.FC<TransferIconProps> = ({ transfer }) => {
-  const { t } = useTranslation();
-  const targetClient = useSelector((state: StateType) =>
-    state.clientCache.find(client => client.clientId === transfer.clientId)
-  );
+export const TransferTarget: React.FC<TransferIconProps> = observer(
+  ({ transfer }) => {
+    const { t } = useTranslation();
+    const targetClient = applicationStore.networkStore.clientCache.find(
+      client => client.clientId === transfer.targetId
+    );
 
-  if (!targetClient) {
-    return null;
+    if (!targetClient) {
+      return null;
+    }
+
+    return (
+      <Tooltip content={t(`transferState.${transfer.state}`)}>
+        <TargetTile
+          className={styles.tile}
+          client={targetClient}
+          aria-label={t('transfers.icon.state', {
+            state: t(`transferState.${transfer.state}`),
+          })}
+        >
+          {stateIcon(transfer.state, transfer.receiving)}
+        </TargetTile>
+      </Tooltip>
+    );
   }
-
-  return (
-    <Tooltip content={t(`transferState.${transfer.state}`)}>
-      <TargetTile
-        className={styles.tile}
-        client={targetClient}
-        aria-label={t('transfers.icon.state', {
-          state: t(`transferState.${transfer.state}`),
-        })}
-      >
-        {stateIcon(transfer.state, transfer.receiving)}
-      </TargetTile>
-    </Tooltip>
-  );
-};
+);

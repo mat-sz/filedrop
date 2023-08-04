@@ -1,16 +1,17 @@
 import React from 'react';
 import { useTranslation } from 'react-i18not';
 import { IoArrowDown, IoArrowUp } from 'react-icons/io5';
+import { observer } from 'mobx-react-lite';
 
 import styles from './Total.module.scss';
 import { formatFileSize } from '../../utils/file';
-import { TransferModel } from '../../types/Models';
+import { Transfer } from '../../stores/Transfer';
 
 interface Props {
-  transfers: TransferModel[];
+  transfers: Transfer[];
 }
 
-export const Total: React.FC<Props> = ({ transfers }) => {
+export const Total: React.FC<Props> = observer(({ transfers }) => {
   const { t } = useTranslation();
 
   if (transfers.length < 2) {
@@ -61,4 +62,4 @@ export const Total: React.FC<Props> = ({ transfers }) => {
       </div>
     </li>
   );
-};
+});

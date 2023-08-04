@@ -1,14 +1,13 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18not';
 import { motion } from 'nanoanim';
 import { IoClose } from 'react-icons/io5';
 
 import styles from './ClipboardModal.module.scss';
-import { createTransferAction } from '../actions/transfers';
 import { animationPropsOpacity } from '../animationSettings';
 import { Network } from '../components/Network';
 import { IconButton } from '../components/IconButton';
+import { applicationStore } from '../stores/ApplicationStore';
 
 interface ClipboardModalProps {
   files: File[];
@@ -20,12 +19,11 @@ export const ClipboardModal: React.FC<ClipboardModalProps> = ({
   dismissClipboard,
 }) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const fileNames = files.map((file, i) => file.name).join(', ');
 
   const onSelect = (clientId: string) => {
     for (let file of files) {
-      dispatch(createTransferAction(file, clientId));
+      applicationStore.networkStore.createTransfer(file, clientId);
     }
 
     dismissClipboard();
