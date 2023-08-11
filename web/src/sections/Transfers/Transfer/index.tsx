@@ -7,7 +7,7 @@ import styles from './index.module.scss';
 import { animationPropsSlide } from '../../../animationSettings';
 import { TransferState } from '../../../types/TransferState';
 import { formatFileName, formatFileSize } from '../../../utils/file';
-import { humanTimeElapsed, humanTimeLeft } from '../../../utils/time';
+import { humanTime } from '../../../utils/time';
 import { Tooltip } from '../../../components/Tooltip';
 import { TransferIcon } from './TransferIcon';
 import { TransferTarget } from './TransferTarget';
@@ -22,8 +22,13 @@ export const TransferInfo: React.FC<TransferProps> = observer(
   ({ transfer }) => {
     const { t } = useTranslation();
 
-    const formattedOffset = transfer.offset && formatFileSize(transfer.offset);
+    const offset =
+      transfer.state === TransferState.IN_PROGRESS ? transfer.offset || 0 : 0;
+    const formattedOffset = offset && formatFileSize(offset);
     const formattedSize = formatFileSize(transfer.fileSize);
+
+    const elapsed = humanTime(transfer.timeElapsed());
+    const left = humanTime(transfer.timeLeft());
 
     return (
       <motion.li
@@ -44,11 +49,8 @@ export const TransferInfo: React.FC<TransferProps> = observer(
               </span>
             </Tooltip>
           </div>
-          {transfer.state === TransferState.IN_PROGRESS ? (
-            <progress
-              value={(transfer.offset || 0) / transfer.fileSize}
-              max={1}
-            />
+          {offset ? (
+            <progress value={offset / transfer.fileSize} max={1} />
           ) : null}
           <div className={styles.metadata}>
             <span>
@@ -60,11 +62,11 @@ export const TransferInfo: React.FC<TransferProps> = observer(
                 : formattedSize}
             </span>
             {transfer.state === TransferState.FAILED && <span>Failed!</span>}
-            <span>{humanTimeElapsed(transfer.time)}</span>
+            <span>{elapsed && t('transfers.elapsed', { time: elapsed })}</span>
             {transfer.state === TransferState.IN_PROGRESS && (
               <>
-                <span>{formatFileSize(transfer.speed!)}/s</span>
-                <span>{humanTimeLeft(transfer.timeLeft)}</span>
+                <span>{formatFileSize(transfer.speed()!)}/s</span>
+                <span>{left && t('transfers.left', { time: left })}</span>
               </>
             )}
           </div>

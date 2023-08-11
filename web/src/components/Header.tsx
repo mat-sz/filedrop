@@ -10,7 +10,7 @@ import { observer } from 'mobx-react-lite';
 
 import styles from './Header.module.scss';
 import { DropIcon } from './DropIcon';
-import { applicationStore } from '../stores/ApplicationStore';
+import { applicationStore } from '../stores';
 
 export const Header: React.FC = observer(() => {
   const { t } = useTranslation();

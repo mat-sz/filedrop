@@ -6,12 +6,13 @@ import { observer } from 'mobx-react-lite';
 import { Loading } from '../components/Loading';
 import { nameCharacterSet, nameLength } from '../config';
 import { randomString } from '../utils/string';
-import { applicationStore } from '../stores/ApplicationStore';
+import { applicationStore, connection, networkStore } from '../stores';
 
 export const Redirect: React.FC = observer(() => {
   const { t } = useTranslation();
-  const { networkName, clientId } = applicationStore.networkStore;
-  const { connected, suggestedNetworkName } = applicationStore;
+  const { networkName } = networkStore;
+  const suggestedNetworkName = applicationStore.suggestedNetworkName;
+  const { connected, clientId } = connection;
 
   const navigate = useNavigate();
 
@@ -20,6 +21,7 @@ export const Redirect: React.FC = observer(() => {
       networkName ||
       suggestedNetworkName ||
       randomString(nameLength, nameCharacterSet);
+
     if (connected && clientId) {
       navigate('/' + currentNetworkName);
     }

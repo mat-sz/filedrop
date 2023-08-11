@@ -4,11 +4,9 @@ import { observer } from 'mobx-react-lite';
 
 import styles from './index.module.scss';
 import { Tab } from './Tab';
-import { applicationStore } from '../../stores/ApplicationStore';
+import { connection } from '../../stores';
 
 export const MobileTabs: React.FC = observer(() => {
-  const privateKey = applicationStore.privateKey;
-
   return (
     <div className={styles.tabs} role="tablist">
       <Tab id="transfers">
@@ -17,7 +15,7 @@ export const MobileTabs: React.FC = observer(() => {
       <Tab id="connect">
         <IoQrCode />
       </Tab>
-      {!!privateKey && (
+      {connection.secure && (
         <Tab id="chat">
           <IoChatbubbles />
         </Tab>

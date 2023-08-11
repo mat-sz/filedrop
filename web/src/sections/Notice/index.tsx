@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { observer } from 'mobx-react-lite';
 
 import styles from './index.module.scss';
-import { applicationStore } from '../../stores/ApplicationStore';
+import { applicationStore } from '../../stores';
 
 export const NoticeSection: React.FC = observer(() => {
   const { noticeText, noticeUrl } = applicationStore;

@@ -8,10 +8,10 @@ import {
   isWebSocketSupported,
 } from '../utils/browser';
 import { TextSection } from '../components/TextSection';
-import { applicationStore } from '../stores/ApplicationStore';
+import { connection } from '../stores';
 
 export const TechnicalInformation: React.FC = observer(() => {
-  const remoteAddress = applicationStore.remoteAddress;
+  const remoteAddress = connection.remoteAddress;
 
   return (
     <TextSection>

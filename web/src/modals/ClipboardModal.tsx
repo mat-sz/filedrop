@@ -7,7 +7,7 @@ import styles from './ClipboardModal.module.scss';
 import { animationPropsOpacity } from '../animationSettings';
 import { Network } from '../components/Network';
 import { IconButton } from '../components/IconButton';
-import { applicationStore } from '../stores/ApplicationStore';
+import { networkStore } from '../stores';
 
 interface ClipboardModalProps {
   files: File[];
@@ -23,7 +23,7 @@ export const ClipboardModal: React.FC<ClipboardModalProps> = ({
 
   const onSelect = (clientId: string) => {
     for (let file of files) {
-      applicationStore.networkStore.createTransfer(file, clientId);
+      networkStore.createTransfer(file, clientId);
     }
 
     dismissClipboard();

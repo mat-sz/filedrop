@@ -5,7 +5,7 @@ import { runInAction } from 'mobx';
 
 import styles from './Settings.module.scss';
 import { Toggle } from '../../components/Toggle';
-import { applicationStore } from '../../stores/ApplicationStore';
+import { settingsStore } from '../../stores';
 
 export const Settings: React.FC = observer(() => {
   const { t } = useTranslation();
@@ -14,9 +14,9 @@ export const Settings: React.FC = observer(() => {
     <div className={styles.settings}>
       <Toggle
         label={t('settings.autoAccept')}
-        value={applicationStore.autoAccept}
+        value={settingsStore.autoAccept}
         onChange={value =>
-          runInAction(() => (applicationStore.autoAccept = value))
+          runInAction(() => (settingsStore.autoAccept = value))
         }
       />
     </div>

@@ -6,14 +6,14 @@ import clsx from 'clsx';
 
 import styles from './Status.module.scss';
 import { animationPropsOpacity } from '../animationSettings';
-import { applicationStore } from '../stores/ApplicationStore';
+import { connection } from '../stores';
 
 export const Status: React.FC = observer(() => {
   const { t } = useTranslation();
 
   return (
     <AnimatePresence>
-      {!applicationStore.connected ? (
+      {!connection.connected ? (
         <motion.div
           {...animationPropsOpacity}
           className={clsx(styles.status, styles.error)}

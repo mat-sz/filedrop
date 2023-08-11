@@ -9,8 +9,7 @@ import styles from './Network.module.scss';
 import { animationPropsOpacity } from '../animationSettings';
 import { NetworkTile } from './NetworkTile';
 import { Button } from './Button';
-import { applicationStore } from '../stores/ApplicationStore';
-import { runInAction } from 'mobx';
+import { applicationStore, networkStore } from '../stores';
 
 interface NetworkProps {
   onSelect?: (clientId: string) => void;
@@ -18,17 +17,15 @@ interface NetworkProps {
 
 export const Network: React.FC<NetworkProps> = observer(({ onSelect }) => {
   const { t } = useTranslation();
-  const network = applicationStore.networkStore.network.filter(
-    client => client.clientId !== applicationStore.networkStore.clientId
-  );
+  const clients = networkStore.clients;
 
   return (
     <AnimatePresence>
-      {network.length > 0 ? (
+      {clients.length > 0 ? (
         <ScrollArea horizontal hideScrollbarY>
           <div className={styles.network}>
             <AnimatePresence>
-              {network.map(client => (
+              {clients.map(client => (
                 <NetworkTile
                   key={client.clientId}
                   client={client}
@@ -45,9 +42,7 @@ export const Network: React.FC<NetworkProps> = observer(({ onSelect }) => {
           <div>
             <Button
               className="desktopHidden"
-              onClick={() =>
-                runInAction(() => (applicationStore.tab = 'connect'))
-              }
+              onClick={() => applicationStore.setTab('connect')}
             >
               {t('emptyNetwork.qr')}
             </Button>

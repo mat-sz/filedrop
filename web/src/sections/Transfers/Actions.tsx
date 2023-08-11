@@ -1,7 +1,6 @@
 import React from 'react';
 
 import styles from './Actions.module.scss';
-import { TransferState } from '../../types/TransferState';
 import { IconButton } from '../../components/IconButton';
 import { IoCheckmarkDoneCircle, IoCloseCircle } from 'react-icons/io5';
 import { Transfer } from '../../stores/Transfer';
@@ -16,11 +15,7 @@ export const Actions: React.FC<Props> = ({ transfers }) => {
   }
 
   const acceptAll = () => {
-    const acceptable = transfers.filter(
-      transfer => transfer.state === TransferState.INCOMING
-    );
-
-    for (const transfer of acceptable) {
+    for (const transfer of transfers) {
       transfer.accept();
     }
   };
@@ -30,9 +25,7 @@ export const Actions: React.FC<Props> = ({ transfers }) => {
     }
   };
 
-  const hasAcceptable = !!transfers.find(
-    transfer => transfer.state === TransferState.INCOMING
-  );
+  const hasAcceptable = transfers.some(transfer => transfer.canAccept);
 
   return (
     <>

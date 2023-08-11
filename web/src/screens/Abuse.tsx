@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import { TextSection } from '../components/TextSection';
-import { applicationStore } from '../stores/ApplicationStore';
+import { applicationStore } from '../stores';
 
 export const Abuse: React.FC = observer(() => {
   const abuseEmail = applicationStore.abuseEmail;

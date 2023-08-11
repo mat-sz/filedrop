@@ -5,7 +5,7 @@ import clsx from 'clsx';
 
 import styles from './Footer.module.scss';
 import { observer } from 'mobx-react-lite';
-import { applicationStore } from '../stores/ApplicationStore';
+import { applicationStore } from '../stores';
 
 export const Footer: React.FC = observer(() => {
   const { t } = useTranslation();

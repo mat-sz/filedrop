@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { runInAction } from 'mobx';
 
 import styles from './Tab.module.scss';
-import { applicationStore } from '../../stores/ApplicationStore';
+import { applicationStore } from '../../stores';
 
 interface Props {
   id: string;

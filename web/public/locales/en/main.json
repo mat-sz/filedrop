@@ -51,7 +51,9 @@
       "state": "Transfer state: {{state}}",
       "preview": "Preview: {{fileName}}"
     },
-    "progress": "{{offset}} of {{size}}"
+    "progress": "{{offset}} of {{size}}",
+    "elapsed": "{{time}} elapsed",
+    "left": "{{time}} left"
   },
   "fileType": {
     "unknown": "",

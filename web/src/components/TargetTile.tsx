@@ -2,11 +2,11 @@ import React from 'react';
 import clsx from 'clsx';
 import { IoLockClosed, IoPhonePortrait, IoHome } from 'react-icons/io5';
 import { ClientModel, DeviceType } from '@filedrop/types';
+import { observer } from 'mobx-react-lite';
 
 import styles from './TargetTile.module.scss';
 import { uuidToColor } from '../utils/color';
-import { observer } from 'mobx-react-lite';
-import { applicationStore } from '../stores/ApplicationStore';
+import { connection } from '../stores';
 
 interface TargetTileProps extends React.HTMLProps<HTMLDivElement> {
   client: ClientModel;
@@ -16,7 +16,7 @@ interface TargetTileProps extends React.HTMLProps<HTMLDivElement> {
 export const TargetTile = observer(
   React.forwardRef<HTMLDivElement, React.PropsWithChildren<TargetTileProps>>(
     ({ client, className, variant = 'small', children, ...props }, ref) => {
-      const isSecure = !!applicationStore.publicKey && !!client.publicKey;
+      const isSecure = connection.secure && !!client.publicKey;
       const isLocal = client.isLocal;
       const isMobile = client.deviceType === DeviceType.MOBILE;
 

@@ -5,17 +5,14 @@ import { observer } from 'mobx-react-lite';
 
 import styles from './OtherNetworks.module.scss';
 import { Button } from '../../components/Button';
-import { applicationStore } from '../../stores/ApplicationStore';
+import { networkStore } from '../../stores';
 
 export const OtherNetworks: React.FC = observer(() => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const localNetworkNames = applicationStore.localNetworkNames?.filter(
-    name => name !== applicationStore.networkStore.networkName
-  );
-
-  if (!localNetworkNames?.length) {
+  const names = networkStore.otherNetworks;
+  if (!names?.length) {
     return null;
   }
 
@@ -23,7 +20,7 @@ export const OtherNetworks: React.FC = observer(() => {
     <div>
       <div className={styles.header}>{t('otherNetworks')}</div>
       <div className={styles.list}>
-        {localNetworkNames.map(name => (
+        {names.map(name => (
           <Button key={name} onClick={() => navigate(`/${name}`)}>
             {name}
           </Button>

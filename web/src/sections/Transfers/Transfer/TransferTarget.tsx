@@ -17,7 +17,7 @@ import { TransferState } from '../../../types/TransferState';
 import { Tooltip } from '../../../components/Tooltip';
 import { TargetTile } from '../../../components/TargetTile';
 import { Transfer } from '../../../stores/Transfer';
-import { applicationStore } from '../../../stores/ApplicationStore';
+import { networkStore } from '../../../stores';
 
 interface TransferIconProps {
   transfer: Transfer;
@@ -49,7 +49,7 @@ const stateIcon = (state: TransferState, receiving: boolean) => {
 export const TransferTarget: React.FC<TransferIconProps> = observer(
   ({ transfer }) => {
     const { t } = useTranslation();
-    const targetClient = applicationStore.networkStore.clientCache.find(
+    const targetClient = networkStore.clientCache.find(
       client => client.clientId === transfer.targetId
     );
 

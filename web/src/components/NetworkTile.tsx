@@ -9,7 +9,7 @@ import { ClientModel } from '@filedrop/types';
 import styles from './NetworkTile.module.scss';
 import { animationPropsOpacity } from '../animationSettings';
 import { TargetTile } from './TargetTile';
-import { applicationStore } from '../stores/ApplicationStore';
+import { networkStore } from '../stores';
 
 interface NetworkTileProps {
   client: ClientModel;
@@ -24,7 +24,7 @@ export const NetworkTile: React.FC<NetworkTileProps> = ({
 
   const onDrop = (files: File[]) => {
     for (const file of files) {
-      applicationStore.networkStore.createTransfer(file, client.clientId);
+      networkStore.createTransfer(file, client.clientId);
     }
   };
 

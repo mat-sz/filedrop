@@ -6,13 +6,11 @@ import { TargetTile } from '../../components/TargetTile';
 import { ClientName } from './ClientName';
 import { Settings } from './Settings';
 import { observer } from 'mobx-react-lite';
-import { applicationStore } from '../../stores/ApplicationStore';
+import { networkStore } from '../../stores';
 
 export const YourTileSection: React.FC = observer(() => {
   const { t } = useTranslation();
-  const client = applicationStore.networkStore.network.find(
-    client => client.clientId === applicationStore.networkStore.clientId
-  );
+  const client = networkStore.currentClient;
 
   return (
     <div className="subsection">

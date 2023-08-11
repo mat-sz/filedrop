@@ -1,8 +1,5 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { v4 } from 'uuid';
-import type { NetworkStore } from './NetworkStore';
-import { TransferState } from '../types/TransferState';
-import type { ApplicationStore } from './ApplicationStore';
 import {
   ActionMessageActionType,
   ActionMessageModel,
@@ -11,18 +8,20 @@ import {
   RTCDescriptionMessageModel,
 } from '@filedrop/types';
 
+import { TransferState } from '../types/TransferState';
+import type { NetworkStore } from './NetworkStore';
+import type { Connection } from './Connection';
+
 export class Transfer {
   blobUrl?: string = undefined;
   peerConnection?: RTCPeerConnection = undefined;
   offset?: number = undefined;
-  speed?: number = undefined;
-  time?: number = undefined;
-  timeLeft?: number = undefined;
+  startedAt?: number = undefined;
   state: TransferState;
-  applicationStore: ApplicationStore;
 
   constructor(
     private network: NetworkStore,
+    private connection: Connection,
     public file: File | undefined,
     public targetId: string,
     public fileName: string,
@@ -33,9 +32,27 @@ export class Transfer {
     public receiving = false
   ) {
     this.state = receiving ? TransferState.INCOMING : TransferState.OUTGOING;
-    this.applicationStore = this.network.applicationStore;
 
     makeAutoObservable(this);
+  }
+
+  get canAccept() {
+    return this.state !== TransferState.INCOMING;
+  }
+
+  get isActive() {
+    return (
+      this.state === TransferState.CONNECTED ||
+      this.state === TransferState.CONNECTING ||
+      this.state === TransferState.IN_PROGRESS
+    );
+  }
+
+  get isDone() {
+    return (
+      this.state === TransferState.COMPLETE ||
+      this.state === TransferState.FAILED
+    );
   }
 
   cancel() {
@@ -52,11 +69,15 @@ export class Transfer {
       action: ActionMessageActionType.CANCEL,
     };
 
-    this.applicationStore.send(message);
+    this.connection.send(message);
     this.network.removeTransfer(this.transferId);
   }
 
   accept() {
+    if (!this.canAccept) {
+      return;
+    }
+
     const message: ActionMessageModel = {
       type: MessageType.ACTION,
       transferId: this.transferId,
@@ -64,7 +85,7 @@ export class Transfer {
       action: ActionMessageActionType.ACCEPT,
     };
 
-    this.applicationStore.send(message);
+    this.connection.send(message);
     this.state = TransferState.CONNECTING;
   }
 
@@ -90,56 +111,96 @@ export class Transfer {
     }
   }
 
+  timeElapsed() {
+    if (!this.startedAt) {
+      return undefined;
+    }
+
+    const now = new Date().getTime();
+    return (now - this.startedAt) / 1000;
+  }
+
+  timeLeft() {
+    const offset = this.offset;
+    const speed = this.speed();
+
+    if (!offset || !speed) {
+      return undefined;
+    }
+
+    return Math.round((this.fileSize - offset) / speed);
+  }
+
+  speed() {
+    const elapsed = this.timeElapsed();
+    const offset = this.offset;
+
+    if (!elapsed || !offset) {
+      return undefined;
+    }
+
+    return offset / elapsed;
+  }
+
+  private sendDescription(description: RTCSessionDescription) {
+    const message: RTCDescriptionMessageModel = {
+      type: MessageType.RTC_DESCRIPTION,
+      transferId: this.transferId,
+      targetId: this.targetId,
+      data: {
+        type: description.type,
+        sdp: description.sdp,
+      },
+    };
+
+    this.connection.send(message);
+  }
+
   async start(remoteDescription?: any) {
-    const connection = new RTCPeerConnection(
-      this.applicationStore.rtcConfiguration
-    );
+    const connection = new RTCPeerConnection(this.network.rtcConfiguration);
     this.peerConnection = connection;
+
+    connection.addEventListener('icecandidate', e => {
+      if (!e || !e.candidate) return;
+
+      const message: RTCCandidateMessageModel = {
+        type: MessageType.RTC_CANDIDATE,
+        transferId: this.transferId,
+        targetId: this.targetId,
+        data: e.candidate,
+      };
+
+      this.connection.send(message);
+    });
+
+    let complete = false;
+    const onFailure = () => {
+      complete = true;
+
+      runInAction(() => {
+        this.state = TransferState.FAILED;
+        this.offset = undefined;
+      });
+    };
+
+    connection.addEventListener('iceconnectionstatechange', () => {
+      if (
+        (connection.iceConnectionState === 'failed' ||
+          connection.iceConnectionState === 'disconnected') &&
+        !complete
+      ) {
+        onFailure();
+      }
+    });
 
     if (this.receiving) {
       await connection.setRemoteDescription(remoteDescription);
       const answer = await connection.createAnswer();
       await connection.setLocalDescription(answer);
+      this.sendDescription(connection.localDescription!);
 
-      const message: RTCDescriptionMessageModel = {
-        type: MessageType.RTC_DESCRIPTION,
-        transferId: this.transferId,
-        targetId: this.targetId,
-        data: {
-          type: connection.localDescription!.type,
-          sdp: connection.localDescription!.sdp,
-        },
-      };
-      this.applicationStore.send(message);
-
-      connection.addEventListener('icecandidate', e => {
-        if (!e || !e.candidate) return;
-
-        const message: RTCCandidateMessageModel = {
-          type: MessageType.RTC_CANDIDATE,
-          targetId: this.targetId,
-          transferId: this.transferId,
-          data: e.candidate,
-        };
-
-        this.applicationStore.send(message);
-      });
-
-      const start = new Date().getTime();
       const buffer: BlobPart[] = [];
       let offset = 0;
-
-      let complete = false;
-      const onFailure = () => {
-        complete = true;
-
-        runInAction(() => {
-          this.state = TransferState.FAILED;
-          this.offset = undefined;
-          this.speed = 0;
-          this.timeLeft = 0;
-        });
-      };
 
       const onComplete = () => {
         complete = true;
@@ -147,15 +208,8 @@ export class Transfer {
         const blob = new Blob(buffer);
         const blobUrl = URL.createObjectURL(blob);
 
-        const now = new Date().getTime();
-        const elapsed = (now - start) / 1000;
-
         runInAction(() => {
           this.state = TransferState.COMPLETE;
-          this.offset = undefined;
-          this.speed = 0;
-          this.time = Math.floor(elapsed);
-          this.timeLeft = 0;
           this.blobUrl = blobUrl;
         });
 
@@ -172,6 +226,7 @@ export class Transfer {
       connection.addEventListener('datachannel', event => {
         runInAction(() => {
           this.state = TransferState.CONNECTED;
+          this.startedAt = new Date().getTime();
         });
 
         const channel = event.channel;
@@ -183,18 +238,13 @@ export class Transfer {
           offset += event.data.byteLength;
 
           const now = new Date().getTime();
-          const elapsed = (now - start) / 1000;
 
           if (now - lastUpdate > 50) {
             lastUpdate = now;
-            const speed = offset / elapsed;
 
             runInAction(() => {
               this.state = TransferState.IN_PROGRESS;
               this.offset = offset;
-              this.speed = speed;
-              this.time = Math.floor(elapsed);
-              this.timeLeft = Math.round((this.fileSize - offset) / speed);
             });
           }
 
@@ -212,75 +262,23 @@ export class Transfer {
           }
         });
       });
-
-      connection.addEventListener('iceconnectionstatechange', () => {
-        if (
-          (connection.iceConnectionState === 'failed' ||
-            connection.iceConnectionState === 'disconnected') &&
-          !complete
-        ) {
-          onFailure();
-        }
-      });
     } else {
-      const connection = new RTCPeerConnection(
-        this.applicationStore.rtcConfiguration
-      );
-      this.peerConnection = connection;
-
       const file = this.file!;
 
       connection.addEventListener('negotiationneeded', async () => {
         const offer = await connection.createOffer();
         await connection.setLocalDescription(offer);
-
-        const message: RTCDescriptionMessageModel = {
-          type: MessageType.RTC_DESCRIPTION,
-          transferId: this.transferId,
-          targetId: this.targetId,
-          data: {
-            type: connection.localDescription!.type,
-            sdp: connection.localDescription!.sdp,
-          },
-        };
-
-        this.applicationStore.send(message);
-      });
-
-      connection.addEventListener('icecandidate', e => {
-        if (!e || !e.candidate) return;
-
-        const message: RTCCandidateMessageModel = {
-          type: MessageType.RTC_CANDIDATE,
-          transferId: this.transferId,
-          targetId: this.targetId,
-          data: e.candidate,
-        };
-
-        this.applicationStore.send(message);
+        this.sendDescription(connection.localDescription!);
       });
 
       const channel = connection.createDataChannel('sendDataChannel');
       channel.binaryType = 'arraybuffer';
 
-      const start = new Date().getTime();
-
-      let complete = false;
-      const onFailure = () => {
-        complete = true;
-
-        runInAction(() => {
-          this.state = TransferState.FAILED;
-          this.offset = undefined;
-          this.speed = 0;
-          this.timeLeft = 0;
-        });
-      };
-
       channel.addEventListener('open', () => {
         const bufferSize = connection.sctp?.maxMessageSize || 65535;
         runInAction(() => {
           this.state = TransferState.CONNECTED;
+          this.startedAt = new Date().getTime();
         });
 
         const fileReader = new FileReader();
@@ -307,27 +305,18 @@ export class Transfer {
           offset += buffer.byteLength;
 
           const now = new Date().getTime();
-          const elapsed = (now - start) / 1000;
 
           if (now - lastUpdate > 50) {
             lastUpdate = now;
-            const speed = offset / elapsed;
             runInAction(() => {
               this.state = TransferState.IN_PROGRESS;
               this.offset = offset;
-              this.speed = speed;
-              this.time = Math.floor(elapsed);
-              this.timeLeft = Math.round((file.size - offset) / speed);
             });
           }
 
           if (offset >= file.size) {
             runInAction(() => {
               this.state = TransferState.COMPLETE;
-              this.offset = undefined;
-              this.speed = 0;
-              this.time = Math.floor(elapsed);
-              this.timeLeft = 0;
             });
 
             complete = true;
@@ -350,16 +339,6 @@ export class Transfer {
         }
 
         connection.close();
-      });
-
-      connection.addEventListener('iceconnectionstatechange', () => {
-        if (
-          (connection.iceConnectionState === 'failed' ||
-            connection.iceConnectionState === 'disconnected') &&
-          !complete
-        ) {
-          onFailure();
-        }
       });
     }
   }

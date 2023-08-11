@@ -11,12 +11,11 @@ import styles from './index.module.scss';
 import { animationPropsOpacity } from '../../animationSettings';
 import { ChatItem } from './ChatItem';
 import { IconButton } from '../../components/IconButton';
-import { applicationStore } from '../../stores/ApplicationStore';
+import { chatStore } from '../../stores';
 
 export const ChatSection: React.FC = observer(() => {
   const { t } = useTranslation();
-  const chat = applicationStore.networkStore.chat;
-  const privateKey = applicationStore.privateKey;
+  const chat = chatStore.items;
   const containerRef = useRef<HTMLUListElement | null>(null);
 
   const [message, setMessage] = useState('');
@@ -27,7 +26,7 @@ export const ChatSection: React.FC = observer(() => {
       return;
     }
 
-    applicationStore.networkStore.sendChatMessage(message);
+    chatStore.sendChatMessage(message);
     setMessage('');
   };
 
@@ -49,7 +48,7 @@ export const ChatSection: React.FC = observer(() => {
   }, [chat.length]);
 
   // Disable chat if Web Crypto is not supported.
-  if (!privateKey) {
+  if (!chatStore.enabled) {
     return null;
   }
 

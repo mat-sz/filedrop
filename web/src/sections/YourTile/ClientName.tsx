@@ -5,11 +5,11 @@ import { observer } from 'mobx-react-lite';
 
 import styles from './ClientName.module.scss';
 import { IconButton } from '../../components/IconButton';
-import { applicationStore } from '../../stores/ApplicationStore';
+import { networkStore } from '../../stores';
 
 export const ClientName: React.FC = observer(() => {
   const { t } = useTranslation();
-  const clientName = applicationStore.networkStore.clientName;
+  const clientName = networkStore.clientName;
 
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState(clientName);
@@ -27,7 +27,7 @@ export const ClientName: React.FC = observer(() => {
     setIsEditing(false);
 
     if (name) {
-      applicationStore.networkStore.updateClientName(name);
+      networkStore.updateClientName(name);
     }
   };
 

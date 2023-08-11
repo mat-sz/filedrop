@@ -11,7 +11,7 @@ import { ChatItemModel } from '../../types/Models';
 import { copy } from '../../utils/copy';
 import { TargetTile } from '../../components/TargetTile';
 import { IconButton } from '../../components/IconButton';
-import { applicationStore } from '../../stores/ApplicationStore';
+import { networkStore } from '../../stores';
 
 export interface ChatItemProps {
   item: ChatItemModel;
@@ -37,7 +37,7 @@ export const ChatItem: React.FC<ChatItemProps> = observer(({ item }) => {
   const { t, language } = useTranslation();
   const [expanded, setExpanded] = useState(false);
   const messageRef = useRef<HTMLDivElement>(null);
-  const client = applicationStore.networkStore.clientCache.find(
+  const client = networkStore.clientCache.find(
     client => client.clientId === item.clientId
   );
 

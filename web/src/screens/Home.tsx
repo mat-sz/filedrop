@@ -14,23 +14,18 @@ import { TransfersSection } from '../sections/Transfers';
 import { ConnectSection } from '../sections/Connect';
 import { ChatSection } from '../sections/Chat';
 import { MobileTabs } from '../sections/MobileTabs';
-import { applicationStore } from '../stores/ApplicationStore';
+import { applicationStore, networkStore } from '../stores';
 
 export const Home: React.FC = observer(() => {
   const [clipboardFiles, setClipboardFiles] = useState<File[]>([]);
   const { networkName } = useParams<{ networkName: string }>();
-  const [href, setHref] = useState('');
   const tab = applicationStore.tab;
 
   useEffect(() => {
-    setHref(
-      window.location.origin + window.location.pathname + window.location.hash
-    );
-
     if (networkName) {
-      applicationStore.networkStore.updateNetworkName(networkName);
+      networkStore.updateNetworkName(networkName);
     }
-  }, [setHref, networkName]);
+  }, [networkName]);
 
   useEffect(() => {
     const onPaste = (e: ClipboardEvent) => {
@@ -96,7 +91,7 @@ export const Home: React.FC = observer(() => {
               mobileHidden: tab !== 'connect',
             })}
           >
-            <ConnectSection href={href} />
+            <ConnectSection />
           </div>
           <div
             className={clsx('mobileFlex', {
