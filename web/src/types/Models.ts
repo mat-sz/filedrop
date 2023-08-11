@@ -1,4 +1,4 @@
-import { TransferState } from './TransferState';
+import { TransferState } from './TransferState.js';
 
 export interface ActionModel {
   type: string;

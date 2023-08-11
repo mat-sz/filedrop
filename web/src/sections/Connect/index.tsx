@@ -1,16 +1,16 @@
 import React, { useMemo } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { useTranslation } from 'react-i18not';
-import { IoSend, IoCopy } from 'react-icons/io5';
+import { IoSend, IoCopy } from 'react-icons/io5/index.js';
+import { useLocation } from 'react-router-dom';
 import clsx from 'clsx';
 
 import styles from './index.module.scss';
-import { copy } from '../../utils/copy';
-import { isShareSupported } from '../../utils/browser';
-import { IconButton } from '../../components/IconButton';
-import { OtherNetworks } from './OtherNetworks';
-import { applicationStore } from '../../stores';
-import { useLocation } from 'react-router-dom';
+import { copy } from '../../utils/copy.js';
+import { isShareSupported } from '../../utils/browser.js';
+import { IconButton } from '../../components/IconButton.js';
+import { OtherNetworks } from './OtherNetworks.js';
+import { applicationStore } from '../../stores/index.js';
 
 export const ConnectSection: React.FC = () => {
   const { t } = useTranslation();

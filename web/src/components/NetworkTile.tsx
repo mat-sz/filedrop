@@ -3,13 +3,13 @@ import clsx from 'clsx';
 import { useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18not';
 import { motion } from 'nanoanim';
-import { IoAdd } from 'react-icons/io5';
+import { IoAdd } from 'react-icons/io5/index.js';
 import { ClientModel } from '@filedrop/types';
 
 import styles from './NetworkTile.module.scss';
-import { animationPropsOpacity } from '../animationSettings';
-import { TargetTile } from './TargetTile';
-import { networkStore } from '../stores';
+import { animationPropsOpacity } from '../animationSettings.js';
+import { TargetTile } from './TargetTile.js';
+import { networkStore } from '../stores/index.js';
 
 interface NetworkTileProps {
   client: ClientModel;

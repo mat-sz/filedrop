@@ -1,8 +1,8 @@
 import { makeAutoObservable } from 'mobx';
 import { Message, MessageType } from '@filedrop/types';
 
-import type { Connection } from './Connection';
-import { defaultAppName } from '../config';
+import type { Connection } from './Connection.js';
+import { defaultAppName } from '../config.js';
 
 export class ApplicationStore {
   error?: string = undefined;

@@ -1,11 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18not';
 import { Link } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 import clsx from 'clsx';
 
 import styles from './Footer.module.scss';
-import { observer } from 'mobx-react-lite';
-import { applicationStore } from '../stores';
+import { applicationStore } from '../stores/index.js';
 
 export const Footer: React.FC = observer(() => {
   const { t } = useTranslation();

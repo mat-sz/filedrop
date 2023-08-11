@@ -4,13 +4,13 @@ import {
   IoLogoGithub,
   IoInformationCircle,
   IoLogoTwitter,
-} from 'react-icons/io5';
+} from 'react-icons/io5/index.js';
 import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import styles from './Header.module.scss';
-import { DropIcon } from './DropIcon';
-import { applicationStore } from '../stores';
+import { DropIcon } from './DropIcon.js';
+import { applicationStore } from '../stores/index.js';
 
 export const Header: React.FC = observer(() => {
   const { t } = useTranslation();

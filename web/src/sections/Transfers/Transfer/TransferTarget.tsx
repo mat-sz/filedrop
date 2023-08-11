@@ -9,15 +9,15 @@ import {
   FaAngleDoubleUp,
   FaHourglassHalf,
   FaHourglassEnd,
-} from 'react-icons/fa';
+} from 'react-icons/fa/index.js';
 import { observer } from 'mobx-react-lite';
 
 import styles from './TransferTarget.module.scss';
-import { TransferState } from '../../../types/TransferState';
-import { Tooltip } from '../../../components/Tooltip';
-import { TargetTile } from '../../../components/TargetTile';
-import { Transfer } from '../../../stores/Transfer';
-import { networkStore } from '../../../stores';
+import { TransferState } from '../../../types/TransferState.js';
+import { Tooltip } from '../../../components/Tooltip.js';
+import { TargetTile } from '../../../components/TargetTile.js';
+import { Transfer } from '../../../stores/Transfer.js';
+import { networkStore } from '../../../stores/index.js';
 
 interface TransferIconProps {
   transfer: Transfer;

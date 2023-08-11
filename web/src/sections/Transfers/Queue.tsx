@@ -3,10 +3,10 @@ import { AnimatePresence } from 'nanoanim';
 import { observer } from 'mobx-react-lite';
 
 import styles from './Queue.module.scss';
-import { TransferInfo } from './Transfer';
-import { Actions } from './Actions';
-import { Total } from './Total';
-import { Transfer } from '../../stores/Transfer';
+import { TransferInfo } from './Transfer/index.js';
+import { Actions } from './Actions.js';
+import { Total } from './Total.js';
+import { Transfer } from '../../stores/Transfer.js';
 
 interface Props {
   transfers: Transfer[];

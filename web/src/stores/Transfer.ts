@@ -8,9 +8,9 @@ import {
   RTCDescriptionMessageModel,
 } from '@filedrop/types';
 
-import { TransferState } from '../types/TransferState';
-import type { NetworkStore } from './NetworkStore';
-import type { Connection } from './Connection';
+import { TransferState } from '../types/TransferState.js';
+import type { NetworkStore } from './NetworkStore.js';
+import type { Connection } from './Connection.js';
 
 export class Transfer {
   blobUrl?: string = undefined;

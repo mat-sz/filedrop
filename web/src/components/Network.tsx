@@ -6,10 +6,10 @@ import { AnimatePresence, motion } from 'nanoanim';
 import clsx from 'clsx';
 
 import styles from './Network.module.scss';
-import { animationPropsOpacity } from '../animationSettings';
-import { NetworkTile } from './NetworkTile';
-import { Button } from './Button';
-import { applicationStore, networkStore } from '../stores';
+import { animationPropsOpacity } from '../animationSettings.js';
+import { NetworkTile } from './NetworkTile.js';
+import { Button } from './Button.js';
+import { applicationStore, networkStore } from '../stores/index.js';
 
 interface NetworkProps {
   onSelect?: (clientId: string) => void;

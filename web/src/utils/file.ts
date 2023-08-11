@@ -1,6 +1,6 @@
 import { filesize } from 'filesize';
 
-import { FileType } from '../types/FileType';
+import { FileType } from '../types/FileType.js';
 
 export function fileType(type?: string): FileType {
   if (!type) {

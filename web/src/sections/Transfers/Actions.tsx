@@ -1,9 +1,9 @@
 import React from 'react';
+import { IoCheckmarkDoneCircle, IoCloseCircle } from 'react-icons/io5/index.js';
 
 import styles from './Actions.module.scss';
-import { IconButton } from '../../components/IconButton';
-import { IoCheckmarkDoneCircle, IoCloseCircle } from 'react-icons/io5';
-import { Transfer } from '../../stores/Transfer';
+import { IconButton } from '../../components/IconButton.js';
+import { Transfer } from '../../stores/Transfer.js';
 
 interface Props {
   transfers: Transfer[];

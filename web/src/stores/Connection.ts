@@ -11,8 +11,8 @@ import {
   PingMessageModel,
 } from '@filedrop/types';
 
-import { wsServer } from '../config';
-import { randomString } from '../utils/string';
+import { wsServer } from '../config.js';
+import { randomString } from '../utils/string.js';
 
 export class Connection {
   clientId?: string = undefined;

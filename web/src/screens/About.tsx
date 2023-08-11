@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { TextSection } from '../components/TextSection';
+import { TextSection } from '../components/TextSection.js';
 
 export const About: React.FC = () => {
   return (

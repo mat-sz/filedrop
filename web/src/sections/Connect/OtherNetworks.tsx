@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import styles from './OtherNetworks.module.scss';
-import { Button } from '../../components/Button';
-import { networkStore } from '../../stores';
+import { Button } from '../../components/Button.js';
+import { networkStore } from '../../stores/index.js';
 
 export const OtherNetworks: React.FC = observer(() => {
   const { t } = useTranslation();

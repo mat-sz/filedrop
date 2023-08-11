@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { TextSection } from '../components/TextSection';
+import { TextSection } from '../components/TextSection.js';
 
 export const ToS: React.FC = () => {
   return (

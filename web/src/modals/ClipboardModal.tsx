@@ -1,13 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18not';
 import { motion } from 'nanoanim';
-import { IoClose } from 'react-icons/io5';
+import { IoClose } from 'react-icons/io5/index.js';
 
 import styles from './ClipboardModal.module.scss';
-import { animationPropsOpacity } from '../animationSettings';
-import { Network } from '../components/Network';
-import { IconButton } from '../components/IconButton';
-import { networkStore } from '../stores';
+import { animationPropsOpacity } from '../animationSettings.js';
+import { Network } from '../components/Network.js';
+import { IconButton } from '../components/IconButton.js';
+import { networkStore } from '../stores/index.js';
 
 interface ClipboardModalProps {
   files: File[];

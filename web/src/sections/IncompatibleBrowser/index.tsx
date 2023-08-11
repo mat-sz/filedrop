@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18not';
 
-import { isBrowserCompatible } from '../../utils/browser';
+import { isBrowserCompatible } from '../../utils/browser.js';
 
 export const IncompatibleBrowserSection: React.FC = () => {
   const { t } = useTranslation();

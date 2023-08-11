@@ -4,15 +4,15 @@ import { motion } from 'nanoanim';
 import { observer } from 'mobx-react-lite';
 
 import styles from './index.module.scss';
-import { animationPropsSlide } from '../../../animationSettings';
-import { TransferState } from '../../../types/TransferState';
-import { formatFileName, formatFileSize } from '../../../utils/file';
-import { humanTime } from '../../../utils/time';
-import { Tooltip } from '../../../components/Tooltip';
-import { TransferIcon } from './TransferIcon';
-import { TransferTarget } from './TransferTarget';
-import { TransferActions } from './TransferActions';
-import { Transfer } from '../../../stores/Transfer';
+import { animationPropsSlide } from '../../../animationSettings.js';
+import { TransferState } from '../../../types/TransferState.js';
+import { formatFileName, formatFileSize } from '../../../utils/file.js';
+import { humanTime } from '../../../utils/time.js';
+import { Tooltip } from '../../../components/Tooltip.js';
+import { TransferIcon } from './TransferIcon.js';
+import { TransferTarget } from './TransferTarget.js';
+import { TransferActions } from './TransferActions.js';
+import { Transfer } from '../../../stores/Transfer.js';
 
 interface TransferProps {
   transfer: Transfer;

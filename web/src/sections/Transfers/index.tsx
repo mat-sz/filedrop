@@ -1,9 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18not';
-
-import { Queue } from './Queue';
 import { observer } from 'mobx-react-lite';
-import { networkStore } from '../../stores';
+
+import { Queue } from './Queue.js';
+import { networkStore } from '../../stores/index.js';
 
 export const TransfersSection: React.FC = observer(() => {
   const { t } = useTranslation();

@@ -4,14 +4,16 @@ import { AnimatePresence, motion } from 'nanoanim';
 import { ScrollArea } from 'react-nano-scrollbar';
 import Textarea from 'react-expanding-textarea';
 import { observer } from 'mobx-react-lite';
-import { IoSend, IoChatbox } from 'react-icons/io5';
+import { IoSend, IoChatbox } from 'react-icons/io5/index.js';
 import clsx from 'clsx';
 
 import styles from './index.module.scss';
-import { animationPropsOpacity } from '../../animationSettings';
-import { ChatItem } from './ChatItem';
-import { IconButton } from '../../components/IconButton';
-import { chatStore } from '../../stores';
+import { animationPropsOpacity } from '../../animationSettings.js';
+import { ChatItem } from './ChatItem.js';
+import { IconButton } from '../../components/IconButton.js';
+import { chatStore } from '../../stores/index.js';
+
+const TextareaComponent = Textarea as any;
 
 export const ChatSection: React.FC = observer(() => {
   const { t } = useTranslation();
@@ -74,10 +76,12 @@ export const ChatSection: React.FC = observer(() => {
         </ScrollArea>
       )}
       <form onSubmit={onSubmit}>
-        <Textarea
+        <TextareaComponent
           value={message}
           onKeyDown={onKeyDown}
-          onChange={e => setMessage((e.target as any).value)}
+          onChange={(e: React.ChangeEvent) =>
+            setMessage((e.target as any).value)
+          }
           placeholder={t('chat.message')}
         />
         <IconButton>

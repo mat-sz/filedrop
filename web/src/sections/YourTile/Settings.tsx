@@ -4,8 +4,8 @@ import { observer } from 'mobx-react-lite';
 import { runInAction } from 'mobx';
 
 import styles from './Settings.module.scss';
-import { Toggle } from '../../components/Toggle';
-import { settingsStore } from '../../stores';
+import { Toggle } from '../../components/Toggle.js';
+import { settingsStore } from '../../stores/index.js';
 
 export const Settings: React.FC = observer(() => {
   const { t } = useTranslation();

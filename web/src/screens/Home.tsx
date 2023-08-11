@@ -5,16 +5,16 @@ import { observer } from 'mobx-react-lite';
 import clsx from 'clsx';
 
 import styles from './Home.module.scss';
-import { ClipboardModal } from '../modals/ClipboardModal';
-import { IncompatibleBrowserSection } from '../sections/IncompatibleBrowser';
-import { YourTileSection } from '../sections/YourTile';
-import { NoticeSection } from '../sections/Notice';
-import { NetworkSection } from '../sections/Network';
-import { TransfersSection } from '../sections/Transfers';
-import { ConnectSection } from '../sections/Connect';
-import { ChatSection } from '../sections/Chat';
-import { MobileTabs } from '../sections/MobileTabs';
-import { applicationStore, networkStore } from '../stores';
+import { ClipboardModal } from '../modals/ClipboardModal.js';
+import { IncompatibleBrowserSection } from '../sections/IncompatibleBrowser/index.js';
+import { YourTileSection } from '../sections/YourTile/index.js';
+import { NoticeSection } from '../sections/Notice/index.js';
+import { NetworkSection } from '../sections/Network/index.js';
+import { TransfersSection } from '../sections/Transfers/index.js';
+import { ConnectSection } from '../sections/Connect/index.js';
+import { ChatSection } from '../sections/Chat/index.js';
+import { MobileTabs } from '../sections/MobileTabs/index.js';
+import { applicationStore, networkStore } from '../stores/index.js';
 
 export const Home: React.FC = observer(() => {
   const [clipboardFiles, setClipboardFiles] = useState<File[]>([]);

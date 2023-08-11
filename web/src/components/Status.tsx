@@ -5,8 +5,8 @@ import { observer } from 'mobx-react-lite';
 import clsx from 'clsx';
 
 import styles from './Status.module.scss';
-import { animationPropsOpacity } from '../animationSettings';
-import { connection } from '../stores';
+import { animationPropsOpacity } from '../animationSettings.js';
+import { connection } from '../stores/index.js';
 
 export const Status: React.FC = observer(() => {
   const { t } = useTranslation();

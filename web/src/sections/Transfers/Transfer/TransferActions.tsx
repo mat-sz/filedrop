@@ -4,13 +4,13 @@ import {
   IoArrowDownCircle,
   IoCloseCircle,
   IoCopy,
-} from 'react-icons/io5';
+} from 'react-icons/io5/index.js';
 import { observer } from 'mobx-react-lite';
 
 import styles from './TransferActions.module.scss';
-import { copy } from '../../../utils/copy';
-import { IconButton } from '../../../components/IconButton';
-import { Transfer } from '../../../stores/Transfer';
+import { copy } from '../../../utils/copy.js';
+import { IconButton } from '../../../components/IconButton.js';
+import { Transfer } from '../../../stores/Transfer.js';
 
 interface TransferProps {
   transfer: Transfer;

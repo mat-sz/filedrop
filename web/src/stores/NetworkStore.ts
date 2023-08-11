@@ -10,14 +10,14 @@ import {
 import { makeAutoObservable, runInAction } from 'mobx';
 import { canvas } from 'imtool';
 
-import type { Connection } from './Connection';
-import { deviceType } from '../utils/browser';
-import { TransferState } from '../types/TransferState';
-import { Transfer } from './Transfer';
-import { defaultAppName } from '../config';
-import { replaceUrlParameters } from '../utils/url';
-import { getItem, setItem } from '../utils/storage';
-import { settingsStore } from './SettingsStore';
+import type { Connection } from './Connection.js';
+import { deviceType } from '../utils/browser.js';
+import { TransferState } from '../types/TransferState.js';
+import { Transfer } from './Transfer.js';
+import { defaultAppName } from '../config.js';
+import { replaceUrlParameters } from '../utils/url.js';
+import { getItem, setItem } from '../utils/storage.js';
+import { settingsStore } from './SettingsStore.js';
 
 export class NetworkStore {
   maxSize = 0;

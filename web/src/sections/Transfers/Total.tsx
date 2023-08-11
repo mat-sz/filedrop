@@ -1,11 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18not';
-import { IoArrowDown, IoArrowUp } from 'react-icons/io5';
+import { IoArrowDown, IoArrowUp } from 'react-icons/io5/index.js';
 import { observer } from 'mobx-react-lite';
 
 import styles from './Total.module.scss';
-import { formatFileSize } from '../../utils/file';
-import { Transfer } from '../../stores/Transfer';
+import { formatFileSize } from '../../utils/file.js';
+import { Transfer } from '../../stores/Transfer.js';
 
 interface Props {
   transfers: Transfer[];

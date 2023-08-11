@@ -4,16 +4,16 @@ import { Routes, Route } from 'react-router-dom';
 import 'react-nano-scrollbar/dist/index.css';
 import './App.scss';
 
-import { Router } from './config';
-import { Home } from './screens/Home';
-import { Redirect } from './screens/Redirect';
-import { Privacy } from './screens/Privacy';
-import { ToS } from './screens/ToS';
-import { Abuse } from './screens/Abuse';
-import { About } from './screens/About';
-import { TechnicalInformation } from './screens/TechnicalInformation';
-import { Header } from './components/Header';
-import { Status } from './components/Status';
+import { Router } from './config.js';
+import { Home } from './screens/Home.js';
+import { Redirect } from './screens/Redirect.js';
+import { Privacy } from './screens/Privacy.js';
+import { ToS } from './screens/ToS.js';
+import { Abuse } from './screens/Abuse.js';
+import { About } from './screens/About.js';
+import { TechnicalInformation } from './screens/TechnicalInformation.js';
+import { Header } from './components/Header.js';
+import { Status } from './components/Status.js';
 
 export const App: React.FC = () => {
   return (

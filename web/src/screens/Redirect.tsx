@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18not';
 import { observer } from 'mobx-react-lite';
 
-import { Loading } from '../components/Loading';
-import { nameCharacterSet, nameLength } from '../config';
-import { randomString } from '../utils/string';
-import { applicationStore, connection, networkStore } from '../stores';
+import { Loading } from '../components/Loading.js';
+import { nameCharacterSet, nameLength } from '../config.js';
+import { randomString } from '../utils/string.js';
+import { applicationStore, connection, networkStore } from '../stores/index.js';
 
 export const Redirect: React.FC = observer(() => {
   const { t } = useTranslation();

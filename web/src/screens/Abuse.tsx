@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
-import { TextSection } from '../components/TextSection';
-import { applicationStore } from '../stores';
+import { TextSection } from '../components/TextSection.js';
+import { applicationStore } from '../stores/index.js';
 
 export const Abuse: React.FC = observer(() => {
   const abuseEmail = applicationStore.abuseEmail;

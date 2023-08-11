@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18not';
-import { IoPencil, IoCheckmarkCircle, IoCloseCircle } from 'react-icons/io5';
+import {
+  IoPencil,
+  IoCheckmarkCircle,
+  IoCloseCircle,
+} from 'react-icons/io5/index.js';
 import { observer } from 'mobx-react-lite';
 
 import styles from './ClientName.module.scss';
-import { IconButton } from '../../components/IconButton';
-import { networkStore } from '../../stores';
+import { IconButton } from '../../components/IconButton.js';
+import { networkStore } from '../../stores/index.js';
 
 export const ClientName: React.FC = observer(() => {
   const { t } = useTranslation();

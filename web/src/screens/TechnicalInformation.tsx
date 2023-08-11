@@ -6,9 +6,9 @@ import {
   isORTCSupported,
   isWebRTCSupported,
   isWebSocketSupported,
-} from '../utils/browser';
-import { TextSection } from '../components/TextSection';
-import { connection } from '../stores';
+} from '../utils/browser.js';
+import { TextSection } from '../components/TextSection.js';
+import { connection } from '../stores/index.js';
 
 export const TechnicalInformation: React.FC = observer(() => {
   const remoteAddress = connection.remoteAddress;

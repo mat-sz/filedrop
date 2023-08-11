@@ -1,12 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18not';
+import { observer } from 'mobx-react-lite';
 
 import styles from './index.module.scss';
-import { TargetTile } from '../../components/TargetTile';
-import { ClientName } from './ClientName';
-import { Settings } from './Settings';
-import { observer } from 'mobx-react-lite';
-import { networkStore } from '../../stores';
+import { TargetTile } from '../../components/TargetTile.js';
+import { ClientName } from './ClientName.js';
+import { Settings } from './Settings.js';
+import { networkStore } from '../../stores/index.js';
 
 export const YourTileSection: React.FC = observer(() => {
   const { t } = useTranslation();
