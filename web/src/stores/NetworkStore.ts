@@ -17,7 +17,7 @@ import { Transfer } from './Transfer';
 import { defaultAppName } from '../config';
 import { replaceUrlParameters } from '../utils/url';
 import { getItem, setItem } from '../utils/storage';
-import { settingsStore } from '.';
+import { settingsStore } from './SettingsStore';
 
 export class NetworkStore {
   maxSize = 0;

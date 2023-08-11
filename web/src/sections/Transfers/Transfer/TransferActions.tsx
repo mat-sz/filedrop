@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   IoCheckmarkCircle,
   IoArrowDownCircle,
@@ -8,7 +8,6 @@ import {
 import { observer } from 'mobx-react-lite';
 
 import styles from './TransferActions.module.scss';
-import { TransferState } from '../../../types/TransferState';
 import { copy } from '../../../utils/copy';
 import { IconButton } from '../../../components/IconButton';
 import { Transfer } from '../../../stores/Transfer';
@@ -19,26 +18,16 @@ interface TransferProps {
 
 export const TransferActions: React.FC<TransferProps> = observer(
   ({ transfer }) => {
-    const [text, setText] = useState('');
-
-    useEffect(() => {
-      if (transfer.fileType === 'text/plain' && transfer.blobUrl) {
-        fetch(transfer.blobUrl)
-          .then(res => res.text())
-          .then(text => setText(text));
-      }
-    }, [transfer]);
-
     return (
       <div className={styles.actions}>
-        {transfer.state === TransferState.COMPLETE && transfer.blobUrl ? (
+        {transfer.blobUrl ? (
           <>
             <IconButton href={transfer.blobUrl} download={transfer.fileName}>
               <IoArrowDownCircle />
             </IconButton>
-            {transfer.fileType === 'text/plain' ? (
+            {transfer.text ? (
               <IconButton
-                onClick={() => copy(text)}
+                onClick={() => copy(transfer.text!)}
                 round
                 className={styles.copy}
               >
@@ -47,7 +36,7 @@ export const TransferActions: React.FC<TransferProps> = observer(
             ) : null}
           </>
         ) : null}
-        {transfer.state === TransferState.INCOMING ? (
+        {transfer.canAccept ? (
           <IconButton
             onClick={() => transfer.accept()}
             className={styles.positive}

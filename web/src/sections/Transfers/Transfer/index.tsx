@@ -22,8 +22,8 @@ export const TransferInfo: React.FC<TransferProps> = observer(
   ({ transfer }) => {
     const { t } = useTranslation();
 
-    const offset =
-      transfer.state === TransferState.IN_PROGRESS ? transfer.offset || 0 : 0;
+    const inProgress = transfer.state === TransferState.IN_PROGRESS;
+    const offset = inProgress ? transfer.offset || 0 : 0;
     const formattedOffset = offset && formatFileSize(offset);
     const formattedSize = formatFileSize(transfer.fileSize);
 
@@ -63,7 +63,7 @@ export const TransferInfo: React.FC<TransferProps> = observer(
             </span>
             {transfer.state === TransferState.FAILED && <span>Failed!</span>}
             <span>{elapsed && t('transfers.elapsed', { time: elapsed })}</span>
-            {transfer.state === TransferState.IN_PROGRESS && (
+            {inProgress && (
               <>
                 <span>{formatFileSize(transfer.speed()!)}/s</span>
                 <span>{left && t('transfers.left', { time: left })}</span>

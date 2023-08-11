@@ -18,6 +18,7 @@ export class Transfer {
   offset?: number = undefined;
   startedAt?: number = undefined;
   state: TransferState;
+  text?: string = undefined;
 
   constructor(
     private network: NetworkStore,
@@ -37,7 +38,7 @@ export class Transfer {
   }
 
   get canAccept() {
-    return this.state !== TransferState.INCOMING;
+    return this.state === TransferState.INCOMING;
   }
 
   get isActive() {
@@ -164,7 +165,7 @@ export class Transfer {
   }
 
   async start(remoteDescription?: any) {
-    if (remoteDescription?.data?.type === 'answer') {
+    if (remoteDescription?.type === 'answer') {
       this.setRemoteDescription(remoteDescription);
       return;
     }
@@ -214,7 +215,7 @@ export class Transfer {
       const buffer: BlobPart[] = [];
       let offset = 0;
 
-      const onComplete = () => {
+      const onComplete = async () => {
         complete = true;
 
         const blob = new Blob(buffer);
@@ -233,6 +234,16 @@ export class Transfer {
         element.click();
 
         connection.close();
+
+        if (
+          (this.fileType.startsWith('text/') || !this.fileType) &&
+          this.fileSize <= 10 * 1024 * 1024
+        ) {
+          const text = await blob.text();
+          runInAction(() => {
+            this.text = text;
+          });
+        }
       };
 
       connection.addEventListener('datachannel', event => {
