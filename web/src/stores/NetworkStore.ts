@@ -28,9 +28,9 @@ export class NetworkStore {
   clientName?: string = getItem('clientName', undefined);
   networkName?: string = undefined;
 
-  clientCache: ClientModel[] = [];
-  network: ClientModel[] = [];
-  transfers: Transfer[] = [];
+  clientCache: Map<string, ClientModel> = new Map();
+  networkClients: Map<string, ClientModel> = new Map();
+  transfers: Map<string, Transfer> = new Map();
 
   constructor(private connection: Connection) {
     makeAutoObservable(this);
@@ -38,24 +38,28 @@ export class NetworkStore {
     connection.on('message', message => this.onMessage(message as any));
   }
 
+  get transferList() {
+    return [...this.transfers.values()];
+  }
+
   get incomingTransfers() {
-    return this.transfers.filter(
+    return this.transferList.filter(
       transfer => transfer.state === TransferState.INCOMING
     );
   }
 
   get outgoingTransfers() {
-    return this.transfers.filter(
+    return this.transferList.filter(
       transfer => transfer.state === TransferState.OUTGOING
     );
   }
 
   get activeTransfers() {
-    return this.transfers.filter(transfer => transfer.isActive);
+    return this.transferList.filter(transfer => transfer.isActive);
   }
 
   get doneTransfers() {
-    return this.transfers.filter(transfer => transfer.isDone);
+    return this.transferList.filter(transfer => transfer.isDone);
   }
 
   get otherNetworks() {
@@ -65,13 +69,15 @@ export class NetworkStore {
   }
 
   get currentClient() {
-    return this.network.find(
-      client => client.clientId === this.connection.clientId
-    );
+    if (!this.connection.clientId) {
+      return undefined;
+    }
+
+    return this.networkClients.get(this.connection.clientId);
   }
 
   get clients() {
-    return this.network.filter(
+    return [...this.networkClients.values()].filter(
       client => client.clientId !== this.connection.clientId
     );
   }
@@ -109,30 +115,11 @@ export class NetworkStore {
   }
 
   updateNetwork(clients: ClientModel[]) {
-    this.network = clients;
+    this.networkClients.clear();
 
-    const clientIds = clients.map(client => client.clientId);
-    const cached = this.clientCache.filter(
-      client => !clientIds.includes(client.clientId)
-    );
-    this.clientCache = [...cached, ...clients];
-  }
-
-  setRemoteDescription(id: string, description: RTCSessionDescription) {
-    for (const transfer of this.transfers) {
-      if (transfer.transferId === id) {
-        transfer.setRemoteDescription(description);
-        return;
-      }
-    }
-  }
-
-  addIceCandiate(id: string, candidate: RTCIceCandidate) {
-    for (const transfer of this.transfers) {
-      if (transfer.transferId === id) {
-        transfer.addIceCandiate(candidate);
-        return;
-      }
+    for (const client of clients) {
+      this.networkClients.set(client.clientId, client);
+      this.clientCache.set(client.clientId, client);
     }
   }
 
@@ -166,7 +153,7 @@ export class NetworkStore {
     );
 
     runInAction(() => {
-      this.transfers.push(transfer);
+      this.transfers.set(transfer.transferId, transfer);
     });
 
     const message: TransferMessageModel = {
@@ -182,26 +169,9 @@ export class NetworkStore {
     this.connection.send(message);
   }
 
-  cancelTransfer(id: string) {
-    const transfer = this.transfers.find(
-      transfer => transfer.transferId === id
-    );
-    if (!transfer) return;
-    transfer.cancel();
-  }
-
-  acceptTransfer(id: string) {
-    const transfer = this.transfers.find(
-      transfer => transfer.transferId === id
-    );
-    if (!transfer) return;
-    transfer.accept();
-  }
-
   removeTransfer(id: string) {
-    this.transfers = this.transfers.filter(
-      transfer => transfer.transferId !== id
-    );
+    this.transfers.get(id)?.stop();
+    this.transfers.delete(id);
   }
 
   async onMessage(message: Message) {
@@ -245,6 +215,12 @@ export class NetworkStore {
           this.updateNetworkName(this.networkName);
         }
         break;
+      case MessageType.NETWORK:
+        this.updateNetwork(message.clients);
+        break;
+      case MessageType.LOCAL_NETWORKS:
+        this.localNetworkNames = message.localNetworkNames;
+        break;
       case MessageType.TRANSFER:
         if (message.clientId) {
           const transfer = new Transfer(
@@ -260,9 +236,9 @@ export class NetworkStore {
             true
           );
 
-          this.transfers.push(transfer);
+          this.transfers.set(transfer.transferId, transfer);
           if (settingsStore.autoAccept) {
-            this.acceptTransfer(transfer.transferId);
+            transfer.accept();
           }
         }
         break;
@@ -272,31 +248,15 @@ export class NetworkStore {
             this.removeTransfer(message.transferId);
             break;
           case ActionMessageActionType.ACCEPT:
-            const transfer = this.transfers.find(
-              transfer => transfer.transferId === message.transferId
-            );
-            transfer?.start();
+            this.transfers.get(message.transferId)?.start();
             break;
         }
         break;
-      case MessageType.NETWORK:
-        this.updateNetwork(message.clients);
-        break;
-      case MessageType.LOCAL_NETWORKS:
-        this.localNetworkNames = message.localNetworkNames;
-        break;
       case MessageType.RTC_DESCRIPTION:
-        if (message.data.type === 'answer') {
-          this.setRemoteDescription(message.transferId, message.data);
-        } else {
-          const transfer = this.transfers.find(
-            transfer => transfer.transferId === message.transferId
-          );
-          transfer?.start(message.data);
-        }
+        this.transfers.get(message.transferId)?.start(message.data);
         break;
       case MessageType.RTC_CANDIDATE:
-        this.addIceCandiate(message.transferId, message.data);
+        this.transfers.get(message.transferId)?.addIceCandiate(message.data);
         break;
     }
   }

@@ -55,21 +55,20 @@ export class Transfer {
     );
   }
 
-  cancel() {
-    if (this.peerConnection) {
-      try {
-        this.peerConnection.close();
-      } catch {}
-    }
-
+  private sendAction(action: ActionMessageActionType) {
     const message: ActionMessageModel = {
       type: MessageType.ACTION,
       transferId: this.transferId,
       targetId: this.targetId,
-      action: ActionMessageActionType.CANCEL,
+      action,
     };
 
     this.connection.send(message);
+  }
+
+  cancel() {
+    this.stop();
+    this.sendAction(ActionMessageActionType.CANCEL);
     this.network.removeTransfer(this.transferId);
   }
 
@@ -78,37 +77,29 @@ export class Transfer {
       return;
     }
 
-    const message: ActionMessageModel = {
-      type: MessageType.ACTION,
-      transferId: this.transferId,
-      targetId: this.targetId,
-      action: ActionMessageActionType.ACCEPT,
-    };
-
-    this.connection.send(message);
+    this.sendAction(ActionMessageActionType.ACCEPT);
     this.state = TransferState.CONNECTING;
   }
 
-  setRemoteDescription(description: RTCSessionDescription) {
+  validPeerConnection() {
     const peerConnection = this.peerConnection;
-    if (
-      peerConnection &&
+    return peerConnection &&
       peerConnection.connectionState !== 'disconnected' &&
       peerConnection.connectionState !== 'failed'
-    ) {
-      peerConnection.setRemoteDescription(description).catch(() => {});
-    }
+      ? peerConnection
+      : undefined;
+  }
+
+  setRemoteDescription(description: RTCSessionDescription) {
+    this.validPeerConnection()
+      ?.setRemoteDescription(description)
+      .catch(() => {});
   }
 
   addIceCandiate(candidate: RTCIceCandidate) {
-    const peerConnection = this.peerConnection;
-    if (
-      peerConnection &&
-      peerConnection.connectionState !== 'disconnected' &&
-      peerConnection.connectionState !== 'failed'
-    ) {
-      peerConnection.addIceCandidate(candidate).catch(() => {});
-    }
+    this.validPeerConnection()
+      ?.addIceCandidate(candidate)
+      .catch(() => {});
   }
 
   timeElapsed() {
@@ -142,6 +133,22 @@ export class Transfer {
     return offset / elapsed;
   }
 
+  uploadSpeed() {
+    if (this.receiving) {
+      return 0;
+    }
+
+    return this.speed() || 0;
+  }
+
+  downloadSpeed() {
+    if (!this.receiving) {
+      return 0;
+    }
+
+    return this.speed() || 0;
+  }
+
   private sendDescription(description: RTCSessionDescription) {
     const message: RTCDescriptionMessageModel = {
       type: MessageType.RTC_DESCRIPTION,
@@ -157,6 +164,11 @@ export class Transfer {
   }
 
   async start(remoteDescription?: any) {
+    if (remoteDescription?.data?.type === 'answer') {
+      this.setRemoteDescription(remoteDescription);
+      return;
+    }
+
     const connection = new RTCPeerConnection(this.network.rtcConfiguration);
     this.peerConnection = connection;
 
@@ -340,6 +352,14 @@ export class Transfer {
 
         connection.close();
       });
+    }
+  }
+
+  stop() {
+    if (this.peerConnection) {
+      try {
+        this.peerConnection.close();
+      } catch {}
     }
   }
 }

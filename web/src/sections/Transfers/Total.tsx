@@ -28,11 +28,11 @@ export const Total: React.FC<Props> = observer(({ transfers }) => {
   );
 
   const downloadSpeedSum = transfers.reduce(
-    (sum, transfer) => sum + (transfer.receiving ? transfer.speed || 0 : 0),
+    (sum, transfer) => sum + transfer.downloadSpeed(),
     0
   );
   const uploadSpeedSum = transfers.reduce(
-    (sum, transfer) => sum + (!transfer.receiving ? transfer.speed || 0 : 0),
+    (sum, transfer) => sum + transfer.uploadSpeed(),
     0
   );
 

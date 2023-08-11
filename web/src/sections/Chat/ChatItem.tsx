@@ -37,9 +37,7 @@ export const ChatItem: React.FC<ChatItemProps> = observer(({ item }) => {
   const { t, language } = useTranslation();
   const [expanded, setExpanded] = useState(false);
   const messageRef = useRef<HTMLDivElement>(null);
-  const client = networkStore.clientCache.find(
-    client => client.clientId === item.clientId
-  );
+  const client = networkStore.clientCache.get(item.clientId);
 
   useLayoutEffect(() => {
     if (messageRef.current!.offsetHeight < 50) {

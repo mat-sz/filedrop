@@ -49,9 +49,7 @@ const stateIcon = (state: TransferState, receiving: boolean) => {
 export const TransferTarget: React.FC<TransferIconProps> = observer(
   ({ transfer }) => {
     const { t } = useTranslation();
-    const targetClient = networkStore.clientCache.find(
-      client => client.clientId === transfer.targetId
-    );
+    const targetClient = networkStore.clientCache.get(transfer.targetId);
 
     if (!targetClient) {
       return null;
