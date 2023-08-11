@@ -1,8 +1,9 @@
-import { ChatMessageModel, Message, MessageType } from '@filedrop/types';
 import { makeAutoObservable } from 'mobx';
-import { ChatItemModel } from '../types/Models';
+import { ChatMessageModel, Message, MessageType } from '@filedrop/types';
 import { v4 } from 'uuid';
+
 import type { Connection } from './Connection';
+import { ChatItemModel } from '../types/Models';
 
 export class ChatStore {
   items: ChatItemModel[] = [];

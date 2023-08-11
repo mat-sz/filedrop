@@ -10,12 +10,13 @@ import {
 import { makeAutoObservable, runInAction } from 'mobx';
 import { canvas } from 'imtool';
 
+import type { Connection } from './Connection';
 import { deviceType } from '../utils/browser';
 import { TransferState } from '../types/TransferState';
 import { Transfer } from './Transfer';
-import type { Connection } from './Connection';
 import { defaultAppName } from '../config';
 import { replaceUrlParameters } from '../utils/url';
+import { getItem, setItem } from '../utils/storage';
 import { settingsStore } from '.';
 
 export class NetworkStore {
@@ -24,7 +25,7 @@ export class NetworkStore {
   rtcConfiguration?: RTCConfiguration = undefined;
   localNetworkNames: string[] = [];
 
-  clientName?: string = localStorage.getItem('clientName') || undefined;
+  clientName?: string = getItem('clientName', undefined);
   networkName?: string = undefined;
 
   clientCache: ClientModel[] = [];
@@ -93,7 +94,7 @@ export class NetworkStore {
 
     this.connection.send(message);
     this.clientName = clientName;
-    localStorage.setItem('clientName', clientName);
+    setItem('clientName', clientName);
   }
 
   updateNetworkName(networkName: string) {
