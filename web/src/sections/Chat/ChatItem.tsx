@@ -47,7 +47,9 @@ export const ChatItem: React.FC<ChatItemProps> = observer(({ item }) => {
 
   return (
     <motion.li
-      className={clsx('subsection', { [styles.expanded]: expanded })}
+      className={clsx('subsection', styles.item, {
+        [styles.expanded]: expanded,
+      })}
       {...animationPropsSlide}
       aria-label="Chat message"
     >

@@ -105,6 +105,7 @@ export interface ChatMessageModel extends MessageModel {
   clientId?: string;
   targetId: string;
   message: string;
+  direct?: boolean;
 }
 
 export interface EncryptedMessageModel extends TargetedMessageModel {
