@@ -7,6 +7,7 @@ import {
   RTCCandidateMessageModel,
   RTCDescriptionMessageModel,
 } from '@filedrop/types';
+import { download, toString } from 'fitool';
 
 import { TransferState } from '../types/TransferState.js';
 import type { NetworkStore } from './NetworkStore.js';
@@ -91,12 +92,6 @@ export class Transfer {
       : undefined;
   }
 
-  setRemoteDescription(description: RTCSessionDescription) {
-    this.validPeerConnection()
-      ?.setRemoteDescription(description)
-      .catch(() => {});
-  }
-
   addIceCandiate(candidate: RTCIceCandidate) {
     this.validPeerConnection()
       ?.addIceCandidate(candidate)
@@ -164,9 +159,43 @@ export class Transfer {
     this.connection.send(message);
   }
 
+  private stateFailed() {
+    this.state = TransferState.FAILED;
+    this.offset = undefined;
+  }
+
+  private stateComplete(blobUrl?: string) {
+    this.state = TransferState.COMPLETE;
+    this.blobUrl = blobUrl;
+  }
+
+  private stateConnected() {
+    this.state = TransferState.CONNECTED;
+    this.startedAt = new Date().getTime();
+  }
+
+  private stateInProgress(offset: number) {
+    this.state = TransferState.IN_PROGRESS;
+    this.offset = offset;
+  }
+
+  private async textFromBlob(blob: Blob) {
+    if (
+      (this.fileType.startsWith('text/') || !this.fileType) &&
+      this.fileSize <= 10 * 1024 * 1024
+    ) {
+      const text = await toString(blob);
+      runInAction(() => {
+        this.text = text;
+      });
+    }
+  }
+
   async start(remoteDescription?: any) {
     if (remoteDescription?.type === 'answer') {
-      this.setRemoteDescription(remoteDescription);
+      this.validPeerConnection()
+        ?.setRemoteDescription(remoteDescription)
+        .catch(() => {});
       return;
     }
 
@@ -186,25 +215,25 @@ export class Transfer {
       this.connection.send(message);
     });
 
-    let complete = false;
-    const onFailure = () => {
-      complete = true;
-
-      runInAction(() => {
-        this.state = TransferState.FAILED;
-        this.offset = undefined;
-      });
-    };
-
     connection.addEventListener('iceconnectionstatechange', () => {
       if (
         (connection.iceConnectionState === 'failed' ||
           connection.iceConnectionState === 'disconnected') &&
-        !complete
+        !this.isDone
       ) {
-        onFailure();
+        this.stateFailed();
       }
     });
+
+    let lastUpdate = 0;
+    const progressUpdate = (offset: number) => {
+      const now = new Date().getTime();
+
+      if (now - lastUpdate > 50) {
+        lastUpdate = now;
+        this.stateInProgress(offset);
+      }
+    };
 
     if (this.receiving) {
       await connection.setRemoteDescription(remoteDescription);
@@ -215,61 +244,25 @@ export class Transfer {
       const buffer: BlobPart[] = [];
       let offset = 0;
 
-      const onComplete = async () => {
-        complete = true;
-
+      const onComplete = () => {
         const blob = new Blob(buffer);
         const blobUrl = URL.createObjectURL(blob);
-
-        runInAction(() => {
-          this.state = TransferState.COMPLETE;
-          this.blobUrl = blobUrl;
-        });
-
-        const element = document.createElement('a');
-        element.setAttribute('href', blobUrl);
-        element.setAttribute('download', this.fileName);
-
-        element.style.display = 'none';
-        element.click();
-
+        this.stateComplete(blobUrl);
+        this.textFromBlob(blob);
+        download(blobUrl, this.fileName);
         connection.close();
-
-        if (
-          (this.fileType.startsWith('text/') || !this.fileType) &&
-          this.fileSize <= 10 * 1024 * 1024
-        ) {
-          const text = await blob.text();
-          runInAction(() => {
-            this.text = text;
-          });
-        }
       };
 
       connection.addEventListener('datachannel', event => {
-        runInAction(() => {
-          this.state = TransferState.CONNECTED;
-          this.startedAt = new Date().getTime();
-        });
+        this.stateConnected();
 
         const channel = event.channel;
         channel.binaryType = 'arraybuffer';
 
-        let lastUpdate = 0;
         channel.addEventListener('message', event => {
           buffer.push(event.data);
           offset += event.data.byteLength;
-
-          const now = new Date().getTime();
-
-          if (now - lastUpdate > 50) {
-            lastUpdate = now;
-
-            runInAction(() => {
-              this.state = TransferState.IN_PROGRESS;
-              this.offset = offset;
-            });
-          }
+          progressUpdate(offset);
 
           if (offset >= this.fileSize) {
             onComplete();
@@ -279,8 +272,8 @@ export class Transfer {
 
         channel.addEventListener('close', () => {
           if (offset < this.fileSize) {
-            onFailure();
-          } else if (!complete) {
+            this.stateFailed();
+          } else if (!this.isDone) {
             onComplete();
           }
         });
@@ -299,10 +292,7 @@ export class Transfer {
 
       channel.addEventListener('open', () => {
         const bufferSize = connection.sctp?.maxMessageSize || 65535;
-        runInAction(() => {
-          this.state = TransferState.CONNECTED;
-          this.startedAt = new Date().getTime();
-        });
+        this.stateConnected();
 
         const fileReader = new FileReader();
         let offset = 0;
@@ -312,37 +302,23 @@ export class Transfer {
           fileReader.readAsArrayBuffer(slice);
         };
 
-        let lastUpdate = 0;
         fileReader.addEventListener('load', e => {
-          if (complete) return;
+          if (this.isDone) return;
           const buffer = e.target!.result as ArrayBuffer;
 
           try {
             channel.send(buffer);
           } catch {
-            onFailure();
+            this.stateFailed();
             channel.close();
             return;
           }
 
           offset += buffer.byteLength;
-
-          const now = new Date().getTime();
-
-          if (now - lastUpdate > 50) {
-            lastUpdate = now;
-            runInAction(() => {
-              this.state = TransferState.IN_PROGRESS;
-              this.offset = offset;
-            });
-          }
+          progressUpdate(offset);
 
           if (offset >= file.size) {
-            runInAction(() => {
-              this.state = TransferState.COMPLETE;
-            });
-
-            complete = true;
+            this.stateComplete();
             // Uncomment the next line if there are issues with transfers getting stuck at 100%.
             // channel.close();
           } else if (channel.bufferedAmount < bufferSize / 2) {
@@ -357,8 +333,8 @@ export class Transfer {
       });
 
       channel.addEventListener('close', () => {
-        if (!complete) {
-          onFailure();
+        if (!this.isDone) {
+          this.stateFailed();
         }
 
         connection.close();

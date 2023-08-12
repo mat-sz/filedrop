@@ -3539,6 +3539,13 @@ find-up@^5.0.0:
     locate-path "^6.0.0"
     path-exists "^4.0.0"
 
+fitool@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/fitool/-/fitool-1.0.3.tgz#885016c7f7050159586cc3b404fa7154ef05df1a"
+  integrity sha512-XYMUhzx0RpX9xxGZczir5YkkZowx9sboeYOHo9d27LbL/JTPZ4tgaM5CLx9ITg07FBzwDAV6/oKWIKwJt5WRBg==
+  dependencies:
+    base64-js "^1.3.1"
+
 flat-cache@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/flat-cache/-/flat-cache-3.0.4.tgz#61b0338302b2fe9f957dcc32fc2a87f1c3048b11"
