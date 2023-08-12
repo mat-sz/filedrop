@@ -104,7 +104,13 @@ export const ChatSection: React.FC = observer(() => {
             <motion.div className={styles.empty} {...animationPropsOpacity}>
               <IoChatbox />
               <h3>{t('emptyChat.title')}</h3>
-              <div>{t('emptyChat.body')}</div>
+              <div>
+                {chatStore.currentChannel === 'global'
+                  ? t('emptyChat.body')
+                  : t('emptyChat.bodyTarget', {
+                      target: chatStore.currentChannelName,
+                    })}
+              </div>
             </motion.div>
           </AnimatePresence>
         ) : (
@@ -126,7 +132,9 @@ export const ChatSection: React.FC = observer(() => {
           onChange={(e: React.ChangeEvent) =>
             setMessage((e.target as any).value)
           }
-          placeholder={t('chat.message')}
+          placeholder={t('chat.message', {
+            target: chatStore.currentChannelName,
+          })}
         />
         <IconButton>
           <IoSend />

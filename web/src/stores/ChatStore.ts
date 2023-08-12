@@ -9,6 +9,7 @@ import { v4 } from 'uuid';
 
 import type { Connection } from './Connection.js';
 import { ChatItemModel } from '../types/Models.js';
+import { t } from 'i18not';
 
 interface ChatChannel {
   channel: string;
@@ -34,6 +35,14 @@ export class ChatStore {
 
   get enabled() {
     return this.connection.secure;
+  }
+
+  get currentChannelName() {
+    return this.currentChannel === 'global'
+      ? t('chat.everyone')
+      : this.connection.clients.find(
+          client => client.clientId === this.currentChannel
+        )?.clientName || '';
   }
 
   get channels(): ChatChannel[] {
@@ -72,9 +81,9 @@ export class ChatStore {
     }
   }
 
-  selectChannel(name: string) {
-    this.currentChannel = name;
-    this.unreadCount.set(name, 0);
+  selectChannel(channel: string) {
+    this.currentChannel = channel;
+    this.unreadCount.set(channel, 0);
   }
 
   sendChatMessage(body: string) {

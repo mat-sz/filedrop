@@ -20,23 +20,25 @@ export const ConnectSection: React.FC = () => {
   const href = useMemo(() => window.location.href, [pathname]);
 
   return (
-    <div className={clsx(styles.connect, 'subsection')}>
-      <div className={styles.info}>{t('connect')}</div>
-      <div className={styles.qrcode}>
-        <QRCodeSVG value={href} size={192} />
-      </div>
-      <div className={styles.share}>
-        <div className={styles.copy}>
-          <pre>{href}</pre>
-          <div className={styles.buttons}>
-            <IconButton onClick={() => copy(href)}>
-              <IoCopy />
-            </IconButton>
-            {isShareSupported && (
-              <IconButton onClick={() => applicationStore.share(href)}>
-                <IoSend />
+    <div className="subsection">
+      <div className={styles.connect}>
+        <div className={styles.info}>{t('connect')}</div>
+        <div className={styles.qrcode}>
+          <QRCodeSVG value={href} size={192} />
+        </div>
+        <div className={styles.share}>
+          <div className={styles.copy}>
+            <pre>{href}</pre>
+            <div className={styles.buttons}>
+              <IconButton onClick={() => copy(href)}>
+                <IoCopy />
               </IconButton>
-            )}
+              {isShareSupported && (
+                <IconButton onClick={() => applicationStore.share(href)}>
+                  <IoSend />
+                </IconButton>
+              )}
+            </div>
           </div>
         </div>
       </div>

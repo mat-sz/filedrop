@@ -28,11 +28,13 @@
   },
   "chat": {
     "showMore": "Show more",
-    "message": "Message"
+    "message": "Message {{target}}",
+    "everyone": "everyone"
   },
   "emptyChat": {
     "title": "It's empty in here.",
-    "body": "Start chatting with others in your room."
+    "body": "Start chatting with others in your room.",
+    "bodyTarget": "Start chatting with {{target}}."
   },
   "connect": "Open this page on your other device to copy files:",
   "otherNetworks": "Other local networks:",

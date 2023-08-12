@@ -38,8 +38,23 @@
       align-items: center;
     }
 
+    &:after {
+      display: none;
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 5px;
+      right: 5px;
+      height: 6px;
+      background: white;
+      border-radius: 2px;
+      box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
+    }
+
     &.active {
-      border-bottom: 2px solid white;
+      &:after {
+        display: block;
+      }
     }
   }
 
