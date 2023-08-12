@@ -20,6 +20,8 @@ export class Connection {
   remoteAddress?: string = undefined;
   publicKey?: string = undefined;
   privateKey?: string = undefined;
+
+  clientCache: Map<string, ClientModel> = new Map();
   clients: ClientModel[] = [];
   eventListeners: Map<string, Set<Function>> = new Map();
 
@@ -138,6 +140,10 @@ export class Connection {
         break;
       case MessageType.NETWORK:
         this.clients = message.clients;
+
+        for (const client of message.clients) {
+          this.clientCache.set(client.clientId, client);
+        }
         break;
       case MessageType.PING:
         const pongMessage: PingMessageModel = {

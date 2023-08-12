@@ -46,12 +46,15 @@ export class ChatStore {
   }
 
   get channels(): ChatChannel[] {
-    return [
+    const channels: ChatChannel[] = [
       {
         channel: 'global',
         name: 'Everyone',
         unread: this.unreadCount.get('global') || 0,
       },
+    ];
+
+    channels.push(
       ...this.connection.clients
         .filter(client => client.clientId !== this.connection.clientId)
         .map(client => ({
@@ -59,8 +62,30 @@ export class ChatStore {
           name: client.clientName || '',
           unread: this.unreadCount.get(client.clientId) || 0,
           client,
-        })),
-    ];
+        }))
+    );
+
+    for (const key of this.channelItems.keys()) {
+      if (key === 'global') {
+        continue;
+      }
+
+      if (!channels.find(channel => channel.channel === key)) {
+        const cached = this.connection.clientCache.get(key);
+        if (!cached) {
+          continue;
+        }
+
+        channels.push({
+          channel: key,
+          name: cached.clientName || '',
+          unread: this.unreadCount.get(cached.clientId) || 0,
+          client: cached,
+        });
+      }
+    }
+
+    return channels;
   }
 
   private pushMessage(channel: string, senderId: string, message: string) {

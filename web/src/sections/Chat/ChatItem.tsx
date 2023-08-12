@@ -11,7 +11,7 @@ import { ChatItemModel } from '../../types/Models.js';
 import { copy } from '../../utils/copy.js';
 import { TargetTile } from '../../components/TargetTile.js';
 import { IconButton } from '../../components/IconButton.js';
-import { networkStore } from '../../stores/index.js';
+import { connection } from '../../stores/index.js';
 
 export interface ChatItemProps {
   item: ChatItemModel;
@@ -37,7 +37,7 @@ export const ChatItem: React.FC<ChatItemProps> = observer(({ item }) => {
   const { t, language } = useTranslation();
   const [expanded, setExpanded] = useState(false);
   const messageRef = useRef<HTMLDivElement>(null);
-  const client = networkStore.clientCache.get(item.clientId);
+  const client = connection.clientCache.get(item.clientId);
 
   useLayoutEffect(() => {
     if (messageRef.current!.offsetHeight < 50) {

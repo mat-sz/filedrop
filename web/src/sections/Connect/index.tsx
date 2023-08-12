@@ -3,7 +3,6 @@ import { QRCodeSVG } from 'qrcode.react';
 import { useTranslation } from 'react-i18not';
 import { IoSend, IoCopy } from 'react-icons/io5/index.js';
 import { useLocation } from 'react-router-dom';
-import clsx from 'clsx';
 
 import styles from './index.module.scss';
 import { copy } from '../../utils/copy.js';

@@ -28,7 +28,6 @@ export class NetworkStore {
   clientName?: string = getItem('clientName', undefined);
   networkName?: string = undefined;
 
-  clientCache: Map<string, ClientModel> = new Map();
   networkClients: Map<string, ClientModel> = new Map();
   transfers: Map<string, Transfer> = new Map();
 
@@ -112,15 +111,6 @@ export class NetworkStore {
 
     this.networkName = networkName;
     this.connection.send(message);
-  }
-
-  updateNetwork(clients: ClientModel[]) {
-    this.networkClients.clear();
-
-    for (const client of clients) {
-      this.networkClients.set(client.clientId, client);
-      this.clientCache.set(client.clientId, client);
-    }
   }
 
   async createTransfer(file: File, targetId: string) {
@@ -216,7 +206,11 @@ export class NetworkStore {
         }
         break;
       case MessageType.NETWORK:
-        this.updateNetwork(message.clients);
+        this.networkClients.clear();
+
+        for (const client of message.clients) {
+          this.networkClients.set(client.clientId, client);
+        }
         break;
       case MessageType.LOCAL_NETWORKS:
         this.localNetworkNames = message.localNetworkNames;
