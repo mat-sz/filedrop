@@ -11,7 +11,7 @@ import styles from './index.module.scss';
 import { ChatItem } from './ChatItem.js';
 import { animationPropsOpacity } from '../../animationSettings.js';
 import { IconButton } from '../../components/IconButton.js';
-import { chatStore } from '../../stores/index.js';
+import { applicationStore, chatStore } from '../../stores/index.js';
 import { TargetTile } from '../../components/TargetTile.js';
 import { NotificationCount } from '../../components/NotificationCount.js';
 
@@ -22,6 +22,11 @@ export const ChatSection: React.FC = observer(() => {
   const chat = chatStore.items;
   const channels = chatStore.channels;
   const containerRef = useRef<HTMLUListElement | null>(null);
+
+  const tab = applicationStore.tab;
+  useEffect(() => {
+    chatStore.setVisible(applicationStore.tab === 'chat');
+  }, [tab]);
 
   const [message, setMessage] = useState('');
   const onSubmit = (e: React.FormEvent | React.KeyboardEvent) => {

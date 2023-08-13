@@ -20,7 +20,7 @@ export const Tab: React.FC<React.PropsWithChildren<Props>> = observer(
         onClick={() => runInAction(() => (applicationStore.tab = id))}
         role="tab"
       >
-        {children}
+        <span>{children}</span>
       </button>
     );
   }

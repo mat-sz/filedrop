@@ -6,6 +6,11 @@
   border-radius: 5px;
   font-size: 0;
 
+  span {
+    position: relative;
+    display: inline-block;
+  }
+
   &:not(:last-child) {
     margin-right: 10px;
   }

@@ -22,6 +22,12 @@ export class ChatStore {
   channelItems: Map<string, ChatItemModel[]> = new Map();
   unreadCount: Map<string, number> = new Map();
   currentChannel = 'global';
+  visible = false;
+
+  setVisible(visible: boolean) {
+    this.visible = visible;
+    this.unreadCount.set(this.currentChannel, 0);
+  }
 
   get items() {
     return this.channelItems.get(this.currentChannel) || [];
@@ -31,6 +37,13 @@ export class ChatStore {
     makeAutoObservable(this);
 
     connection.on('message', message => this.onMessage(message as any));
+  }
+
+  get unread() {
+    return [...this.unreadCount.values()].reduce(
+      (total, current) => total + current,
+      0
+    );
   }
 
   get enabled() {
@@ -88,6 +101,10 @@ export class ChatStore {
     return channels;
   }
 
+  private getVisible() {
+    return this.visible || window.matchMedia('(min-width: 768px)').matches;
+  }
+
   private pushMessage(channel: string, senderId: string, message: string) {
     if (!this.channelItems.has(channel)) {
       this.channelItems.set(channel, []);
@@ -101,7 +118,7 @@ export class ChatStore {
       message,
     });
 
-    if (channel !== this.currentChannel) {
+    if (!this.getVisible() || channel !== this.currentChannel) {
       this.unreadCount.set(channel, (this.unreadCount.get(channel) || 0) + 1);
     }
   }

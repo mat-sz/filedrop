@@ -26,12 +26,13 @@
       display: none;
       content: '';
       position: absolute;
-      bottom: -2px;
+      bottom: 0;
       left: 5px;
       right: 5px;
-      height: 6px;
+      height: 5px;
       background: white;
-      border-radius: 2px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
       box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
     }
 
