@@ -48,6 +48,7 @@ $speed: 0.2s;
   margin-right: 12px;
   position: relative;
   width: $track-width;
+  min-width: $track-width;
   transition: background $speed ease-in-out;
 }
 
