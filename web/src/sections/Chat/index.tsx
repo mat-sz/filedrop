@@ -8,11 +8,12 @@ import { IoSend, IoChatbox, IoGlobe } from 'react-icons/io5/index.js';
 import clsx from 'clsx';
 
 import styles from './index.module.scss';
-import { animationPropsOpacity } from '../../animationSettings.js';
 import { ChatItem } from './ChatItem.js';
+import { animationPropsOpacity } from '../../animationSettings.js';
 import { IconButton } from '../../components/IconButton.js';
 import { chatStore } from '../../stores/index.js';
 import { TargetTile } from '../../components/TargetTile.js';
+import { NotificationCount } from '../../components/NotificationCount.js';
 
 const TextareaComponent = Textarea as any;
 
@@ -74,9 +75,7 @@ export const ChatSection: React.FC = observer(() => {
                     client={channel.client}
                     onClick={() => chatStore.selectChannel(channel.channel)}
                   >
-                    {!!channel.unread && (
-                      <div className={styles.count}>{channel.unread}</div>
-                    )}
+                    <NotificationCount count={channel.unread} />
                   </TargetTile>
                 ) : (
                   <div
@@ -87,9 +86,7 @@ export const ChatSection: React.FC = observer(() => {
                     })}
                     onClick={() => chatStore.selectChannel(channel.channel)}
                   >
-                    {!!channel.unread && (
-                      <div className={styles.count}>{channel.unread}</div>
-                    )}
+                    <NotificationCount count={channel.unread} />
                     <IoGlobe />
                   </div>
                 )

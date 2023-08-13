@@ -1,0 +1,15 @@
+.count {
+  position: absolute;
+  top: -7.5px;
+  right: -7.5px;
+  background: red;
+  border-radius: 100%;
+  font-size: 10px;
+  width: 15px;
+  height: 15px;
+  color: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
