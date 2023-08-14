@@ -7,10 +7,27 @@ import fastifyHttpProxy from '@fastify/http-proxy';
 import { WSClient } from './WSClient.js';
 import { ClientManager } from './ClientManager.js';
 import { isMessageModel } from './utils/validation.js';
-import { host, maxSize, port, useProxy } from './config.js';
+import { host, maxSize, port, useProxy, appName } from './config.js';
 
 const clientManager = new ClientManager();
 const app = Fastify();
+
+const manifest = {
+  icons: [
+    {
+      src: 'icon512.png',
+      sizes: '512x512',
+      type: 'image/png',
+      purpose: 'any maskable',
+    },
+  ],
+  start_url: '/',
+  display: 'standalone',
+  theme_color: '#000000',
+  background_color: '#000000',
+  name: appName || 'filedrop',
+};
+const manifestString = JSON.stringify(manifest);
 
 if (useProxy) {
   app.register(fastifyHttpProxy, {
@@ -39,6 +56,11 @@ if (useProxy) {
     index: 'index.html',
   });
 }
+
+app.get('/manifest.json', (_, res) => {
+  res.type('application/json');
+  return manifestString;
+});
 
 app.register(fastifyWebsocket);
 app.register(async function (fastify) {
