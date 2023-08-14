@@ -301,7 +301,7 @@ export class Transfer {
           progressUpdate(offset);
 
           if (offset >= this.fileSize) {
-            this.stateComplete(new Blob(buffer));
+            this.stateComplete(new Blob(buffer, { type: this.fileType }));
             channel.close();
             connection.close();
           }
@@ -311,7 +311,7 @@ export class Transfer {
           if (offset < this.fileSize) {
             this.stateFailed();
           } else if (!this.isDone) {
-            this.stateComplete(new Blob(buffer));
+            this.stateComplete(new Blob(buffer, { type: this.fileType }));
             connection.close();
           }
         });
