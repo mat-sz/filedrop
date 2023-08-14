@@ -85,10 +85,12 @@ export class Transfer {
           new ClipboardItem({ 'image/png': this.blob }),
         ]);
       } else {
-        const canvas = await fromImage(this.blob);
-        const pngBlob = await canvas.type('image/png').toBlob();
         await navigator.clipboard.write([
-          new ClipboardItem({ 'image/png': pngBlob }),
+          new ClipboardItem({
+            'image/png': fromImage(this.blob).then(canvas =>
+              canvas.type('image/png').toBlob()
+            ),
+          }),
         ]);
       }
     }
