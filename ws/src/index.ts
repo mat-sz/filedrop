@@ -1,8 +1,9 @@
-import { resolve } from 'path';
+import path, { resolve } from 'path';
 import Fastify from 'fastify';
 import fastifyWebsocket from '@fastify/websocket';
 import fastifyStatic from '@fastify/static';
 import fastifyHttpProxy from '@fastify/http-proxy';
+import fastifyCompress from '@fastify/compress';
 
 import { WSClient } from './WSClient.js';
 import { ClientManager } from './ClientManager.js';
@@ -11,6 +12,7 @@ import { host, maxSize, port, useProxy, appName } from './config.js';
 
 const clientManager = new ClientManager();
 const app = Fastify();
+app.register(fastifyCompress);
 
 const manifest = {
   icons: [
@@ -28,6 +30,7 @@ const manifest = {
   name: appName || 'filedrop',
 };
 const manifestString = JSON.stringify(manifest);
+const maxAge = 30 * 24 * 60 * 60 * 1000;
 
 if (useProxy) {
   app.register(fastifyHttpProxy, {
@@ -54,6 +57,23 @@ if (useProxy) {
     root: STATIC_ROOT,
     prefix: '/',
     index: 'index.html',
+    cacheControl: false,
+  });
+  app.register(fastifyStatic, {
+    root: path.join(STATIC_ROOT, 'assets'),
+    prefix: '/assets',
+    cacheControl: true,
+    immutable: true,
+    maxAge,
+    decorateReply: false,
+  });
+  app.register(fastifyStatic, {
+    root: path.join(STATIC_ROOT, 'locales'),
+    prefix: '/locales',
+    cacheControl: true,
+    immutable: true,
+    maxAge,
+    decorateReply: false,
   });
 }
 

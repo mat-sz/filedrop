@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
+    "@fastify/compress": "^6.4.0",
     "@fastify/http-proxy": "^9.2.1",
     "@fastify/static": "^6.10.2",
     "@fastify/websocket": "^8.2.0",
