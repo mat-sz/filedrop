@@ -105,7 +105,7 @@ export const ChatSection: React.FC = observer(() => {
           <AnimatePresence>
             <motion.div className={styles.empty} {...animationPropsOpacity}>
               <IoChatbox />
-              <h3>{t('emptyChat.title')}</h3>
+              <div className={styles.title}>{t('emptyChat.title')}</div>
               <div>
                 {chatStore.currentChannel === 'global'
                   ? t('emptyChat.body')
@@ -138,7 +138,7 @@ export const ChatSection: React.FC = observer(() => {
             target: chatStore.currentChannelName,
           })}
         />
-        <IconButton>
+        <IconButton title={t('send')}>
           <IoSend />
         </IconButton>
       </form>

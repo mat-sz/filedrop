@@ -21,7 +21,7 @@ export const Queue: React.FC<Props> = observer(
         {transfers.length > 0 && (
           <div className="subsection">
             <div className={styles.header}>
-              <h3>{title}</h3>
+              <div className={styles.title}>{title}</div>
               <Actions transfers={transfers} />
             </div>
             <ul className={styles.queue}>

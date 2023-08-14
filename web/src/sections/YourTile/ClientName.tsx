@@ -44,7 +44,7 @@ export const ClientName: React.FC = observer(() => {
       {!isEditing ? (
         <>
           <strong>{clientName}</strong>{' '}
-          <IconButton onClick={onEdit}>
+          <IconButton onClick={onEdit} title={t('edit')}>
             <IoPencil />
           </IconButton>
         </>
@@ -57,10 +57,10 @@ export const ClientName: React.FC = observer(() => {
             onChange={e => setName(e.target.value)}
             maxLength={32}
           />
-          <IconButton onClick={onSave}>
+          <IconButton onClick={onSave} title={t('save')}>
             <IoCheckmarkCircle />
           </IconButton>
-          <IconButton onClick={onCancel}>
+          <IconButton onClick={onCancel} title={t('cancel')}>
             <IoCloseCircle />
           </IconButton>
         </>

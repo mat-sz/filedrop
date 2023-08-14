@@ -38,7 +38,7 @@ export const ClipboardModal: React.FC<ClipboardModalProps> = ({
       <div className="subsection" onClick={e => e.stopPropagation()}>
         <h2>
           {t('clipboard.title')}
-          <IconButton onClick={dismissClipboard}>
+          <IconButton onClick={dismissClipboard} title={t('close')}>
             <IoClose />
           </IconButton>
         </h2>

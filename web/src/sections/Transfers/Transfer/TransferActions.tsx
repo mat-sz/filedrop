@@ -6,6 +6,7 @@ import {
   IoCopy,
 } from 'react-icons/io5/index.js';
 import { observer } from 'mobx-react-lite';
+import { useTranslation } from 'react-i18not';
 
 import styles from './TransferActions.module.scss';
 import { IconButton } from '../../../components/IconButton.js';
@@ -17,10 +18,16 @@ interface TransferProps {
 
 export const TransferActions: React.FC<TransferProps> = observer(
   ({ transfer }) => {
+    const { t } = useTranslation();
+
     return (
       <div className={styles.actions}>
         {transfer.canDownload && (
-          <IconButton href={transfer.blobUrl} download={transfer.fileName}>
+          <IconButton
+            href={transfer.blobUrl}
+            download={transfer.fileName}
+            title={t('download')}
+          >
             <IoArrowDownCircle />
           </IconButton>
         )}
@@ -29,6 +36,7 @@ export const TransferActions: React.FC<TransferProps> = observer(
             onClick={() => transfer.copy()}
             round
             className={styles.copy}
+            title={t('copy')}
           >
             <IoCopy />
           </IconButton>
@@ -37,11 +45,12 @@ export const TransferActions: React.FC<TransferProps> = observer(
           <IconButton
             onClick={() => transfer.accept()}
             className={styles.positive}
+            title={t('accept')}
           >
             <IoCheckmarkCircle />
           </IconButton>
         )}
-        <IconButton onClick={() => transfer.cancel()}>
+        <IconButton onClick={() => transfer.cancel()} title={t('cancel')}>
           <IoCloseCircle />
         </IconButton>
       </div>

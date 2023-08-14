@@ -19,8 +19,13 @@
   justify-content: space-between;
   margin-bottom: 15px;
 
-  h3 {
+  .title {
+    text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.75);
+    text-transform: uppercase;
+    letter-spacing: 3px;
     margin: 0;
     padding: 5px 0;
+    font-size: 16px;
+    font-weight: bold;
   }
 }

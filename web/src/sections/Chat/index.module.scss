@@ -151,6 +151,15 @@
     display: block;
     margin-bottom: 0;
   }
+
+  .title {
+    text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.75);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+  }
 }
 
 @media screen and (min-width: 768px) {

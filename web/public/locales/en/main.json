@@ -39,6 +39,16 @@
   "connect": "Open this page on your other device to copy files:",
   "otherNetworks": "Other local networks:",
   "you": "You",
+  "edit": "Edit",
+  "send": "Send",
+  "share": "Share",
+  "cancelAll": "Cancel all",
+  "acceptAll": "Accept all",
+  "cancel": "Cancel",
+  "accept": "Accept",
+  "download": "Download",
+  "copy": "Copy to clipboard",
+  "save": "Save",
   "settings": {
     "autoAccept": "Accept all incoming transfers",
     "autoDownload": "Download all complete transfers"
@@ -75,6 +85,11 @@
     "inProgress": "In progress...",
     "complete": "Complete",
     "failed": "Failed :("
+  },
+  "tabs": {
+    "transfers": "Transfers",
+    "connect": "Connect",
+    "chat": "Chat"
   },
   "yourName": "Your name"
 }

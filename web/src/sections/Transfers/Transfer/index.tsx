@@ -34,7 +34,7 @@ export const TransferInfo: React.FC<TransferProps> = observer(
       <motion.li
         className={styles.transfer}
         {...animationPropsSlide}
-        aria-label="Transfer"
+        title="Transfer"
       >
         <TransferIcon transfer={transfer} />
         <div className={styles.state}>

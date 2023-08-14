@@ -51,7 +51,7 @@ export const ChatItem: React.FC<ChatItemProps> = observer(({ item }) => {
         [styles.expanded]: expanded,
       })}
       {...animationPropsSlide}
-      aria-label="Chat message"
+      title="Chat message"
     >
       <div className={styles.info}>
         {client && <TargetTile client={client} />}
@@ -59,7 +59,7 @@ export const ChatItem: React.FC<ChatItemProps> = observer(({ item }) => {
         <div>
           {item.date.toLocaleTimeString(language, { timeStyle: 'short' })}
         </div>
-        <IconButton onClick={() => copy(item.message)}>
+        <IconButton onClick={() => copy(item.message)} title={t('copy')}>
           <IoCopy />
         </IconButton>
       </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import { observer } from 'mobx-react-lite';
 import { runInAction } from 'mobx';
+import { useTranslation } from 'react-i18not';
 
 import styles from './Tab.module.scss';
 import { applicationStore } from '../../stores/index.js';
@@ -13,12 +14,14 @@ interface Props {
 export const Tab: React.FC<React.PropsWithChildren<Props>> = observer(
   ({ id, children }) => {
     const isActive = applicationStore.tab === id;
+    const { t } = useTranslation();
 
     return (
       <button
         className={clsx(styles.tab, { [styles.active]: isActive })}
         onClick={() => runInAction(() => (applicationStore.tab = id))}
         role="tab"
+        title={t(`tabs.${id}`)}
       >
         <span>{children}</span>
       </button>

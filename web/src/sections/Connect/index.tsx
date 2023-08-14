@@ -29,11 +29,14 @@ export const ConnectSection: React.FC = () => {
           <div className={styles.copy}>
             <pre>{href}</pre>
             <div className={styles.buttons}>
-              <IconButton onClick={() => copy(href)}>
+              <IconButton onClick={() => copy(href)} title={t('copy')}>
                 <IoCopy />
               </IconButton>
               {isShareSupported && (
-                <IconButton onClick={() => applicationStore.share(href)}>
+                <IconButton
+                  onClick={() => applicationStore.share(href)}
+                  title={t('share')}
+                >
                   <IoSend />
                 </IconButton>
               )}

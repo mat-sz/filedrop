@@ -60,7 +60,7 @@ export const TransferTarget: React.FC<TransferIconProps> = observer(
         <TargetTile
           className={styles.tile}
           client={targetClient}
-          aria-label={t('transfers.icon.state', {
+          title={t('transfers.icon.state', {
             state: t(`transferState.${transfer.state}`),
           })}
         >

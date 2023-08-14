@@ -61,7 +61,7 @@ export const NetworkTile: React.FC<NetworkTileProps> = ({
                 style: {},
               })}
               accept={'*'}
-              tabIndex={1}
+              tabIndex={0}
             />
             {t('tile')}
           </label>
