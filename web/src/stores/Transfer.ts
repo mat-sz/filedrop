@@ -12,8 +12,12 @@ import { download, toString } from 'fitool';
 import { TransferState } from '../types/TransferState.js';
 import type { NetworkStore } from './NetworkStore.js';
 import type { Connection } from './Connection.js';
+import { isClipboardItemSupported } from '../utils/browser.js';
+import { copy } from '../utils/copy.js';
+import { fromImage } from 'imtool';
 
 export class Transfer {
+  blob?: Blob = undefined;
   blobUrl?: string = undefined;
   peerConnection?: RTCPeerConnection = undefined;
   offset?: number = undefined;
@@ -55,6 +59,38 @@ export class Transfer {
       this.state === TransferState.COMPLETE ||
       this.state === TransferState.FAILED
     );
+  }
+
+  get canDownload() {
+    return this.state === TransferState.COMPLETE && !!this.blobUrl;
+  }
+
+  get canCopy() {
+    return (
+      this.state === TransferState.COMPLETE &&
+      (!!this.text ||
+        (this.blob &&
+          this.fileType.startsWith('image/') &&
+          isClipboardItemSupported))
+    );
+  }
+
+  async copy() {
+    if (this.text) {
+      await copy(this.text!);
+    } else if (this.blob && this.fileType.startsWith('image/')) {
+      if (this.fileType === 'image/png') {
+        await navigator.clipboard.write([
+          new ClipboardItem({ 'image/png': this.blob }),
+        ]);
+      } else {
+        const canvas = await fromImage(this.blob);
+        const pngBlob = await canvas.type('image/png').toBlob();
+        await navigator.clipboard.write([
+          new ClipboardItem({ 'image/png': pngBlob }),
+        ]);
+      }
+    }
   }
 
   private sendAction(action: ActionMessageActionType) {
@@ -164,9 +200,15 @@ export class Transfer {
     this.offset = undefined;
   }
 
-  private stateComplete(blobUrl?: string) {
+  private stateComplete(blob?: Blob) {
     this.state = TransferState.COMPLETE;
-    this.blobUrl = blobUrl;
+    if (blob) {
+      const blobUrl = URL.createObjectURL(blob);
+      this.blob = blob;
+      this.blobUrl = blobUrl;
+      this.textFromBlob(blob);
+      download(blobUrl, this.fileName);
+    }
   }
 
   private stateConnected() {
@@ -244,15 +286,6 @@ export class Transfer {
       const buffer: BlobPart[] = [];
       let offset = 0;
 
-      const onComplete = () => {
-        const blob = new Blob(buffer);
-        const blobUrl = URL.createObjectURL(blob);
-        this.stateComplete(blobUrl);
-        this.textFromBlob(blob);
-        download(blobUrl, this.fileName);
-        connection.close();
-      };
-
       connection.addEventListener('datachannel', event => {
         this.stateConnected();
 
@@ -265,8 +298,9 @@ export class Transfer {
           progressUpdate(offset);
 
           if (offset >= this.fileSize) {
-            onComplete();
+            this.stateComplete(new Blob(buffer));
             channel.close();
+            connection.close();
           }
         });
 
@@ -274,7 +308,8 @@ export class Transfer {
           if (offset < this.fileSize) {
             this.stateFailed();
           } else if (!this.isDone) {
-            onComplete();
+            this.stateComplete(new Blob(buffer));
+            connection.close();
           }
         });
       });
