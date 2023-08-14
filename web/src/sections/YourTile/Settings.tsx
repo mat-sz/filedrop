@@ -9,15 +9,14 @@ import { settingsStore } from '../../stores/index.js';
 
 export const Settings: React.FC = observer(() => {
   const { t } = useTranslation();
+  const settings = settingsStore.settings;
 
   return (
     <div className={styles.settings}>
       <Toggle
         label={t('settings.autoAccept')}
-        value={settingsStore.autoAccept}
-        onChange={value =>
-          runInAction(() => (settingsStore.autoAccept = value))
-        }
+        value={settings.autoAccept}
+        onChange={value => runInAction(() => (settings.autoAccept = value))}
       />
     </div>
   );

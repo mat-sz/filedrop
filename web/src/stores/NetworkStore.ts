@@ -231,7 +231,7 @@ export class NetworkStore {
           );
 
           this.transfers.set(transfer.transferId, transfer);
-          if (settingsStore.autoAccept) {
+          if (settingsStore.settings.autoAccept) {
             transfer.accept();
           }
         }
