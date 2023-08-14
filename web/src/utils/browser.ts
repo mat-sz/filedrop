@@ -6,6 +6,7 @@ export const isORTCSupported = 'RTCIceGatherer' in window;
 export const isWebSocketSupported =
   'WebSocket' in window && 2 === window.WebSocket.CLOSING;
 export const isFileReaderSupported = 'FileReader' in window;
+export const isClipboardItemSupported = 'ClipboardItem' in window;
 export const isBrowserCompatible =
   isWebRTCSupported && isWebSocketSupported && isFileReaderSupported;
 export const isMobile = /iPhone|Android/i.test(navigator.userAgent);

@@ -1,4 +1,13 @@
-export const copy = (text: string) => {
+import { isClipboardItemSupported } from './browser.js';
+
+export const copy = async (text: string) => {
+  try {
+    if (isClipboardItemSupported) {
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+  } catch {}
+
   try {
     const area = document.createElement('textarea');
     area.value = text;
@@ -21,5 +30,5 @@ export const copy = (text: string) => {
 
     document.execCommand('copy');
     document.body.removeChild(area);
-  } catch (e) {}
+  } catch {}
 };
