@@ -10,6 +10,7 @@ const DEFAULT_SETTINGS = {
 };
 
 export class SettingsStore {
+  keys = Object.keys(DEFAULT_SETTINGS);
   settings: Settings = {
     ...DEFAULT_SETTINGS,
     ...getItem('settings', {}),

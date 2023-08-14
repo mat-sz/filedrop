@@ -9,15 +9,18 @@ import { settingsStore } from '../../stores/index.js';
 
 export const Settings: React.FC = observer(() => {
   const { t } = useTranslation();
-  const settings = settingsStore.settings;
+  const settings = settingsStore.settings as any;
 
   return (
     <div className={styles.settings}>
-      <Toggle
-        label={t('settings.autoAccept')}
-        value={settings.autoAccept}
-        onChange={value => runInAction(() => (settings.autoAccept = value))}
-      />
+      {settingsStore.keys.map(key => (
+        <Toggle
+          key={key}
+          label={t(`settings.${key}`)}
+          value={settings[key]}
+          onChange={value => runInAction(() => (settings[key] = value))}
+        />
+      ))}
     </div>
   );
 });
