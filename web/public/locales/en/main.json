@@ -40,7 +40,8 @@
   "otherNetworks": "Other local networks:",
   "you": "You",
   "settings": {
-    "autoAccept": "Automatically accept all incoming transfers"
+    "autoAccept": "Accept all incoming transfers",
+    "autoDownload": "Download all complete transfers"
   },
   "transfers": {
     "title": {

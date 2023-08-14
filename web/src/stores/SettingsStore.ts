@@ -1,12 +1,11 @@
 import { autorun, makeAutoObservable } from 'mobx';
 import { getItem, setItem } from '../utils/storage.js';
 
-interface Settings {
-  autoAccept: boolean;
-}
+type Settings = Record<keyof typeof DEFAULT_SETTINGS, boolean>;
 
 const DEFAULT_SETTINGS = {
   autoAccept: false,
+  autoDownload: true,
 };
 
 export class SettingsStore {

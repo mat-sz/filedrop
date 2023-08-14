@@ -15,6 +15,7 @@ import type { Connection } from './Connection.js';
 import { isClipboardItemSupported } from '../utils/browser.js';
 import { copy } from '../utils/copy.js';
 import { fromImage } from 'imtool';
+import { settingsStore } from './SettingsStore.js';
 
 export class Transfer {
   blob?: Blob = undefined;
@@ -207,7 +208,9 @@ export class Transfer {
       this.blob = blob;
       this.blobUrl = blobUrl;
       this.textFromBlob(blob);
-      download(blobUrl, this.fileName);
+      if (settingsStore.settings.autoDownload) {
+        download(blobUrl, this.fileName);
+      }
     }
   }
 
