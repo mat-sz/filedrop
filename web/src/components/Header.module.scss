@@ -2,7 +2,7 @@
   position: sticky;
   top: 0;
   z-index: 9999;
-  padding-top: 15px;
+  padding-block-start: 15px;
 }
 
 .menu {
@@ -27,7 +27,7 @@
       fill: var(--color-accent);
       height: 24px;
       width: auto;
-      margin-right: 6px;
+      margin-inline-end: 6px;
     }
   }
 
@@ -35,7 +35,7 @@
     font-size: 0;
 
     a {
-      margin-left: 10px;
+      margin-inline-start: 10px;
 
       svg {
         height: 1.4rem;

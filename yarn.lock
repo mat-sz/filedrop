@@ -3883,10 +3883,10 @@ husky@^8.0.3:
   resolved "https://registry.yarnpkg.com/husky/-/husky-8.0.3.tgz#4936d7212e46d1dea28fef29bb3a108872cd9184"
   integrity sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==
 
-i18not@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/i18not/-/i18not-0.1.0.tgz#b3abcfa0e2a0f88e5fb9e6f4349ab7d92cc13aa6"
-  integrity sha512-THYzB4XZkQEsF96BCWVQ78UYVtgkY4hSIrc/8PdNyv6yihANEP0XM5p253N0mLAAr5ZhXVG1qJgXEGOYCkqcTw==
+i18not@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/i18not/-/i18not-0.1.1.tgz#f82cbb766b6ca84436d664e2da5142bc4b87b1d7"
+  integrity sha512-U+a7kMxrwRmae6j+DYXAU6l+x+pTLsFJ/E0fbYv0s5UCQRJBn6IrXWBIZJgaJU8Oee4DhXrvPCcZY6GBQPPM9Q==
 
 ieee754@^1.1.13, ieee754@^1.2.1:
   version "1.2.1"
@@ -5119,10 +5119,10 @@ react-expanding-textarea@^2.3.6:
     react-with-forwarded-ref "^0.3.5"
     tslib "^2.4.0"
 
-react-i18not@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/react-i18not/-/react-i18not-0.1.0.tgz#01f7b92d7c30358a8570358d101fb3a6fda6f4f4"
-  integrity sha512-NKYDyIn2usXpMqhMi971i7KigOp18yICtgMYtOIYTSRwxiq+SszdUtz7cHvVnXJTA1WO8qLNlSfSj6SA2gieJA==
+react-i18not@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/react-i18not/-/react-i18not-0.1.1.tgz#d933107301f8432514613906a095037892559d96"
+  integrity sha512-ku31zFpwhsRkSYW07GQsQ5wgC3tJ6VCd35M/CwMNKBRqtqRLKvaXSPsjvpgE9dtE0bbVo0Sy91Cbn/9kn0odzQ==
 
 react-icons@^4.3.1:
   version "4.10.1"

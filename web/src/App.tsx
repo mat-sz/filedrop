@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { useTranslation } from 'react-i18not';
 
 import 'react-nano-scrollbar/dist/index.css';
 import './App.scss';
@@ -16,6 +17,9 @@ import { Header } from './components/Header.js';
 import { Status } from './components/Status.js';
 
 export const App: React.FC = () => {
+  const { dir } = useTranslation();
+  document.body.dir = dir;
+
   return (
     <Router>
       <div className="app">

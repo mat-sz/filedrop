@@ -3,12 +3,12 @@
   flex-direction: column;
 
   .channels {
-    margin-top: -15px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--color-primary);
+    margin-block-start: -15px;
+    padding-block-end: 10px;
+    border-block-end: 1px solid var(--color-primary);
 
     .list {
-      padding-top: 15px;
+      padding-block-start: 15px;
       display: inline-flex;
     }
   }
@@ -18,7 +18,7 @@
     height: 40px;
     cursor: pointer;
 
-    margin-right: 10px;
+    margin-inline-end: 10px;
     overflow: visible;
 
     &:after {
@@ -30,8 +30,8 @@
       right: 5px;
       height: 5px;
       background: var(--color-fg);
-      border-top-left-radius: 5px;
-      border-top-right-radius: 5px;
+      border-block-start-inline-start-radius: 5px;
+      border-block-start-inline-end-radius: 5px;
     }
 
     &.active {
@@ -65,7 +65,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-bottom: 10px;
+    margin-block-end: 10px;
     flex: 1;
 
     & > * {
@@ -75,12 +75,12 @@
     svg {
       height: 100px;
       width: 100px;
-      margin-bottom: 20px;
+      margin-block-end: 20px;
     }
   }
 
   .items {
-    margin-bottom: 10px;
+    margin-block-end: 10px;
     flex: 1;
 
     & > div:first-child {
@@ -94,8 +94,8 @@
   ul {
     list-style-type: none;
     padding: 0;
-    margin-top: 0;
-    margin-bottom: 0;
+    margin-block-start: 0;
+    margin-block-end: 0;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -109,11 +109,11 @@
       position: relative;
 
       &:not(:first-child) {
-        border-top: 1px solid var(--color-primary);
+        border-block-start: 1px solid var(--color-primary);
       }
 
       &:last-child {
-        padding-bottom: 5px;
+        padding-block-end: 5px;
       }
     }
   }
@@ -125,13 +125,13 @@
     border-radius: 5px;
 
     button {
-      margin-right: 15px;
+      margin-inline-end: 15px;
     }
 
     textarea {
       resize: none;
       flex: 1;
-      margin-right: 10px;
+      margin-inline-end: 10px;
       min-height: 40px;
       background: none;
       padding: 10px 15px;
@@ -147,7 +147,7 @@
 
   span {
     display: block;
-    margin-bottom: 0;
+    margin-block-end: 0;
   }
 
   .title {

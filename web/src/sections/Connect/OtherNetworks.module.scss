@@ -1,11 +1,11 @@
 .header {
   text-align: left;
-  margin-bottom: 10px;
+  margin-block-end: 10px;
   font-weight: bold;
 
-  margin-top: 15px;
-  padding-top: 10px;
-  border-top: 1px solid var(--color-primary);
+  margin-block-start: 15px;
+  padding-block-start: 10px;
+  border-block-start: 1px solid var(--color-primary);
 }
 
 .list {
@@ -14,6 +14,6 @@
   justify-content: flex-start;
 
   & > *:not(:last-child) {
-    margin-right: 10px;
+    margin-inline-end: 10px;
   }
 }

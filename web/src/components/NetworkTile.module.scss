@@ -4,7 +4,7 @@
   align-items: center;
 
   &:not(:last-child) {
-    margin-right: 10px;
+    margin-inline-end: 10px;
   }
 }
 
@@ -55,7 +55,7 @@
   text-align: center;
   width: 75px;
   font-size: 0.8rem;
-  margin-top: 10px;
+  margin-block-start: 10px;
   color: var(--color-fg);
   word-break: break-word;
 }

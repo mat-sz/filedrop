@@ -2,7 +2,7 @@
   background: var(--color-bg-soft);
   padding: 15px;
   margin: 15px;
-  margin-bottom: 0;
+  margin-block-end: 0;
   position: relative;
   border-radius: 5px;
 
@@ -12,12 +12,12 @@
 
   h2 {
     padding: 0;
-    margin-bottom: 15px;
+    margin-block-end: 15px;
   }
 
   p:last-child,
   ol:last-child,
   ul:last-child {
-    margin-bottom: 0;
+    margin-block-end: 0;
   }
 }

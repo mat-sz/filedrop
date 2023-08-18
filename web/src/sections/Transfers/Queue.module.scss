@@ -7,9 +7,9 @@
     animation: fadeIn 0.4s ease-in-out 0s 1;
 
     &:not(:last-child) {
-      padding-bottom: 15px;
-      margin-bottom: 15px;
-      border-bottom: 1px solid var(--color-primary);
+      padding-block-end: 15px;
+      margin-block-end: 15px;
+      border-block-end: 1px solid var(--color-primary);
     }
   }
 }
@@ -17,7 +17,7 @@
 .header {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 15px;
+  margin-block-end: 15px;
 
   .title {
     text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.75);

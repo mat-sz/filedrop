@@ -1,5 +1,5 @@
 .footer {
-  margin-top: 15px;
+  margin-block-start: 15px;
 
   ul {
     list-style: none;
@@ -11,11 +11,11 @@
 
     li {
       display: inline-block;
-      margin-right: 20px;
+      margin-inline-end: 20px;
       font-size: 0.8rem;
 
       &:last-child {
-        border-right: none;
+        border-inline-end: none;
       }
 
       a {

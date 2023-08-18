@@ -3,9 +3,9 @@
   justify-content: space-between;
   align-items: center;
   font-size: 0.8rem;
-  margin-top: -10px;
+  margin-block-start: -10px;
 
   span:not(:last-child) {
-    margin-right: 0.5rem;
+    margin-inline-end: 0.5rem;
   }
 }
