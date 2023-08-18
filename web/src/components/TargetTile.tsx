@@ -4,7 +4,6 @@ import {
   IoLockClosed,
   IoPhonePortrait,
   IoHome,
-  IoEllipsisHorizontal,
 } from 'react-icons/io5/index.js';
 import { ClientModel, DeviceType } from '@filedrop/types';
 import { observer } from 'mobx-react-lite';
