@@ -1,28 +1,25 @@
 .footer {
-  margin: 15px;
+  margin-top: 15px;
 
   ul {
     list-style: none;
     padding: 0;
     margin: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 
-    li:first-child {
-      padding-left: 0;
-    }
+    li {
+      display: inline-block;
+      margin-right: 20px;
+      font-size: 0.8rem;
 
-    li:last-child {
-      border-right: none;
-    }
-  }
-}
+      &:last-child {
+        border-right: none;
+      }
 
-@media screen and (min-width: 768px) {
-  .footer {
-    ul {
-      li {
-        display: inline-block;
-        padding: 0 10px;
-        border-right: 1px solid #333;
+      a {
+        color: #999999;
       }
     }
   }

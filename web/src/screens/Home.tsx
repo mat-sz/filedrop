@@ -15,6 +15,7 @@ import { ConnectSection } from '../sections/Connect/index.js';
 import { ChatSection } from '../sections/Chat/index.js';
 import { MobileTabs } from '../sections/MobileTabs/index.js';
 import { applicationStore, networkStore } from '../stores/index.js';
+import { Footer } from '../components/Footer.js';
 
 export const Home: React.FC = observer(() => {
   const [clipboardFiles, setClipboardFiles] = useState<File[]>([]);
@@ -87,7 +88,7 @@ export const Home: React.FC = observer(() => {
         </div>
         <div className="mobileFlex">
           <div
-            className={clsx('mobileFlex', {
+            className={clsx({
               mobileHidden: tab !== 'connect',
             })}
           >
@@ -100,6 +101,7 @@ export const Home: React.FC = observer(() => {
           >
             <ChatSection />
           </div>
+          {tab !== 'chat' && <Footer />}
         </div>
       </div>
       <MobileTabs />

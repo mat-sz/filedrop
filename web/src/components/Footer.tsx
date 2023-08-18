@@ -11,7 +11,7 @@ export const Footer: React.FC = observer(() => {
   const { t } = useTranslation();
 
   return (
-    <footer className={clsx('subsection', styles.footer)}>
+    <footer className={clsx(styles.footer)}>
       <ul>
         <li>
           <Link to="/privacy">{t('sections.privacy')}</Link>
