@@ -5,7 +5,7 @@
   .channels {
     margin-top: -15px;
     padding-bottom: 10px;
-    border-bottom: 1px solid #35353b;
+    border-bottom: 1px solid var(--color-primary);
 
     .list {
       padding-top: 15px;
@@ -29,7 +29,7 @@
       left: 5px;
       right: 5px;
       height: 5px;
-      background: white;
+      background: var(--color-fg);
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
     }
@@ -42,9 +42,9 @@
   }
 
   .global {
-    color: #ffffff;
+    color: var(--color-fg);
     font-size: 20px;
-    background: #161618;
+    background: var(--color-bg);
     border-radius: 5px;
 
     display: flex;
@@ -109,7 +109,7 @@
       position: relative;
 
       &:not(:first-child) {
-        border-top: 1px solid #35353b;
+        border-top: 1px solid var(--color-primary);
       }
 
       &:last-child {
@@ -121,7 +121,7 @@
   form {
     display: flex;
     align-items: center;
-    background: #35353b;
+    background: var(--color-primary);
     border-radius: 5px;
 
     button {
@@ -135,7 +135,7 @@
       min-height: 40px;
       background: none;
       padding: 10px 15px;
-      color: white;
+      color: var(--color-fg);
       border: none;
       font-size: 0.8rem;
 

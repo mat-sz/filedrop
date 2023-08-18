@@ -18,11 +18,11 @@
       width: 100%;
 
       &::-moz-progress-bar {
-        background-color: var(--accent-color);
+        background-color: var(--color-accent);
       }
 
       &::-webkit-progress-value {
-        background-color: var(--accent-color);
+        background-color: var(--color-accent);
       }
 
       &::-webkit-progress-bar {
@@ -42,7 +42,7 @@
       font-size: 0.8rem;
       grid-template-columns: 1fr 1fr;
       justify-content: center;
-      color: #aaa;
+      color: var(--color-fg-soft);
 
       & > *:nth-child(2),
       & > *:nth-child(4) {

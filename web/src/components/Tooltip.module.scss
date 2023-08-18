@@ -15,7 +15,7 @@
     pointer-events: none;
     transition: 0.1s ease-in-out all;
     transform: translate(-50%, -100%);
-    background: #111;
+    background: var(--color-bg);
     border-radius: 5px;
     padding: 5px 10px;
     font-size: 0.8rem;

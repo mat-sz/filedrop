@@ -1,6 +1,6 @@
 .tab {
-  background: #252529;
-  color: white;
+  background: var(--color-bg-soft);
+  color: var(--color-fg);
   flex: 1;
   padding: 10px;
   border-radius: 5px;
@@ -21,6 +21,6 @@
 
   &.active,
   &:hover {
-    background: #35353b;
+    background: var(--color-primary);
   }
 }

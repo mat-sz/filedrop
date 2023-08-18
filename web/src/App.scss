@@ -1,11 +1,19 @@
 :root {
-  --accent-color: #ff6f06;
   --dark-gradient: linear-gradient(135deg, #00000000 0%, #00000044 100%);
+  --color-accent: #ff6f06;
+  --color-bg: #1b1b1d;
+  --color-bg-soft: #252529;
+  --color-primary: #35353b;
+  --color-primary-soft: #575760;
+  --color-fg-soft: #aaaaaa;
+  --color-fg: #ffffff;
+  --green: #3ea74e;
+  --red: #ff5656;
 }
 
 body {
-  background: #1b1b1d;
-  color: white;
+  background: var(--color-bg);
+  color: var(--color-fg);
   line-height: 1.4;
   user-select: none;
 }
@@ -42,7 +50,7 @@ body,
 
 a {
   display: inline-block;
-  color: white;
+  color: var(--color-fg);
   text-decoration: none;
   white-space: nowrap;
 
@@ -52,9 +60,9 @@ a {
 }
 
 input {
-  background: #35353b;
+  background: var(--color-primary);
   border: none;
-  color: white;
+  color: var(--color-fg);
   padding: 10px 20px;
   border-radius: 5px;
 }
@@ -86,7 +94,7 @@ h3 {
 }
 
 .subsection {
-  background: #252529;
+  background: var(--color-bg-soft);
   padding: 15px;
   position: relative;
   border-radius: 5px;

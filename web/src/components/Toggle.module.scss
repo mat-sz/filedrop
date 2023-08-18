@@ -3,10 +3,9 @@ $track-height: $toggle-indicator-size + 6;
 $track-width: $toggle-indicator-size * 2.5;
 $highContrastModeSupport: solid 2px transparent;
 
-$indicator: #fff;
-$track-border: #5a72b5;
-$track-background: #575760;
-$track-background-checked: #3ea74e;
+$indicator: var(--color-fg);
+$track-background: var(--color-primary-soft);
+$track-background-checked: var(--green);
 
 $speed: 0.2s;
 
@@ -68,7 +67,7 @@ $speed: 0.2s;
 }
 
 .checkmark {
-  fill: $track-background-checked;
+  fill: var(--color-bg);
   height: $toggle-indicator-size - 4;
   width: $toggle-indicator-size - 4;
   opacity: 0;

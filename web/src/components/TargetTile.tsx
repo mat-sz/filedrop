@@ -4,6 +4,7 @@ import {
   IoLockClosed,
   IoPhonePortrait,
   IoHome,
+  IoEllipsisHorizontal,
 } from 'react-icons/io5/index.js';
 import { ClientModel, DeviceType } from '@filedrop/types';
 import { observer } from 'mobx-react-lite';
@@ -34,11 +35,11 @@ export const TargetTile = observer(
           {...props}
         >
           {variant === 'big' && (
-            <>
+            <div className={styles.icons}>
               {isSecure && <IoLockClosed className={styles.secure} />}
               {isLocal && <IoHome className={styles.local} />}
               {isMobile && <IoPhonePortrait className={styles.device} />}
-            </>
+            </div>
           )}
           {children}
         </div>

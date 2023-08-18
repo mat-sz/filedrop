@@ -1,7 +1,7 @@
 .info {
   display: flex;
   align-items: center;
-  color: #aaa;
+  color: var(--color-fg-soft);
   margin-bottom: 5px;
 
   & > * {
@@ -32,7 +32,7 @@
     rgba(0, 0, 0, 0.4) 0%,
     rgba(0, 0, 0, 0) 100%
   );
-  color: white;
+  color: var(--color-fg);
   padding: 10px 0;
 
   &:hover {

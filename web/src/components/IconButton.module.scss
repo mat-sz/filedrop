@@ -4,7 +4,7 @@
   align-items: center;
   background: none;
   padding: 0;
-  color: #aaa;
+  color: var(--color-fg-soft);
   font-size: 1rem;
 
   &:hover {
@@ -18,8 +18,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #222;
-    background: #aaa;
+    color: var(--color-bg);
+    background: var(--color-fg-soft);
     border-radius: 100%;
 
     svg {

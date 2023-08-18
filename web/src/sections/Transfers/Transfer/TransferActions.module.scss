@@ -13,11 +13,11 @@
     }
 
     &.positive {
-      color: #3ea74e;
+      color: var(--green);
     }
 
     &.negative {
-      color: #ff5656;
+      color: var(--red);
     }
   }
 }
