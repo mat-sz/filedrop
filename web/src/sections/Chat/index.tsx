@@ -4,7 +4,12 @@ import { AnimatePresence, motion } from 'nanoanim';
 import { ScrollArea } from 'react-nano-scrollbar';
 import Textarea from 'react-expanding-textarea';
 import { observer } from 'mobx-react-lite';
-import { IoSend, IoChatbox, IoGlobe } from 'react-icons/io5/index.js';
+import {
+  IoSend,
+  IoChatbox,
+  IoGlobe,
+  IoClipboard,
+} from 'react-icons/io5/index.js';
 import clsx from 'clsx';
 
 import styles from './index.module.scss';
@@ -138,6 +143,21 @@ export const ChatSection: React.FC = observer(() => {
             target: chatStore.currentChannelName,
           })}
         />
+        {applicationStore.showPaste && (
+          <IconButton
+            title={t('paste')}
+            onClick={async () => {
+              try {
+                const text = await navigator.clipboard.readText();
+                if (text) {
+                  chatStore.sendChatMessage(text);
+                }
+              } catch {}
+            }}
+          >
+            <IoClipboard />
+          </IconButton>
+        )}
         <IconButton title={t('send')}>
           <IoSend />
         </IconButton>

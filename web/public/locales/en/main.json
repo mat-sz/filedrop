@@ -48,6 +48,7 @@
   "accept": "Accept",
   "download": "Download",
   "copy": "Copy to clipboard",
+  "paste": "Paste",
   "save": "Save",
   "settings": {
     "autoAccept": "Accept all incoming transfers",

@@ -1,8 +1,9 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, runInAction } from 'mobx';
 import { Message, MessageType } from '@filedrop/types';
 
 import type { Connection } from './Connection.js';
 import { defaultAppName } from '../config.js';
+import { isClipboardReadSupported } from '../utils/browser.js';
 
 export class ApplicationStore {
   error?: string = undefined;
@@ -12,11 +13,13 @@ export class ApplicationStore {
   appName = defaultAppName;
   abuseEmail?: string = undefined;
   tab = 'transfers';
+  showPaste = false;
 
   constructor(private connection: Connection) {
     makeAutoObservable(this);
 
     connection.on('message', message => this.onMessage(message as any));
+    this.refreshClipboardStatus();
   }
 
   setTab(tab: string) {
@@ -32,6 +35,32 @@ export class ApplicationStore {
       title: this.appName + ' - transfer files',
       url,
     });
+  }
+
+  private handlePermissionState(state: PermissionState) {
+    this.showPaste = state !== 'denied';
+  }
+
+  async refreshClipboardStatus() {
+    if (!isClipboardReadSupported) {
+      this.showPaste = false;
+      return;
+    }
+
+    try {
+      const permissionStatus = await navigator.permissions.query({
+        name: 'clipboard-read',
+        allowWithoutGesture: false,
+      } as any);
+      this.handlePermissionState(permissionStatus.state);
+      permissionStatus.onchange = () => {
+        this.handlePermissionState(permissionStatus.state);
+      };
+    } catch {
+      runInAction(() => {
+        this.showPaste = false;
+      });
+    }
   }
 
   async onMessage(message: Message) {

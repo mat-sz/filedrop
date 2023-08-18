@@ -7,6 +7,8 @@ export const isWebSocketSupported =
   'WebSocket' in window && 2 === window.WebSocket.CLOSING;
 export const isFileReaderSupported = 'FileReader' in window;
 export const isClipboardItemSupported = 'ClipboardItem' in window;
+export const isClipboardReadSupported =
+  'clipboard' in navigator && !!navigator.clipboard.read;
 export const isBrowserCompatible =
   isWebRTCSupported && isWebSocketSupported && isFileReaderSupported;
 export const isMobile = /iPhone|Android/i.test(navigator.userAgent);
