@@ -12,12 +12,26 @@
       font-size: 2rem;
     }
 
+    &.copy {
+      svg {
+        height: 1.1rem;
+      }
+    }
+
     &.positive {
-      color: var(--green);
+      background-color: var(--green-soft);
+
+      &:hover {
+        background-color: var(--green);
+      }
     }
 
     &.negative {
-      color: var(--red);
+      background-color: var(--red-soft);
+
+      &:hover {
+        background-color: var(--red);
+      }
     }
   }
 }

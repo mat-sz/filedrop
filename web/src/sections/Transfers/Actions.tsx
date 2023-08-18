@@ -1,5 +1,5 @@
 import React from 'react';
-import { IoCheckmarkDoneCircle, IoCloseCircle } from 'react-icons/io5/index.js';
+import { IoCheckmarkDone, IoCloseSharp } from 'react-icons/io5/index.js';
 import { useTranslation } from 'react-i18not';
 
 import styles from './Actions.module.scss';
@@ -34,12 +34,12 @@ export const Actions: React.FC<Props> = ({ transfers }) => {
     <>
       <div className={styles.actions}>
         {hasAcceptable && (
-          <IconButton onClick={acceptAll} title={t('acceptAll')}>
-            <IoCheckmarkDoneCircle />
+          <IconButton round onClick={acceptAll} title={t('acceptAll')}>
+            <IoCheckmarkDone />
           </IconButton>
         )}
-        <IconButton onClick={cancelAll} title={t('cancelAll')}>
-          <IoCloseCircle />
+        <IconButton round onClick={cancelAll} title={t('cancelAll')}>
+          <IoCloseSharp />
         </IconButton>
       </div>
     </>

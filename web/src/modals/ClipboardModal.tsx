@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18not';
 import { motion } from 'nanoanim';
-import { IoClose } from 'react-icons/io5/index.js';
+import { IoCloseSharp } from 'react-icons/io5/index.js';
 
 import styles from './ClipboardModal.module.scss';
 import { animationPropsOpacity } from '../animationSettings.js';
@@ -39,7 +39,7 @@ export const ClipboardModal: React.FC<ClipboardModalProps> = ({
         <h2>
           {t('clipboard.title')}
           <IconButton onClick={dismissClipboard} title={t('close')}>
-            <IoClose />
+            <IoCloseSharp />
           </IconButton>
         </h2>
         <p>{t('clipboard.body', { fileNames })}</p>

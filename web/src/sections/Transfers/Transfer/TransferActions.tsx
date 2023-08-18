@@ -1,9 +1,9 @@
 import React from 'react';
 import {
-  IoCheckmarkCircle,
-  IoArrowDownCircle,
-  IoCloseCircle,
   IoCopy,
+  IoCloseSharp,
+  IoCheckmark,
+  IoArrowDown,
 } from 'react-icons/io5/index.js';
 import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18not';
@@ -24,17 +24,18 @@ export const TransferActions: React.FC<TransferProps> = observer(
       <div className={styles.actions}>
         {transfer.canDownload && (
           <IconButton
+            round
             href={transfer.blobUrl}
             download={transfer.fileName}
             title={t('download')}
           >
-            <IoArrowDownCircle />
+            <IoArrowDown />
           </IconButton>
         )}
         {transfer.canCopy && (
           <IconButton
-            onClick={() => transfer.copy()}
             round
+            onClick={() => transfer.copy()}
             className={styles.copy}
             title={t('copy')}
           >
@@ -43,15 +44,21 @@ export const TransferActions: React.FC<TransferProps> = observer(
         )}
         {transfer.canAccept && (
           <IconButton
+            round
             onClick={() => transfer.accept()}
             className={styles.positive}
             title={t('accept')}
           >
-            <IoCheckmarkCircle />
+            <IoCheckmark />
           </IconButton>
         )}
-        <IconButton onClick={() => transfer.cancel()} title={t('cancel')}>
-          <IoCloseCircle />
+        <IconButton
+          round
+          onClick={() => transfer.cancel()}
+          className={styles.negative}
+          title={t('cancel')}
+        >
+          <IoCloseSharp />
         </IconButton>
       </div>
     );

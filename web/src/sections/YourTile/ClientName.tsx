@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18not';
-import {
-  IoPencil,
-  IoCheckmarkCircle,
-  IoCloseCircle,
-} from 'react-icons/io5/index.js';
+import { IoPencil, IoCheckmark, IoCloseSharp } from 'react-icons/io5/index.js';
 import { observer } from 'mobx-react-lite';
 
 import styles from './ClientName.module.scss';
@@ -57,11 +53,11 @@ export const ClientName: React.FC = observer(() => {
             onChange={e => setName(e.target.value)}
             maxLength={32}
           />
-          <IconButton onClick={onSave} title={t('save')}>
-            <IoCheckmarkCircle />
+          <IconButton round onClick={onSave} title={t('save')}>
+            <IoCheckmark />
           </IconButton>
-          <IconButton onClick={onCancel} title={t('cancel')}>
-            <IoCloseCircle />
+          <IconButton round onClick={onCancel} title={t('cancel')}>
+            <IoCloseSharp />
           </IconButton>
         </>
       )}

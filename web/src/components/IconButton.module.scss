@@ -8,7 +8,7 @@
   font-size: 1rem;
 
   &:hover {
-    opacity: 0.8;
+    color: var(--color-fg);
     background: none;
   }
 
@@ -22,8 +22,14 @@
     background: var(--color-fg-soft);
     border-radius: 100%;
 
+    &:hover {
+      color: var(--color-bg);
+      background: var(--color-fg);
+    }
+
     svg {
-      font-size: 0.9rem;
+      width: auto;
+      height: 1.2rem;
     }
   }
 }
