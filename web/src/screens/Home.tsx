@@ -88,7 +88,7 @@ export const Home: React.FC = observer(() => {
         </div>
         <div className="mobileFlex">
           <div
-            className={clsx({
+            className={clsx('desktopSubsection', {
               mobileHidden: tab !== 'connect',
             })}
           >

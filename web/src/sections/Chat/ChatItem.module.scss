@@ -47,9 +47,3 @@
 .expanded .message {
   max-height: unset;
 }
-
-.item {
-  &:not(:last-child) {
-    margin-bottom: 10px !important;
-  }
-}

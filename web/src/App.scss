@@ -4,7 +4,7 @@
 }
 
 body {
-  background: #111;
+  background: #1b1b1d;
   color: white;
   line-height: 1.4;
   user-select: none;
@@ -26,10 +26,6 @@ button {
   cursor: pointer;
   font-size: 14px;
   text-shadow: none;
-
-  &:hover {
-    box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.5);
-  }
 }
 
 html,
@@ -56,7 +52,7 @@ a {
 }
 
 input {
-  background: rgba(90, 90, 90, 0.4);
+  background: #35353b;
   border: none;
   color: white;
   padding: 10px 20px;
@@ -90,7 +86,7 @@ h3 {
 }
 
 .subsection {
-  background: #1e1e1e;
+  background: #252529;
   padding: 15px;
   position: relative;
   border-radius: 5px;
@@ -141,7 +137,7 @@ h3 {
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding-bottom: 65px;
+  padding-bottom: 55px;
 }
 
 @media screen and (min-width: 768px) {
@@ -149,6 +145,12 @@ h3 {
     display: block;
     flex: unset;
 
+    & > .subsection {
+      margin-bottom: 15px;
+    }
+  }
+
+  .desktopSubsection {
     & > .subsection {
       margin-bottom: 15px;
     }

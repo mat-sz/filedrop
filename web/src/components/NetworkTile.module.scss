@@ -44,8 +44,6 @@
   &.active,
   &:hover,
   &:focus-within {
-    box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.5);
-
     svg {
       color: rgba(0, 0, 0, 0.5);
     }

@@ -10,7 +10,7 @@
   }
 
   .copy {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: #35353b;
     border-radius: 5px;
     display: flex;
     justify-content: space-between;
@@ -51,7 +51,6 @@
     svg {
       box-sizing: content-box;
       border: 10px solid white;
-      box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.5);
       border-radius: 5px;
     }
   }

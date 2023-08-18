@@ -1,5 +1,5 @@
 .tab {
-  background: #333;
+  background: #252529;
   color: white;
   flex: 1;
   padding: 10px;
@@ -19,7 +19,8 @@
     font-size: 1.5rem;
   }
 
-  &.active {
-    background: #444;
+  &.active,
+  &:hover {
+    background: #35353b;
   }
 }

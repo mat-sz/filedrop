@@ -47,7 +47,7 @@ export const ChatItem: React.FC<ChatItemProps> = observer(({ item }) => {
 
   return (
     <motion.li
-      className={clsx('subsection', styles.item, {
+      className={clsx(styles.item, {
         [styles.expanded]: expanded,
       })}
       {...animationPropsSlide}

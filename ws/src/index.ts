@@ -25,8 +25,8 @@ const manifest = {
   ],
   start_url: '/',
   display: 'standalone',
-  theme_color: '#000000',
-  background_color: '#000000',
+  theme_color: '#1b1b1d',
+  background_color: '#1b1b1d',
   name: appName || 'filedrop',
 };
 const manifestString = JSON.stringify(manifest);

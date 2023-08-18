@@ -16,22 +16,19 @@ export const About: React.FC = () => {
         type long URLs by hand. I hope it is as useful for you as it is for me.
         :)
       </p>
-      <p>
-        You can start a file transfer in a few easy steps:
-        <ol>
-          <li>Open this website on one device (you're here right now!)</li>
-          <li>
-            Scan the QR code or open the URL from the "Invite" section on
-            another device.
-          </li>
-          <li>
-            Drag and drop your files onto a tile (any tile that isn't marked as
-            "You", you can also click on a tile to open a file selection
-            dialog).
-          </li>
-          <li>Accept the transfer on another device.</li>
-        </ol>
-      </p>
+      <p>You can start a file transfer in a few easy steps:</p>
+      <ol>
+        <li>Open this website on one device (you're here right now!)</li>
+        <li>
+          Scan the QR code or open the URL from the "Invite" section on another
+          device.
+        </li>
+        <li>
+          Drag and drop your files onto a tile (any tile that isn't marked as
+          "You", you can also click on a tile to open a file selection dialog).
+        </li>
+        <li>Accept the transfer on another device.</li>
+      </ol>
       <p>filedrop is open source!</p>
       <p>
         <a href="https://github.com/mat-sz/filedrop">
