@@ -66,13 +66,18 @@ export class ApplicationStore {
   async onMessage(message: Message) {
     switch (message.type) {
       case MessageType.APP_INFO:
-        this.abuseEmail = message.abuseEmail;
-        this.noticeText = message.noticeText;
-        this.noticeUrl = message.noticeUrl;
+        runInAction(() => {
+          this.appName = message.appName || defaultAppName;
+          this.abuseEmail = message.abuseEmail;
+          this.noticeText = message.noticeText;
+          this.noticeUrl = message.noticeUrl;
+        });
 
         break;
       case MessageType.CLIENT_INFO:
-        this.suggestedNetworkName = message.suggestedNetworkName;
+        runInAction(() => {
+          this.suggestedNetworkName = message.suggestedNetworkName;
+        });
         break;
     }
   }
