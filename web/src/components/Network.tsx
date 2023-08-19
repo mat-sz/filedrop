@@ -1,5 +1,4 @@
 import React from 'react';
-import { ScrollArea } from 'react-nano-scrollbar';
 import { useTranslation } from 'react-i18not';
 import { observer } from 'mobx-react-lite';
 import { AnimatePresence, motion } from 'nanoanim';
@@ -22,19 +21,17 @@ export const Network: React.FC<NetworkProps> = observer(({ onSelect }) => {
   return (
     <AnimatePresence>
       {clients.length > 0 ? (
-        <ScrollArea horizontal hideScrollbarY>
-          <div className={styles.network}>
-            <AnimatePresence>
-              {clients.map(client => (
-                <NetworkTile
-                  key={client.clientId}
-                  client={client}
-                  onSelect={onSelect}
-                />
-              ))}
-            </AnimatePresence>
-          </div>
-        </ScrollArea>
+        <div className={styles.network}>
+          <AnimatePresence>
+            {clients.map(client => (
+              <NetworkTile
+                key={client.clientId}
+                client={client}
+                onSelect={onSelect}
+              />
+            ))}
+          </AnimatePresence>
+        </div>
       ) : (
         <motion.div className={clsx(styles.empty)} {...animationPropsOpacity}>
           <div>{t('emptyNetwork.title')}</div>

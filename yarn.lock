@@ -5144,11 +5144,6 @@ react-is@^18.0.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
 
-react-nano-scrollbar@^0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/react-nano-scrollbar/-/react-nano-scrollbar-0.0.4.tgz#aeb0620a9acf9167482345e6eff762feaa8478d3"
-  integrity sha512-6JK3+LHc4w4Fa1sJVevuyPh4/5OaUd/Ouw/g6RokbL0ugkEfSB9QOi6yBGKK4y3aHbqrn3RoPnvcuKoWDLRffw==
-
 react-refresh@^0.14.0:
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.14.0.tgz#4e02825378a5f227079554d4284889354e5f553e"

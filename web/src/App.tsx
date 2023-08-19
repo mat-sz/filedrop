@@ -2,7 +2,6 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useTranslation } from 'react-i18not';
 
-import 'react-nano-scrollbar/dist/index.css';
 import './App.scss';
 
 import { Router } from './config.js';

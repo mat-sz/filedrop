@@ -1,5 +1,7 @@
 .network {
   display: inline-flex;
+  overflow-x: auto;
+  max-width: 100%;
 }
 
 .wrapper {

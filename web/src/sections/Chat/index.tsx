@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18not';
 import { AnimatePresence, motion } from 'nanoanim';
-import { ScrollArea } from 'react-nano-scrollbar';
 import Textarea from 'react-expanding-textarea';
 import { observer } from 'mobx-react-lite';
 import {
@@ -70,40 +69,38 @@ export const ChatSection: React.FC = observer(() => {
   return (
     <div className={clsx('subsection', 'mobileFlex', styles.chat)}>
       <div className={styles.channels}>
-        <ScrollArea horizontal hideScrollbarY>
-          <div className={styles.list}>
-            <AnimatePresence>
-              {channels.map(channel =>
-                channel.client ? (
-                  <TargetTile
-                    className={clsx(styles.channel, {
-                      [styles.active]:
-                        chatStore.currentChannel === channel.channel,
-                    })}
-                    variant="small"
-                    key={channel.channel}
-                    client={channel.client}
-                    onClick={() => chatStore.selectChannel(channel.channel)}
-                  >
-                    <NotificationCount count={channel.unread} />
-                  </TargetTile>
-                ) : (
-                  <div
-                    key={channel.channel}
-                    className={clsx(styles.channel, styles.global, {
-                      [styles.active]:
-                        chatStore.currentChannel === channel.channel,
-                    })}
-                    onClick={() => chatStore.selectChannel(channel.channel)}
-                  >
-                    <NotificationCount count={channel.unread} />
-                    <IoGlobe />
-                  </div>
-                )
-              )}
-            </AnimatePresence>
-          </div>
-        </ScrollArea>
+        <div className={styles.list}>
+          <AnimatePresence>
+            {channels.map(channel =>
+              channel.client ? (
+                <TargetTile
+                  className={clsx(styles.channel, {
+                    [styles.active]:
+                      chatStore.currentChannel === channel.channel,
+                  })}
+                  variant="small"
+                  key={channel.channel}
+                  client={channel.client}
+                  onClick={() => chatStore.selectChannel(channel.channel)}
+                >
+                  <NotificationCount count={channel.unread} />
+                </TargetTile>
+              ) : (
+                <div
+                  key={channel.channel}
+                  className={clsx(styles.channel, styles.global, {
+                    [styles.active]:
+                      chatStore.currentChannel === channel.channel,
+                  })}
+                  onClick={() => chatStore.selectChannel(channel.channel)}
+                >
+                  <NotificationCount count={channel.unread} />
+                  <IoGlobe />
+                </div>
+              )
+            )}
+          </AnimatePresence>
+        </div>
       </div>
       <React.Fragment key={chatStore.currentChannel}>
         {chat.length === 0 ? (
@@ -121,7 +118,7 @@ export const ChatSection: React.FC = observer(() => {
             </motion.div>
           </AnimatePresence>
         ) : (
-          <ScrollArea hideScrollbarX className={styles.items}>
+          <div className={styles.items}>
             <ul ref={containerRef}>
               <AnimatePresence>
                 {chat.map(item => (
@@ -129,7 +126,7 @@ export const ChatSection: React.FC = observer(() => {
                 ))}
               </AnimatePresence>
             </ul>
-          </ScrollArea>
+          </div>
         )}
       </React.Fragment>
       <form onSubmit={onSubmit}>

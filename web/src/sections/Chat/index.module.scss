@@ -6,6 +6,8 @@
     margin-block-start: -15px;
     padding-block-end: 10px;
     border-block-end: 1px solid var(--color-primary);
+    overflow-x: auto;
+    max-width: 100%;
 
     .list {
       padding-block-start: 15px;
@@ -30,8 +32,8 @@
       right: 5px;
       height: 5px;
       background: var(--color-fg);
-      border-block-start-inline-start-radius: 5px;
-      border-block-start-inline-end-radius: 5px;
+      border-start-start-radius: 5px;
+      border-start-end-radius: 5px;
     }
 
     &.active {
@@ -82,6 +84,8 @@
   .items {
     margin-block-end: 10px;
     flex: 1;
+    overflow-x: hidden;
+    overflow-y: auto;
 
     & > div:first-child {
       width: 100%;
