@@ -92,5 +92,6 @@
     "connect": "Connect",
     "chat": "Chat"
   },
-  "yourName": "Your name"
+  "yourName": "Your name",
+  "desktopHint": "Press Ctrl+V to paste your clipboard contents."
 }
