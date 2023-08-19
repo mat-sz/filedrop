@@ -3,6 +3,27 @@
   top: 0;
   z-index: 9999;
   padding-block-start: 15px;
+  background: linear-gradient(
+    to bottom,
+    var(--color-bg) 0%,
+    var(--color-bg-transparent) 100%
+  );
+
+  &:after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: '';
+    z-index: -1;
+
+    backdrop-filter: blur(20px);
+    mask: linear-gradient(to bottom, #000000ff 0%, #00000000 100%);
+    mask-composite: xor;
+    -webkit-mask: linear-gradient(to bottom, #000000ff 0%, #00000000 100%);
+    -webkit-mask-composite: xor;
+  }
 }
 
 .menu {

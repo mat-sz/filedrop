@@ -1,6 +1,7 @@
 :root {
   --dark-gradient: linear-gradient(135deg, #00000000 0%, #00000044 100%);
   --color-accent: #ff6f06;
+  --color-bg-transparent: #1b1b1d00;
   --color-bg: #1b1b1d;
   --color-bg-soft: #252529;
   --color-primary: #35353b;
@@ -16,7 +17,7 @@
 
 /* Firefox */
 * {
-  scrollbar-color: rgba(0, 0, 0, 0.4) rgba(0, 0, 0, 0);
+  scrollbar-color: rgba(0, 0, 0, 0.3) rgba(0, 0, 0, 0);
 }
 
 /* Chrome, Edge, and Safari */
@@ -29,14 +30,14 @@
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.3);
   background-clip: content-box;
   border: 5px solid transparent;
   border-radius: 10px;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.5);
   border: 3px solid transparent;
 }
 
@@ -178,6 +179,8 @@ h3 {
   flex: 1;
   max-height: 100vh;
   min-height: 100vh;
+  padding-top: env(safe-area-inset-top, 0);
+  padding-bottom: env(safe-area-inset-bottom, 0);
 }
 
 @media screen and (min-width: 768px) {
