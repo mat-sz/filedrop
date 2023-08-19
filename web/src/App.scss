@@ -188,7 +188,7 @@ h3 {
   max-height: 100%;
   min-height: 100%;
   padding-top: env(safe-area-inset-top, 0);
-  padding-bottom: calc(env(safe-area-inset-bottom, 0) * 2);
+  padding-bottom: env(safe-area-inset-bottom, 0);
 }
 
 @media screen and (min-width: 768px) {
