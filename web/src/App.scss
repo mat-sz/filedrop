@@ -13,6 +13,7 @@
   --green-soft: #3ea74ecc;
   --red: #ff5c5c;
   --red-soft: #ff5c5ccc;
+  --main-padding: 15px;
 }
 
 /* Firefox */
@@ -187,8 +188,14 @@ h3 {
   flex: 1;
   max-height: 100%;
   min-height: 100%;
-  padding-top: env(safe-area-inset-top, 0);
-  padding-bottom: max(env(safe-area-inset-bottom, 15px), 15px);
+  padding-top: max(
+    env(safe-area-inset-top, var(--main-padding)),
+    var(--main-padding)
+  );
+  padding-bottom: max(
+    env(safe-area-inset-bottom, var(--main-padding)),
+    var(--main-padding)
+  );
 }
 
 @media screen and (min-width: 768px) {
