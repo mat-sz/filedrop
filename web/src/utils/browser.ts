@@ -18,6 +18,8 @@ export const deviceType: DeviceType = isTablet
   : isMobile
   ? DeviceType.MOBILE
   : DeviceType.DESKTOP;
+export const isSafari =
+  navigator.vendor && navigator.vendor.indexOf('Apple') > -1;
 export const iOS =
   [
     'iPad Simulator',

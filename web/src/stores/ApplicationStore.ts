@@ -3,7 +3,7 @@ import { Message, MessageType } from '@filedrop/types';
 
 import type { Connection } from './Connection.js';
 import { defaultAppName } from '../config.js';
-import { isClipboardReadSupported } from '../utils/browser.js';
+import { isClipboardReadSupported, isSafari } from '../utils/browser.js';
 
 export class ApplicationStore {
   error?: string = undefined;
@@ -44,6 +44,11 @@ export class ApplicationStore {
   async refreshClipboardStatus() {
     if (!isClipboardReadSupported) {
       this.showPaste = false;
+      return;
+    }
+
+    if (isSafari) {
+      this.showPaste = true;
       return;
     }
 
