@@ -9,6 +9,11 @@ export interface ClientModel {
   deviceType?: DeviceType;
 }
 
+export interface NetworkModel {
+  name: string;
+  clients: ClientModel[];
+}
+
 export interface MessageModel {
   type: MessageType;
   secure?: boolean;
@@ -39,13 +44,13 @@ export interface ClientInfoMessageModel extends MessageModel {
   clientId: string;
   suggestedClientName?: string;
   suggestedNetworkName?: string;
-  localNetworkNames: string[];
+  localNetworks?: NetworkModel[];
   rtcConfiguration?: any;
 }
 
 export interface LocalNetworksMessageModel extends MessageModel {
   type: MessageType.LOCAL_NETWORKS;
-  localNetworkNames: string[];
+  localNetworks: NetworkModel[];
 }
 
 export interface NetworkNameMessageModel extends MessageModel {

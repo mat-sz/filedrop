@@ -1,10 +1,10 @@
 {
   "sections": {
-    "privacy": "Privacy Policy",
-    "terms": "Terms of Service",
+    "privacy": "Privacy policy",
+    "terms": "Terms of service",
     "abuse": "Report abuse / DMCA",
-    "tech": "Technical Information",
-    "github": "Source Code",
+    "tech": "Technical information",
+    "github": "Source code",
     "twitter": "Follow me on Twitter",
     "about": "About"
   },
@@ -15,7 +15,8 @@
   "emptyNetwork": {
     "title": "Nobody is connected to your network.",
     "body": "Open this website elsewhere to connect.",
-    "qr": "View QR code"
+    "qr": "QR code",
+    "local": "Local networks are available:"
   },
   "tile": "Click on this area to start a transfer.",
   "state": {
@@ -37,7 +38,7 @@
     "bodyTarget": "Start chatting with {{target}}."
   },
   "connect": "Open this page on your other device to copy files:",
-  "otherNetworks": "Other local networks:",
+  "localNetworks": "Local networks:",
   "you": "You",
   "edit": "Edit",
   "send": "Send",
@@ -93,5 +94,5 @@
     "chat": "Chat"
   },
   "yourName": "Your name",
-  "desktopHint": "Press Ctrl+V to paste your clipboard contents."
+  "desktopHint": "Press Ctrl+V to send your clipboard contents."
 }

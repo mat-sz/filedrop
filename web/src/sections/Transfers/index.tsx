@@ -4,7 +4,6 @@ import { observer } from 'mobx-react-lite';
 
 import { Queue } from './Queue.js';
 import { networkStore } from '../../stores/index.js';
-import { Hint } from './Hint.js';
 
 export const TransfersSection: React.FC = observer(() => {
   const { t } = useTranslation();
@@ -27,7 +26,6 @@ export const TransfersSection: React.FC = observer(() => {
         transfers={networkStore.doneTransfers}
         title={t('transfers.title.complete')}
       />
-      <Hint />
     </>
   );
 });

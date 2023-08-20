@@ -8,7 +8,6 @@ import styles from './index.module.scss';
 import { copy } from '../../utils/copy.js';
 import { isShareSupported } from '../../utils/browser.js';
 import { IconButton } from '../../components/IconButton.js';
-import { OtherNetworks } from './OtherNetworks.js';
 import { applicationStore } from '../../stores/index.js';
 
 export const ConnectSection: React.FC = () => {
@@ -43,9 +42,6 @@ export const ConnectSection: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div className={styles.other}>
-        <OtherNetworks />
       </div>
     </div>
   );

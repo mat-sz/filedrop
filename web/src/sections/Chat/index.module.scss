@@ -69,10 +69,7 @@
     flex-direction: column;
     margin-block-end: 10px;
     flex: 1;
-
-    & > * {
-      opacity: 0.7;
-    }
+    color: var(--color-fg-soft);
 
     svg {
       height: 100px;

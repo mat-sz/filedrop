@@ -1,0 +1,13 @@
+.hint {
+  color: var(--color-fg-soft);
+  text-align: center;
+  font-size: 0.8rem;
+  margin-block-start: 15px;
+}
+
+.empty {
+  color: var(--color-fg-soft);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

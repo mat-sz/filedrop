@@ -8,6 +8,7 @@ import {
   AppInfoMessageModel,
   ClientInfoMessageModel,
   PingMessageModel,
+  NetworkModel,
 } from '@filedrop/types';
 
 import { Client } from './types/Client.js';
@@ -65,7 +66,7 @@ export class ClientManager {
       client.clientId = secretToId(client.secret);
       client.publicKey = message.publicKey;
 
-      const localNetworkNames = this.getLocalNetworkNames(client);
+      const localNetworks = this.getLocalNetworks(client);
 
       this.clients.push(client);
 
@@ -73,8 +74,8 @@ export class ClientManager {
         type: MessageType.CLIENT_INFO,
         clientId: client.clientId,
         suggestedClientName: client.clientName,
-        suggestedNetworkName: localNetworkNames[0],
-        localNetworkNames,
+        suggestedNetworkName: localNetworks[0]?.name,
+        localNetworks,
         rtcConfiguration: rtcConfiguration(client.clientId),
       };
       client.send(clientInfoMessage);
@@ -126,11 +127,11 @@ export class ClientManager {
 
   sendLocalNetworksMessage(client: Client) {
     const localClients = this.getLocalClients(client);
-    const localNetworkNames = this.getLocalNetworkNames(client);
+    const localNetworks = this.getLocalNetworks(client);
 
     const localNetworksMessage: LocalNetworksMessageModel = {
       type: MessageType.LOCAL_NETWORKS,
-      localNetworkNames,
+      localNetworks,
     };
     this.broadcast(localNetworksMessage, localClients);
   }
@@ -156,13 +157,9 @@ export class ClientManager {
   sendNetworkMessage(networkName: string) {
     const networkClients = this.getNetworkClients(networkName);
 
-    const sortedClients = networkClients.sort(
-      (a, b) => b.firstSeen.getTime() - a.firstSeen.getTime()
-    );
-
     networkClients.forEach(client => {
       try {
-        const clients: ClientModel[] = sortedClients.map(otherClient => {
+        const clients: ClientModel[] = networkClients.map(otherClient => {
           return {
             clientId: otherClient.clientId!,
             clientName: otherClient.clientName,
@@ -203,7 +200,7 @@ export class ClientManager {
       .sort((a, b) => b.lastSeen.getTime() - a.lastSeen.getTime());
   }
 
-  getLocalNetworkNames(client: Client): string[] {
+  getLocalNetworks(client: Client): NetworkModel[] {
     const localClients = this.getLocalClients(client);
     const networkNames = new Set<string>();
 
@@ -213,7 +210,22 @@ export class ClientManager {
       }
     }
 
-    return [...networkNames.values()];
+    const networks: NetworkModel[] = [];
+    for (const name of networkNames.values()) {
+      networks.push({
+        name,
+        clients: this.getNetworkClients(name).map(otherClient => {
+          return {
+            clientId: otherClient.clientId!,
+            clientName: otherClient.clientName,
+            isLocal: otherClient.remoteAddress === client.remoteAddress,
+          };
+        }),
+      });
+    }
+
+    networks.sort((a, b) => b.clients.length - a.clients.length);
+    return networks;
   }
 
   broadcast(message: MessageModel, clients?: Client[]) {

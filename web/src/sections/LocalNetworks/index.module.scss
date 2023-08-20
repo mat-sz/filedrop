@@ -1,0 +1,42 @@
+.list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 15px;
+  margin-block-start: 10px;
+
+  & > *:not(:last-child) {
+    margin-inline-end: 10px;
+  }
+
+  .network {
+    display: block;
+    width: 100%;
+    background: var(--color-primary);
+    border-radius: 5px;
+    padding: 10px;
+    transition: 0.1s ease-in-out all;
+
+    &:hover {
+      text-decoration: none;
+      background: var(--color-primary-soft);
+    }
+
+    span {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .clients {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+  }
+}
+
+@media screen and (min-width: 1500px) {
+  .list {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}

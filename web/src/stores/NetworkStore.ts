@@ -4,6 +4,7 @@ import {
   ClientNameMessageModel,
   Message,
   MessageType,
+  NetworkModel,
   NetworkNameMessageModel,
   TransferMessageModel,
 } from '@filedrop/types';
@@ -23,7 +24,7 @@ export class NetworkStore {
   maxSize = 0;
   appName = defaultAppName;
   rtcConfiguration?: RTCConfiguration = undefined;
-  localNetworkNames: string[] = [];
+  localNetworks: NetworkModel[] = [];
 
   clientName?: string = getItem('clientName', undefined);
   networkName?: string = undefined;
@@ -62,8 +63,8 @@ export class NetworkStore {
   }
 
   get otherNetworks() {
-    return this.localNetworkNames.filter(
-      networkName => networkName !== this.networkName
+    return this.localNetworks.filter(
+      network => network.name !== this.networkName
     );
   }
 
@@ -213,7 +214,7 @@ export class NetworkStore {
         }
         break;
       case MessageType.LOCAL_NETWORKS:
-        this.localNetworkNames = message.localNetworkNames;
+        this.localNetworks = message.localNetworks;
         break;
       case MessageType.TRANSFER:
         if (message.clientId) {
