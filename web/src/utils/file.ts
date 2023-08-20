@@ -63,3 +63,18 @@ export function formatFileName(
 export function formatFileSize(size: number): string {
   return filesize(size, { pad: true, precision: 3 }) as string;
 }
+
+export function mimeToExtension(type: string) {
+  switch (type) {
+    case 'text/plain':
+      return '.txt';
+    case 'text/html':
+      return '.html';
+    case 'image/png':
+      return '.png';
+    case 'image/jpeg':
+      return '.jpg';
+  }
+
+  return '';
+}

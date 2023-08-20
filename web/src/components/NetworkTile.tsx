@@ -14,11 +14,13 @@ import { networkStore } from '../stores/index.js';
 interface NetworkTileProps {
   client: ClientModel;
   onSelect?: (clientId: string) => void;
+  icon?: React.ReactNode;
 }
 
 export const NetworkTile: React.FC<NetworkTileProps> = ({
   client,
   onSelect,
+  icon,
 }) => {
   const { t } = useTranslation();
 
@@ -66,7 +68,9 @@ export const NetworkTile: React.FC<NetworkTileProps> = ({
             {t('tile')}
           </label>
         )}
-        <IoAdd className={styles.plus} />
+        <div className={styles.icon}>
+          {icon ? icon : <IoAdd className={styles.plus} />}
+        </div>
       </TargetTile>
       <div className={styles.name}>{client.clientName}</div>
     </motion.div>

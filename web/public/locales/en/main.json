@@ -94,5 +94,6 @@
     "chat": "Chat"
   },
   "yourName": "Your name",
-  "desktopHint": "Press Ctrl+V to send your clipboard contents."
+  "desktopHint": "Press Ctrl+V to send your clipboard contents.",
+  "sendFromClipboard": "Send from clipboard"
 }

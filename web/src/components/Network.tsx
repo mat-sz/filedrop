@@ -8,26 +8,30 @@ import { networkStore } from '../stores/index.js';
 
 interface NetworkProps {
   onSelect?: (clientId: string) => void;
+  icon?: React.ReactNode;
 }
 
-export const Network: React.FC<NetworkProps> = observer(({ onSelect }) => {
-  const clients = networkStore.clients;
+export const Network: React.FC<NetworkProps> = observer(
+  ({ onSelect, icon }) => {
+    const clients = networkStore.clients;
 
-  if (clients.length === 0) {
-    return null;
+    if (clients.length === 0) {
+      return null;
+    }
+
+    return (
+      <div className={styles.network}>
+        <AnimatePresence>
+          {clients.map(client => (
+            <NetworkTile
+              key={client.clientId}
+              client={client}
+              onSelect={onSelect}
+              icon={icon}
+            />
+          ))}
+        </AnimatePresence>
+      </div>
+    );
   }
-
-  return (
-    <div className={styles.network}>
-      <AnimatePresence>
-        {clients.map(client => (
-          <NetworkTile
-            key={client.clientId}
-            client={client}
-            onSelect={onSelect}
-          />
-        ))}
-      </AnimatePresence>
-    </div>
-  );
-});
+);

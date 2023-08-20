@@ -11,3 +11,9 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.clipboardToggle {
+  padding-block-end: 10px;
+  margin-block-end: 10px;
+  border-block-end: 1px solid var(--color-primary);
+}
