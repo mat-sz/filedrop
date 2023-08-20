@@ -45,7 +45,7 @@ export function formatFileName(
       return (
         fileName.substring(0, half) +
         replacementCharacter +
-        fileName.substring(fileName.length - (half + 1)) +
+        fileName.substring(fileName.length - half) +
         extension
       );
     }
@@ -53,7 +53,7 @@ export function formatFileName(
     return (
       name.substring(0, half) +
       replacementCharacter +
-      name.substring(name.length - (half + 1))
+      name.substring(name.length - half)
     );
   }
 

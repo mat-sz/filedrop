@@ -45,7 +45,7 @@ export const TransferInfo: React.FC<TransferProps> = observer(
                 {formatFileName(transfer.fileName)}
               </span>
               <span className="desktopHidden">
-                {formatFileName(transfer.fileName, 8)}
+                {formatFileName(transfer.fileName, 10)}
               </span>
             </Tooltip>
           </div>
