@@ -31,6 +31,10 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: flex-start;
+
+      & > div {
+        margin-right: 2px;
+      }
     }
   }
 }
