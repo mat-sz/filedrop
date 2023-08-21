@@ -100,6 +100,7 @@
     "title": "You have been disconnected.",
     "reason": "Reason:",
     "reasons": {
+      "cryptoRequired": "This instance requires WebCrypto. Possible reasons for failure: your connection is not over HTTPS or your web browser does not support WebCrypto.",
       "notSpecified": "Not specified."
     }
   }

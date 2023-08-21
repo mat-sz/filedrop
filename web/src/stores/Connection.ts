@@ -138,7 +138,7 @@ export class Connection {
         break;
       case MessageType.DISCONNECTED:
         this.socket.disconnect();
-        this.disconnectReason = message.reason || 'unspecified';
+        this.disconnectReason = message.reason || 'notSpecified';
         break;
       case MessageType.CLIENT_INFO:
         this.clientId = message.clientId;

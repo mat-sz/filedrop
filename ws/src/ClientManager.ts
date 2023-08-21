@@ -9,6 +9,7 @@ import {
   ClientInfoMessageModel,
   PingMessageModel,
   NetworkModel,
+  DisconnectedMessageModel,
 } from '@filedrop/types';
 
 import { Client } from './types/Client.js';
@@ -29,6 +30,7 @@ import {
   maxSize,
   noticeText,
   noticeUrl,
+  requireCrypto,
 } from './config.js';
 import { secretToId } from './utils/id.js';
 
@@ -58,6 +60,16 @@ export class ClientManager {
 
     if (isInitializeMessageModel(message)) {
       if (client.initialized) {
+        return;
+      }
+
+      if (!message.publicKey && requireCrypto) {
+        const disconnectedMessage: DisconnectedMessageModel = {
+          type: MessageType.DISCONNECTED,
+          reason: 'cryptoRequired',
+        };
+        client.send(disconnectedMessage);
+        client.close();
         return;
       }
 
@@ -100,6 +112,8 @@ export class ClientManager {
           this.setNetworkName(client, client.networkName);
         }
       }
+    } else if (requireCrypto && !isEncryptedMessageModel(message)) {
+      // Ignore unencrypted messages when running with required E2E crypto.
     } else if (
       isActionMessageModel(message) ||
       isRTCDescriptionMessageModel(message) ||
