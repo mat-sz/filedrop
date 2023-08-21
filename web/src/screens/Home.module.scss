@@ -3,6 +3,18 @@
   overflow: auto;
 }
 
+.disconnected {
+  margin: 15px;
+
+  div {
+    margin-top: 1rem;
+  }
+
+  span {
+    font-weight: 600;
+  }
+}
+
 @media screen and (min-width: 768px) {
   .home {
     display: grid;

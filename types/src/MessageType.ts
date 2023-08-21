@@ -1,5 +1,6 @@
 export enum MessageType {
   INITIALIZE = 'initialize',
+  DISCONNECTED = 'disconnected',
   APP_INFO = 'appInfo',
   CLIENT_INFO = 'clientInfo',
   LOCAL_NETWORKS = 'localNetworks',

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { AnimatePresence } from 'nanoanim';
 import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
+import { useTranslation } from 'react-i18not';
 import clsx from 'clsx';
 
 import styles from './Home.module.scss';
@@ -14,10 +15,11 @@ import { TransfersSection } from '../sections/Transfers/index.js';
 import { ConnectSection } from '../sections/Connect/index.js';
 import { ChatSection } from '../sections/Chat/index.js';
 import { MobileTabs } from '../sections/MobileTabs/index.js';
-import { applicationStore, networkStore } from '../stores/index.js';
+import { applicationStore, connection, networkStore } from '../stores/index.js';
 import { Footer } from '../components/Footer.js';
 
 export const Home: React.FC = observer(() => {
+  const { t } = useTranslation();
   const [clipboardFiles, setClipboardFiles] = useState<File[]>([]);
   const { networkName } = useParams<{ networkName: string }>();
   const tab = applicationStore.tab;
@@ -63,6 +65,21 @@ export const Home: React.FC = observer(() => {
       document.removeEventListener('paste', onPaste);
     };
   });
+
+  if (connection.disconnectReason) {
+    return (
+      <div className={clsx(styles.disconnected)}>
+        <div className="subsection">
+          <h2>{t('disconnected.title')}</h2>
+          <div>
+            <span>{t('disconnected.reason')}</span>{' '}
+            {t(`disconnected.reasons.${connection.disconnectReason}`)}
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   const dismissClipboard = () => {
     setClipboardFiles([]);

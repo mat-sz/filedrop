@@ -20,6 +20,7 @@ export class Connection {
   remoteAddress?: string = undefined;
   publicKey?: string = undefined;
   privateKey?: string = undefined;
+  disconnectReason?: string = undefined;
 
   clientCache: Map<string, ClientModel> = new Map();
   clients: ClientModel[] = [];
@@ -134,6 +135,10 @@ export class Connection {
     switch (message.type) {
       case MessageType.APP_INFO:
         this.remoteAddress = message.remoteAddress;
+        break;
+      case MessageType.DISCONNECTED:
+        this.socket.disconnect();
+        this.disconnectReason = message.reason || 'unspecified';
         break;
       case MessageType.CLIENT_INFO:
         this.clientId = message.clientId;

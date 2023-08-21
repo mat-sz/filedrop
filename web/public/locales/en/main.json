@@ -95,5 +95,12 @@
   },
   "yourName": "Your name",
   "desktopHint": "Press Ctrl+V to send your clipboard contents.",
-  "sendFromClipboard": "Send from clipboard"
+  "sendFromClipboard": "Send from clipboard",
+  "disconnected": {
+    "title": "You have been disconnected.",
+    "reason": "Reason:",
+    "reasons": {
+      "notSpecified": "Not specified."
+    }
+  }
 }

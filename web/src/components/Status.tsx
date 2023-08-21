@@ -13,7 +13,7 @@ export const Status: React.FC = observer(() => {
 
   return (
     <AnimatePresence>
-      {!connection.connected ? (
+      {!connection.connected && !connection.disconnectReason ? (
         <motion.div
           {...animationPropsOpacity}
           className={clsx(styles.status, styles.error)}

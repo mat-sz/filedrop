@@ -29,6 +29,11 @@ export interface InitializeMessageModel extends MessageModel {
   publicKey?: string;
 }
 
+export interface DisconnectedMessageModel extends MessageModel {
+  type: MessageType.DISCONNECTED;
+  reason: string;
+}
+
 export interface AppInfoMessageModel extends MessageModel {
   type: MessageType.APP_INFO;
   remoteAddress?: string;
@@ -121,6 +126,7 @@ export interface EncryptedMessageModel extends TargetedMessageModel {
 
 export type Message =
   | InitializeMessageModel
+  | DisconnectedMessageModel
   | AppInfoMessageModel
   | ClientInfoMessageModel
   | LocalNetworksMessageModel
