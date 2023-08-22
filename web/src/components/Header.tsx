@@ -11,6 +11,7 @@ import { observer } from 'mobx-react-lite';
 import styles from './Header.module.scss';
 import { DropIcon } from './DropIcon.js';
 import { applicationStore } from '../stores/index.js';
+import { SecureStatus } from './SecureStatus.js';
 
 export const Header: React.FC = observer(() => {
   const { t } = useTranslation();
@@ -21,8 +22,9 @@ export const Header: React.FC = observer(() => {
         <h1>
           <Link to="/" className={styles.logo}>
             <DropIcon />
-            {applicationStore.appName}
+            <span>{applicationStore.appName}</span>
           </Link>
+          <SecureStatus />
         </h1>
         <div className={styles.right}>
           <Link to="/about" title={t('sections.about')}>

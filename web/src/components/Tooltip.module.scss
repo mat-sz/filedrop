@@ -9,18 +9,27 @@
 
   .tooltip {
     position: absolute;
-    top: -10px;
-    left: 50%;
     opacity: 0;
     pointer-events: none;
     transition: 0.1s ease-in-out all;
-    transform: translate(-50%, -100%);
     background: var(--color-bg);
     border-radius: 5px;
     padding: 5px 10px;
     font-size: 0.8rem;
     width: max-content;
-    max-width: 300px;
+    max-width: 200px;
     font-weight: normal;
+
+    &.top {
+      top: -10px;
+      left: 50%;
+      transform: translate(-50%, -100%);
+    }
+
+    &.bottom {
+      bottom: -10px;
+      left: 50%;
+      transform: translate(-50%, 100%);
+    }
   }
 }

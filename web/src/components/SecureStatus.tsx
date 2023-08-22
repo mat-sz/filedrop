@@ -1,13 +1,14 @@
 import React from 'react';
 import { useTranslation } from 'react-i18not';
 import { observer } from 'mobx-react-lite';
-import { IoCheckmark, IoWarning } from 'react-icons/io5/index.js';
+import { IoCheckmarkCircle, IoWarning } from 'react-icons/io5/index.js';
 import clsx from 'clsx';
 
-import styles from './index.module.scss';
-import { connection } from '../../stores/index.js';
+import styles from './SecureStatus.module.scss';
+import { connection } from '../stores/index.js';
+import { Tooltip } from './Tooltip.js';
 
-export const SecuritySection: React.FC = observer(() => {
+export const SecureStatus: React.FC = observer(() => {
   const { t } = useTranslation();
   const alwaysSecure = connection.alwaysSecure;
 
@@ -23,19 +24,13 @@ export const SecuritySection: React.FC = observer(() => {
       })}
     >
       {alwaysSecure ? (
-        <>
-          <div>
-            <IoCheckmark />
-          </div>
-          {t('secure')}
-        </>
+        <Tooltip content={t('secure')} location="bottom">
+          <IoCheckmarkCircle />
+        </Tooltip>
       ) : (
-        <>
-          <div>
-            <IoWarning />
-          </div>
-          {t('insecure')}
-        </>
+        <Tooltip content={t('insecure')} location="bottom">
+          <IoWarning />
+        </Tooltip>
       )}
     </div>
   );

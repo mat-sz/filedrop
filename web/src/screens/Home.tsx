@@ -8,7 +8,6 @@ import clsx from 'clsx';
 import styles from './Home.module.scss';
 import { ClipboardModal } from '../modals/ClipboardModal.js';
 import { IncompatibleBrowserSection } from '../sections/IncompatibleBrowser/index.js';
-import { SecuritySection } from '../sections/Security/index.js';
 import { YourTileSection } from '../sections/YourTile/index.js';
 import { NoticeSection } from '../sections/Notice/index.js';
 import { NetworkSection } from '../sections/Network/index.js';
@@ -111,7 +110,6 @@ export const Home: React.FC = observer(() => {
       </AnimatePresence>
       <div className={clsx('mobileFlex', styles.home)}>
         <div className={clsx({ mobileHidden: tab !== 'transfers' })}>
-          <SecuritySection />
           <IncompatibleBrowserSection />
           <NoticeSection />
           <YourTileSection />

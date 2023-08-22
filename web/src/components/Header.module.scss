@@ -35,6 +35,8 @@
 
   h1 {
     line-height: 1.5;
+    display: flex;
+    align-items: center;
   }
 
   .logo {
@@ -44,6 +46,10 @@
     font-size: 24px;
     position: relative;
     z-index: 500;
+
+    span {
+      margin-top: -2px;
+    }
 
     svg {
       fill: var(--color-accent);
