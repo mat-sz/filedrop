@@ -19,6 +19,12 @@ import { MobileTabs } from '../sections/MobileTabs/index.js';
 import { applicationStore, connection, networkStore } from '../stores/index.js';
 import { Footer } from '../components/Footer.js';
 
+function itemToString(item: DataTransferItem): Promise<string> {
+  return new Promise(resolve => {
+    item.getAsString(resolve);
+  });
+}
+
 export const Home: React.FC = observer(() => {
   const { t } = useTranslation();
   const [clipboardFiles, setClipboardFiles] = useState<File[]>([]);
@@ -32,7 +38,11 @@ export const Home: React.FC = observer(() => {
   }, [networkName]);
 
   useEffect(() => {
-    const onPaste = (e: ClipboardEvent) => {
+    if (!networkStore.clients.length) {
+      return;
+    }
+
+    const onPaste = async (e: ClipboardEvent) => {
       const element = e.target as HTMLElement;
       if (
         document.body.contains(element) &&
@@ -48,16 +58,19 @@ export const Home: React.FC = observer(() => {
         if (file) {
           files.push(file);
         } else if (item.type === 'text/plain') {
-          item.getAsString(str => {
-            setClipboardFiles(files => [
-              ...files,
-              new File([str], 'clipboard.txt', { type: 'text/plain' }),
-            ]);
-          });
+          const str = await itemToString(item);
+          files.push(new File([str], 'clipboard.txt', { type: 'text/plain' }));
         }
       }
 
-      setClipboardFiles(files);
+      if (networkStore.clients.length === 1) {
+        const clientId = networkStore.clients[0].clientId;
+        for (const file of files) {
+          networkStore.createTransfer(file, clientId);
+        }
+      } else {
+        setClipboardFiles(files);
+      }
     };
 
     document.addEventListener('paste', onPaste);
@@ -65,7 +78,7 @@ export const Home: React.FC = observer(() => {
     return () => {
       document.removeEventListener('paste', onPaste);
     };
-  });
+  }, [setClipboardFiles]);
 
   if (connection.disconnectReason) {
     return (
