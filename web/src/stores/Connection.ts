@@ -133,7 +133,7 @@ export class Connection {
     switch (message.type) {
       case MessageType.APP_INFO:
         this.remoteAddress = message.remoteAddress;
-        this.alwaysSecure = !!message.requireCrypto;
+        this.alwaysSecure = !!this.publicKey && message.requireCrypto;
         break;
       case MessageType.DISCONNECTED:
         this.socket.disconnect();
