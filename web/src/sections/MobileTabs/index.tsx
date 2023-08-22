@@ -1,5 +1,10 @@
 import React from 'react';
-import { IoQrCode, IoChatbubbles, IoHome } from 'react-icons/io5/index.js';
+import {
+  IoQrCode,
+  IoChatbubbles,
+  IoHome,
+  IoSettings,
+} from 'react-icons/io5/index.js';
 import { observer } from 'mobx-react-lite';
 
 import styles from './index.module.scss';
@@ -20,6 +25,9 @@ export const MobileTabs: React.FC = observer(() => {
       <Tab id="chat">
         <NotificationCount count={chatStore.unread} />
         <IoChatbubbles />
+      </Tab>
+      <Tab id="settings">
+        <IoSettings />
       </Tab>
     </div>
   );

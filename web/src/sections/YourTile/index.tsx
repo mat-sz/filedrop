@@ -5,7 +5,6 @@ import { observer } from 'mobx-react-lite';
 import styles from './index.module.scss';
 import { TargetTile } from '../../components/TargetTile.js';
 import { ClientName } from './ClientName.js';
-import { Settings } from './Settings.js';
 import { networkStore } from '../../stores/index.js';
 
 export const YourTileSection: React.FC = observer(() => {
@@ -22,7 +21,6 @@ export const YourTileSection: React.FC = observer(() => {
         )}
         <div className={styles.info}>
           <ClientName />
-          <Settings />
         </div>
       </div>
     </div>

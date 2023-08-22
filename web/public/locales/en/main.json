@@ -91,7 +91,8 @@
   "tabs": {
     "transfers": "Transfers",
     "connect": "Connect",
-    "chat": "Chat"
+    "chat": "Chat",
+    "settings": "Settings"
   },
   "yourName": "Your name",
   "desktopHint": "Press Ctrl+V to send your clipboard contents.",

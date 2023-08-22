@@ -17,6 +17,7 @@ import { ChatSection } from '../sections/Chat/index.js';
 import { MobileTabs } from '../sections/MobileTabs/index.js';
 import { applicationStore, connection, networkStore } from '../stores/index.js';
 import { Footer } from '../components/Footer.js';
+import { SettingsSection } from '../sections/Settings/index.js';
 
 function itemToString(item: DataTransferItem): Promise<string> {
   return new Promise(resolve => {
@@ -117,6 +118,13 @@ export const Home: React.FC = observer(() => {
           <TransfersSection />
         </div>
         <div className="mobileFlex">
+          <div
+            className={clsx('desktopSubsection', {
+              mobileHidden: tab !== 'settings',
+            })}
+          >
+            <SettingsSection />
+          </div>
           <div
             className={clsx('desktopSubsection', {
               mobileHidden: tab !== 'connect',
