@@ -14,7 +14,7 @@ import { connection, settingsStore } from '../stores/index.js';
 
 interface TargetTileProps extends React.HTMLProps<HTMLDivElement> {
   client: ClientModel;
-  variant?: 'small' | 'big';
+  variant?: 'small' | 'medium' | 'big';
 }
 
 export const TargetTile = observer(

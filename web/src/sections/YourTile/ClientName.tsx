@@ -38,14 +38,14 @@ export const ClientName: React.FC = observer(() => {
   return (
     <div className={styles.clientName}>
       {!isEditing ? (
-        <>
-          <strong>{clientName}</strong>{' '}
-          <IconButton onClick={onEdit} title={t('edit')}>
+        <div onClick={onEdit} className={styles.view}>
+          <strong>{clientName}</strong>
+          <IconButton title={t('edit')}>
             <IoPencil />
           </IconButton>
-        </>
+        </div>
       ) : (
-        <>
+        <div className={styles.edit}>
           <input
             type="text"
             placeholder={t('yourName')}
@@ -59,7 +59,7 @@ export const ClientName: React.FC = observer(() => {
           <IconButton round onClick={onCancel} title={t('cancel')}>
             <IoCloseSharp />
           </IconButton>
-        </>
+        </div>
       )}
     </div>
   );

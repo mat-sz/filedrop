@@ -13,4 +13,14 @@
   input {
     padding: 5px 10px;
   }
+
+  .view,
+  .edit {
+    display: flex;
+    align-items: center;
+  }
+
+  .view {
+    cursor: pointer;
+  }
 }
