@@ -42,6 +42,7 @@ export interface AppInfoMessageModel extends MessageModel {
   noticeUrl?: string;
   appName?: string;
   abuseEmail?: string;
+  requireCrypto: boolean;
 }
 
 export interface ClientInfoMessageModel extends MessageModel {

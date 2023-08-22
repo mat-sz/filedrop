@@ -50,6 +50,7 @@ export class ClientManager {
       noticeUrl,
       appName,
       abuseEmail,
+      requireCrypto,
     };
 
     client.send(message);

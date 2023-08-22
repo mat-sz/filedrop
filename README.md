@@ -71,7 +71,7 @@ The following variables are used in the WebSockets server:
 | `WS_PORT`                | `5000`                          | Port to bind to.                                                                      |
 | `WS_USE_X_FORWARDED_FOR` | `0`                             | Set to `1` if you want the application to respect the `X-Forwarded-For` header.       |
 | `WS_MAX_SIZE`            | `65536`                         | The limit should accommodate preview images (100x100 thumbnails).                     |
-| `WS_REQUIRE_CRYPTO`      | `0`                             | Set to `1` if you want to ensure that all communication between clients is encrypted. |
+| `WS_REQUIRE_CRYPTO`      | `0`                             | Set to `1` if you want to ensure that all communication between clients is encrypted. HTTPS is required for this to work. |
 | `STUN_SERVER`            | `stun:stun1.l.google.com:19302` | STUN server address.                                                                  |
 | `TURN_MODE`              | `default`                       | `default` for static credentials, `hmac` for time-limited credentials.                |
 | `TURN_SERVER`            | null                            | TURN server address.                                                                  |

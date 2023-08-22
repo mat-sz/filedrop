@@ -21,6 +21,7 @@ export class Connection {
   publicKey?: string = undefined;
   privateKey?: string = undefined;
   disconnectReason?: string = undefined;
+  alwaysSecure = false;
 
   clientCache: Map<string, ClientModel> = new Map();
   clients: ClientModel[] = [];
@@ -64,9 +65,6 @@ export class Connection {
       return;
     }
 
-    const secure = !!message.secure;
-    delete message['secure'];
-
     if ('targetId' in message) {
       const target = this.clients.find(
         client => client.clientId === message.targetId
@@ -90,10 +88,10 @@ export class Connection {
           return;
         } catch {}
       }
-    }
 
-    if (secure) {
-      return;
+      if (this.alwaysSecure) {
+        return;
+      }
     }
 
     this.socket.send(message);
@@ -135,6 +133,7 @@ export class Connection {
     switch (message.type) {
       case MessageType.APP_INFO:
         this.remoteAddress = message.remoteAddress;
+        this.alwaysSecure = !!message.requireCrypto;
         break;
       case MessageType.DISCONNECTED:
         this.socket.disconnect();
