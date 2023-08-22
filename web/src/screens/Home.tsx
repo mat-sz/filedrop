@@ -38,11 +38,11 @@ export const Home: React.FC = observer(() => {
   }, [networkName]);
 
   useEffect(() => {
-    if (!networkStore.clients.length) {
-      return;
-    }
-
     const onPaste = async (e: ClipboardEvent) => {
+      if (!networkStore.clients.length) {
+        return;
+      }
+
       const element = e.target as HTMLElement;
       if (
         document.body.contains(element) &&
