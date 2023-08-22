@@ -1,10 +1,15 @@
 .tab {
-  background: var(--color-bg-soft);
+  background: transparent;
   color: var(--color-fg);
   flex: 1;
   padding: 10px;
   border-radius: 5px;
   font-size: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: normal;
 
   span {
     position: relative;
@@ -21,6 +26,11 @@
 
   &.active,
   &:hover {
-    background: var(--color-primary);
+    color: var(--color-accent);
+  }
+
+  .title {
+    font-size: 0.8rem;
+    margin-top: 5px;
   }
 }

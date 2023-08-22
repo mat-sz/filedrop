@@ -1,9 +1,14 @@
 .tabs {
+  --tab-padding: 5px;
   display: flex;
   justify-content: space-evenly;
-  padding: 15px;
-  padding-block-start: 0;
-  padding-block-end: 0;
+  padding: var(--tab-padding);
+  background: var(--color-bg-soft);
+
+  padding-bottom: max(
+    env(safe-area-inset-bottom, var(--tab-padding)),
+    var(--tab-padding)
+  );
 }
 
 @media screen and (min-width: 768px) {

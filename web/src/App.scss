@@ -190,14 +190,6 @@ h3 {
   flex: 1;
   max-height: 100%;
   min-height: 100%;
-  padding-top: max(
-    env(safe-area-inset-top, var(--main-padding)),
-    var(--main-padding)
-  );
-  padding-bottom: max(
-    env(safe-area-inset-bottom, var(--main-padding)),
-    var(--main-padding)
-  );
 }
 
 @media screen and (min-width: 768px) {

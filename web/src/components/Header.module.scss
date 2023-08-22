@@ -9,6 +9,11 @@
     var(--color-bg) 0%,
     var(--color-bg-transparent) 100%
   );
+  padding-top: max(
+    env(safe-area-inset-top, var(--main-padding)),
+    var(--main-padding)
+  );
+  padding-bottom: var(--main-padding);
 
   &:after {
     position: absolute;

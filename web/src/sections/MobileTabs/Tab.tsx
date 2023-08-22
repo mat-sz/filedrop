@@ -16,14 +16,17 @@ export const Tab: React.FC<React.PropsWithChildren<Props>> = observer(
     const isActive = applicationStore.tab === id;
     const { t } = useTranslation();
 
+    const title = t(`tabs.${id}`);
+
     return (
       <button
         className={clsx(styles.tab, { [styles.active]: isActive })}
         onClick={() => runInAction(() => (applicationStore.tab = id))}
         role="tab"
-        title={t(`tabs.${id}`)}
+        title={title}
       >
         <span>{children}</span>
+        <span className={styles.title}>{title}</span>
       </button>
     );
   }
