@@ -1,9 +1,9 @@
 .tabs {
   --tab-padding: 5px;
   display: flex;
-  justify-content: space-evenly;
   padding: var(--tab-padding);
   background: var(--color-bg-soft);
+  border-top: 1px solid var(--color-primary);
 
   padding-bottom: max(
     env(safe-area-inset-bottom, var(--tab-padding)),

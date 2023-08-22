@@ -26,7 +26,6 @@ export const Tab: React.FC<React.PropsWithChildren<Props>> = observer(
         title={title}
       >
         <span>{children}</span>
-        <span className={styles.title}>{title}</span>
       </button>
     );
   }
