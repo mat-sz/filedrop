@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 
 import styles from './index.module.scss';
 import { Tab } from './Tab.js';
-import { chatStore, connection, networkStore } from '../../stores/index.js';
+import { chatStore, networkStore } from '../../stores/index.js';
 import { NotificationCount } from '../../components/NotificationCount.js';
 
 export const MobileTabs: React.FC = observer(() => {
@@ -17,12 +17,10 @@ export const MobileTabs: React.FC = observer(() => {
       <Tab id="connect">
         <IoQrCode />
       </Tab>
-      {connection.secure && (
-        <Tab id="chat">
-          <NotificationCount count={chatStore.unread} />
-          <IoChatbubbles />
-        </Tab>
-      )}
+      <Tab id="chat">
+        <NotificationCount count={chatStore.unread} />
+        <IoChatbubbles />
+      </Tab>
     </div>
   );
 });

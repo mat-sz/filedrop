@@ -46,10 +46,6 @@ export class ChatStore {
     );
   }
 
-  get enabled() {
-    return this.connection.secure;
-  }
-
   get currentChannelName() {
     return this.currentChannel === 'global'
       ? t('chat.everyone')
@@ -137,15 +133,10 @@ export class ChatStore {
       : this.connection.clients;
 
     for (const client of clients) {
-      if (!client.publicKey) {
-        continue;
-      }
-
       const message: ChatMessageModel = {
         type: MessageType.CHAT,
         targetId: client.clientId,
         message: body,
-        secure: true,
         direct,
       };
 

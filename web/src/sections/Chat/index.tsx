@@ -61,11 +61,6 @@ export const ChatSection: React.FC = observer(() => {
     }
   }, [chat.length]);
 
-  // Disable chat if Web Crypto is not supported.
-  if (!chatStore.enabled) {
-    return null;
-  }
-
   return (
     <div className={clsx('subsection', 'mobileFlex', styles.chat)}>
       <div className={styles.channels}>

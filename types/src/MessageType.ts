@@ -6,6 +6,7 @@ export enum MessageType {
   LOCAL_NETWORKS = 'localNetworks',
   NETWORK_NAME = 'networkName',
   CLIENT_NAME = 'clientName',
+  CHAT = 'chat',
   TRANSFER = 'transfer',
   ACTION = 'action',
   NETWORK = 'network',
@@ -13,9 +14,6 @@ export enum MessageType {
   RTC_DESCRIPTION = 'rtcDescription',
   RTC_CANDIDATE = 'rtcCandidate',
   ENCRYPTED = 'encrypted',
-
-  // The following only exist as encrypted messages:
-  CHAT = 'chat',
 }
 
 export enum ActionMessageActionType {

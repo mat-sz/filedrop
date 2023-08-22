@@ -23,6 +23,7 @@ import {
   isRTCCandidateMessageModel,
   isEncryptedMessageModel,
   isInitializeMessageModel,
+  isChatMessageModel,
 } from './utils/validation.js';
 import {
   abuseEmail,
@@ -120,7 +121,8 @@ export class ClientManager {
       isRTCDescriptionMessageModel(message) ||
       isRTCCandidateMessageModel(message) ||
       isEncryptedMessageModel(message) ||
-      isTransferMessageModel(message)
+      isTransferMessageModel(message) ||
+      isChatMessageModel(message)
     ) {
       this.sendMessage(client.clientId, message);
     }

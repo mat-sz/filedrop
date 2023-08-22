@@ -12,6 +12,7 @@ import {
   ActionMessageActionType,
   DeviceType,
   InitializeMessageModel,
+  ChatMessageModel,
 } from '@filedrop/types';
 
 const messageModelSchema = Joi.object({
@@ -36,6 +37,13 @@ const networkNameMessageModelSchema = Joi.object({
 const clientNameMessageModelSchema = Joi.object({
   type: Joi.string().equal(MessageType.CLIENT_NAME).required(),
   clientName: Joi.string().max(32).required(),
+}).required();
+
+const chatMessageModelSchema = Joi.object({
+  type: Joi.string().equal(MessageType.CHAT).required(),
+  targetId: Joi.string().hex().required(),
+  message: Joi.string().max(2000).required(),
+  direct: Joi.boolean(),
 }).required();
 
 const transferMessageModelSchema = Joi.object({
@@ -101,6 +109,12 @@ export function isClientNameMessageModel(
   message: MessageModel | ClientNameMessageModel
 ): message is ClientNameMessageModel {
   return !clientNameMessageModelSchema.validate(message).error;
+}
+
+export function isChatMessageModel(
+  message: MessageModel | ChatMessageModel
+): message is ChatMessageModel {
+  return !chatMessageModelSchema.validate(message).error;
 }
 
 export function isTransferMessageModel(
