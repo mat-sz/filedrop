@@ -45,6 +45,7 @@ TURN uses TCP port 3478 and UDP ports 49152-65535.
 | `-e <email>` | Sets contact email.                             |
 | `-p <port>`  | Sets port for the application to be exposed at. |
 | `-f`         | Enables WS_USE_X_FORWARDED_FOR.                 |
+| `-s`         | Enables WS_REQUIRE_SECURE.                      |
 
 ### Manual
 
@@ -63,24 +64,24 @@ The following variables are used in the build process of the frontend:
 
 The following variables are used in the WebSockets server:
 
-| Variable                 | Default value                   | Description                                                                           |
-| ------------------------ | ------------------------------- | ------------------------------------------------------------------------------------- |
-| `WS_APP_NAME`            | `filedrop`                      | Application title.                                                                    |
-| `WS_ABUSE_EMAIL`         | null                            | E-mail to show in the Abuse section.                                                  |
-| `WS_HOST`                | `127.0.0.1`                     | IP address to bind to.                                                                |
-| `WS_PORT`                | `5000`                          | Port to bind to.                                                                      |
-| `WS_USE_X_FORWARDED_FOR` | `0`                             | Set to `1` if you want the application to respect the `X-Forwarded-For` header.       |
-| `WS_MAX_SIZE`            | `65536`                         | The limit should accommodate preview images (100x100 thumbnails).                     |
+| Variable                 | Default value                   | Description                                                                                                               |
+| ------------------------ | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `WS_APP_NAME`            | `filedrop`                      | Application title.                                                                                                        |
+| `WS_ABUSE_EMAIL`         | null                            | E-mail to show in the Abuse section.                                                                                      |
+| `WS_HOST`                | `127.0.0.1`                     | IP address to bind to.                                                                                                    |
+| `WS_PORT`                | `5000`                          | Port to bind to.                                                                                                          |
+| `WS_USE_X_FORWARDED_FOR` | `0`                             | Set to `1` if you want the application to respect the `X-Forwarded-For` header.                                           |
+| `WS_MAX_SIZE`            | `65536`                         | The limit should accommodate preview images (100x100 thumbnails).                                                         |
 | `WS_REQUIRE_CRYPTO`      | `0`                             | Set to `1` if you want to ensure that all communication between clients is encrypted. HTTPS is required for this to work. |
-| `STUN_SERVER`            | `stun:stun1.l.google.com:19302` | STUN server address.                                                                  |
-| `TURN_MODE`              | `default`                       | `default` for static credentials, `hmac` for time-limited credentials.                |
-| `TURN_SERVER`            | null                            | TURN server address.                                                                  |
-| `TURN_USERNAME`          | null                            | TURN username.                                                                        |
-| `TURN_CREDENTIAL`        | null                            | TURN credential (password).                                                           |
-| `TURN_SECRET`            | null                            | TURN secret (required for `hmac`).                                                    |
-| `TURN_EXPIRY`            | `3600`                          | TURN token expiration time (when in `hmac` mode), in seconds.                         |
-| `NOTICE_TEXT`            | null                            | Text of the notice to be displayed for all clients.                                   |
-| `NOTICE_URL`             | null                            | URL the notice should link to.                                                        |
+| `STUN_SERVER`            | `stun:stun1.l.google.com:19302` | STUN server address.                                                                                                      |
+| `TURN_MODE`              | `default`                       | `default` for static credentials, `hmac` for time-limited credentials.                                                    |
+| `TURN_SERVER`            | null                            | TURN server address.                                                                                                      |
+| `TURN_USERNAME`          | null                            | TURN username.                                                                                                            |
+| `TURN_CREDENTIAL`        | null                            | TURN credential (password).                                                                                               |
+| `TURN_SECRET`            | null                            | TURN secret (required for `hmac`).                                                                                        |
+| `TURN_EXPIRY`            | `3600`                          | TURN token expiration time (when in `hmac` mode), in seconds.                                                             |
+| `NOTICE_TEXT`            | null                            | Text of the notice to be displayed for all clients.                                                                       |
+| `NOTICE_URL`             | null                            | URL the notice should link to.                                                                                            |
 
 ## FAQ
 

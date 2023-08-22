@@ -12,6 +12,7 @@ services:
       - WS_APP_NAME=${APP_NAME}
       - WS_ABUSE_EMAIL=${ABUSE_EMAIL}
       - WS_USE_X_FORWARDED_FOR=${USE_X_FORWARDED_FOR}
+      - WS_REQUIRE_SECURE=${REQUIRE_SECURE}
       - TURN_MODE=hmac
       - TURN_SERVER=turn:(hostname)
       - TURN_USERNAME=filedrop
