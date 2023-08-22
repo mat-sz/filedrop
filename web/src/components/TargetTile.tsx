@@ -10,7 +10,7 @@ import { observer } from 'mobx-react-lite';
 
 import styles from './TargetTile.module.scss';
 import { uuidToColor } from '../utils/color.js';
-import { connection } from '../stores/index.js';
+import { connection, settingsStore } from '../stores/index.js';
 
 interface TargetTileProps extends React.HTMLProps<HTMLDivElement> {
   client: ClientModel;
@@ -23,6 +23,7 @@ export const TargetTile = observer(
       const isSecure = connection.secure && !!client.publicKey;
       const isLocal = client.isLocal;
       const isMobile = client.deviceType === DeviceType.MOBILE;
+      const displayIcons = settingsStore.settings.displayIcons;
 
       return (
         <div
@@ -33,7 +34,7 @@ export const TargetTile = observer(
           ref={ref}
           {...props}
         >
-          {variant === 'big' && (
+          {variant === 'big' && displayIcons && (
             <div className={styles.icons}>
               {isSecure && <IoLockClosed className={styles.secure} />}
               {isLocal && <IoHome className={styles.local} />}

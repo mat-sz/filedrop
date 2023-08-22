@@ -6,6 +6,7 @@ type Settings = Record<keyof typeof DEFAULT_SETTINGS, boolean>;
 const DEFAULT_SETTINGS = {
   autoAccept: false,
   autoDownload: true,
+  displayIcons: false,
 };
 
 export class SettingsStore {

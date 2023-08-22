@@ -53,7 +53,8 @@
   "save": "Save",
   "settings": {
     "autoAccept": "Accept all incoming transfers",
-    "autoDownload": "Download all complete transfers"
+    "autoDownload": "Download all complete transfers",
+    "displayIcons": "Display client status icons"
   },
   "transfers": {
     "title": {
