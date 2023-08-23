@@ -39,7 +39,9 @@ export class NetworkStore {
   }
 
   get transferList() {
-    return [...this.transfers.values()];
+    const list = [...this.transfers.values()];
+    list.sort((a, b) => b.sortTimestamp - a.sortTimestamp);
+    return list;
   }
 
   get incomingTransfers() {

@@ -25,6 +25,7 @@ export class Transfer {
   startedAt?: number = undefined;
   state: TransferState;
   text?: string = undefined;
+  sortTimestamp: number = new Date().getTime();
 
   constructor(
     private network: NetworkStore,
@@ -120,6 +121,7 @@ export class Transfer {
 
     this.sendAction(ActionMessageActionType.ACCEPT);
     this.state = TransferState.CONNECTING;
+    this.moveToTop();
   }
 
   validPeerConnection() {
@@ -201,10 +203,13 @@ export class Transfer {
   private stateFailed() {
     this.state = TransferState.FAILED;
     this.offset = undefined;
+    this.moveToTop();
   }
 
   private stateComplete(blob?: Blob) {
     this.state = TransferState.COMPLETE;
+    this.moveToTop();
+
     if (blob) {
       const blobUrl = URL.createObjectURL(blob);
       this.blob = blob;
@@ -219,11 +224,16 @@ export class Transfer {
   private stateConnected() {
     this.state = TransferState.CONNECTED;
     this.startedAt = new Date().getTime();
+    this.moveToTop();
   }
 
   private stateInProgress(offset: number) {
     this.state = TransferState.IN_PROGRESS;
     this.offset = offset;
+  }
+
+  private moveToTop() {
+    this.sortTimestamp = new Date().getTime();
   }
 
   private async textFromBlob(blob: Blob) {
