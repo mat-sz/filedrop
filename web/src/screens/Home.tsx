@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { AnimatePresence } from 'nanoanim';
 import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18not';
@@ -101,14 +100,10 @@ export const Home: React.FC = observer(() => {
 
   return (
     <>
-      <AnimatePresence>
-        {clipboardFiles.length > 0 && (
-          <ClipboardModal
-            files={clipboardFiles}
-            dismissClipboard={dismissClipboard}
-          />
-        )}
-      </AnimatePresence>
+      <ClipboardModal
+        files={clipboardFiles}
+        dismissClipboard={dismissClipboard}
+      />
       <div className={clsx('mobileFlex', styles.home)}>
         <div className={clsx({ mobileHidden: tab !== 'transfers' })}>
           <IncompatibleBrowserSection />
