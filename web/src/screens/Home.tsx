@@ -5,6 +5,9 @@ import { useTranslation } from 'react-i18not';
 import clsx from 'clsx';
 
 import styles from './Home.module.scss';
+import { applicationStore, connection, networkStore } from '../stores/index.js';
+import { Footer } from '../components/Footer.js';
+import { Modal } from '../components/Modal.js';
 import { ClipboardModal } from '../modals/ClipboardModal.js';
 import { IncompatibleBrowserSection } from '../sections/IncompatibleBrowser/index.js';
 import { YourTileSection } from '../sections/YourTile/index.js';
@@ -14,8 +17,6 @@ import { TransfersSection } from '../sections/Transfers/index.js';
 import { ConnectSection } from '../sections/Connect/index.js';
 import { ChatSection } from '../sections/Chat/index.js';
 import { MobileTabs } from '../sections/MobileTabs/index.js';
-import { applicationStore, connection, networkStore } from '../stores/index.js';
-import { Footer } from '../components/Footer.js';
 import { SettingsSection } from '../sections/Settings/index.js';
 
 function itemToString(item: DataTransferItem): Promise<string> {
@@ -98,12 +99,28 @@ export const Home: React.FC = observer(() => {
     setClipboardFiles([]);
   };
 
+  const modal = applicationStore.modal;
+
   return (
     <>
       <ClipboardModal
         files={clipboardFiles}
         dismissClipboard={dismissClipboard}
       />
+      <Modal
+        onClose={() => applicationStore.closeModal()}
+        title={t('tabs.settings')}
+        isOpen={modal === 'settings'}
+      >
+        <SettingsSection />
+      </Modal>
+      <Modal
+        onClose={() => applicationStore.closeModal()}
+        title={t('tabs.connect')}
+        isOpen={modal === 'connect'}
+      >
+        <ConnectSection />
+      </Modal>
       <div className={clsx('mobileFlex', styles.home)}>
         <div className={clsx({ mobileHidden: tab !== 'transfers' })}>
           <IncompatibleBrowserSection />
@@ -114,14 +131,14 @@ export const Home: React.FC = observer(() => {
         </div>
         <div className="mobileFlex">
           <div
-            className={clsx('desktopSubsection', {
+            className={clsx('desktopHidden', {
               mobileHidden: tab !== 'settings',
             })}
           >
             <SettingsSection />
           </div>
           <div
-            className={clsx('desktopSubsection', {
+            className={clsx('desktopHidden', {
               mobileHidden: tab !== 'connect',
             })}
           >

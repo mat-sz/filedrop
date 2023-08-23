@@ -13,6 +13,7 @@ export class ApplicationStore {
   appName = defaultAppName;
   abuseEmail?: string = undefined;
   tab = 'transfers';
+  modal?: string = undefined;
   showPaste = false;
 
   constructor(private connection: Connection) {
@@ -20,6 +21,14 @@ export class ApplicationStore {
 
     connection.on('message', message => this.onMessage(message as any));
     this.refreshClipboardStatus();
+  }
+
+  openModal(modal: string) {
+    this.modal = modal;
+  }
+
+  closeModal() {
+    this.modal = undefined;
   }
 
   setTab(tab: string) {

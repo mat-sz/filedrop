@@ -1,6 +1,18 @@
 .you {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto 1fr auto;
   grid-gap: 15px;
   align-items: center;
+}
+
+.actions {
+  font-size: 0;
+
+  button {
+    margin-left: 0.5rem;
+  }
+
+  svg {
+    font-size: 1.4rem;
+  }
 }

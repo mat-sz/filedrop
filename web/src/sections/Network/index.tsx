@@ -73,6 +73,11 @@ export const NetworkSection: React.FC = observer(() => {
                   {t('emptyNetwork.qr')}
                 </Button>
               </div>
+              <div className="mobileHidden">
+                <Button onClick={() => applicationStore.openModal('connect')}>
+                  {t('emptyNetwork.qr')}
+                </Button>
+              </div>
             </div>
             <LocalNetworks />
           </>
