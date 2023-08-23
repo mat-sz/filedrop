@@ -31,6 +31,7 @@
       margin: 0;
       border-radius: 5px;
       user-select: text;
+      -webkit-user-select: text;
     }
 
     button {
@@ -55,46 +56,14 @@
       border-radius: 5px;
     }
   }
-
-  .other {
-    margin-block-start: 10px;
-  }
 }
 
-@media screen and (min-width: 1200px) {
-  .connect {
-    display: grid;
-    grid-gap: 15px;
-    grid-template-columns: auto 1fr;
-    grid-template-rows: 1fr 1fr;
+.other {
+  & > span {
+    color: var(--color-fg-soft);
+  }
 
-    & > div {
-      margin: 0 !important;
-    }
-
-    .info,
-    .share {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .qrcode {
-      grid-area: 1 / 1 / 3 / 2;
-    }
-
-    .info {
-      justify-content: flex-end;
-      grid-area: 1 / 2 / 2 / 2;
-    }
-
-    .share {
-      justify-content: flex-start;
-      grid-area: 2 / 2 / 3 / 2;
-    }
-
-    .other {
-      margin-block-start: 0;
-      grid-column: 1 / 3;
-    }
+  & > div {
+    grid-template-columns: 1fr 1fr !important;
   }
 }
