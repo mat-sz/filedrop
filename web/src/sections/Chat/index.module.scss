@@ -1,12 +1,14 @@
 .chat {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 
   .channels {
     margin-block-start: -15px;
     padding-block-end: 10px;
     border-block-end: 1px solid var(--color-primary);
     overflow-x: auto;
+    overflow-y: hidden;
     max-width: 100%;
 
     .list {
@@ -81,15 +83,15 @@
   .items {
     margin-block-end: 10px;
     flex: 1;
-    overflow-x: hidden;
     overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
 
-    & > div:first-child {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
+  .placeholder {
+    margin-top: auto;
   }
 
   ul {
@@ -97,10 +99,6 @@
     padding: 0;
     margin-block-start: 0;
     margin-block-end: 0;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: safe flex-end;
 
     li {
       display: block;

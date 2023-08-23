@@ -114,6 +114,7 @@ export const ChatSection: React.FC = observer(() => {
           </AnimatePresence>
         ) : (
           <div className={styles.items}>
+            <div className={styles.placeholder} />
             <ul ref={containerRef}>
               <AnimatePresence>
                 {chat.map(item => (
