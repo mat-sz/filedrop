@@ -2,9 +2,10 @@
   background: transparent;
   color: var(--color-fg);
   flex: 1;
-  padding: 10px;
+  padding: 15px;
   border-radius: 5px;
   font-size: 0;
+  padding-bottom: max(env(safe-area-inset-bottom, 15px), 15px);
 
   display: flex;
   flex-direction: column;
