@@ -6,13 +6,16 @@ import {
   EncryptedMessageModel,
   InitializeMessageModel,
   Message,
-  MessageModel,
   MessageType,
   PingMessageModel,
 } from '@filedrop/types';
 
 import { wsServer } from '../config.js';
 import { randomString } from '../utils/string.js';
+
+declare global {
+  var _filedropSocket: TypeSocket<Message> | undefined;
+}
 
 export class Connection {
   clientId?: string = undefined;
@@ -26,9 +29,11 @@ export class Connection {
   clientCache: Map<string, ClientModel> = new Map();
   clients: ClientModel[] = [];
   eventListeners: Map<string, Set<Function>> = new Map();
+  targetMessageQueue: Map<string, Message[]> = new Map();
+  messageQueue: Message[] = [];
 
   private secret = randomString(64);
-  private socket = new TypeSocket<MessageModel>(wsServer, {
+  private socket = new TypeSocket<Message>(wsServer, {
     maxRetries: 0,
     retryOnClose: true,
     retryTime: 1000,
@@ -36,6 +41,10 @@ export class Connection {
 
   constructor() {
     makeAutoObservable(this);
+
+    // Make sure we don't have any lingering connections when the app reloads.
+    window._filedropSocket?.disconnect();
+    window._filedropSocket = this.socket;
 
     this.socket.on('connected', () => this.onConnected());
     this.socket.on('disconnected', () => this.onDisconnected());
@@ -60,15 +69,26 @@ export class Connection {
     this.socket.connect();
   }
 
-  async send(message: MessageModel) {
-    if (this.socket.readyState !== 1) {
+  async send(message: Message) {
+    if (!this.connected || this.socket.readyState !== 1) {
+      if ('targetId' in message) {
+        this.messageQueue.push(message);
+      }
       return;
     }
 
     if ('targetId' in message) {
-      const target = this.clients.find(
-        client => client.clientId === message.targetId
-      );
+      const targetId = message.targetId as string;
+      const target = this.clients.find(client => client.clientId === targetId);
+      if (!target) {
+        if (!this.targetMessageQueue.has(targetId)) {
+          this.targetMessageQueue.set(targetId, []);
+        }
+
+        this.targetMessageQueue.get(targetId)!.push(message);
+        return;
+      }
+
       const targetPublicKey = target?.publicKey;
 
       if (targetPublicKey) {
@@ -145,8 +165,21 @@ export class Connection {
       case MessageType.NETWORK:
         this.clients = message.clients;
 
+        for (const message of this.messageQueue) {
+          this.send(message);
+        }
+        this.messageQueue = [];
+
         for (const client of message.clients) {
           this.clientCache.set(client.clientId, client);
+          if (this.targetMessageQueue.has(client.clientId)) {
+            const messages = this.targetMessageQueue.get(client.clientId)!;
+            this.targetMessageQueue.delete(client.clientId);
+
+            for (const message of messages) {
+              this.send(message);
+            }
+          }
         }
         break;
       case MessageType.PING:
