@@ -24,7 +24,7 @@ const messageModelSchema = Joi.object({
 const initializeMessageModelSchema = Joi.object({
   type: Joi.string().equal(MessageType.INITIALIZE).required(),
   secret: Joi.string().min(10).max(128).required(),
-  publicKey: Joi.string(),
+  publicKey: Joi.string().max(512),
 }).required();
 
 const validDeviceTypes = Object.values(DeviceType);
