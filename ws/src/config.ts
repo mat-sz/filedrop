@@ -9,6 +9,9 @@ export const abuseEmail = process.env.WS_ABUSE_EMAIL || undefined;
 
 export const maxClientNameLength = 32;
 export const maxSize = parseInt(process.env.WS_MAX_SIZE || '65536');
+export const maxNetworkClients = parseInt(
+  process.env.WS_MAX_NETWORK_CLIENTS || '64'
+);
 export const noticeText = process.env.NOTICE_TEXT;
 export const noticeUrl = process.env.NOTICE_URL;
 

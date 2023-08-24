@@ -13,6 +13,7 @@
   --green-soft: #3ea74ecc;
   --red: #ff5c5c;
   --red-soft: #ff5c5ccc;
+  --error: #ff4a4a;
   --warning: #ffff5e;
   --ok: #5bff5b;
   --main-padding: 15px;
@@ -194,6 +195,19 @@ h3 {
   max-height: 100%;
   min-height: 100%;
   touch-action: none;
+}
+
+.error {
+  color: var(--red);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+
+  svg {
+    font-size: 1.4rem;
+    min-width: 1.4rem;
+    margin-right: 5px;
+  }
 }
 
 @media screen and (min-width: 768px) {

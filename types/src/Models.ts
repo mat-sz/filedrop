@@ -34,6 +34,12 @@ export interface DisconnectedMessageModel extends MessageModel {
   reason: string;
 }
 
+export interface ErrorMessageModel extends MessageModel {
+  type: MessageType.ERROR;
+  mode: 'network';
+  reason: string;
+}
+
 export interface AppInfoMessageModel extends MessageModel {
   type: MessageType.APP_INFO;
   remoteAddress?: string;
@@ -128,6 +134,7 @@ export interface EncryptedMessageModel extends TargetedMessageModel {
 export type Message =
   | InitializeMessageModel
   | DisconnectedMessageModel
+  | ErrorMessageModel
   | AppInfoMessageModel
   | ClientInfoMessageModel
   | LocalNetworksMessageModel

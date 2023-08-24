@@ -10,6 +10,7 @@ import {
   PingMessageModel,
   NetworkModel,
   DisconnectedMessageModel,
+  ErrorMessageModel,
 } from '@filedrop/types';
 
 import { Client } from './types/Client.js';
@@ -28,6 +29,7 @@ import {
 import {
   abuseEmail,
   appName,
+  maxNetworkClients,
   maxSize,
   noticeText,
   noticeUrl,
@@ -36,7 +38,7 @@ import {
 import { secretToId } from './utils/id.js';
 
 export class ClientManager {
-  private clients: Client[] = [];
+  private clients = new Set<Client>();
 
   constructor() {
     this.sendNetworkMessage = this.sendNetworkMessage.bind(this);
@@ -66,12 +68,7 @@ export class ClientManager {
       }
 
       if (!message.publicKey && requireCrypto) {
-        const disconnectedMessage: DisconnectedMessageModel = {
-          type: MessageType.DISCONNECTED,
-          reason: 'cryptoRequired',
-        };
-        client.send(disconnectedMessage);
-        client.close();
+        this.disconnectClient(client, 'cryptoRequired');
         return;
       }
 
@@ -82,7 +79,7 @@ export class ClientManager {
 
       const localNetworks = this.getLocalNetworks(client);
 
-      this.clients.push(client);
+      this.clients.add(client);
 
       const clientInfoMessage: ClientInfoMessageModel = {
         type: MessageType.CLIENT_INFO,
@@ -102,10 +99,20 @@ export class ClientManager {
     }
 
     if (isNetworkNameMessageModel(message)) {
+      const name = message.networkName.toUpperCase();
+      const count = this.getNetworkClients(name).length;
+
+      if (count >= maxNetworkClients) {
+        this.sendError(client, 'network', 'networkFull');
+        return;
+      }
+
       client.deviceType = message.deviceType;
-      this.setNetworkName(client, message.networkName.toUpperCase());
+      this.setNetworkName(client, name);
     } else if (isClientNameMessageModel(message)) {
-      const clients = this.clients.filter(c => c.clientId === client.clientId);
+      const clients = [...this.clients].filter(
+        c => c.clientId === client.clientId
+      );
 
       for (const client of clients) {
         client.clientName = message.clientName;
@@ -128,6 +135,25 @@ export class ClientManager {
     }
   }
 
+  disconnectClient(client: Client, reason: string) {
+    const message: DisconnectedMessageModel = {
+      type: MessageType.DISCONNECTED,
+      reason,
+    };
+    client.send(message);
+    client.close();
+    this.removeClient(client);
+  }
+
+  sendError(client: Client, mode: ErrorMessageModel['mode'], reason: string) {
+    const message: ErrorMessageModel = {
+      type: MessageType.ERROR,
+      mode,
+      reason,
+    };
+    client.send(message);
+  }
+
   sendMessage(fromClientId: string, message: TargetedMessageModel) {
     if (!message.targetId || message.targetId === fromClientId) {
       return;
@@ -138,7 +164,9 @@ export class ClientManager {
       clientId: fromClientId,
     };
 
-    const targets = this.clients.filter(c => c.clientId === message.targetId);
+    const targets = [...this.clients].filter(
+      c => c.clientId === message.targetId
+    );
     this.broadcast(data, targets);
   }
 
@@ -154,7 +182,7 @@ export class ClientManager {
   }
 
   getNetworkClients(networkName: string): Client[] {
-    const clients = this.clients.filter(
+    const clients = [...this.clients].filter(
       client => client.networkName === networkName
     );
 
@@ -212,7 +240,7 @@ export class ClientManager {
   }
 
   getLocalClients(client: Client) {
-    return this.clients
+    return [...this.clients]
       .filter(c => c.remoteAddress === client.remoteAddress && c.networkName)
       .sort((a, b) => b.lastSeen.getTime() - a.lastSeen.getTime());
   }
@@ -247,7 +275,7 @@ export class ClientManager {
 
   broadcast(message: MessageModel, clients?: Client[]) {
     if (!clients) {
-      clients = this.clients;
+      clients = [...this.clients];
     }
     const data = JSON.stringify(message);
 
@@ -272,18 +300,18 @@ export class ClientManager {
 
   removeClient(client: Client) {
     this.setNetworkName(client, undefined);
-    this.clients = this.clients.filter(c => c !== client);
+    this.clients.delete(client);
   }
 
   removeBrokenClients() {
-    this.clients = this.clients.filter(client => {
+    for (const client of this.clients) {
       if (client.readyState <= 1) {
-        return true;
-      } else {
-        this.setNetworkName(client, undefined);
-        return false;
+        continue;
       }
-    });
+
+      this.setNetworkName(client, undefined);
+      this.clients.delete(client);
+    }
   }
 
   removeInactiveClients() {

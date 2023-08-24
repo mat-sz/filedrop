@@ -106,6 +106,11 @@
       "notSpecified": "Not specified."
     }
   },
+  "error": {
+    "network": {
+      "networkFull": "The network you have selected is full, please select a different network."
+    }
+  },
   "secure": "This instance ensures all data (file metadata, previews, chat) is encrypted between peers.",
   "insecure": "This instance allows for unencrypted data exchange. The owners of this instance may see the data (file metadata, previews, chat) sent between peers. File transfers are still encrypted."
 }

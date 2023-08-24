@@ -28,6 +28,7 @@ export class NetworkStore {
 
   clientName?: string = getItem('clientName', undefined);
   networkName?: string = undefined;
+  networkError?: string = undefined;
 
   networkClients: Map<string, ClientModel> = new Map();
   transfers: Map<string, Transfer> = new Map();
@@ -208,7 +209,13 @@ export class NetworkStore {
           this.updateNetworkName(this.networkName);
         }
         break;
+      case MessageType.ERROR:
+        if (message.mode === 'network') {
+          this.networkError = message.reason;
+        }
+        break;
       case MessageType.NETWORK:
+        this.networkError = undefined;
         this.networkClients.clear();
 
         for (const client of message.clients) {
