@@ -45,7 +45,7 @@ TURN uses TCP port 3478 and UDP ports 49152-65535.
 | `-e <email>` | Sets contact email.                             |
 | `-p <port>`  | Sets port for the application to be exposed at. |
 | `-f`         | Enables WS_USE_X_FORWARDED_FOR.                 |
-| `-s`         | Enables WS_REQUIRE_SECURE.                      |
+| `-s`         | Enables WS_REQUIRE_CRYPTO.                      |
 
 ### Manual
 
