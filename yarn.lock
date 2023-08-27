@@ -3883,10 +3883,10 @@ husky@^8.0.3:
   resolved "https://registry.yarnpkg.com/husky/-/husky-8.0.3.tgz#4936d7212e46d1dea28fef29bb3a108872cd9184"
   integrity sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==
 
-i18not@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/i18not/-/i18not-0.1.1.tgz#f82cbb766b6ca84436d664e2da5142bc4b87b1d7"
-  integrity sha512-U+a7kMxrwRmae6j+DYXAU6l+x+pTLsFJ/E0fbYv0s5UCQRJBn6IrXWBIZJgaJU8Oee4DhXrvPCcZY6GBQPPM9Q==
+i18not@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/i18not/-/i18not-0.1.2.tgz#6b8420e9ec88bc3ec05c2ca376736a2c195934b0"
+  integrity sha512-cODcaiXz5uXzIGhEqaZ3JnfkCUFldJjABX60KBh55LY7QTPwbtdD4iKCUc9qDmxIIm12jIgQoLorsP2DgmdmrQ==
 
 ieee754@^1.1.13, ieee754@^1.2.1:
   version "1.2.1"
