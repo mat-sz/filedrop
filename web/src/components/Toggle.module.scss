@@ -93,3 +93,15 @@ $speed: 0.2s;
   font-size: 0.9rem;
   color: var(--color-fg-soft);
 }
+
+[dir='rtl'] {
+  .indicator {
+    transform: translateX($track-width - $track-height);
+  }
+
+  .input:checked + .track {
+    .indicator {
+      transform: translateX(0);
+    }
+  }
+}
