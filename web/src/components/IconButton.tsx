@@ -4,9 +4,9 @@ import clsx from 'clsx';
 import styles from './IconButton.module.scss';
 
 interface IconButtonProps
-  extends React.DetailedHTMLProps<
-    React.HTMLAttributes<HTMLButtonElement>,
-    HTMLButtonElement
+  extends Omit<
+    React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>,
+    'ref'
   > {
   href?: string;
   download?: string;
@@ -31,6 +31,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
         )}
         href={href}
         download={download}
+        {...props}
       >
         {children}
       </a>

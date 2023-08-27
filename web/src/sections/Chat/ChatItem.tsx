@@ -51,7 +51,6 @@ export const ChatItem: React.FC<ChatItemProps> = observer(({ item }) => {
         [styles.expanded]: expanded,
       })}
       {...animationPropsSlide}
-      title="Chat message"
     >
       <div className={styles.info}>
         {client && <TargetTile client={client} />}

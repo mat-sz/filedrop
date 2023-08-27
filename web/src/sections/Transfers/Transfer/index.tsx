@@ -31,11 +31,7 @@ export const TransferInfo: React.FC<TransferProps> = observer(
     const left = humanTime(transfer.timeLeft());
 
     return (
-      <motion.li
-        className={styles.transfer}
-        {...animationPropsSlide}
-        title="Transfer"
-      >
+      <motion.li className={styles.transfer} {...animationPropsSlide}>
         <TransferIcon transfer={transfer} />
         <div className={styles.state}>
           <div className={styles.filename}>
