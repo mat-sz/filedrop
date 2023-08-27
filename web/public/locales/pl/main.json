@@ -1,0 +1,116 @@
+{
+  "sections": {
+    "privacy": "Polityka prywatności",
+    "terms": "Warunki usługi",
+    "abuse": "Zgłoś nadużycie / DMCA",
+    "tech": "Informacje techniczne",
+    "github": "Kod źródłowy",
+    "twitter": "Obserwuj mnie na Twitterze",
+    "about": "O projekcje"
+  },
+  "incompatibleBrowser": {
+    "title": "Niewpierana przeglądarka",
+    "body": "Twoja przeglądarka nie obsługuje technologii wymaganych do poprawnego funkcjonowania tej aplikacji. Możesz próbować korzystać z aplikacji, ale część funkcjonalności może nie działać poprawnie."
+  },
+  "emptyNetwork": {
+    "title": "Nikt nie jest połączony z Twoją siecią.",
+    "body": "Otwórz tę stronę na innym urządzeniu, aby się połączyć.",
+    "qr": "Kod QR",
+    "local": "Lokalne sieci są dostępne:"
+  },
+  "tile": "Kliknij tutaj aby rozpocząć transfer pliku.",
+  "state": {
+    "connecting": "Trwa łączenie...",
+    "loading": "Ładowanie..."
+  },
+  "clipboard": {
+    "title": "Wyślij schowek",
+    "body": "Wysyłanie: {{fileNames}}"
+  },
+  "chat": {
+    "showMore": "Rozwiń",
+    "message": "Wyśli wiadomość do: {{target}}",
+    "everyone": "wszystkich"
+  },
+  "emptyChat": {
+    "title": "Trochę tu pusto.",
+    "body": "Zacznij czat z innymi w Twojej sieci.",
+    "bodyTarget": "Zacznij czat z: {{target}}."
+  },
+  "connect": "Otwórz tę stronę na innym urządzeniu, aby wysłać pliki:",
+  "localNetworks": "Sieci lokalne:",
+  "you": "Ty",
+  "edit": "Edytuj",
+  "send": "Wyślij",
+  "share": "Udostępnij",
+  "cancelAll": "Anuluj wszystkie",
+  "acceptAll": "Akceptuj wszystkie",
+  "cancel": "Anuluj",
+  "accept": "Akceptuj",
+  "download": "Pobierz",
+  "copy": "Kopiuj",
+  "paste": "Wklej",
+  "save": "Zapisz",
+  "settings": {
+    "autoAccept": "Akceptuj wszystkie przychodzące transfery",
+    "autoDownload": "Pobierz wszystkie ukończone transfery",
+    "displayIcons": "Pokaż ikony statusu klienta"
+  },
+  "transfers": {
+    "title": {
+      "incoming": "Przychodzące",
+      "outgoing": "Wychodzące",
+      "active": "Aktywne",
+      "complete": "Ukończone"
+    },
+    "icon": {
+      "state": "Status transferu: {{state}}",
+      "preview": "Podgląd: {{fileName}}"
+    },
+    "progress": "{{offset}} z {{size}}",
+    "elapsed": "{{time}} upłynęło",
+    "left": "{{time}} pozostało"
+  },
+  "fileType": {
+    "unknown": "",
+    "text": "Plik tekstowy",
+    "archive": "Archiwum",
+    "image": "Obraz",
+    "video": "Film",
+    "audio": "Dźwięk",
+    "binary": "Plik binarny"
+  },
+  "transferState": {
+    "incoming": "Przychodzący",
+    "outgoing": "Wychodzący",
+    "connecting": "Łączenie...",
+    "connected": "Połączono",
+    "inProgress": "W trakcie...",
+    "complete": "Ukończony",
+    "failed": "Ukończony niepowodzeniem :("
+  },
+  "tabs": {
+    "transfers": "Transfery",
+    "connect": "Połącz się",
+    "chat": "Czat",
+    "settings": "Ustawienia"
+  },
+  "yourName": "Twoja nazwa",
+  "desktopHint": "Wciśnij Ctrl+V aby wysłać zawartość schowka.",
+  "sendFromClipboard": "Wyślij ze schowka",
+  "disconnected": {
+    "title": "Rozłączono z serwerem.",
+    "reason": "Powód:",
+    "reasons": {
+      "cryptoRequired": "Ta instancja wymaga WebCrypto. Możliwe problemy: Twoje połączenie ze stroną nie jest przez HTTPS lub Twoja przeglądarka nie wspiera WebCrypto.",
+      "notSpecified": "Nieznany."
+    }
+  },
+  "error": {
+    "network": {
+      "networkFull": "Wybrana sieć jest pełna, proszę wybrać inną sieć."
+    }
+  },
+  "secure": "Ta instancja wymaga pełnego szyfrowania danych (metadane pliku, podglądy, czat) między członkami sieci.",
+  "insecure": "Ta instancja pozwala na nieszyfrowaną wymianę danych między członkami sieci, co może pozwolić administratorowi instancji na wgląd do danych (metadane pliku, podglądy, czat). Transfery plików są szyfrowane."
+}
