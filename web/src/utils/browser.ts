@@ -1,3 +1,4 @@
+import { abbreviatedSha } from '~build/info';
 import { DeviceType } from '@filedrop/types';
 
 export const isShareSupported = !!(navigator as any).share;
@@ -31,3 +32,4 @@ export const iOS =
   ].includes(navigator.platform) ||
   // iPad on iOS 13 detection
   (navigator.userAgent.includes('Mac') && 'ontouchend' in document);
+export const commitHash = abbreviatedSha;

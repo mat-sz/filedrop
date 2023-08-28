@@ -14,7 +14,8 @@
     "downlevelIteration": true,
     "noEmit": true,
     "jsx": "react",
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "types": ["vite-plugin-info/client"]
   },
   "include": ["src", "src/types"]
 }

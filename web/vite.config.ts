@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import buildInfo from 'vite-plugin-info';
 import { v4 } from 'uuid';
 
 export default defineConfig(({ mode }) => ({
@@ -23,5 +24,5 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: './build',
   },
-  plugins: [react()],
+  plugins: [buildInfo(), react()],
 }));
