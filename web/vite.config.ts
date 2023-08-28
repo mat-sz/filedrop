@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import buildInfo from 'vite-plugin-info';
-import { v4 } from 'uuid';
 
 export default defineConfig(({ mode }) => ({
   server: {
@@ -10,9 +9,6 @@ export default defineConfig(({ mode }) => ({
       port: 3001,
       clientPort: 3001,
     },
-  },
-  define: {
-    __BUILD_UUID__: JSON.stringify(v4()),
   },
   resolve:
     mode === 'production'
