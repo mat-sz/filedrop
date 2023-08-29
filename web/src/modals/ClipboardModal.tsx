@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18not';
 
+import styles from './ClipboardModal.module.scss';
 import { Network } from '../components/Network.js';
 import { networkStore } from '../stores/index.js';
 import { observer } from 'mobx-react-lite';
@@ -32,7 +33,9 @@ export const ClipboardModal: React.FC<ClipboardModalProps> = observer(
         isOpen={!!files.length}
       >
         <div className="subsection">
-          <p>{t('clipboard.body', { fileNames })}</p>
+          <div className={styles.file}>
+            {t('clipboard.body', { fileNames })}
+          </div>
           <Network onSelect={onSelect} />
           {clients.length === 0 && <div>{t('emptyNetwork.title')}</div>}
         </div>
