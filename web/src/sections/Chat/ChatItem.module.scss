@@ -23,8 +23,7 @@
 .more {
   position: absolute;
   bottom: 0;
-  left: 0;
-  right: 0;
+  inset-inline: 0;
   width: 100%;
   background: linear-gradient(
     0deg,

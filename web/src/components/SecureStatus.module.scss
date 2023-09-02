@@ -3,7 +3,7 @@
   align-items: center;
   font-weight: 600;
   font-size: 0.9rem;
-  margin-left: 0.5rem;
+  margin-inline-start: 0.5rem;
 
   div {
     display: flex;
@@ -11,7 +11,7 @@
   }
 
   svg {
-    margin-right: 5px;
+    margin-inline-end: 5px;
     font-size: 1rem;
     height: auto;
     width: 1.5rem;

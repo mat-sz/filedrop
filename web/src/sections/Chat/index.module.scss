@@ -30,8 +30,7 @@
       content: '';
       position: absolute;
       bottom: 0;
-      left: 5px;
-      right: 5px;
+      inset-inline: 5px;
       height: 5px;
       background: var(--color-fg);
       border-start-start-radius: 5px;
