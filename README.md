@@ -57,10 +57,9 @@ TURN uses TCP port 3478 and UDP ports 49152-65535.
 
 The following variables are used in the build process of the frontend:
 
-| Variable                      | Default value | Description                                                                 |
-| ----------------------------- | ------------- | --------------------------------------------------------------------------- |
-| `VITE_APP_NAME`               | `filedrop`    | Application title.                                                          |
-| `VITE_APP_USE_BROWSER_ROUTER` | `0`           | `1` if you want the application to use BrowserRouter instead of HashRouter. |
+| Variable        | Default value | Description                                   |
+| --------------- | ------------- | --------------------------------------------- |
+| `VITE_APP_NAME` | `filedrop`    | Default application title (while connecting). |
 
 The following variables are used in the WebSockets server:
 

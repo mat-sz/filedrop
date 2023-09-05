@@ -6,7 +6,6 @@ services:
       dockerfile: Dockerfile
       args:
         - VITE_APP_NAME=${APP_NAME}
-        - VITE_APP_USE_BROWSER_ROUTER=1
     environment:
       - WS_HOST=0.0.0.0
       - WS_APP_NAME=${APP_NAME}

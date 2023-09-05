@@ -1,10 +1,9 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18not';
 
 import './App.scss';
 
-import { Router } from './config.js';
 import { Home } from './screens/Home.js';
 import { Redirect } from './screens/Redirect.js';
 import { Privacy } from './screens/Privacy.js';
@@ -20,7 +19,7 @@ export const App: React.FC = () => {
   document.body.dir = dir;
 
   return (
-    <Router>
+    <BrowserRouter>
       <div className="app">
         <Header />
         <Status />
@@ -34,6 +33,6 @@ export const App: React.FC = () => {
           <Route index element={<Redirect />} />
         </Routes>
       </div>
-    </Router>
+    </BrowserRouter>
   );
 };

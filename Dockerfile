@@ -5,7 +5,6 @@ FROM node:19-alpine as build
 ARG BUILD_DATE
 ARG VERSION
 
-ARG VITE_APP_USE_BROWSER_ROUTER
 ARG VITE_APP_NAME
 
 LABEL build_version="filedrop version: ${VERSION}, Build Date: ${BUILD_DATE}"
