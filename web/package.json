@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "devDependencies": {
-    "@testing-library/dom": "^8.17.1",
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.2.0",
+    "@testing-library/dom": "^9.3.1",
+    "@testing-library/jest-dom": "^6.1.2",
+    "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.2.0",
     "vite": "^4.4.7",
     "vite-bundle-visualizer": "^0.10.0"
@@ -15,7 +15,7 @@
     "@filedrop/types": "*",
     "@types/react": "^18.0.18",
     "@types/react-dom": "^18.0.4",
-    "@types/uuid": "^8.3.4",
+    "@types/uuid": "^9.0.3",
     "@vitejs/plugin-react": "^4.0.3",
     "base64-js": "^1.5.1",
     "clsx": "^2.0.0",
@@ -39,7 +39,7 @@
     "react-router-dom": "^6.3.0",
     "sass": "^1.51.0",
     "typesocket": "^1.0.2",
-    "uuid": "^8.3.2",
+    "uuid": "^9.0.0",
     "vite-plugin-info": "^0.4.1"
   },
   "scripts": {
