@@ -1,6 +1,5 @@
 import React from 'react';
 import clsx from 'clsx';
-import { useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18not';
 import { motion } from 'nanoanim';
 import { IoAdd } from 'react-icons/io5/index.js';
@@ -30,19 +29,9 @@ export const NetworkTile: React.FC<NetworkTileProps> = ({
     }
   };
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-  });
-
-  const preventClick = (event: React.MouseEvent) => {
-    event.preventDefault();
-  };
-
   const onClick = () => {
     onSelect?.(client.clientId);
   };
-
-  const dragProps = onSelect ? {} : getRootProps();
 
   return (
     <motion.div
@@ -50,23 +39,21 @@ export const NetworkTile: React.FC<NetworkTileProps> = ({
       onClick={onClick}
       className={styles.wrapper}
     >
-      <TargetTile
-        {...dragProps}
-        client={client}
-        variant="big"
-        className={clsx(styles.tile, { active: isDragActive })}
-      >
+      <TargetTile client={client} variant="big" className={clsx(styles.tile)}>
         {!onSelect && (
-          <label onClick={preventClick}>
-            <input
-              {...getInputProps({
-                style: {},
-              })}
-              accept={'*'}
-              tabIndex={0}
-            />
-            {t('tile')}
-          </label>
+          <input
+            type="file"
+            tabIndex={0}
+            onChange={e => {
+              if (e.target.files) {
+                onDrop([...e.target.files]);
+              }
+
+              e.target.value = '';
+            }}
+            title={t('tile')}
+            multiple
+          />
         )}
         <div className={styles.icon}>
           {icon ? icon : <IoAdd className={styles.plus} />}
