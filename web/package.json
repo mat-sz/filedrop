@@ -28,6 +28,7 @@
     "mobx": "^6.10.0",
     "mobx-react-lite": "^4.0.3",
     "nanoanim": "^0.1.0",
+    "pwanow": "^0.0.1",
     "qrcode.react": "^3.0.2",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",

@@ -1,10 +1,10 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
+import { pwanow, splash } from 'pwanow';
 
 import { Loading } from './components/Loading.js';
 import { App } from './App.js';
 import './i18n.js';
-import { renderBothSplash } from './utils/pwa.js';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -29,4 +29,7 @@ document.addEventListener(
   { passive: false }
 );
 
-renderBothSplash('/drop.svg', '#1b1b1d');
+pwanow({
+  backgroundColor: '#1b1b1d',
+  iconUrl: '/drop.svg',
+}).use(splash);
