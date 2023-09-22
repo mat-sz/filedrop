@@ -19,12 +19,12 @@
   .home {
     display: grid;
     grid-gap: 15px;
-    grid-template-columns: 3fr 2fr;
+    grid-template-columns: 1fr 50%;
   }
 }
 
 @media screen and (min-width: 1200px) {
   .home {
-    grid-template-columns: minmax(0, 2fr) 1fr;
+    grid-template-columns: 1fr 33.3%;
   }
 }

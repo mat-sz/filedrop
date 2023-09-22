@@ -12,10 +12,13 @@
 .message {
   position: relative;
   white-space: pre-wrap;
+  word-wrap: break-word;
   max-height: 50px;
   overflow: hidden;
 
   a {
+    display: inline;
+    white-space: unset;
     font-weight: bold;
   }
 }
