@@ -23,7 +23,7 @@ export const Redirect: React.FC = observer(() => {
       randomString(nameLength, nameCharacterSet);
 
     if (connected && clientId) {
-      navigate('/' + currentNetworkName);
+      navigate('/' + currentNetworkName, { replace: true });
     }
   }, [connected, networkName, navigate, clientId, suggestedNetworkName]);
 
