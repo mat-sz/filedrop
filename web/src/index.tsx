@@ -22,7 +22,7 @@ document.addEventListener(
   'touchmove',
   (event: any) => {
     event = event.originalEvent || event;
-    if (event.scale !== 1) {
+    if (typeof event.scale !== 'undefined' && event.scale !== 1) {
       event.preventDefault();
     }
   },

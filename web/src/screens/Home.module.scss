@@ -1,5 +1,7 @@
 .home {
-  margin: 15px;
+  margin-block-start: 15px;
+  padding: 15px;
+  padding-block-start: 0;
   overflow: auto;
 }
 
@@ -7,7 +9,7 @@
   margin: 15px;
 
   div > div {
-    margin-top: 1rem;
+    margin-block-start: 1rem;
   }
 
   span {
