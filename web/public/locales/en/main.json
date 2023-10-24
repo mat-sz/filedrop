@@ -48,7 +48,8 @@
   "cancel": "Cancel",
   "accept": "Accept",
   "download": "Download",
-  "copy": "Copy to clipboard",
+  "copy": "Copy",
+  "copied": "Copied to clipboard!",
   "paste": "Paste",
   "save": "Save",
   "settings": {
