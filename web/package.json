@@ -35,11 +35,11 @@
     "react-expanding-textarea": "^2.3.6",
     "react-i18not": "^0.1.1",
     "react-icons": "^4.3.1",
-    "react-router-dom": "^6.3.0",
     "sass": "^1.51.0",
     "typesocket": "^1.0.2",
     "uuid": "^9.0.0",
-    "vite-plugin-info": "^0.4.1"
+    "vite-plugin-info": "^0.4.1",
+    "wouter": "^2.12.1"
   },
   "scripts": {
     "start": "vite",

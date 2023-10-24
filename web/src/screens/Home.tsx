@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'wouter';
 import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18not';
 import clsx from 'clsx';

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'wouter';
 import { useTranslation } from 'react-i18not';
 import { observer } from 'mobx-react-lite';
 
@@ -14,7 +14,7 @@ export const Redirect: React.FC = observer(() => {
   const suggestedNetworkName = applicationStore.suggestedNetworkName;
   const { connected, clientId } = connection;
 
-  const navigate = useNavigate();
+  const navigate = useLocation()[1];
 
   useEffect(() => {
     const currentNetworkName =

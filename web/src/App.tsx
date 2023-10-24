@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { Router, Route, Switch } from 'wouter';
 import { useTranslation } from 'react-i18not';
 
 import './App.scss';
@@ -19,20 +19,34 @@ export const App: React.FC = () => {
   document.body.dir = dir;
 
   return (
-    <BrowserRouter>
-      <div className="app">
-        <Header />
-        <Status />
-        <Routes>
-          <Route path="/abuse" element={<Abuse />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/tos" element={<ToS />} />
-          <Route path="/tech" element={<TechnicalInformation />} />
-          <Route path="/:networkName" element={<Home />} />
-          <Route index element={<Redirect />} />
-        </Routes>
-      </div>
-    </BrowserRouter>
+    <div className="app">
+      <Header />
+      <Status />
+      <Router>
+        <Switch>
+          <Route path="/abuse">
+            <Abuse />
+          </Route>
+          <Route path="/about">
+            <About />
+          </Route>
+          <Route path="/privacy">
+            <Privacy />
+          </Route>
+          <Route path="/tos">
+            <ToS />
+          </Route>
+          <Route path="/tech">
+            <TechnicalInformation />
+          </Route>
+          <Route path="/:networkName">
+            <Home />
+          </Route>
+          <Route>
+            <Redirect />
+          </Route>
+        </Switch>
+      </Router>
+    </div>
   );
 };

@@ -5,7 +5,7 @@ import {
   IoInformationCircle,
   IoLogoTwitter,
 } from 'react-icons/io5/index.js';
-import { Link } from 'react-router-dom';
+import { Link } from 'wouter';
 import { observer } from 'mobx-react-lite';
 
 import styles from './Header.module.scss';

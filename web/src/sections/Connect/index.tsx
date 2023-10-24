@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { QRCodeSVG } from 'qrcode.react';
 import { useTranslation } from 'react-i18not';
 import { IoSend } from 'react-icons/io5/index.js';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'wouter';
 import { observer } from 'mobx-react-lite';
 
 import styles from './index.module.scss';
@@ -16,10 +16,10 @@ import { LocalNetworks } from '../LocalNetworks/index.js';
 
 export const ConnectSection: React.FC = observer(() => {
   const { t } = useTranslation();
-  const { pathname } = useLocation();
+  const [location] = useLocation();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const href = useMemo(() => window.location.href, [pathname]);
+  const href = useMemo(() => window.location.href, [location]);
 
   return (
     <>

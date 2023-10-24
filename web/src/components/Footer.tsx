@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18not';
-import { Link } from 'react-router-dom';
+import { Link } from 'wouter';
 import { observer } from 'mobx-react-lite';
 import clsx from 'clsx';
 
