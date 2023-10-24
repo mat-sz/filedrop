@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18not';
-import { IoArrowDown, IoArrowUp } from 'react-icons/io5/index.js';
+import { IoArrowDown, IoArrowUp } from 'react-icons/io5';
 import { observer } from 'mobx-react-lite';
 
 import styles from './Total.module.scss';

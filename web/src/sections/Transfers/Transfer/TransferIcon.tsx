@@ -7,7 +7,7 @@ import {
   FaFileAudio,
   FaFileImage,
   FaFileArchive,
-} from 'react-icons/fa/index.js';
+} from 'react-icons/fa';
 
 import styles from './TransferIcon.module.scss';
 import { fileType } from '../../../utils/file.js';

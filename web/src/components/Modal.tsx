@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { IoClose } from 'react-icons/io5/index.js';
+import { IoClose } from 'react-icons/io5';
 import { useTranslation } from 'react-i18not';
 
 import styles from './Modal.module.scss';

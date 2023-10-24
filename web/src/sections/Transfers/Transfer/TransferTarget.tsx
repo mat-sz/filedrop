@@ -9,7 +9,7 @@ import {
   FaAngleDoubleUp,
   FaHourglassHalf,
   FaHourglassEnd,
-} from 'react-icons/fa/index.js';
+} from 'react-icons/fa';
 import { observer } from 'mobx-react-lite';
 
 import styles from './TransferTarget.module.scss';

@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18not';
 import { motion } from 'nanoanim';
-import { IoAdd } from 'react-icons/io5/index.js';
+import { IoAdd } from 'react-icons/io5';
 import { ClientModel } from '@filedrop/types';
 
 import styles from './NetworkTile.module.scss';

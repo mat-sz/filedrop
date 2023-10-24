@@ -1,5 +1,5 @@
 import React from 'react';
-import { IoCheckmarkDone, IoCloseSharp } from 'react-icons/io5/index.js';
+import { IoCheckmarkDone, IoCloseSharp } from 'react-icons/io5';
 import { useTranslation } from 'react-i18not';
 
 import styles from './Actions.module.scss';
@@ -14,7 +14,7 @@ export const Actions: React.FC<Props> = ({ transfers }) => {
   const { t } = useTranslation();
 
   if (transfers.length <= 1) {
-    return;
+    return null;
   }
 
   const acceptAll = () => {

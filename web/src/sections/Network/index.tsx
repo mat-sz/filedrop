@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import clsx from 'clsx';
 import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18not';
-import { IoClipboard, IoCloseCircle } from 'react-icons/io5/index.js';
+import { IoClipboard, IoCloseCircle } from 'react-icons/io5';
 
 import styles from './index.module.scss';
 import { Network } from '../../components/Network.js';

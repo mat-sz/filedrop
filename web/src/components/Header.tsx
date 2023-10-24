@@ -4,7 +4,7 @@ import {
   IoLogoGithub,
   IoInformationCircle,
   IoLogoTwitter,
-} from 'react-icons/io5/index.js';
+} from 'react-icons/io5';
 import { Link } from 'wouter';
 import { observer } from 'mobx-react-lite';
 

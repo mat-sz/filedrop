@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18not';
-import { IoQrCode, IoSettings } from 'react-icons/io5/index.js';
+import { IoQrCode, IoSettings } from 'react-icons/io5';
 
 import styles from './index.module.scss';
 import { TargetTile } from '../../components/TargetTile.js';

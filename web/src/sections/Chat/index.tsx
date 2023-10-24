@@ -3,12 +3,7 @@ import { useTranslation } from 'react-i18not';
 import { AnimatePresence, motion } from 'nanoanim';
 import Textarea from 'react-expanding-textarea';
 import { observer } from 'mobx-react-lite';
-import {
-  IoSend,
-  IoChatbox,
-  IoGlobe,
-  IoClipboard,
-} from 'react-icons/io5/index.js';
+import { IoSend, IoChatbox, IoGlobe, IoClipboard } from 'react-icons/io5';
 import clsx from 'clsx';
 
 import styles from './index.module.scss';
@@ -18,8 +13,6 @@ import { IconButton } from '../../components/IconButton.js';
 import { applicationStore, chatStore } from '../../stores/index.js';
 import { TargetTile } from '../../components/TargetTile.js';
 import { NotificationCount } from '../../components/NotificationCount.js';
-
-const TextareaComponent = Textarea as any;
 
 export const ChatSection: React.FC = observer(() => {
   const { t } = useTranslation();
@@ -126,7 +119,7 @@ export const ChatSection: React.FC = observer(() => {
         )}
       </React.Fragment>
       <form onSubmit={onSubmit}>
-        <TextareaComponent
+        <Textarea
           value={message}
           onKeyDown={onKeyDown}
           onChange={(e: React.ChangeEvent) =>

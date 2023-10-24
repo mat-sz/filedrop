@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18not';
-import { IoPencil, IoCheckmark, IoCloseSharp } from 'react-icons/io5/index.js';
+import { IoPencil, IoCheckmark, IoCloseSharp } from 'react-icons/io5';
 import { observer } from 'mobx-react-lite';
 
 import styles from './ClientName.module.scss';

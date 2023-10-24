@@ -15,7 +15,7 @@ interface ClipboardModalProps {
 export const ClipboardModal: React.FC<ClipboardModalProps> = observer(
   ({ files = [], dismissClipboard }) => {
     const { t } = useTranslation();
-    const fileNames = files.map((file, i) => file.name).join(', ');
+    const fileNames = files.map(file => file.name).join(', ');
     const clients = networkStore.clients;
 
     const onSelect = (clientId: string) => {

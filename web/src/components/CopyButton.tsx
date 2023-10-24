@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18not';
-import { IoCopy } from 'react-icons/io5/index.js';
+import { IoCopy } from 'react-icons/io5';
 import { clsx } from 'clsx';
 
 import { useTimedState } from '../utils/hooks.js';

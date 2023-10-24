@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  IoQrCode,
-  IoChatbubbles,
-  IoHome,
-  IoSettings,
-} from 'react-icons/io5/index.js';
+import { IoQrCode, IoChatbubbles, IoHome, IoSettings } from 'react-icons/io5';
 import { observer } from 'mobx-react-lite';
 
 import styles from './index.module.scss';

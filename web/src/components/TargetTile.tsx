@@ -1,10 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import {
-  IoLockClosed,
-  IoPhonePortrait,
-  IoHome,
-} from 'react-icons/io5/index.js';
+import { IoLockClosed, IoPhonePortrait, IoHome } from 'react-icons/io5';
 import { ClientModel, DeviceType } from '@filedrop/types';
 import { observer } from 'mobx-react-lite';
 

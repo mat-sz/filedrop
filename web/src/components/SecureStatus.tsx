@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18not';
 import { observer } from 'mobx-react-lite';
-import { IoCheckmarkCircle, IoWarning } from 'react-icons/io5/index.js';
+import { IoCheckmarkCircle, IoWarning } from 'react-icons/io5';
 import clsx from 'clsx';
 
 import styles from './SecureStatus.module.scss';

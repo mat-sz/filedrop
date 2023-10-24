@@ -16,7 +16,7 @@ export class ApplicationStore {
   modal?: string = undefined;
   showPaste = false;
 
-  constructor(private connection: Connection) {
+  constructor(connection: Connection) {
     makeAutoObservable(this);
 
     connection.on('message', message => this.onMessage(message as any));

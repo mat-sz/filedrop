@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import clsx from 'clsx';
 import { QRCodeSVG } from 'qrcode.react';
 import { useTranslation } from 'react-i18not';
-import { IoSend } from 'react-icons/io5/index.js';
+import { IoSend } from 'react-icons/io5';
 import { useLocation } from 'wouter';
 import { observer } from 'mobx-react-lite';
 

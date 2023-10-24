@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  IoCloseSharp,
-  IoCheckmark,
-  IoArrowDown,
-} from 'react-icons/io5/index.js';
+import { IoCloseSharp, IoCheckmark, IoArrowDown } from 'react-icons/io5';
 import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18not';
 
