@@ -3,7 +3,7 @@ import clsx from 'clsx';
 
 import styles from './IconButton.module.scss';
 
-interface IconButtonProps
+export interface IconButtonProps
   extends Omit<
     React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>,
     'ref'

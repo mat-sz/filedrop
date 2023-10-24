@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  IoCopy,
   IoCloseSharp,
   IoCheckmark,
   IoArrowDown,
@@ -10,6 +9,7 @@ import { useTranslation } from 'react-i18not';
 
 import styles from './TransferActions.module.scss';
 import { IconButton } from '../../../components/IconButton.js';
+import { CopyButton } from '../../../components/CopyButton.js';
 import { Transfer } from '../../../stores/Transfer.js';
 
 interface TransferProps {
@@ -33,14 +33,11 @@ export const TransferActions: React.FC<TransferProps> = observer(
           </IconButton>
         )}
         {transfer.canCopy && (
-          <IconButton
+          <CopyButton
             round
             onClick={() => transfer.copy()}
             className={styles.copy}
-            title={t('copy')}
-          >
-            <IoCopy />
-          </IconButton>
+          />
         )}
         {transfer.canAccept && (
           <IconButton

@@ -1,7 +1,6 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18not';
 import { motion } from 'nanoanim';
-import { IoCopy } from 'react-icons/io5/index.js';
 import { observer } from 'mobx-react-lite';
 import clsx from 'clsx';
 
@@ -10,7 +9,7 @@ import { animationPropsSlide } from '../../animationSettings.js';
 import { ChatItemModel } from '../../types/Models.js';
 import { copy } from '../../utils/copy.js';
 import { TargetTile } from '../../components/TargetTile.js';
-import { IconButton } from '../../components/IconButton.js';
+import { CopyButton } from '../../components/CopyButton.js';
 import { connection } from '../../stores/index.js';
 
 export interface ChatItemProps {
@@ -58,9 +57,7 @@ export const ChatItem: React.FC<ChatItemProps> = observer(({ item }) => {
         <div>
           {item.date.toLocaleTimeString(language, { timeStyle: 'short' })}
         </div>
-        <IconButton onClick={() => copy(item.message)} title={t('copy')}>
-          <IoCopy />
-        </IconButton>
+        <CopyButton onClick={() => copy(item.message)} />
       </div>
       <div className={styles.message} ref={messageRef}>
         {urlify(item.message)}
