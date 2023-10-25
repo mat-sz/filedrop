@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import preact from '@preact/preset-vite';
 import buildInfo from 'vite-plugin-info';
 
 export default defineConfig(({ mode }) => ({
@@ -10,15 +10,12 @@ export default defineConfig(({ mode }) => ({
       clientPort: 3001,
     },
   },
-  resolve:
-    mode === 'production'
-      ? {
-          // Enables MobX production build
-          mainFields: ['jsnext:main', 'module', 'main'],
-        }
-      : undefined,
+  resolve: {
+    mainFields:
+      mode === 'production' ? ['jsnext:main', 'module', 'main'] : undefined,
+  },
   build: {
     outDir: './build',
   },
-  plugins: [buildInfo(), react()],
+  plugins: [buildInfo(), preact()],
 }));
