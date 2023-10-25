@@ -1,5 +1,4 @@
 import React from 'react';
-import { AnimatePresence } from 'nanoanim';
 import { observer } from 'mobx-react-lite';
 
 import styles from './Queue.module.scss';
@@ -26,11 +25,9 @@ export const Queue: React.FC<Props> = observer(
             </div>
             <ul className={styles.queue}>
               {showTotal && <Total transfers={transfers} />}
-              <AnimatePresence>
-                {transfers.map(transfer => (
-                  <TransferInfo key={transfer.transferId} transfer={transfer} />
-                ))}
-              </AnimatePresence>
+              {transfers.map(transfer => (
+                <TransferInfo key={transfer.transferId} transfer={transfer} />
+              ))}
             </ul>
           </div>
         )}

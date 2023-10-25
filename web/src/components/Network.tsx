@@ -1,6 +1,5 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { AnimatePresence } from 'nanoanim';
 
 import styles from './Network.module.scss';
 import { NetworkTile } from './NetworkTile.js';
@@ -21,16 +20,14 @@ export const Network: React.FC<NetworkProps> = observer(
 
     return (
       <div className={styles.network}>
-        <AnimatePresence>
-          {clients.map(client => (
-            <NetworkTile
-              key={client.clientId}
-              client={client}
-              onSelect={onSelect}
-              icon={icon}
-            />
-          ))}
-        </AnimatePresence>
+        {clients.map(client => (
+          <NetworkTile
+            key={client.clientId}
+            client={client}
+            onSelect={onSelect}
+            icon={icon}
+          />
+        ))}
       </div>
     );
   }

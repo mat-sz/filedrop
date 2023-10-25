@@ -27,7 +27,6 @@
     "matcrypt": "^1.3.0",
     "mobx": "^6.10.2",
     "mobx-react-lite": "^4.0.5",
-    "nanoanim": "^0.1.0",
     "preact": "^10.18.1",
     "preact-compat": "^3.19.0",
     "pwanow": "^0.0.1",

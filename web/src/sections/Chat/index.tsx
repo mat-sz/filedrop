@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18not';
-import { AnimatePresence, motion } from 'nanoanim';
 import Textarea from 'react-expanding-textarea';
 import { observer } from 'mobx-react-lite';
 import { IoSend, IoChatbox, IoGlobe, IoClipboard } from 'react-icons/io5';
@@ -58,62 +57,54 @@ export const ChatSection: React.FC = observer(() => {
     <div className={clsx('subsection', 'mobileFlex', styles.chat)}>
       <div className={styles.channels}>
         <div className={styles.list}>
-          <AnimatePresence>
-            {channels.map(channel =>
-              channel.client ? (
-                <TargetTile
-                  className={clsx(styles.channel, {
-                    [styles.active]:
-                      chatStore.currentChannel === channel.channel,
-                  })}
-                  variant="small"
-                  key={channel.channel}
-                  client={channel.client}
-                  onClick={() => chatStore.selectChannel(channel.channel)}
-                >
-                  <NotificationCount count={channel.unread} />
-                </TargetTile>
-              ) : (
-                <div
-                  key={channel.channel}
-                  className={clsx(styles.channel, styles.global, {
-                    [styles.active]:
-                      chatStore.currentChannel === channel.channel,
-                  })}
-                  onClick={() => chatStore.selectChannel(channel.channel)}
-                >
-                  <NotificationCount count={channel.unread} />
-                  <IoGlobe />
-                </div>
-              )
-            )}
-          </AnimatePresence>
+          {channels.map(channel =>
+            channel.client ? (
+              <TargetTile
+                className={clsx(styles.channel, {
+                  [styles.active]: chatStore.currentChannel === channel.channel,
+                })}
+                variant="small"
+                key={channel.channel}
+                client={channel.client}
+                onClick={() => chatStore.selectChannel(channel.channel)}
+              >
+                <NotificationCount count={channel.unread} />
+              </TargetTile>
+            ) : (
+              <div
+                key={channel.channel}
+                className={clsx(styles.channel, styles.global, {
+                  [styles.active]: chatStore.currentChannel === channel.channel,
+                })}
+                onClick={() => chatStore.selectChannel(channel.channel)}
+              >
+                <NotificationCount count={channel.unread} />
+                <IoGlobe />
+              </div>
+            )
+          )}
         </div>
       </div>
       <React.Fragment key={chatStore.currentChannel}>
         {chat.length === 0 ? (
-          <AnimatePresence>
-            <motion.div className={styles.empty} {...animationPropsOpacity}>
-              <IoChatbox />
-              <div className={styles.title}>{t('emptyChat.title')}</div>
-              <div>
-                {chatStore.currentChannel === 'global'
-                  ? t('emptyChat.body')
-                  : t('emptyChat.bodyTarget', {
-                      target: chatStore.currentChannelName,
-                    })}
-              </div>
-            </motion.div>
-          </AnimatePresence>
+          <div className={styles.empty} {...animationPropsOpacity}>
+            <IoChatbox />
+            <div className={styles.title}>{t('emptyChat.title')}</div>
+            <div>
+              {chatStore.currentChannel === 'global'
+                ? t('emptyChat.body')
+                : t('emptyChat.bodyTarget', {
+                    target: chatStore.currentChannelName,
+                  })}
+            </div>
+          </div>
         ) : (
           <div className={styles.items}>
             <div className={styles.placeholder} />
             <ul ref={containerRef}>
-              <AnimatePresence>
-                {chat.map(item => (
-                  <ChatItem key={item.id} item={item} />
-                ))}
-              </AnimatePresence>
+              {chat.map(item => (
+                <ChatItem key={item.id} item={item} />
+              ))}
             </ul>
           </div>
         )}
