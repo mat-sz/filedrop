@@ -7,7 +7,6 @@ import clsx from 'clsx';
 
 import styles from './index.module.scss';
 import { ChatItem } from './ChatItem.js';
-import { animationPropsOpacity } from '../../animationSettings.js';
 import { IconButton } from '../../components/IconButton.js';
 import { applicationStore, chatStore } from '../../stores/index.js';
 import { TargetTile } from '../../components/TargetTile.js';
@@ -87,7 +86,7 @@ export const ChatSection: React.FC = observer(() => {
       </div>
       <React.Fragment key={chatStore.currentChannel}>
         {chat.length === 0 ? (
-          <div className={styles.empty} {...animationPropsOpacity}>
+          <div className={styles.empty}>
             <IoChatbox />
             <div className={styles.title}>{t('emptyChat.title')}</div>
             <div>

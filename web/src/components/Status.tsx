@@ -4,17 +4,13 @@ import { observer } from 'mobx-react-lite';
 import clsx from 'clsx';
 
 import styles from './Status.module.scss';
-import { animationPropsOpacity } from '../animationSettings.js';
 import { connection } from '../stores/index.js';
 
 export const Status: React.FC = observer(() => {
   const { t } = useTranslation();
 
   return !connection.connected && !connection.disconnectReason ? (
-    <div
-      {...animationPropsOpacity}
-      className={clsx(styles.status, styles.error)}
-    >
+    <div className={clsx(styles.status, styles.error)}>
       <div>{t('state.connecting')}</div>
     </div>
   ) : null;

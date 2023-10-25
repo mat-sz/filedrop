@@ -1,10 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18not';
-import { motion } from 'nanoanim';
 import { observer } from 'mobx-react-lite';
 
 import styles from './index.module.scss';
-import { animationPropsSlide } from '../../../animationSettings.js';
 import { TransferState } from '../../../types/TransferState.js';
 import { formatFileName, formatFileSize } from '../../../utils/file.js';
 import { humanTime } from '../../../utils/time.js';
@@ -31,7 +29,7 @@ export const TransferInfo: React.FC<TransferProps> = observer(
     const left = humanTime(transfer.timeLeft());
 
     return (
-      <motion.li className={styles.transfer} {...animationPropsSlide}>
+      <li className={styles.transfer}>
         <TransferIcon transfer={transfer} />
         <div className={styles.state}>
           <div className={styles.filename}>
@@ -68,7 +66,7 @@ export const TransferInfo: React.FC<TransferProps> = observer(
           </div>
         </div>
         <TransferActions transfer={transfer} />
-      </motion.li>
+      </li>
     );
   }
 );

@@ -1,12 +1,10 @@
 import React from 'react';
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18not';
-import { motion } from 'nanoanim';
 import { IoAdd } from 'react-icons/io5';
 import { ClientModel } from '@filedrop/types';
 
 import styles from './NetworkTile.module.scss';
-import { animationPropsOpacity } from '../animationSettings.js';
 import { TargetTile } from './TargetTile.js';
 import { networkStore } from '../stores/index.js';
 
@@ -34,11 +32,7 @@ export const NetworkTile: React.FC<NetworkTileProps> = ({
   };
 
   return (
-    <motion.div
-      {...animationPropsOpacity}
-      onClick={onClick}
-      className={styles.wrapper}
-    >
+    <div onClick={onClick} className={styles.wrapper}>
       <TargetTile client={client} variant="big" className={clsx(styles.tile)}>
         {!onSelect && (
           <input
@@ -60,6 +54,6 @@ export const NetworkTile: React.FC<NetworkTileProps> = ({
         </div>
       </TargetTile>
       <div className={styles.name}>{client.clientName}</div>
-    </motion.div>
+    </div>
   );
 };

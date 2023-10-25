@@ -1,11 +1,9 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18not';
-import { motion } from 'nanoanim';
 import { observer } from 'mobx-react-lite';
 import clsx from 'clsx';
 
 import styles from './ChatItem.module.scss';
-import { animationPropsSlide } from '../../animationSettings.js';
 import { ChatItemModel } from '../../types/Models.js';
 import { copy } from '../../utils/copy.js';
 import { TargetTile } from '../../components/TargetTile.js';
@@ -45,11 +43,10 @@ export const ChatItem: React.FC<ChatItemProps> = observer(({ item }) => {
   }, [setExpanded]);
 
   return (
-    <motion.li
+    <li
       className={clsx(styles.item, {
         [styles.expanded]: expanded,
       })}
-      {...animationPropsSlide}
     >
       <div className={styles.info}>
         {client && <TargetTile client={client} />}
@@ -67,6 +64,6 @@ export const ChatItem: React.FC<ChatItemProps> = observer(({ item }) => {
           {t('chat.showMore')}
         </button>
       )}
-    </motion.li>
+    </li>
   );
 });
