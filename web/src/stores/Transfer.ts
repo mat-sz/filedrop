@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction } from 'mobx';
-import { v4 } from 'uuid';
+import { nanoid } from 'nanoid';
 import {
   ActionMessageActionType,
   ActionMessageModel,
@@ -36,7 +36,7 @@ export class Transfer {
     public fileSize: number,
     public fileType: string,
     public preview?: string,
-    public transferId: string = v4(),
+    public transferId: string = nanoid(),
     public receiving = false
   ) {
     this.state = receiving ? TransferState.INCOMING : TransferState.OUTGOING;

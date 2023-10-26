@@ -5,7 +5,7 @@ import {
   Message,
   MessageType,
 } from '@filedrop/types';
-import { v4 } from 'uuid';
+import { nanoid } from 'nanoid';
 
 import type { Connection } from './Connection.js';
 import { ChatItemModel } from '../types/Models.js';
@@ -108,7 +108,7 @@ export class ChatStore {
 
     const array = this.channelItems.get(channel)!;
     array.push({
-      id: v4(),
+      id: nanoid(),
       date: new Date(),
       clientId: senderId,
       message,

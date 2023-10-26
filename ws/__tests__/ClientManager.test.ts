@@ -1,4 +1,3 @@
-import { v4 as uuid } from 'uuid';
 import {
   ActionMessageActionType,
   TargetedMessageModel,
@@ -168,7 +167,7 @@ describe('ClientManager', () => {
       type: MessageType.ACTION,
       action: ActionMessageActionType.ACCEPT,
       targetId: client2.clientId!,
-      transferId: uuid(),
+      transferId: 'ay3UIn8k4QsznfyHCt9mh',
     };
 
     clientManager.handleMessage(client1, targetedMessage);

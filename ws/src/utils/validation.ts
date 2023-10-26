@@ -48,7 +48,7 @@ const chatMessageModelSchema = Joi.object({
 
 const transferMessageModelSchema = Joi.object({
   type: Joi.string().equal(MessageType.TRANSFER).required(),
-  transferId: Joi.string().uuid().required(),
+  transferId: Joi.string().max(36).required(),
   targetId: Joi.string().hex().required(),
   fileName: Joi.string().required(),
   fileSize: Joi.number().required(),
@@ -59,7 +59,7 @@ const transferMessageModelSchema = Joi.object({
 const validActions = Object.values(ActionMessageActionType);
 const actionMessageModelSchema = Joi.object({
   type: Joi.string().equal(MessageType.ACTION).required(),
-  transferId: Joi.string().uuid().required(),
+  transferId: Joi.string().max(36).required(),
   targetId: Joi.string().hex().required(),
   action: Joi.string()
     .equal(...validActions)
@@ -68,7 +68,7 @@ const actionMessageModelSchema = Joi.object({
 
 const rtcDescriptionMessageModelSchema = Joi.object({
   type: Joi.string().equal(MessageType.RTC_DESCRIPTION).required(),
-  transferId: Joi.string().uuid().required(),
+  transferId: Joi.string().max(36).required(),
   targetId: Joi.string().hex().required(),
   data: Joi.object({
     type: Joi.string().required(),
@@ -78,7 +78,7 @@ const rtcDescriptionMessageModelSchema = Joi.object({
 
 const rtcCandidateMessageModelSchema = Joi.object({
   type: Joi.string().equal(MessageType.RTC_CANDIDATE).required(),
-  transferId: Joi.string().uuid().required(),
+  transferId: Joi.string().max(36).required(),
   targetId: Joi.string().hex().required(),
   data: Joi.object().required(),
 }).required();
