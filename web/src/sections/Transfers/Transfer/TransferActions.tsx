@@ -1,5 +1,5 @@
 import React from 'react';
-import { IoCloseSharp, IoCheckmark, IoArrowDown } from 'react-icons/io5';
+import { IoClose, IoCheckmark, IoArrowDown } from 'react-icons/io5';
 import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18not';
 
@@ -51,7 +51,7 @@ export const TransferActions: React.FC<TransferProps> = observer(
           className={styles.negative}
           title={t('cancel')}
         >
-          <IoCloseSharp />
+          <IoClose />
         </IconButton>
       </div>
     );

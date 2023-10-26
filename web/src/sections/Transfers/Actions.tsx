@@ -1,5 +1,5 @@
 import React from 'react';
-import { IoCheckmarkDone, IoCloseSharp } from 'react-icons/io5';
+import { IoCheckmarkDone, IoClose } from 'react-icons/io5';
 import { useTranslation } from 'react-i18not';
 
 import styles from './Actions.module.scss';
@@ -39,7 +39,7 @@ export const Actions: React.FC<Props> = ({ transfers }) => {
           </IconButton>
         )}
         <IconButton round onClick={cancelAll} title={t('cancelAll')}>
-          <IoCloseSharp />
+          <IoClose />
         </IconButton>
       </div>
     </>

@@ -1,15 +1,15 @@
 import React from 'react';
 import { useTranslation } from 'react-i18not';
 import {
-  FaTimes,
-  FaArrowDown,
-  FaArrowUp,
-  FaAngleDoubleDown,
-  FaCheck,
-  FaAngleDoubleUp,
-  FaHourglassHalf,
-  FaHourglassEnd,
-} from 'react-icons/fa';
+  IoClose,
+  IoArrowDown,
+  IoArrowUp,
+  IoCaretUp,
+  IoCaretDown,
+  IoCheckmark,
+  IoHourglassOutline,
+  IoLink,
+} from 'react-icons/io5';
 import { observer } from 'mobx-react-lite';
 
 import styles from './TransferTarget.module.scss';
@@ -26,23 +26,23 @@ interface TransferIconProps {
 const stateIcon = (state: TransferState, receiving: boolean) => {
   switch (state) {
     case TransferState.INCOMING:
-      return <FaArrowDown />;
+      return <IoArrowDown />;
     case TransferState.OUTGOING:
-      return <FaArrowUp />;
+      return <IoArrowUp />;
     case TransferState.FAILED:
-      return <FaTimes />;
+      return <IoClose />;
     case TransferState.IN_PROGRESS:
       if (receiving) {
-        return <FaAngleDoubleDown />;
+        return <IoCaretDown />;
       } else {
-        return <FaAngleDoubleUp />;
+        return <IoCaretUp />;
       }
     case TransferState.CONNECTING:
-      return <FaHourglassHalf />;
+      return <IoHourglassOutline />;
     case TransferState.CONNECTED:
-      return <FaHourglassEnd />;
+      return <IoLink />;
     case TransferState.COMPLETE:
-      return <FaCheck />;
+      return <IoCheckmark />;
   }
 };
 

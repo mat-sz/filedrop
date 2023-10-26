@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18not';
-import { IoPencil, IoCheckmark, IoCloseSharp } from 'react-icons/io5';
+import { IoPencil, IoCheckmark, IoClose } from 'react-icons/io5';
 import { observer } from 'mobx-react-lite';
 
 import styles from './ClientName.module.scss';
@@ -57,7 +57,7 @@ export const ClientName: React.FC = observer(() => {
             <IoCheckmark />
           </IconButton>
           <IconButton round onClick={onCancel} title={t('cancel')}>
-            <IoCloseSharp />
+            <IoClose />
           </IconButton>
         </div>
       )}

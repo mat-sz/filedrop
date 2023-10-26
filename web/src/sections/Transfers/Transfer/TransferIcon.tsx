@@ -1,13 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18not';
 import {
-  FaFile,
-  FaFileAlt,
-  FaFileVideo,
-  FaFileAudio,
-  FaFileImage,
-  FaFileArchive,
-} from 'react-icons/fa';
+  IoDocument,
+  IoDocumentText,
+  IoFilm,
+  IoMusicalNotes,
+  IoImage,
+  IoArchive,
+} from 'react-icons/io5';
 
 import styles from './TransferIcon.module.scss';
 import { fileType } from '../../../utils/file.js';
@@ -23,19 +23,18 @@ const typeIcon = (mime: string) => {
 
   switch (type) {
     case FileType.ARCHIVE:
-      return <FaFileArchive />;
+      return <IoArchive />;
     case FileType.IMAGE:
-      return <FaFileImage />;
+      return <IoImage />;
     case FileType.AUDIO:
-      return <FaFileAudio />;
+      return <IoMusicalNotes />;
     case FileType.VIDEO:
-      return <FaFileVideo />;
+      return <IoFilm />;
     case FileType.BINARY:
-      return <FaFileAlt />;
     case FileType.TEXT:
-      return <FaFileAlt />;
+      return <IoDocumentText />;
     default:
-      return <FaFile />;
+      return <IoDocument />;
   }
 };
 
