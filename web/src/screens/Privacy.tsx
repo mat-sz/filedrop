@@ -44,3 +44,5 @@ export const Privacy: React.FC = () => {
     </TextSection>
   );
 };
+
+export default Privacy;

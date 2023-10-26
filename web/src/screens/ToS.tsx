@@ -106,3 +106,5 @@ export const ToS: React.FC = () => {
     </TextSection>
   );
 };
+
+export default ToS;

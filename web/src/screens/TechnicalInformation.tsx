@@ -27,3 +27,5 @@ export const TechnicalInformation: React.FC = observer(() => {
     </TextSection>
   );
 });
+
+export default TechnicalInformation;

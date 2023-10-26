@@ -56,3 +56,5 @@ export const ConnectSection: React.FC = observer(() => {
     </>
   );
 });
+
+export default ConnectSection;

@@ -29,3 +29,5 @@ export const Abuse: React.FC = observer(() => {
     </TextSection>
   );
 });
+
+export default Abuse;

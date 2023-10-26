@@ -48,3 +48,5 @@ export const About: React.FC = () => {
     </TextSection>
   );
 };
+
+export default About;

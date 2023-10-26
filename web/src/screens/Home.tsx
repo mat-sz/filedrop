@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { useParams } from 'wouter';
 import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18not';
@@ -14,10 +14,11 @@ import { YourTileSection } from '../sections/YourTile/index.js';
 import { NoticeSection } from '../sections/Notice/index.js';
 import { NetworkSection } from '../sections/Network/index.js';
 import { TransfersSection } from '../sections/Transfers/index.js';
-import { ConnectSection } from '../sections/Connect/index.js';
 import { ChatSection } from '../sections/Chat/index.js';
 import { MobileTabs } from '../sections/MobileTabs/index.js';
 import { SettingsSection } from '../sections/Settings/index.js';
+
+const ConnectSection = React.lazy(() => import('../sections/Connect/index.js'));
 
 function itemToString(item: DataTransferItem): Promise<string> {
   return new Promise(resolve => {
@@ -142,7 +143,9 @@ export const Home: React.FC = observer(() => {
               mobileHidden: tab !== 'connect',
             })}
           >
-            <ConnectSection />
+            <Suspense>
+              <ConnectSection />
+            </Suspense>
           </div>
           <div
             className={clsx('mobileFlex', {
