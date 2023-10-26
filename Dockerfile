@@ -1,5 +1,5 @@
 # => Build container
-FROM node:19-alpine as build
+FROM node:20-alpine as build
 
 # set version label
 ARG BUILD_DATE
