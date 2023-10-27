@@ -24,4 +24,5 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: corepack yarn install
+      - run: corepack yarn build
       - run: corepack yarn test
