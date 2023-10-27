@@ -14,8 +14,10 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY . /app
 
 RUN apk add --no-cache bash
-RUN corepack yarn install && corepack yarn build && corepack yarn cache clean
+RUN corepack yarn install && corepack yarn build && mv web/build web_build && rm -rf web && rm -rf node_modules && corepack yarn cache clean && rm -rf /root/.npm
+RUN corepack yarn install && corepack yarn cache clean && rm -rf /root/.npm
 
 EXPOSE 5000
 
+ENV WS_STATIC_ROOT ../web_build
 CMD ["corepack", "yarn", "start:prod"]
