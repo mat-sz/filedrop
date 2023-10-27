@@ -2,13 +2,19 @@ import path, { resolve } from 'path';
 import Fastify from 'fastify';
 import fastifyWebsocket from '@fastify/websocket';
 import fastifyStatic from '@fastify/static';
-import fastifyHttpProxy from '@fastify/http-proxy';
 import fastifyCompress from '@fastify/compress';
 
 import { WSClient } from './WSClient.js';
 import { ClientManager } from './ClientManager.js';
 import { isMessageModel } from './utils/validation.js';
-import { host, maxSize, port, useProxy, appName } from './config.js';
+import {
+  host,
+  maxSize,
+  port,
+  useProxy,
+  appName,
+  staticRoot,
+} from './config.js';
 
 const clientManager = new ClientManager();
 const app = Fastify();
@@ -33,11 +39,12 @@ const manifestString = JSON.stringify(manifest);
 const maxAge = 30 * 24 * 60 * 60 * 1000;
 
 if (useProxy) {
+  const fastifyHttpProxy = (await import('@fastify/http-proxy')).default;
   app.register(fastifyHttpProxy, {
     upstream: 'http://localhost:3000/',
   });
 } else {
-  const STATIC_ROOT = resolve('../web/build');
+  const STATIC_ROOT = resolve(staticRoot);
 
   app.setNotFoundHandler((req, reply) => {
     const split = req.url.split('/');
