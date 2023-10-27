@@ -14,8 +14,8 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY . /app
 
 RUN apk add --no-cache bash
-RUN yarn install
-RUN yarn build
+RUN corepack yarn install && corepack yarn build && corepack yarn cache clean
+
 EXPOSE 5000
 
-CMD ["yarn", "start:prod"]
+CMD ["corepack", "yarn", "start:prod"]

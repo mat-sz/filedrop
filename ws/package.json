@@ -5,19 +5,12 @@
   "type": "module",
   "dependencies": {
     "@fastify/compress": "^6.4.0",
-    "@fastify/http-proxy": "^9.2.1",
     "@fastify/static": "^6.10.2",
     "@fastify/websocket": "^8.2.0",
     "@filedrop/types": "*",
-    "@types/node": "^20.4.5",
-    "@types/ws": "^8.5.3",
-    "@typescript-eslint/eslint-plugin": "^6.2.0",
-    "@typescript-eslint/parser": "^6.2.0",
     "dotenv-flow": "^4.0.0",
-    "eslint": "^8.46.0",
     "fastify": "^4.21.0",
     "joi": "^17.6.0",
-    "tsx": "^3.12.8",
     "ws": "^8.6.0"
   },
   "scripts": {
@@ -26,5 +19,11 @@
     "build": "tsc",
     "test": "vitest",
     "lint": "eslint . --ext ts,tsx"
+  },
+  "devDependencies": {
+    "@fastify/http-proxy": "^9.2.1",
+    "@types/node": "^20.8.9",
+    "@types/ws": "^8.5.8",
+    "tsx": "^3.14.0"
   }
 }

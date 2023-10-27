@@ -7,12 +7,12 @@
     "types"
   ],
   "scripts": {
-    "prepare": "nx run-many -t build -p @filedrop/types",
-    "start": "WS_USE_PROXY=1 nx run-many -t start -p @filedrop/web @filedrop/ws",
-    "build": "nx run-many -t build",
-    "start:prod": "cd ws && yarn start:prod",
+    "prepare": "corepack yarn workspace types run build",
+    "start": "WS_USE_PROXY=1 corepack yarn workspaces foreach -Apt run start",
+    "build": "corepack yarn workspaces foreach -Apt run build",
+    "start:prod": "corepack yarn workspace @filedrop/ws run start:prod",
     "test": "vitest",
-    "lint": "nx run-many -t lint"
+    "lint": "corepack yarn workspaces foreach -Apt run lint"
   },
   "husky": {
     "hooks": {
@@ -34,9 +34,9 @@
     "eslint": "^8.46.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.1.2",
-    "nx": "16.5.5",
     "prettier": "^2.8.4",
     "typescript": "^5.2.2",
     "vitest": "^0.33.0"
-  }
+  },
+  "packageManager": "yarn@4.0.0"
 }
