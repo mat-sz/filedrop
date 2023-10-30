@@ -16,7 +16,7 @@ export const NetworkSection: React.FC = observer(() => {
   const clients = networkStore.clients;
   const transfers = networkStore.transfers;
   const { t } = useTranslation();
-  const [isPaste, setPaste] = useState(false);
+  const [isPaste, setPaste] = useState(window.location.hash === '#paste');
   const showPaste = applicationStore.showPaste;
   const sendFromClipboard = isPaste && showPaste;
 
