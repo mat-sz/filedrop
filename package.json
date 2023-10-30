@@ -8,11 +8,11 @@
   ],
   "scripts": {
     "prepare": "corepack yarn workspace types run build",
-    "start": "WS_USE_PROXY=1 corepack yarn workspaces foreach -Apt run start",
-    "build": "corepack yarn workspaces foreach -Apt run build",
+    "start": "WS_USE_PROXY=1 corepack yarn workspaces foreach -Aipt run start",
+    "build": "corepack yarn workspaces foreach -Aipt run build",
     "start:prod": "corepack yarn workspace @filedrop/ws run start:prod",
     "test": "vitest",
-    "lint": "corepack yarn workspaces foreach -Apt run lint"
+    "lint": "corepack yarn workspaces foreach -Aipt run lint"
   },
   "husky": {
     "hooks": {
