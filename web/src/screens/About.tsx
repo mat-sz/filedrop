@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from 'wouter';
 
+import { Link } from '../components/Link.js';
 import { TextSection } from '../components/TextSection.js';
 
 export const About: React.FC = () => {

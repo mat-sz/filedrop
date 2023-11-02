@@ -1,10 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18not';
-import { Link } from 'wouter';
 import { observer } from 'mobx-react-lite';
 import clsx from 'clsx';
 
 import styles from './Footer.module.scss';
+import { Link } from './Link.js';
 import { applicationStore } from '../stores/index.js';
 
 export const Footer: React.FC = observer(() => {

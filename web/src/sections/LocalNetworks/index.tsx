@@ -1,9 +1,9 @@
 import React from 'react';
 import clsx from 'clsx';
 import { observer } from 'mobx-react-lite';
-import { Link } from 'wouter';
 
 import styles from './index.module.scss';
+import { Link } from '../../components/Link.js';
 import { applicationStore, networkStore } from '../../stores/index.js';
 import { TargetTile } from '../../components/TargetTile.js';
 

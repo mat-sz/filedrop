@@ -5,10 +5,10 @@ import {
   IoInformationCircle,
   IoLogoTwitter,
 } from 'react-icons/io5';
-import { Link } from 'wouter';
 import { observer } from 'mobx-react-lite';
 
 import styles from './Header.module.scss';
+import { Link } from './Link.js';
 import { DropIcon } from './DropIcon.js';
 import { applicationStore } from '../stores/index.js';
 import { SecureStatus } from './SecureStatus.js';
