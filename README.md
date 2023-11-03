@@ -1,12 +1,16 @@
 # filedrop
 
+Available at: https://drop.lol/
+
 Easy end-to-end encrypted, peer-to-peer file transfer.
 
-<p align="center">
-    <a href="https://drop.lol/">
-        <strong>Click here to open drop.lol.</strong>
-    </a>
-</p>
+**Features:**
+
+- Fully end-to-end encrypted, including metadata and chat.
+- Peer-to-peer wherever possible (using WebRTC).
+- Simple chat function with copy and paste.
+- Minimalist user interface.
+- Available as a Progressive Web Application.
 
 <p align="center">
     <a href="https://drop.lol/">
