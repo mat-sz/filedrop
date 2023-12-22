@@ -142,7 +142,7 @@ export class NetworkStore {
       targetId,
       file.name,
       file.size,
-      file.type,
+      file.type || 'application/octet-stream',
       preview
     );
 
