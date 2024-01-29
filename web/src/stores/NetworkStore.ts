@@ -260,7 +260,7 @@ export class NetworkStore {
         this.transfers.get(message.transferId)?.start(message.data);
         break;
       case MessageType.RTC_CANDIDATE:
-        this.transfers.get(message.transferId)?.addIceCandiate(message.data);
+        this.transfers.get(message.transferId)?.addIceCandidate(message.data);
         break;
     }
   }

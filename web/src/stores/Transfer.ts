@@ -133,7 +133,7 @@ export class Transfer {
       : undefined;
   }
 
-  addIceCandiate(candidate: RTCIceCandidate) {
+  addIceCandidate(candidate: RTCIceCandidate) {
     this.validPeerConnection()
       ?.addIceCandidate(candidate)
       .catch(() => {});
