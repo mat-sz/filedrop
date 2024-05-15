@@ -393,6 +393,10 @@ export class Transfer {
   }
 
   stop() {
+    if (this.blobUrl) {
+      URL.revokeObjectURL(this.blobUrl);
+    }
+
     if (this.peerConnection) {
       try {
         this.peerConnection.close();
