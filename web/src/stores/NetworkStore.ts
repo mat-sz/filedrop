@@ -67,7 +67,7 @@ export class NetworkStore {
 
   get otherNetworks() {
     return this.localNetworks.filter(
-      network => network.name !== this.networkName
+      network => network.name.toUpperCase() !== this.networkName?.toUpperCase()
     );
   }
 
