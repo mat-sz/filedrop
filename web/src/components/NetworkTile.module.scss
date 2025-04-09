@@ -54,6 +54,22 @@
       color: rgba(0, 0, 0, 0.5);
     }
   }
+
+  &.everyone {
+    .icon {
+      svg {
+        color: rgba(255, 255, 255, 0.5);
+      }
+    }
+
+    &.active,
+    &:hover,
+    &:focus-within {
+      svg {
+        color: rgba(255, 255, 255, 1);
+      }
+    }
+  }
 }
 
 .name {

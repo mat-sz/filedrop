@@ -17,6 +17,17 @@ import { copy } from '../utils/copy.js';
 import { fromImage } from 'imtool';
 import { settingsStore } from './SettingsStore.js';
 
+export interface TransferSettings {
+  file?: File;
+  targetId: string;
+  fileName: string;
+  fileSize: number;
+  fileType: string;
+  preview?: string;
+  transferId?: string;
+  receiving: boolean;
+}
+
 export class Transfer {
   blob?: Blob = undefined;
   blobUrl?: string = undefined;
@@ -27,19 +38,32 @@ export class Transfer {
   text?: string = undefined;
   sortTimestamp: number = new Date().getTime();
 
+  file: File | undefined;
+  targetId: string;
+  fileName: string;
+  fileSize: number;
+  fileType: string;
+  preview: string | undefined;
+  transferId: string;
+  receiving: boolean;
+
   constructor(
     private network: NetworkStore,
     private connection: Connection,
-    public file: File | undefined,
-    public targetId: string,
-    public fileName: string,
-    public fileSize: number,
-    public fileType: string,
-    public preview?: string,
-    public transferId: string = nanoid(),
-    public receiving = false
+    settings: TransferSettings
   ) {
-    this.state = receiving ? TransferState.INCOMING : TransferState.OUTGOING;
+    this.state = settings.receiving
+      ? TransferState.INCOMING
+      : TransferState.OUTGOING;
+
+    this.transferId = settings.transferId ?? nanoid();
+    this.file = settings.file;
+    this.targetId = settings.targetId;
+    this.fileName = settings.fileName;
+    this.fileSize = settings.fileSize;
+    this.fileType = settings.fileType;
+    this.preview = settings.preview;
+    this.receiving = settings.receiving;
 
     makeAutoObservable(this);
   }

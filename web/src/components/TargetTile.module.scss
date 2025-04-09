@@ -12,6 +12,11 @@
   overflow: hidden;
   text-shadow: none;
 
+  &.everyone {
+    background: var(--color-bg);
+    color: rgba(255, 255, 255, 0.5);
+  }
+
   svg {
     font-size: 10px;
   }

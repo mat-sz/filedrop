@@ -33,7 +33,13 @@ export const NetworkTile: React.FC<NetworkTileProps> = ({
 
   return (
     <div onClick={onClick} className={styles.wrapper}>
-      <TargetTile client={client} variant="big" className={clsx(styles.tile)}>
+      <TargetTile
+        client={client}
+        variant="big"
+        className={clsx(styles.tile, {
+          [styles.everyone]: client.clientId === 'everyone',
+        })}
+      >
         {!onSelect && (
           <input
             type="file"

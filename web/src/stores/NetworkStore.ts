@@ -14,7 +14,7 @@ import { canvas } from 'imtool';
 import type { Connection } from './Connection.js';
 import { deviceType } from '../utils/browser.js';
 import { TransferState } from '../types/TransferState.js';
-import { Transfer } from './Transfer.js';
+import { Transfer, TransferSettings } from './Transfer.js';
 import { defaultAppName } from '../config.js';
 import { replaceUrlParameters } from '../utils/url.js';
 import { getItem, setItem } from '../utils/storage.js';
@@ -135,16 +135,26 @@ export class NetworkStore {
       } catch {}
     }
 
-    const transfer = new Transfer(
-      this,
-      this.connection,
+    const transferSettings: Omit<TransferSettings, 'targetId'> = {
       file,
-      targetId,
-      file.name,
-      file.size,
-      file.type || 'application/octet-stream',
-      preview
-    );
+      fileName: file.name,
+      fileSize: file.size,
+      fileType: file.type || 'application/octet-stream',
+      preview,
+      receiving: false,
+    };
+
+    if (targetId === 'everyone') {
+      for (const client of this.clients) {
+        this.sendTransfer({ ...transferSettings, targetId: client.clientId });
+      }
+    } else {
+      this.sendTransfer({ ...transferSettings, targetId });
+    }
+  }
+
+  private sendTransfer(settings: TransferSettings) {
+    const transfer = new Transfer(this, this.connection, settings);
 
     runInAction(() => {
       this.transfers.set(transfer.transferId, transfer);
@@ -157,7 +167,7 @@ export class NetworkStore {
       fileSize: transfer.fileSize,
       fileType: transfer.fileType,
       targetId: transfer.targetId,
-      preview,
+      preview: transfer.preview,
     };
 
     this.connection.send(message);
@@ -227,18 +237,14 @@ export class NetworkStore {
         break;
       case MessageType.TRANSFER:
         if (message.clientId) {
-          const transfer = new Transfer(
-            this,
-            this.connection,
-            undefined,
-            message.clientId!,
-            message.fileName,
-            message.fileSize,
-            message.fileType,
-            message.preview?.startsWith('data:') ? message.preview : undefined,
-            message.transferId,
-            true
-          );
+          const transfer = new Transfer(this, this.connection, {
+            ...message,
+            targetId: message.clientId!,
+            preview: message.preview?.startsWith('data:')
+              ? message.preview
+              : undefined,
+            receiving: true,
+          });
 
           this.transfers.set(transfer.transferId, transfer);
           if (settingsStore.settings.autoAccept) {

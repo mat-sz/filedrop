@@ -23,9 +23,17 @@ export const TargetTile = observer(
 
       return (
         <div
-          className={clsx(styles.tile, styles[variant], className)}
+          className={clsx(
+            styles.tile,
+            styles[variant],
+            { [styles.everyone]: client.clientId === 'everyone' },
+            className
+          )}
           style={{
-            backgroundColor: uuidToColor(client.clientId),
+            backgroundColor:
+              client.clientId !== 'everyone'
+                ? uuidToColor(client.clientId)
+                : undefined,
           }}
           ref={ref}
           {...props}
